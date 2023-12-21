@@ -943,8 +943,8 @@ class CrmCustomer extends AFWObject{
                 {
                         $id = $this->id;
                         $customer_mobile = $this->getVal("mobile");
-                        if($customer_mobile) $customer_mobile = CrmCustomer::formatMobile($customer_mobile);
-                        $customer_mobile_correct = CrmCustomer::isCorrectMobileNum($customer_mobile);
+                        if($customer_mobile) $customer_mobile = AfwFormatHelper::formatMobile($customer_mobile);
+                        $customer_mobile_correct = AfwFormatHelper::isCorrectMobileNum($customer_mobile);
                 }
                 else
                 {
