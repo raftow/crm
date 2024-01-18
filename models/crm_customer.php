@@ -245,8 +245,8 @@ class CrmCustomer extends AFWObject{
         public static function loadByMobileAndFirstName($mobile, $first_name_ar)
         {
            $obj = new CrmCustomer();
-           if(!$mobile) $obj->throwError("loadByMobileAndFirstName : mobile is mandatory field");
-           if(!$first_name_ar) $obj->throwError("loadByMobileAndFirstName : first_name_ar is mandatory field");
+           if(!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
+           if(!$first_name_ar) throw new AfwRuntimeException("loadByMobileAndFirstName : first_name_ar is mandatory field");
 
 
            $obj->select("mobile",$mobile);
@@ -263,8 +263,8 @@ class CrmCustomer extends AFWObject{
         public static function loadByMobileAndEmail($mobile, $email)
         {
            $obj = new CrmCustomer();
-           if(!$mobile) $obj->throwError("loadByMobileAndFirstName : mobile is mandatory field");
-           if(!$email) $obj->throwError("loadByMobileAndFirstName : email is mandatory field");
+           if(!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
+           if(!$email) throw new AfwRuntimeException("loadByMobileAndFirstName : email is mandatory field");
 
 
            $obj->select("mobile",$mobile);
@@ -282,7 +282,7 @@ class CrmCustomer extends AFWObject{
         public static function loadByMobile($mobile, $the_incorect_idn)
         {
            $obj = new CrmCustomer();
-           if(!$mobile) $obj->throwError("loadByMobileAndFirstName : mobile is mandatory field");
+           if(!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
 
            $obj->select("mobile",$mobile);
            $obj->where("length(idn)=10");
@@ -297,9 +297,9 @@ class CrmCustomer extends AFWObject{
         public static function loadByMainIndex($mobile, $idn_type_id, $idn, $create_obj_if_not_found=false)
         {
                 $obj = new CrmCustomer();
-                if(!$mobile) $obj->throwError("loadByMainIndex : mobile is mandatory field");
-                if(!$idn_type_id) $obj->throwError("loadByMainIndex : idn_type_id is mandatory field");
-                if(!$idn) $obj->throwError("loadByMainIndex : idn is mandatory field");
+                if(!$mobile) throw new AfwRuntimeException("loadByMainIndex : mobile is mandatory field");
+                if(!$idn_type_id) throw new AfwRuntimeException("loadByMainIndex : idn_type_id is mandatory field");
+                if(!$idn) throw new AfwRuntimeException("loadByMainIndex : idn is mandatory field");
 
 
                 $obj->select("mobile",$mobile);
@@ -356,11 +356,11 @@ class CrmCustomer extends AFWObject{
 
         public static function createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id, $city_id, $customer_type_id=1)
         {
-                if(!$idn) throw new RuntimeException("createOrUpdateCustomer : idn is mandatory");
-                if(!$mobile) throw new RuntimeException("createOrUpdateCustomer : mobile is mandatory");
+                if(!$idn) throw new AfwRuntimeException("createOrUpdateCustomer : idn is mandatory");
+                if(!$mobile) throw new AfwRuntimeException("createOrUpdateCustomer : mobile is mandatory");
 
                 list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, $authorize_other_sa_idns=true);
-                if(!$idn_correct)  throw new RuntimeException("createOrUpdateCustomer : idn number [$idn] is not correct");
+                if(!$idn_correct)  throw new AfwRuntimeException("createOrUpdateCustomer : idn number [$idn] is not correct");
 
                 $customerObj = self::loadByMainIndex($mobile, $idn_type_id, $idn, $create_obj_if_not_found=true);
                 if(!$customerObj->getVal("first_name_ar"))
@@ -430,7 +430,7 @@ class CrmCustomer extends AFWObject{
         {
            $obj = new CrmCustomer();
            
-           if((!$mobile) and (!$email) and (!$idn))  $obj->throwError("loadByMainIndex : mobile or email or idn is mandatory");
+           if((!$mobile) and (!$email) and (!$idn))  throw new AfwRuntimeException("loadByMainIndex : mobile or email or idn is mandatory");
 
            if($email)
            {
@@ -809,7 +809,7 @@ class CrmCustomer extends AFWObject{
                   
              } 
              
-             return $this->getAttributeTranslation($attribute, $lang, $short);
+             return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
         }
         
         public function attributeIsApplicable($attribute)

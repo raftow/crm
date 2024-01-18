@@ -64,7 +64,7 @@ class ResponseTemplate extends AFWObject{
         
         public static function loadByMainIndex($title_en,$create_obj_if_not_found=false)
         {
-           if(!$title_en) throw new RuntimeException("loadByMainIndex : title_en is mandatory field");
+           if(!$title_en) throw new AfwRuntimeException("loadByMainIndex : title_en is mandatory field");
 
 
            $obj = new ResponseTemplate();

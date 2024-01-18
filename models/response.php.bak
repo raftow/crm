@@ -497,7 +497,7 @@ class Response extends AFWObject{
 
         protected function afterMaj($id, $fields_updated) 
         {
-                $lang = self::getGlobalLanguage();
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 if($fields_updated["new_status_id"] and $this->getVal("new_status_id"))
                 {
                        //$this->throwException("")
@@ -720,7 +720,7 @@ class Response extends AFWObject{
                 {
                         return "اكتب هنا المعلومات :";
                 }*/
-                return $this->getAttributeTranslation($attribute, $lang, $short);
+                return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
         }
 
 

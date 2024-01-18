@@ -192,8 +192,8 @@ class CrmEmployee extends CrmObject
         public static function loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found=false)
         {
            $obj = new CrmEmployee();
-           if(!$orgunit_id) $obj->throwError("loadByMainIndex : orgunit_id is mandatory field");
-           if(!$employee_id) $obj->throwError("loadByMainIndex : employee_id is mandatory field");
+           if(!$orgunit_id) throw new AfwRuntimeException("loadByMainIndex : orgunit_id is mandatory field");
+           if(!$employee_id) throw new AfwRuntimeException("loadByMainIndex : employee_id is mandatory field");
 
 
            $obj->select("orgunit_id",$orgunit_id);
@@ -620,7 +620,7 @@ class CrmEmployee extends CrmObject
                 // admin = 'N' and // rafik 30/8/2022 : I removed this from above acondition because admin (مشرف تنسيق) can be a supervisor 
                 
                 
-                $objList = $obj->loadList("employee_id");
+                $objList = AfwLoadHelper::loadList($obj, "employee_id");
 
                 return $objList;
         }
@@ -653,7 +653,7 @@ class CrmEmployee extends CrmObject
                 $obj->select("employee_id",$employee_id);
                 $obj->select("active", 'Y');
                 
-                $objList = $obj->loadList("orgunit_id");
+                $objList = AfwLoadHelper::loadList($obj, "orgunit_id");
 
                 if(count($objList)==1)
                 {

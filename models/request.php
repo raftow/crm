@@ -635,7 +635,7 @@ class Request extends AFWObject{
         public static function getMyCurrentRequests($customer_id, $nb_req_limit=10)
         {
              $obj = new Request();
-             if((!$customer_id) or ($customer_id<0)) $obj->throwError("getMyCurrentRequests : customer_id [$customer_id] is mandatory field");
+             if((!$customer_id) or ($customer_id<0)) throw new AfwRuntimeException("getMyCurrentRequests : customer_id [$customer_id] is mandatory field");
              $obj->select("customer_id",$customer_id);
              $old_status_date = AfwDateHelper::shiftHijriDate("",-20);
              $obj->where("status_id not in (5,6,7,8,9) or status_date >= '$old_status_date'");
@@ -647,7 +647,7 @@ class Request extends AFWObject{
         public static function getMyFinishedRequests($customer_id, $nb_req_limit=10)
         {
              $obj = new Request();
-             if((!$customer_id) or ($customer_id<0)) $obj->throwError("getMyCurrentRequests : customer_id [$customer_id] is mandatory field");
+             if((!$customer_id) or ($customer_id<0)) throw new AfwRuntimeException("getMyCurrentRequests : customer_id [$customer_id] is mandatory field");
              $obj->select("customer_id",$customer_id);
              $old_status_date = AfwDateHelper::shiftHijriDate("",-20);
              $obj->where("status_id in (5,6,7,8,9) or status_date >= '$old_status_date'");
@@ -1101,15 +1101,15 @@ class Request extends AFWObject{
                return true;
         }
         
-        protected function afterLoad()
+        public function afterLoad()
         {
             if(!$this->getVal("status_date"))
             {
-                        // $this->throwError("afterLoad : request_date will be setted to [AfwDateHelper::currentHijriDate()]");
+                        // throw new AfwRuntimeException("afterLoad : request_date will be setted to [AfwDateHelper::currentHijriDate()]");
                         $this->setSlient("status_date",AfwDateHelper::currentHijriDate());
                         $this->setSlient("status_time",date("H:i:s"));                        
             }
-            //else $this->throwError("afterLoad : request_date already setted to [".$this->getVal("request_date")."]");   
+            //else throw new AfwRuntimeException("afterLoad : request_date already setted to [".$this->getVal("request_date")."]");   
             return true;
         }
         
@@ -1632,7 +1632,7 @@ class Request extends AFWObject{
         
         public function changeStatus($new_status_id, $status_comment, $internal="N", $silent=false)
         {
-                $lang = self::getGlobalLanguage();
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 if(!$lang) $lang = "ar";
                 $silent_force=false;
                 $errors = "";
@@ -1751,10 +1751,10 @@ class Request extends AFWObject{
                     
                     if(!$once) 
                     {
-                        $this->throwError("changeStatus entered first time");
+                        throw new AfwRuntimeException("changeStatus entered first time");
                         $once = 1;
                     }
-                    else $this->throwError("changeStatus entered second time");
+                    else throw new AfwRuntimeException("changeStatus entered second time");
                     */
                     
                     // ." ($rand)"
@@ -2247,7 +2247,7 @@ class Request extends AFWObject{
          ***************************************************************************************************
          ***************************************************************************************************/
          
-         protected function attributeCanBeUpdatedBy($attribute, $user, $desc)
+         protected function attributeCanBeEditedBy($attribute, $user, $desc)
          {
                 if($this->attributeIsForSupervisor($attribute))
                 {
@@ -2273,7 +2273,7 @@ class Request extends AFWObject{
                         return array((!$reason), $reason);
                 }
                 
-                return $this->attributeCanBeModifiedBy($attribute, $user, $desc);
+                return [true, ''];
          }
          
          
@@ -2684,10 +2684,10 @@ class Request extends AFWObject{
                 else $sms_mobile = $the_customer->getVal("mobile");
                 
 
-                $sms_mobile = CrmCustomer::formatMobile($sms_mobile);
+                $sms_mobile = AfwFormatHelper::formatMobile($sms_mobile);
                 
                 // send SMS to customer       
-                if($sms_mobile and self::isCorrectMobileNum($sms_mobile)) 
+                if($sms_mobile and AfwFormatHelper::isCorrectMobileNum($sms_mobile)) 
                 {
                     list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $message);
                     if($sms_ok)
@@ -2840,7 +2840,7 @@ class Request extends AFWObject{
         protected function afterMaj($id, $fields_updated) 
         {
             self::lookIfInfiniteLoop();
-            $lang = self::getGlobalLanguage();
+            $lang = AfwLanguageHelper::getGlobalLanguage();
             $objme = AfwSession::getUserConnected();
             // send mail to investigator if is there
             $old_request_priority = 0; // no way to get here in after maj (seems working only in before Maj)
@@ -2884,10 +2884,10 @@ class Request extends AFWObject{
                             else $sms_mobile = $employeeInvestigObj->getVal("mobile");
 
 
-                            $sms_mobile = CrmCustomer::formatMobile($sms_mobile);
+                            $sms_mobile = AfwFormatHelper::formatMobile($sms_mobile);
                      
                             // send SMS to customer       
-                            if($sms_mobile and self::isCorrectMobileNum($sms_mobile)) 
+                            if($sms_mobile and AfwFormatHelper::isCorrectMobileNum($sms_mobile)) 
                             {
                                 list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $subject);
                                 if($sms_ok)

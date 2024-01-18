@@ -1,6 +1,6 @@
 <?php
-$date_start = AfwDateHelper::addDatetimeToGregDatetime('',-15);
-$date_end = AfwDateHelper::addDatetimeToGregDatetime('',+5);
+$date_start = AfwDateHelper::addDatetimeToGregDatetime('',-25);
+$date_end = AfwDateHelper::addDatetimeToGregDatetime('',+15);
 
 echo "to be calculated dates from $date_start to $date_end<br>";
 
@@ -33,8 +33,10 @@ while($gdate <= $date_end)
 
 echo "calculated : $count dates in matrix from $date_start to $date_end<br>";
 
-$phpdir = "C:\\gen\\dates\\";
-$dir_sep = "\\";
+// $phpdir = "C:\\gen\\dates\\";
+// $dir_sep = "\\";
+$phpdir = "/var/log/gen/dates/";
+$dir_sep = "/";
 
 foreach($hijri_to_greg_matrix as $hyear => $hijri_to_greg_arr)
 {

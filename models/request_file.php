@@ -285,12 +285,12 @@ class RequestFile extends AFWObject{
                 return (!$prc->estSubmitted());
         }
 
-        protected function attributeCanBeUpdatedBy($attribute, $user, $desc)
+        protected function attributeCanBeEditedBy($attribute, $user, $desc)
         {
             $prcObj = $this->hetRequest();
             if($prcObj->estSubmitted() and (!$desc["JUSTPROP"])) return array(false, "The request is submitted and $attribute is not setted as JUSTPROP (no impact)"); //  ($attribute!="approve_order") and ($attribute!="vote_order")
               
-            return $this->attributeCanBeModifiedBy($attribute, $user, $desc);
+            return [true, ''];
         }
              
 }
