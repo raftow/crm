@@ -952,7 +952,7 @@ class Request extends AFWObject{
         }
         
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             $server_db_prefix = AfwSession::config("db_prefix","c0");
             
@@ -1052,7 +1052,7 @@ class Request extends AFWObject{
                     break;
                }
                
-               return $this->calcFormuleResult($attribute);
+               return AfwFormulaHelper::calculateFormulaResult($this,$attribute);
         }
         
         protected function initObject()
@@ -1901,7 +1901,7 @@ class Request extends AFWObject{
                 if($employeeId>0)
                 {
                     $status_comment = date("H:i:s").": تم اسناد الطلب [".$this->id."] للموظف(ة) $employeeId ".$this->showAttribute("employee_id");                
-                    // if($employeeId == 1790) self::unSafeDie("case of employeeId = $employeeId");
+                    // if($employeeId == 1790) AfwRunHelper::unSafeDie("case of employeeId = $employeeId");
                     $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, $internal="Y");
                 }
                 else
@@ -1909,7 +1909,7 @@ class Request extends AFWObject{
                     $status_comment = "الطلب في انتظار الاسناد ";                
                     $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, $internal="Y");
                 }
-                // self::safeDie($status_comment, "employee_id = ". $employeeId);
+                // AfwRunHelper::safeDie($status_comment, "employee_id = ". $employeeId);
                 return array("", $status_comment);
         }
         
@@ -2140,7 +2140,7 @@ class Request extends AFWObject{
                     $itemsList["none"] = array('ar' => "none", 'en' => "none");
                 }
 
-                // if($methodName0 == "assignRequest") self::safeDie("for $methodName0 after call to this->$itemsMethod() itemsList contain : ", "", true, $itemsList);
+                // if($methodName0 == "assignRequest") AfwRunHelper::safeDie("for $methodName0 after call to this->$itemsMethod() itemsList contain : ", "", true, $itemsList);
 
                 foreach($itemsList as $itemId => $itemPbm)
                 {
@@ -2159,9 +2159,9 @@ class Request extends AFWObject{
                     if(!$methodColor) $methodColor = $color;
                     $methodConfirmationNeeded   = self::$PUB_METHODS[$methodName]["'confirmation_needed'"];  
                     $methodConfirmationWarning  = $this->decodeTpl(self::$PUB_METHODS[$methodName]["confirmation_warning"]);
-                    $methodConfirmationWarningEn  = $this->decodeTpl(self::tt(self::$PUB_METHODS[$methodName]["confirmation_warning"]),"en");                    
+                    $methodConfirmationWarningEn  = $this->decodeTpl(AfwLanguageHelper::tt(self::$PUB_METHODS[$methodName]["confirmation_warning"]),"en");                    
                     $methodConfirmationQuestion = $this->decodeTpl(self::$PUB_METHODS[$methodName]["confirmation_question"]);
-                    $methodConfirmationQuestionEn = $this->decodeTpl(self::tt(self::$PUB_METHODS[$methodName]["confirmation_question"]),"en");
+                    $methodConfirmationQuestionEn = $this->decodeTpl(AfwLanguageHelper::tt(self::$PUB_METHODS[$methodName]["confirmation_question"]),"en");
                     if(is_array($methodProps))
                     {
                         $one_is_sufficiant = $methodProps[0];
@@ -2499,7 +2499,7 @@ class Request extends AFWObject{
             }
         }
 
-        protected function beforeMaj($id, $fields_updated) 
+        public function beforeMaj($id, $fields_updated) 
         {                
                 
                 if(!$this->getVal("request_date"))
@@ -2692,16 +2692,16 @@ class Request extends AFWObject{
                     list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $message);
                     if($sms_ok)
                     {
-                        AfwSession::pushInformation(self::tt("Customer has been informed by sms about this status change",$lang));
+                        AfwSession::pushInformation(AfwLanguageHelper::tt("Customer has been informed by sms about this status change",$lang));
                     }
                     else
                     {
-                        AfwSession::pushWarning(self::tt("Customer can't be informed, error : ",$lang).$sms_info);
+                        AfwSession::pushWarning(AfwLanguageHelper::tt("Customer can't be informed, error : ",$lang).$sms_info);
                     }
                 }
                 else
                 {
-                    AfwSession::pushWarning(self::tt("Customer hasn't a valid mobile number",$lang)." [$sms_mobile]");
+                    AfwSession::pushWarning(AfwLanguageHelper::tt("Customer hasn't a valid mobile number",$lang)." [$sms_mobile]");
                 }
             }
         }
@@ -2814,7 +2814,7 @@ class Request extends AFWObject{
         }
 
         
-        protected function afterInsert($id, $fields_updated) 
+        public function afterInsert($id, $fields_updated) 
         {
             $customerObjme = $this->hetCustomer(); 
             if($customerObjme)
@@ -2837,7 +2837,7 @@ class Request extends AFWObject{
             return false;
         }
 
-        protected function afterMaj($id, $fields_updated) 
+        public function afterMaj($id, $fields_updated) 
         {
             self::lookIfInfiniteLoop();
             $lang = AfwLanguageHelper::getGlobalLanguage();
@@ -2860,19 +2860,19 @@ class Request extends AFWObject{
                             $request_id =  $this->id;
                             $title = $this->getVal("request_title");
                             $body = $this->getVal("request_text");
-                            $subject = self::tt("urgent : High priority ticket has been assigned to you, titled", $lang)." [".truncateArabicJomla($title, 20)."]";
+                            $subject = AfwLanguageHelper::tt("urgent : High priority ticket has been assigned to you, titled", $lang)." [".truncateArabicJomla($title, 20)."]";
             
                             $bodyHtml = "";
                             $bodyHtml .= "<h3>$subject</h3><br>";
-                            $bodyHtml .= self::tt("Ticket subject", $lang)." : $title<br>";
-                            $bodyHtml .= "<h4><b>".self::tt("Ticket body", $lang)." : </b></h4><br>";
+                            $bodyHtml .= AfwLanguageHelper::tt("Ticket subject", $lang)." : $title<br>";
+                            $bodyHtml .= "<h4><b>".AfwLanguageHelper::tt("Ticket body", $lang)." : </b></h4><br>";
                             $bodyHtml .= "<p>".$body."</p>";
 
                             $res = AfwMailer::htmlSimpleMail("CRM-V2","ticket-$request_id", $to_email_arr, $subject, $bodyHtml, $lang);
                         }
                         catch(Exception $e)
                         {
-                            AfwSession::pushError(self::tt("failed to inform investigator by email : ",$lang).$e->getMessage());
+                            AfwSession::pushError(AfwLanguageHelper::tt("failed to inform investigator by email : ",$lang).$e->getMessage());
                         }
 
                         // if very High priority, than SMS to investigator also 
@@ -2892,30 +2892,30 @@ class Request extends AFWObject{
                                 list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $subject);
                                 if($sms_ok)
                                 {
-                                    AfwSession::pushInformation(self::tt("Investigator has been informed by sms about this prio",$lang));
+                                    AfwSession::pushInformation(AfwLanguageHelper::tt("Investigator has been informed by sms about this prio",$lang));
                                 }
                                 else
                                 {
-                                    AfwSession::pushWarning(self::tt("Investigator can't be informed, error : ",$lang).$sms_info);
+                                    AfwSession::pushWarning(AfwLanguageHelper::tt("Investigator can't be informed, error : ",$lang).$sms_info);
                                 }
                             }
                             else
                             {
-                                AfwSession::pushWarning(self::tt("Investigator hasn't a valid mobile number",$lang)." [$sms_mobile]");
+                                AfwSession::pushWarning(AfwLanguageHelper::tt("Investigator hasn't a valid mobile number",$lang)." [$sms_mobile]");
                             }
                         }
         
                         if($res["result"])
                         {
-                            AfwSession::pushInformation(self::tt("Investigator has been informed by email about this prio",$lang));
+                            AfwSession::pushInformation(AfwLanguageHelper::tt("Investigator has been informed by email about this prio",$lang));
                         }
                         else
                         {
-                            $error_text_to_push = self::tt("Investigator can't be informed",$lang);
+                            $error_text_to_push = AfwLanguageHelper::tt("Investigator can't be informed",$lang);
                             if(($objme and $objme->isSuperAdmin()) or (AfwSession::config("MODE_DEVELOPMENT", false)))
                             {
                                 $error_text_to_push .= " : ".$res["error"];
-                                $error_text_to_push .= self::tt("sending to customer via following email address",$lang) . " : " . $employeeInvestigEmail;
+                                $error_text_to_push .= AfwLanguageHelper::tt("sending to customer via following email address",$lang) . " : " . $employeeInvestigEmail;
                             }
                             
                             
@@ -2958,7 +2958,7 @@ class Request extends AFWObject{
                             $this->commit();
                             if($objme and ($orgObj->id != CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEPARTMENT_ID))
                             {
-                                AfwSession::pushWarning(self::tt("No investigator available for this organization",$lang)." : ".$orgObj->getDisplay($lang));
+                                AfwSession::pushWarning(AfwLanguageHelper::tt("No investigator available for this organization",$lang)." : ".$orgObj->getDisplay($lang));
                             }
                         }
                         else
@@ -3043,7 +3043,7 @@ class Request extends AFWObject{
                 AfwSession::pushInformation(implode("<br>",$infos_arr));
             }
 
-            return self::pbm_result($errors_arr, $infos_arr);
+            return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
 
 
@@ -3084,7 +3084,7 @@ class Request extends AFWObject{
                 AfwSession::pushInformation(implode("<br>",$infos_arr));
             }
 
-            return self::pbm_result($errors_arr, $infos_arr);
+            return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
 
         public static function silentAssignInvestigatorForNonAssigned($lang="ar", $limit="200")
@@ -3131,7 +3131,7 @@ class Request extends AFWObject{
                 AfwSession::pushInformation(implode("<br>",$infos_arr));
             }
 
-            return self::pbm_result($errors_arr, $infos_arr);
+            return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
 
             
         }
@@ -3182,7 +3182,7 @@ class Request extends AFWObject{
                 AfwSession::pushInformation(implode("<br>",$infos_arr));
             }
 
-            return self::pbm_result($errors_arr, $infos_arr);
+            return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
 
             
         }
@@ -3194,7 +3194,7 @@ class Request extends AFWObject{
             $this_supervisor_id = $this->getVal("supervisor_id");
             list($best_supervisor_id, $crmEmpl, $allList, $stats) = CrmEmployee::getBestAvailableSupervisor($this_supervisor_id, $re_distribution);
             $crmRes = array("best"=>$best_supervisor_id, "res"=>$crmEmpl, 'all' => $allList);
-            // self::safeDie("CrmEmployee::getBestAvailableSupervisor() returned object : ", "", true, $crmRes);
+            // AfwRunHelper::safeDie("CrmEmployee::getBestAvailableSupervisor() returned object : ", "", true, $crmRes);
 
             $crmEmplObj = $crmEmpl["obj"];
             
@@ -3205,7 +3205,7 @@ class Request extends AFWObject{
                 $crmEmplObj->assignMeAsRequestSupervisor($this, $commit);
                 $empl = $crmEmplObj->hetEmployee();
             }
-            // else self::safeDie("CrmEmployee::getBestAvailableSupervisor() returned object : ", "", true, $crmRes);
+            // else AfwRunHelper::safeDie("CrmEmployee::getBestAvailableSupervisor() returned object : ", "", true, $crmRes);
 
             if($pbm) {
                 if($empl) return array("",$this->tm("request has beeen assigned to ").$empl->getDisplay($lang)." all=".var_export($stats,true)." => best best_supervisor_id=$best_supervisor_id ");
@@ -3446,7 +3446,7 @@ class Request extends AFWObject{
             //_back_trace()
             if($numInstance>400)
             {
-              self::lightSafeDie("trop dinstances $numInstance", $this);
+              AfwRunHelper::lightSafeDie("trop dinstances $numInstance", $this);
             }
             return true;
         }*/

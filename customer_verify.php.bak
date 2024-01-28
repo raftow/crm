@@ -59,7 +59,7 @@ elseif($_POST["customer_verify_code"])
         $key1 = substr($_POST["has_csrt_ss"],0,1);
         $key2 = substr($_POST["has_csrt_ss"],1,1);
         $has_csrt_posted = substr($_POST["has_csrt_ss"],2);
-        if(AFWRoot::hzmEncode($_POST["customer_verify_code"],$key1,$key2)==$has_csrt_posted)
+        if(AfwStringHelper::hzmEncode($_POST["customer_verify_code"],$key1,$key2)==$has_csrt_posted)
         */
         $customer_mobile = $_POST["customer_mobile"];
         $customer_email = $_POST["customer_email"];

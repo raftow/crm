@@ -447,7 +447,7 @@ class Response extends AFWObject{
                 return true;
         }
 
-        protected function beforeInsert($id, $fields_updated)
+        public function beforeInsert($id, $fields_updated)
         {
                 $this->set("response_date", AfwDateHelper::currentHijriDate());
                 $this->set("response_time", date("H:i:s"));
@@ -460,7 +460,7 @@ class Response extends AFWObject{
         /* 
         rafik : 8/4/2021 : danger
         it calls changeStatus so it is done twice and the notification also is sent/pushed twice
-        protected function afterMAJ($id, $fields_updated) 
+        public function afterMaj($id, $fields_updated) 
         {
                 if($fields_updated["new_status_id"])
                 {
@@ -485,7 +485,7 @@ class Response extends AFWObject{
         */
 
 
-        protected function beforeMaj($id, $fields_updated) 
+        public function beforeMaj($id, $fields_updated) 
         {
                 if($this->getVal("internal")=="W")
                 {
@@ -495,7 +495,7 @@ class Response extends AFWObject{
                 return true;
         }
 
-        protected function afterMaj($id, $fields_updated) 
+        public function afterMaj($id, $fields_updated) 
         {
                 $lang = AfwLanguageHelper::getGlobalLanguage();
                 if($fields_updated["new_status_id"] and $this->getVal("new_status_id"))
@@ -545,7 +545,7 @@ class Response extends AFWObject{
          
         
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             
             

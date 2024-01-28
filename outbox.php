@@ -24,7 +24,7 @@ if(CrmEmployee::isAdmin($myEmplId))
         $arr_sql_conds[] = "(me.supervisor_id='$myEmplId' or me.supervisor_id=0 or me.supervisor_id is null)";
         $arr_sql_conds[] = "((me.status_id not in (1, 3, 301, 5, 6, 7, 8, 9)) and (me.status_id not in (2, 4) or me.employee_id not in (0,$myEmplId)))"; 
         
-        $employee_title = CrmEmployee::tt('مشرف خدمة العملاء :')." ".$objme->getDisplay($lang);
+        $employee_title = AfwLanguageHelper::tt('مشرف خدمة العملاء :')." ".$objme->getDisplay($lang);
 }
 else
 {

@@ -45,7 +45,7 @@ if($objme)
                 unset($_POST);
                 unset($_GET);
 
-                // AfwSession::simpleError("System under maintenance. contactez RB");
+                // AfwRunHelper::simpleError("System under maintenance. contactez RB");
         
                 include("$file_dir_name/../lib/afw/afw_main_page.php");
         }

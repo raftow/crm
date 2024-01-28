@@ -830,7 +830,7 @@ class CrmController extends AfwController{
                         // be sure before commit that no investigator is working on it
                         if(!$reqObj->customerCanComment()) 
                         {
-                                $error_saving = Request::tt("Can't add comments, The ticket status deny comments");
+                                $error_saving = AfwLanguageHelper::tt("Can't add comments, The ticket status deny comments");
                                 AfwSession::pushError($error_saving);
                                 $data["all_error"] = $error_saving;
                         }
@@ -838,7 +838,7 @@ class CrmController extends AfwController{
                         {
                                 if(!$request["comment"])
                                 {
-                                        $error_saving = Request::tt("No comment written");
+                                        $error_saving = AfwLanguageHelper::tt("No comment written");
                                         AfwSession::pushError($error_saving);
                                         $data["all_error"] = $error_saving; 
                                 }
@@ -857,7 +857,7 @@ class CrmController extends AfwController{
                 }
                 else
                 {
-                        $error_saving = Request::tt("Can't apply changes, The ticket is unknown");
+                        $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
                         AfwSession::pushError($error_saving);
                         $data["all_error"] = $error_saving;
                 }
@@ -1036,7 +1036,7 @@ class CrmController extends AfwController{
                         // be sure before commit that no investigator is working on it
                         if(($reqObj->isClosedWithCustomer()) or (!$reqObj->isToComplete())) 
                         {
-                                $error_saving = Request::tt("Can't apply changes, The ticket is already completed");
+                                $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is already completed");
                                 AfwSession::pushError($error_saving);
                                 $data["all_error"] = $error_saving;
                         }
@@ -1050,7 +1050,7 @@ class CrmController extends AfwController{
                                         }
                                         else
                                         {
-                                                $error_saving = Request::tt("No file attached and no comment written");
+                                                $error_saving = AfwLanguageHelper::tt("No file attached and no comment written");
                                                 AfwSession::pushError($error_saving);
                                                 $data["all_error"] = $error_saving; 
                                         }
@@ -1117,7 +1117,7 @@ class CrmController extends AfwController{
                 }
                 else
                 {
-                        $error_saving = Request::tt("Can't apply changes, The ticket is unknown");
+                        $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
                         AfwSession::pushError($error_saving);
                         $data["all_error"] = $error_saving;
                 }
@@ -1216,7 +1216,7 @@ class CrmController extends AfwController{
                 // be sure before commit that no investigator is working on it
                 if($reqObj->isAssigned())
                 {
-                        $error_saving = Request::tt("Can't apply changes, The investigator started working on this request");
+                        $error_saving = AfwLanguageHelper::tt("Can't apply changes, The investigator started working on this request");
                         AfwSession::pushError($error_saving);
                         $data["all_error"] = $error_saving;
                 }

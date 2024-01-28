@@ -23,7 +23,7 @@ if(CrmEmployee::isAdmin($myEmplId))
 {
         $arr_sql_conds[] = "(me.supervisor_id='$myEmplId' or me.supervisor_id=0 or me.supervisor_id is null)";
         $arr_sql_conds[] = "(me.status_id in (2,4) and me.employee_id > 0)"; // 2=sent request, 4=ongoing request
-        $employee_title = CrmEmployee::tt('مشرف خدمة العملاء :')." ".$objme->getDisplay($lang);
+        $employee_title = AfwLanguageHelper::tt('مشرف خدمة العملاء :')." ".$objme->getDisplay($lang);
 }
 else
 {
@@ -52,7 +52,7 @@ if($datatable_on) {
 else $collapse_in = "in";
 
 
-$wb_prefix = CrmEmployee::tt("صندوق الجاري لـ");
+$wb_prefix = AfwLanguageHelper::tt("صندوق الجاري لـ");
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix$employee_title</div>";
 

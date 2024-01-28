@@ -56,9 +56,9 @@ elseif($_POST["crm_new_go"])
 {
       if((!AfwSession::config("sms-captcha-register",true)) or (strtoupper($_POST["customer_cpt"])==strtoupper($_SESSION["cpt"])))
       {
-              $customer_mobile = AfwSession::hardSecureCleanString(trim($_POST["customer_mobile"]));
-              $customer_email = AfwSession::hardSecureCleanString(strtolower(trim($_POST["customer_email"])));
-              $customer_idn = AfwSession::hardSecureCleanString(trim($_POST["customer_idn"]));
+              $customer_mobile = AfwStringHelper::hardSecureCleanString(trim($_POST["customer_mobile"]));
+              $customer_email = AfwStringHelper::hardSecureCleanString(strtolower(trim($_POST["customer_email"])));
+              $customer_idn = AfwStringHelper::hardSecureCleanString(trim($_POST["customer_idn"]));
               $gender_id = $_POST["gender_id"];
               $customer_type_id = $_POST["customer_type_id"];
               $first_name_ar = $_POST["first_name_ar"];
@@ -154,9 +154,9 @@ elseif($_POST["crm_new_go"])
 else
 {
        //
-       $customer_mobile = AfwSession::hardSecureCleanString(trim($_GET["mb"]),true);
-       $customer_email = AfwSession::hardSecureCleanString(trim($_GET["em"]),true);
-       $customer_idn = AfwSession::hardSecureCleanString(trim($_GET["id"]),true);
+       $customer_mobile = AfwStringHelper::hardSecureCleanString(trim($_GET["mb"]),true);
+       $customer_email = AfwStringHelper::hardSecureCleanString(trim($_GET["em"]),true);
+       $customer_idn = AfwStringHelper::hardSecureCleanString(trim($_GET["id"]),true);
 }
 
 if(!$customer_type_id) $customer_type_id = 1;

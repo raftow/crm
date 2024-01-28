@@ -345,7 +345,7 @@ class CrmEmployee extends CrmObject
         
 
 
-        protected function afterInsert($id, $fields_updated) 
+        public function afterInsert($id, $fields_updated) 
         {
                 if($this->est("active") and ($this->getVal("employee_id")>0))
                 {
@@ -358,7 +358,7 @@ class CrmEmployee extends CrmObject
                 }
         }
 
-        protected function afterUpdate($id, $fields_updated) 
+        public function afterUpdate($id, $fields_updated) 
         {
                 if(($this->getVal("employee_id")>0) and 
                    ($fields_updated["active"] or $fields_updated["admin"] or $fields_updated["super_admin"] or $fields_updated["requests_nb"]))
@@ -432,7 +432,7 @@ class CrmEmployee extends CrmObject
             $obj->update(false);
         }
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             
             
@@ -665,7 +665,7 @@ class CrmEmployee extends CrmObject
                                 {
                                         $lang = AfwSession::getSessionVar("lang");
                                         if(!$lang) $lang = "ar";
-                                        return CrmEmployee::tt("المنسق(ـة) في") . " " . $objItem->getDisplay($lang);
+                                        return AfwLanguageHelper::tt("المنسق(ـة) في") . " " . $objItem->getDisplay($lang);
                                 }
                         }                
                 }
@@ -677,7 +677,7 @@ class CrmEmployee extends CrmObject
                         {
                                 $lang = AfwSession::getSessionVar("lang");
                                 if(!$lang) $lang = "ar";
-                                return "<div class='crm-warning'>".CrmEmployee::tt("معين في أكثر من جهة متابعة",$lang)."</div>";
+                                return "<div class='crm-warning'>".AfwLanguageHelper::tt("معين في أكثر من جهة متابعة",$lang)."</div>";
                         }
                 }
                 else
@@ -688,7 +688,7 @@ class CrmEmployee extends CrmObject
                         {
                                 $lang = AfwSession::getSessionVar("lang");
                                 if(!$lang) $lang = "ar";
-                                return "<div class='crm-warning'>".CrmEmployee::tt("غير معين في جهة متابعة",$lang)."</div>";
+                                return "<div class='crm-warning'>".AfwLanguageHelper::tt("غير معين في جهة متابعة",$lang)."</div>";
                         }
                 }
         }
@@ -698,9 +698,9 @@ class CrmEmployee extends CrmObject
                 $investigatorList = self::getInvestigatorArray($orgunit_id);
                 if($except_investigator_id) unset($investigatorList[$except_investigator_id]);
                 else $except_investigator_id=0;
-                // self::safeDie("investigatorList = ".var_export($investigatorList,true));
+                // AfwRunHelper::safeDie("investigatorList = ".var_export($investigatorList,true));
                 $stats_arr = Request::aggreg($function="count(*)", $where="active='Y' and status_id in (".Request::$REQUEST_STATUSES_ONGOING_INVESTIGATOR.") and orgunit_id=$orgunit_id and employee_id > 0 and employee_id != $except_investigator_id", $group_by = "employee_id",$throw_error=true, $throw_analysis_crash=true);
-                // self::safeDie("stats_arr = ".var_export($stats_arr,true));
+                // AfwRunHelper::safeDie("stats_arr = ".var_export($stats_arr,true));
                 $best_investigator_id = 0;
                 if(count($stats_arr)>0)
                 {
@@ -732,7 +732,7 @@ class CrmEmployee extends CrmObject
                 {
                         reset($investigatorList);
                         $first_item = current($investigatorList);
-                        // self::safeDie("first_item = ".var_export($first_item,true)." investigatorList = ".var_export($investigatorList,true));
+                        // AfwRunHelper::safeDie("first_item = ".var_export($first_item,true)." investigatorList = ".var_export($investigatorList,true));
                         if($first_item["obj"]) $best_investigator_id = $first_item["obj"]->getVal("employee_id");
                 }
 
@@ -755,7 +755,7 @@ class CrmEmployee extends CrmObject
                 $supervisorList = $allSupervisorList;
                 if($except_supervisor_id) unset($supervisorList[$except_supervisor_id]);
                 else $except_supervisor_id=0;                 
-                // self::safeDie("supervisorList = ".var_export($supervisorList,true));
+                // AfwRunHelper::safeDie("supervisorList = ".var_export($supervisorList,true));
                 $best_supervisor_id = 0;
 
 
@@ -787,14 +787,14 @@ class CrmEmployee extends CrmObject
                 {
                         reset($supervisorList);
                         $first_item = current($supervisorList);
-                        // self::safeDie("first_item = ".var_export($first_item,true)." supervisorList = ".var_export($supervisorList,true));
+                        // AfwRunHelper::safeDie("first_item = ".var_export($first_item,true)." supervisorList = ".var_export($supervisorList,true));
                         if($first_item["obj"]) $best_supervisor_id = $first_item["obj"]->getVal("employee_id");
                 }
 
                 if($best_supervisor_id) $return = $supervisorList[$best_supervisor_id];
                 else $return = null;
 
-                // self::safeDie("best_supervisor_id = $best_supervisor_id , return = ".var_export($return,true));
+                // AfwRunHelper::safeDie("best_supervisor_id = $best_supervisor_id , return = ".var_export($return,true));
 
                 return array($best_supervisor_id, $return, $supervisorList, $stats_arr);
 

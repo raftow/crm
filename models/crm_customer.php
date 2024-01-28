@@ -381,8 +381,8 @@ class CrmCustomer extends AFWObject{
         public static function loadByLoginInfos($mobile, $email, $idn)
         {
            
-                if(!$idn)  self::simpleError("loadByLoginInfos : idn is mandatory");
-                if((!$mobile) and (!$email))  self::simpleError("loadByMainIndex : mobile or email is mandatory");
+                if(!$idn)  AfwRunHelper::simpleError("loadByLoginInfos : idn is mandatory");
+                if((!$mobile) and (!$email))  AfwRunHelper::simpleError("loadByMainIndex : mobile or email is mandatory");
 
                 list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn,false,false);
                 
@@ -408,7 +408,7 @@ class CrmCustomer extends AFWObject{
         public static function loadByIdn($idn)
         {
            
-                if(!$idn)  self::simpleError("loadByLoginInfos : idn is mandatory");
+                if(!$idn)  AfwRunHelper::simpleError("loadByLoginInfos : idn is mandatory");
 
                 list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn,false,false);
                 
@@ -584,7 +584,7 @@ class CrmCustomer extends AFWObject{
                         $color = "red";
                         $title_ar = "انشاء شركة/مكتب رحلات"; 
                         $methodName = "createBTBWorkBranch";
-                        $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                        $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                 "PUBLIC"=>true, "BF-ID"=>"", STEP => 1,
                                 CONFIRMATION_NEEDED=>true,
@@ -651,7 +651,7 @@ class CrmCustomer extends AFWObject{
         }
         
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             
  
@@ -874,7 +874,7 @@ class CrmCustomer extends AFWObject{
 
                 }
                
-                return $this->calcFormuleResult($attribute);
+                return AfwFormulaHelper::calculateFormulaResult($this,$attribute);
         }
   
         
@@ -889,14 +889,14 @@ class CrmCustomer extends AFWObject{
             return AfwDateHelper::currentHijriDate();
         }                                                         
 
-        protected function afterInsert($id, $fields_updated) 
+        public function afterInsert($id, $fields_updated) 
         {
                 $this->set("last_request_date",AfwDateHelper::currentHijriDate());
                 $this->commit();
         }
 
 
-        protected function beforeMaj($id, $fields_updated) 
+        public function beforeMaj($id, $fields_updated) 
         {                
                 
                 if($this->getVal("customer_type_id")==CustomerType::$CUSTOMER_TYPE_ANONYMOUS)

@@ -132,7 +132,7 @@ class ResponseTemplate extends AFWObject{
             $color = "green";
             $title_ar = "xxxxxxxxxxxxxxxxxxxx"; 
             $methodName = "mmmmmmmmmmmmmmmmmmmmmmm";
-            //$pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,"COLOR"=>$color, "LABEL_AR"=>$title_ar, "ADMIN-ONLY"=>true, "BF-ID"=>"", 'STEP' =>$this->stepOfAttribute("xxyy"));
+            //$pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,"COLOR"=>$color, "LABEL_AR"=>$title_ar, "ADMIN-ONLY"=>true, "BF-ID"=>"", 'STEP' =>$this->stepOfAttribute("xxyy"));
             
             
             
@@ -184,7 +184,7 @@ class ResponseTemplate extends AFWObject{
         }
         
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             $server_db_prefix = AfwSession::config("db_prefix","c0");
             

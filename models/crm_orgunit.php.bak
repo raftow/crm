@@ -232,7 +232,7 @@ class CrmOrgunit extends AFWObject{
                         $color = "green";
                         $title_ar = "اسناد الطلبات إلى المنسقبن"; 
                         $methodName = "requestAssignement";
-                        $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                        $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                         "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                         "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("currentRequests"),
                         
@@ -248,7 +248,7 @@ class CrmOrgunit extends AFWObject{
                         $color = "orange";
                         $title_ar = "إعادة توزيع الطلبات على المنسقبن"; 
                         $methodName = "resetRequestAssignement";
-                        $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                        $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                         "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                         "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("currentRequests"),
                         
@@ -269,7 +269,7 @@ class CrmOrgunit extends AFWObject{
                                 $color = "blue";
                                 $title_ar = "اعادة توزيع الطلبات على مشرفي التنسيق"; 
                                 $methodName = "resetSupervisorAssignement";
-                                $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                                $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                 "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("allEmployeeList"),
                                 
@@ -286,7 +286,7 @@ class CrmOrgunit extends AFWObject{
                                 $color = "green";
                                 $title_ar = "توزيع الطلبات على مشرفي التنسيق"; 
                                 $methodName = "supervisorAssignement";
-                                $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                                $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                 "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("allEmployeeList"),
                                 
@@ -306,7 +306,7 @@ class CrmOrgunit extends AFWObject{
                         $color = "orange";
                         $title_ar = "أي المنسقبن متوفر أكثر"; 
                         $methodName = "getBestAvailInvestigator";
-                        $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                        $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                                 "ADMIN"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("allEmployeeList"),
                                 
@@ -411,7 +411,7 @@ class CrmOrgunit extends AFWObject{
                         }
                 }
 
-                return array("",$nb_resetted." ".self::traduireMessage("request's reset","crm",$lang).", ".$nb_assigned." ".self::traduireMessage("request's assign","crm",$lang),"");
+                return array("",$nb_resetted." ".AfwLanguageHelper::tarjemMessage("request's reset","crm",$lang).", ".$nb_assigned." ".AfwLanguageHelper::tarjemMessage("request's assign","crm",$lang),"");
         }
         
         public function fld_CREATION_USER_ID()
@@ -459,7 +459,7 @@ class CrmOrgunit extends AFWObject{
         }
         
         
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             
             

@@ -59,7 +59,7 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
         AFWDebugg::log("login process starting");
         $_SESSION["error"] = "";
   
-        $user_name_c = AfwSession::hardSecureCleanString(strtolower($_POST["mail"]));
+        $user_name_c = AfwStringHelper::hardSecureCleanString(strtolower($_POST["mail"]));
         $pwd_c = $_POST["pwd"];
         $user_name = addslashes($user_name_c);
         $user_pwd = addslashes($pwd_c);
