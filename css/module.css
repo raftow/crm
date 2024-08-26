@@ -2732,3 +2732,115 @@ label.error {
     margin-top: 0px;
 }
 
+header.top-header {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(to bottom, #def5ff, #2f8bb4);
+    z-index: 0;
+    padding-bottom: 0;
+    transition: all .3s ease-in;
+    max-height: 220px;
+}
+
+.title_company {
+    width: auto;
+    float: right;
+    padding-top: 30px;
+}
+
+.hzm_body {
+    background-color: #4a9bbf;
+}
+
+.cms_container {
+    background-color: transparent !important;
+}
+
+ul.hzm_front_menu_bar.nav.navbar-nav {
+    background-color: transparent !important;
+    margin: 1px !important;
+}
+
+.section nav.navbar {
+    border: none !important;
+}
+
+.navbar-nav>li>a.alogin {
+    background-color: #065b82 !important;
+    color: #ffffff !important;
+}
+
+ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li.navbar-header>a {
+    background-color: #3ebcc7 !important;
+    color: white !important;
+    font-size: 100% !important;
+    border: none !important;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #ffffff69;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 3px solid #308cb5 !important;
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+
+label.light_label {
+    font-weight: normal !important;
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-align: center;
+    color: #0a3f55;
+}
+
+#formlogin1>.form-group>input.form-control,
+#formlogin0>.form-group>input.form-control {
+    background-color: #ffffff4a;
+    border: 1px solid #69a4c1;
+}
+
+.modal-footer {
+    padding: 15px;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 5px;
+    background-color: #ffffff33;
+}
+
+.hzm_home_bloc {
+    background-color: #ffffffa1;
+}
+
+ul.hzm_front_menu_bar>li {
+    border: 1px #518ea8 solid;
+    background-color: #d6f2ff63;
+}
+
+ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a {
+    background-color: #ffffff40 /* !important : here no but in sub-modules */;
+    text-align: center;
+}
+
+.hzm4-title {
+    white-space: pre-wrap;
+    font-weight: bold;
+    color: #005e84;
+}
+
+h1 {
+    color: #035c83;
+}
+
+label {
+
+    color: #035c83;
+}
+
+.container {
+    background-color: #ffffff7a;
+}
