@@ -830,6 +830,11 @@ class CrmEmployee extends CrmObject
                 if($auser->isAdmin()) return false;  
                 return true;
         }
+
+        public function shouldBeCalculatedField($attribute){
+                if($attribute=="email") return true;
+                return false;
+        }
              
 }
 ?>

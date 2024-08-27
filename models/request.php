@@ -3453,7 +3453,29 @@ class Request extends AFWObject{
         
         
          
-         
+        public function shouldBeCalculatedField($attribute){
+            if($attribute=="mobile") return true;
+            return false;
+        }         
+
+        public function myShortNameToAttributeName($attribute){
+            if($attribute=="type") return "request_type_id";
+            if($attribute=="region") return "region_id";
+            if($attribute=="customer") return "customer_id";
+            if($attribute=="priority") return "request_priority";
+            if($attribute=="category") return "service_category_id";
+            if($attribute=="service") return "service_id";
+            if($attribute=="files") return "requestFileList";
+            if($attribute=="supervisor") return "supervisor_id";
+            if($attribute=="orgunit") return "orgunit_id";
+            if($attribute=="employee") return "man";
+            if($attribute=="status") return "status_id";
+            if($attribute=="sent") return "survey_sent";
+            if($attribute=="opened") return "survey_opened";
+            if($attribute=="responses") return "responseList";
+            if($attribute=="extresponses") return "doneResponseList";
+            return $attribute;
+        }
           
         
                
