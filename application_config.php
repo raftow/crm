@@ -64,7 +64,7 @@ $config_arr = array(
 
         'default_customer_type' =>2,
 
-        'HEADER_LOGO_HEIGHT' => 66,
+        'LOGO_APP_HEIGHT' => 66,
 
         'register_file' => "customer_register",
 
