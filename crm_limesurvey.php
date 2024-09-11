@@ -9,7 +9,7 @@ class CrmLimesurvey
         
         $compain_start_date = add_n_days(false, -120, "", "Y-m-d");
         
-        $date_start_migration_back = add_n_days(false, -380, "", "Y-m-d"); // 60
+        $date_start_migration_back = add_n_days(false, -30, "", "Y-m-d"); // 60
 
         $nb_survey_update_back = 0;
         $nb_bad_customer = 0;
@@ -18,7 +18,7 @@ class CrmLimesurvey
         $sql_data_from_survey = "select s.token, mpid, completed, attribute_1 as ticket_num, attribute_5 as mobile, email, ipaddr, ${crm_survey_id}X1X1 as FAST, ${crm_survey_id}X1X2 as SATISFACTION, ${crm_survey_id}X1X3 as RESOLVED, ${crm_survey_id}X1X4 as mmServices 
                 from lime_survey_${crm_survey_id} s 
                    inner join lime_tokens_${crm_survey_id} t on s.token=t.token
-                where t.completed >= '$date_start_migration_back'   ";
+                where t.completed >= '$date_start_migration_back' and t.completed != 'N'  ";
          $data = getDataFromSQL("limesurvey",$sql_data_from_survey);
          $data_count = count($data);
          foreach($data as $rowi => $row)
@@ -101,7 +101,7 @@ class CrmLimesurvey
         // tdep.name as attribute_8,        
         $ticket_orgunit = $ticketObj->showAttribute("orgunit_id");
 
-        $now_YmdHis = "2021-01-01 00:00:00"; //date("Y-m-d H:i:s");
+        $now_YmdHis = AfwDateHelper::shiftGregDate('',-1);
 
         $sql_migrate_to_survey_system = "insert into lime_tokens_$crm_survey_id(token,firstname,lastname,email,emailstatus,language,mpid,
               attribute_1, attribute_2, attribute_3, attribute_5, attribute_7, attribute_8, validfrom, usesleft)

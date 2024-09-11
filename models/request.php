@@ -578,13 +578,14 @@ class Request extends AFWObject{
                             "FOOTER_SUM" => true,
                             "SHOW_PIE" => "FOOTER",
                             "GROUP_SEP"=>".",
+                            "SQL_GROUP_BY" => true,
                             "GROUP_COLS"=>array(
                                                  0=> array("COLUMN"=>"orgunit_id", "DISPLAY-FORMAT"=>"decode","FOOTER_SUM_TITLE"=>"الإجمــالـي"),
                                                ),
                             "DISPLAY_COLS"=>array(
-                                                 1=> array("COLUMN"=>"is_satisfied", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_satisfied","FOOTER_SUM"=>true),
-                                                 2=> array("COLUMN"=>"is_not_satisfied", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_not_satisfied","FOOTER_SUM"=>true),
-                                                 3=> array("COLUMN"=>"is_indifferent", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_indifferent","FOOTER_SUM"=>true),
+                                                 1=> array("COLUMN"=>"satisfied",   "SQL_FORMULA"=>"sum(IF(service_satisfied='Y',1,0))", "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_satisfied","FOOTER_SUM"=>true),
+                                                 2=> array("COLUMN"=>"unsatisfied", "SQL_FORMULA"=>"sum(IF(service_satisfied='N',1,0))", "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_not_satisfied","FOOTER_SUM"=>true),
+                                                 3=> array("COLUMN"=>"indifferent", "SQL_FORMULA"=>"sum(IF(service_satisfied='W',1,0))", "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"is_indifferent","FOOTER_SUM"=>true),
                                                ),
 
                             "FORMULA_COLS"=>array(

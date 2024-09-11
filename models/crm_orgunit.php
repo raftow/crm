@@ -538,7 +538,7 @@ class CrmOrgunit extends AFWObject{
         public function calcArchive_date()
         {    
                 // 1 year and half (we should archive requests older than this date @todo this job)            
-		return AfwDateHelper::add_x_days_to_hijridate("",-540);
+		return AfwDateHelper::shiftHijriDate("",-540);
         }
 
         public function maxRecordsUmsCheck()

@@ -1228,7 +1228,7 @@ class CrmController extends AfwController{
                         if($old_ticket)
                         {
                                 $oldReqObj = $reqObj->getRelatedTicket();
-                                if($oldReqObj->getVal("service_satisfied")=="N")
+                                if($oldReqObj and $oldReqObj->getVal("service_satisfied")=="N")
                                 {
                                         // if you do ta3qib so we remove your previous unsatisfaction and wait your new satisfaction survey regarding ta3qib request
                                         $oldReqObj->set("service_satisfied","W");

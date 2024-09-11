@@ -1,7 +1,7 @@
 <?php
 
 $trad["request"]["request.single"] = "طلب الكتروني";
-$trad["request"]["request.new"] = "جديد(ة)";
+$trad["request"]["request.new"] = "جديد";
 $trad["request"]["request"] = "الطلبات الالكترونية";
 $trad["request"]["request_title"] = "موضوع الطلب";
 $trad["request"]["lang_id"] = "لغة الطلب";
