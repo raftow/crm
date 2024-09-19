@@ -97,7 +97,7 @@
 				),
 
 			'region_id' => array('STEP' => 2,  'SHORTNAME' => 'region',  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 16,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'region',  'ANSMODULE' => 'pag',  
+				'TYPE' => 'FK',  'ANSWER' => 'region',  'ANSMODULE' => 'ums',  
 				'DEPENDENT_OFME' => array (
   0 => 'city_id',
 ),  
@@ -106,7 +106,7 @@
 				),
 
 			'city_id' => array('STEP' => 2,  'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 16,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'pag',  
+				'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'ums',  
 				'WHERE' => "§region_id§='0' or region_id = §region_id§", 
 				 'DEPENDENCY' => 'region_id',  
 				'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  
@@ -119,7 +119,7 @@
 				),
 
 			'lang_id' => array('STEP' => 2,  'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  'SHORTNAME' => 'lang',  'SIZE' => 16,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'lang',  'ANSMODULE' => 'pag',  'DEFAUT' => 1,  
+				'TYPE' => 'enum',  'ANSWER' => 'FUNCTION',   'DEFAUT' => 1,  
 				'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
@@ -238,7 +238,7 @@
                                                                 'QEDIT' => false, 'ANSWER' => 'ugroup', 'ANSMODULE' => 'ums', 'TYPE' => 'MFK', 'FGROUP' => 'tech_fields'),
 
                         'sci_id'                        => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 
-                                                                'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'pag', 'FGROUP' => 'tech_fields'),
+                                                                'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields'),
 
                         'tech_notes' 	                => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA', "SHOW-ADMIN" => true, 
                                                                 'TOKEN_SEP'=>"§", 'READONLY'=>true, "NO-ERROR-CHECK"=>true, 'FGROUP' => 'tech_fields'),

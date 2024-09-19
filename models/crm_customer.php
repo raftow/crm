@@ -29,156 +29,24 @@ class CrmCustomer extends AFWObject{
         
 	public static $DATABASE		= ""; 
         public static $MODULE		    = "crm"; 
-        public static $TABLE			= ""; 
-        public static $DB_STRUCTURE = null; /* = array(
-                id => array(SHOW => true, RETRIEVE => true, EDIT => false, TYPE => PK),
-
-		mobile => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 16,  "MIN-SIZE" => 10,  MAXLENGTH => 16,  CHAR_TEMPLATE => "BRACKETS,MATH-SYMBOLS,NUMERIC", 
-                                MANDATORY => true,  FORMAT => "SA-MOBILE",  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		idn_type_id => array(STEP => 1,  SHORTNAME => type,  SEARCH => false,  QSEARCH => false,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 16,  MANDATORY => true,  UTF8 => false,  
-				TYPE => ENUM,  ANSWER => "FUNCTION",  READONLY => false,  "EDIT-SHORT-LIST" => true, ),
- 
-		idn => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 16,  "MIN-SIZE" => 5,  FORMAT => "SA-IDN",  MANDATORY => true,  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, "IDN-TYPE-ATTRIBUTE" => idn_type_id ),
- 
-		email => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 16,  "MIN-SIZE" => 7,  MAXLENGTH => 64,  MANDATORY => true,  FORMAT => EMAIL,  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		gender_id => array(STEP => 1,  SHORTNAME => gender,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 32,  MAXLENGTH => 32,  MANDATORY => true,  UTF8 => false,  
-				TYPE => ENUM,  ANSWER => "FUNCTION",  
-				RELATION => ManyToOne,  READONLY => false, ),
+        public static $TABLE			= "crm_customer"; 
+        public static $DB_STRUCTURE = null; 
+        
+        
+        public function __construct(){
+		parent::__construct("crm_customer","id","crm");
+                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+                $this->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn", "ref_num", "phone");
+                $this->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
+                 
                 
-		first_name_ar => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 24,  "MIN-SIZE" => 3,  MAXLENGTH => 32,  CHAR_TEMPLATE => "ARABIC-CHARS,SPACE",  REQUIRED => true,  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		father_name_ar => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 24,  "MIN-SIZE" => 3,  MAXLENGTH => 32,  CHAR_TEMPLATE => "",  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		last_name_ar => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 24,  "MIN-SIZE" => 3,  MAXLENGTH => 32,  CHAR_TEMPLATE => "",  REQUIRED => true,  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-                		full_name => array(STEP => 999, "TYPE" => "TEXT", "CATEGORY" => "FORMULA",  RETRIEVE => true,  SHOW => true, QSEARCH=>true, SEARCH=>true, "UTF8"=>true, 
-                                                         "FIELD-FORMULA"=>"concat(IF(ISNULL(first_name_ar), '', first_name_ar) , ' ' , IF(ISNULL(father_name_ar), '', father_name_ar) , ' ' , IF(ISNULL(last_name_ar), '', last_name_ar))",), 
-
-                customer_type_id => array(STEP => 1,  SHORTNAME => type,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true, "DEFAULT" => 1, 
-				SIZE => 32,  MANDATORY => true,  UTF8 => false,  
-				TYPE => FK,  ANSWER => customer_type,  ANSMODULE => crm,  
-                                // WHERE => "module_mfk like '%,,%'",
-                                READONLY => false,  "EDIT-SHORT-LIST" => true, ),
-
-		first_name_en => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 24,  "MIN-SIZE" => 3,  MAXLENGTH => 32,  CHAR_TEMPLATE => "ALPHABETIC,SPACE",  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		father_name_en => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 24,  "MIN-SIZE" => 3,  MAXLENGTH => 32,  CHAR_TEMPLATE => "ALPHABETIC,SPACE",  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		last_name_en => array(STEP => 1,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 24,  "MIN-SIZE" => 3,  MAXLENGTH => 32,  CHAR_TEMPLATE => "ALPHABETIC,SPACE",  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		customer_orgunit_id => array(STEP => 2,  SHORTNAME => orgunit,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  UTF8 => false,  
-				TYPE => FK,  ANSWER => orgunit,  ANSMODULE => hrm,  AUTOCOMPLETE => true,  
-				RELATION => ManyToOne,  READONLY => false, ),
-                
-                ref_num => array(STEP => 2,  SEARCH => true,  QSEARCH => true,  SHOW => false,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  "MIN-SIZE" => 5,  CHAR_TEMPLATE => "",  MANDATORY => false,  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-                phone => array(STEP => 2,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 16,  "MIN-SIZE" => 3,  CHAR_TEMPLATE => "BRACKETS,MATH-SYMBOLS,NUMERIC",  MANDATORY => false,  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		region_id => array(STEP => 2,  SHORTNAME => region,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 16,  UTF8 => false,  
-				TYPE => FK,  ANSWER => region,  ANSMODULE => pag,
-                                DEPENDENT_OFME=>array("city_id", ), 
-				RELATION => ManyToOne,  READONLY => false, ),
-
-		city_id => array(STEP => 2,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 16,  UTF8 => false,  
-				TYPE => FK,  ANSWER => city,  ANSMODULE => pag,
-                                WHERE => "§region_id§='0' or region_id = §region_id§",
-                                DEPENDENCY=>region_id,   
-				RELATION => ManyToOne,  READONLY => false, ),
-
-		other_city => array(STEP => 2,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 255,  CHAR_TEMPLATE => "",  UTF8 => true,  
-                                TYPE => "TEXT",  READONLY => false, ),
-
-                lang_id => array(STEP => 2,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  SHORTNAME => lang,
-				SIZE => 16,  UTF8 => false,  
-				TYPE => FK,  ANSWER => lang,  ANSMODULE => pag,
-                                "DEFAULT" => 1,   
-                                RELATION => ManyToOne,  READONLY => false, ),
-
-                hijri => array(STEP => 2,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-                                EDIT => true,  QEDIT => true, "DEFAULT" => 'Y', TYPE => YN),
-                                                
-			requestList => array(STEP => 3,  SHORTNAME => requests,  SHOW => true,  FORMAT => retrieve,  ICONS => true,  "DELETE-ICON" => true,  BUTTONS => true,  SEARCH => true,  QSEARCH => false,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  MANDATORY => false,  UTF8 => false,  
-				TYPE => FK,  
-				CATEGORY => ITEMS,  ANSWER => request,  ANSMODULE => crm,  ITEM => "customer_id",  
-                                WHERE => "status_id in (2,3,4, 101, 102)", ORDER_BY => "status_date desc, status_time desc",
-                                READONLY => true,  "CAN-BE-SETTED" => false, ),
-
-                        oldRequestList => array(STEP => 3,  SHORTNAME => requests,  SHOW => true,  FORMAT => retrieve,  ICONS => true,  "DELETE-ICON" => true,  BUTTONS => true,  SEARCH => true,  QSEARCH => false,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  MANDATORY => false,  UTF8 => false,  
-				TYPE => FK,  
-				CATEGORY => ITEMS,  ANSWER => request,  ANSMODULE => crm,  ITEM => "customer_id",  
-                                WHERE => "status_id not in (2,3,4, 101, 102)", ORDER_BY => "status_date desc, status_time desc",
-                                READONLY => true,  "CAN-BE-SETTED" => false, ),
-
-                
-                created_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                created_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                updated_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                updated_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                validated_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                validated_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                active => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, QEDIT => false, "DEFAULT" => 'Y', TYPE => YN),
-                version => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => INT),
-                update_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                delete_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                display_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                sci_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => scenario_item, ANSMODULE => pag),
-                tech_notes 	    => array(TYPE => TEXT, CATEGORY => FORMULA, "SHOW-ADMIN" => true, 'STEP' =>"all", TOKEN_SEP=>"§", READONLY=>true, "NO-ERROR-CHECK"=>true),
-	);
-	
-	*/ 
+                $this->UNIQUE_KEY = array('mobile','email','idn_type_id','idn');
+                $this->editByStep = true;
+                $this->editNbSteps = 3;
+                $this->showQeditErrors = true;
+                $this->showRetrieveErrors = true;
+                $this->STATS_DEFAULT_CODE = "gs001";
+	}
         
         
         public static $STATS_CONFIG = array(
@@ -216,20 +84,7 @@ class CrmCustomer extends AFWObject{
 
         );
         
-        public function __construct(){
-		parent::__construct("crm_customer","id","crm");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn", "ref_num", "phone");
-                $this->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
-                 
-                
-                $this->UNIQUE_KEY = array('mobile','email','idn_type_id','idn');
-                $this->editByStep = true;
-                $this->editNbSteps = 3;
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
-                $this->STATS_DEFAULT_CODE = "gs001";
-	}
+        
         
         public static function loadById($id)
         {

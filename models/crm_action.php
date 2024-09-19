@@ -10,77 +10,41 @@ $file_dir_name = dirname(__FILE__);
 
 class CrmAction extends AFWObject{
 
-        public static $MY_ATABLE_ID=3580; 
+     public static $MY_ATABLE_ID=3580; 
 
 
- // lookup Value List codes 
+     // lookup Value List codes 
 
         
-	public static $DATABASE		= ""; public static $MODULE		    = "crm"; public static $TABLE			= ""; public static $DB_STRUCTURE = null; /* = array(
-                id => array(SHOW => true, RETRIEVE => true, EDIT => true, TYPE => PK),
-
-		
-		lookup_code => array("TYPE" => "TEXT", "SHOW" => true, "RETRIEVE"=>true, "EDIT" => true, "SIZE" => 64, "QEDIT" => true, SHORTNAME=>code),
-
-		crm_action_name_ar => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 128,  "MIN-SIZE" => 5,  CHAR_TEMPLATE => "ARABIC-CHARS,SPACE",  MANDATORY => true,  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		crm_action_name_en => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 128,  "MIN-SIZE" => 5,  CHAR_TEMPLATE => "ALPHABETIC,SPACE",  MANDATORY => true,  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		crm_action_desc_ar => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => "AREA",  MANDATORY => true,  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-		crm_action_desc_en => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => "AREA",  MANDATORY => true,  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-                
-                created_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                created_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                updated_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                updated_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                validated_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                validated_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                active => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => true, QEDIT => true, "DEFAULT" => 'Y', TYPE => YN),
-                version => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => INT),
-                update_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                delete_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                display_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                sci_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => scenario_item, ANSMODULE => pag),
-                tech_notes 	    => array(TYPE => TEXT, CATEGORY => FORMULA, "SHOW-ADMIN" => true, 'STEP' =>"all", TOKEN_SEP=>"§", READONLY=>true, "NO-ERROR-CHECK"=>true),
-	);
-	
-	*/ public function __construct(){
-		parent::__construct("crm_action","id","crm");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->DISPLAY_FIELD = "crm_action_name_ar";
-                $this->ORDER_BY_FIELDS = "lookup_code";
-                $this->IS_LOOKUP = true; 
-                $this->ignore_insert_doublon = true;
-                $this->UNIQUE_KEY = array('lookup_code');
-                
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
-	}
+	public static $DATABASE		= ""; 
+     public static $MODULE		    = "crm"; 
+     public static $TABLE			= ""; 
+     public static $DB_STRUCTURE = null; 
+     
+     
+          public function __construct(){
+               parent::__construct("crm_action","id","crm");
+                    $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+                    $this->DISPLAY_FIELD = "crm_action_name_ar";
+                    $this->ORDER_BY_FIELDS = "lookup_code";
+                    $this->IS_LOOKUP = true; 
+                    $this->ignore_insert_doublon = true;
+                    $this->UNIQUE_KEY = array('lookup_code');
+                    
+                    $this->showQeditErrors = true;
+                    $this->showRetrieveErrors = true;
+          }
         
-        public static function loadById($id)
-        {
-           $obj = new CrmAction();
-           $obj->select_visibilite_horizontale();
-           if($obj->load($id))
-           {
-                return $obj;
-           }
-           else return null;
-        }
+          public static function loadById($id)
+          {
+               $obj = new CrmAction();
+               $obj->select_visibilite_horizontale();
+               if($obj->load($id))
+               {
+                    return $obj;
+               }
+               else return null;
+          }
         
         
         

@@ -36,115 +36,13 @@ class Response extends AFWObject{
         // complete - استكمال البيانات  
         public static $RESPONSE_TYPE_COMPLETE = 12; 
 
-	public static $DATABASE		= ""; public static $MODULE		    = "crm"; public static $TABLE			= ""; public static $DB_STRUCTURE = null; /* = array(
-                id => array(SHOW => true, RETRIEVE => true, EDIT => true, TYPE => PK),
-
-		
-		request_id => array(SHORTNAME => request,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false, CSS=> width_pct_33,  
-				SIZE => 64,  "MIN-SIZE" => 5,  CHAR_TEMPLATE => "ARABIC-CHARS,SPACE",  MANDATORY => true,  UTF8 => false,  
-				TYPE => FK,  ANSWER => request,  ANSMODULE => crm,  
-				RELATION => OneToMany,  READONLY => true, ),
-
-                orgunit_id => array(SHORTNAME => orgunit,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false, CSS=> width_pct_33,  
-				SIZE => 40,  MANDATORY => false,  UTF8 => false,  
-				TYPE => FK,  ANSWER => orgunit,  ANSMODULE => hrm,  
-				RELATION => ManyToOne,  READONLY => true, ),
-
-		employee_id => array(SHORTNAME => employee,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false, CSS=> width_pct_33,  
-				SIZE => 32,  MANDATORY => false,  UTF8 => false,  
-				TYPE => FK,  ANSWER => employee,  ANSMODULE => hrm,  
-				RELATION => ManyToOne,  READONLY => true, ),
-
-                request_text => array(CATEGORY => "SHORTCUT",  SHORTCUT => "request_id.request_text",  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => "AREA", ROWS => 10,  MANDATORY => true,  UTF8 => true,  
-				TYPE => "TEXT", FORMAT => PRE, READONLY => true, ),                                
-
-
-                response_date => array(SEARCH => true,  QSEARCH => false,  SHOW => false,  RETRIEVE => false,  
-				EDIT => false,  QEDIT => false,  
-				SIZE => 10,  MANDATORY => true,  UTF8 => false,  
-				TYPE => "DATE",  FORMAT => "HIJRI_UNIT",  READONLY => false, ),
-
-		
-                response_time => array(SEARCH => true,  QSEARCH => false,  SHOW => false,  RETRIEVE => false,  
-				EDIT => false,  QEDIT => false,  
-				SIZE => 8,  MANDATORY => true,  UTF8 => false,  
-				TYPE => "TIME", FORMAT=>"ARABIC-TIME", READONLY => false, ),
-
-
-                response_templates => array(CATEGORY => "FORMULA",  SHOW => true,  RETRIEVE => false,  
-                        EDIT => true,  QEDIT => false,  
-                        SIZE => "AREA", ROWS => 10,  MANDATORY => true,  UTF8 => true,  
-                        TYPE => "TEXT", FORMAT => TOHTML, READONLY => true, ),                                 
-
-                response_text => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-                        EDIT => true,  QEDIT => false,  
-                        SIZE => "AREA", ROWS => 10,  MANDATORY => true,  UTF8 => true,  
-                        TYPE => "TEXT", FORMAT => TOHTML, READONLY => false, ),
-
-                response_type_id => array(SHORTNAME => type,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-                        EDIT => true,  QEDIT => false, CSS=> width_pct_33,  
-                        SIZE => 48,  "MIN-SIZE" => 5,  CHAR_TEMPLATE => "ALPHABETIC,SPACE",  MANDATORY => true,  UTF8 => false,  
-                        TYPE => FK,  ANSWER => response_type,  ANSMODULE => crm,  
-                        RELATION => ManyToOne,  READONLY => false, ),
-
-                internal => array(SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => false,  
-                        EDIT => true,  QEDIT => false, CSS=> width_pct_33,  
-                        SIZE => 32,  MANDATORY => true,  UTF8 => false,  
-                        TYPE => "YN", "DEFAULT"=>"N", READONLY => false, ),
-
-
-                new_status_id => array(SHORTNAME => status,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => true,  
-                        EDIT => true,  QEDIT => false,  
-                        SIZE => 32,  MANDATORY => true, CSS=> width_pct_33,  UTF8 => false,  
-                        TYPE => FK,  ANSWER => request_status,  ANSMODULE => crm,  
-                        WHERE => "lookup_code like 'invest_%'",
-                        RELATION => ManyToOne,  READONLY => false, ),
-
-                
-		response_link => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 255,  "MIN-SIZE" => 16,  CHAR_TEMPLATE => "ALPHABETIC,COMMAS,MATH-SYMBOLS,NUMERIC,SPACE,UNDERSCORE",  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
-
-                //  rafik @todo : to work on it later when we arrive at this step
-		// module_id => array(SHORTNAME => module,  SEARCH => true,  QSEARCH => false,  SHOW => false,  RETRIEVE => false,  
-		// 		EDIT => false,  QEDIT => true,  
-		//		SIZE => 32,  UTF8 => false,  
-		//		TYPE => FK,  ANSWER => module,  ANSMODULE => ums,  
-		// 		RELATION => ManyToOne,  READONLY => false, ),
-                
-
-		// 	responseDataList => array(SHORTNAME => responseDatas,  SHOW => false,  FORMAT => retrieve,  ICONS => true,  "DELETE-ICON" => true,  
-                //                 BUTTONS => true,  SEARCH => true,  QSEARCH => false,  RETRIEVE => false,  
-		// 		EDIT => false,  QEDIT => false,  
-		// 		SIZE => 32,  MANDATORY => false,  UTF8 => false,  
-		// 		TYPE => FK,  "NO-LABEL"=>true, FGROUP => responseDataList,  
-		// 		CATEGORY => ITEMS,  ANSWER => response_data,  ANSMODULE => crm,  ITEM => "response_id",  
-                //                 READONLY => true),
-                              
-
-                
-                created_by         => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                created_at         => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                updated_by         => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                updated_at         => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                validated_by       => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                validated_at       => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                active             => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, QEDIT => false, "DEFAULT" => 'Y', TYPE => YN, AUDIT=>true),
-                version            => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => INT),
-                update_groups_mfk  => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                delete_groups_mfk  => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                display_groups_mfk => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                sci_id             => array(SHOW => true, HIDE_IF_NEW => true, STEP => 99, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => scenario_item, ANSMODULE => pag),
-                tech_notes 	   => array(TYPE => TEXT, CATEGORY => FORMULA, SHOW => true, HIDE_IF_NEW => true, STEP => 99, 'STEP' =>"all", TOKEN_SEP=>"§", READONLY=>true, "NO-ERROR-CHECK"=>true),
-	);
-	
-	*/ public function __construct(){
+	public static $DATABASE		= ""; 
+        public static $MODULE		    = "crm"; 
+        public static $TABLE			= "response"; 
+        
+        public static $DB_STRUCTURE = null; 
+        
+        public function __construct(){
 		parent::__construct("response","id","crm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 $this->DISPLAY_FIELD = "";

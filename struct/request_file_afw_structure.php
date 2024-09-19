@@ -29,7 +29,7 @@
 			'doc_type_id' => array('SHORTNAME' => 'type',  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => false,  
 			    'RETRIEVE' => false, 'MINIBOX' => false,  'EDIT' => false,  'QEDIT' => false, 
 				'SIZE' => 40,  'MAXLENGTH' => 40,  'REQUIRED' => true,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'doc_type',  'ANSMODULE' => 'pag',  
+				'TYPE' => 'FK',  'ANSWER' => 'doc_type',  'ANSMODULE' => 'ums',  
 				'WHERE' => "concat(',',valid_ext,',') like '%,§afile_ext§,%' and id in (§module_config_token_file_types§)", 
 				 
 				'RELATION' => 'ManyToOne',  'READONLY' => true,  'SEARCH-BY-ONE' => false,  'DISPLAY' => false,  'STEP' => 1,  
@@ -43,7 +43,7 @@
 				),
 
 			'afile_id' => array('SHORTNAME' => 'file',  'SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'INPUT_WIDE' => true,  'QEDIT' => true,  'SIZE' => 255,  'REQUIRED' => true,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'afile',  'ANSMODULE' => 'pag',  'AUTOCOMPLETE' => true,  
+				'TYPE' => 'FK',  'ANSWER' => 'afile',  'ANSMODULE' => 'ums',  'AUTOCOMPLETE' => true,  
 				'WHERE' => "stakeholder_id=§MY_COMPANY§ and doc_type_id in (§module_config_token_file_types§)", 
 				 
 				'RELATION' => 'ManyToOne',  'READONLY' => true,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 1,  
@@ -92,7 +92,7 @@
 								'QEDIT' => false, 'ANSWER' => 'ugroup', 'ANSMODULE' => 'ums', 'TYPE' => 'MFK', 'FGROUP' => 'tech_fields'),
 
 				'sci_id'                        => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 
-								'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'pag', 'FGROUP' => 'tech_fields'),
+								'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields'),
 
 				'tech_notes' 	                => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA', "SHOW-ADMIN" => true, 
 								'TOKEN_SEP'=>"§", 'READONLY'=>true, "NO-ERROR-CHECK"=>true, 'FGROUP' => 'tech_fields'),

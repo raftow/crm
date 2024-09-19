@@ -18,72 +18,11 @@ class CrmOrgunit extends AFWObject{
         
 	public static $DATABASE		= ""; 
         public static $MODULE		    = "crm"; 
-        public static $TABLE			= ""; 
-        public static $DB_STRUCTURE = null; /* = array(
-                id => array(SHOW => true, RETRIEVE => true, EDIT => true, TYPE => PK, "TECH_FIELDS-RETRIEVE" => true),
-
-		
-		orgunit_id => array(SHORTNAME => orgunit,  SEARCH => true,  
-                                QSEARCH => false,  INTERNAL_QSEARCH=>true, SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  "TECH_FIELDS-RETRIEVE" => true,
-				SIZE => 40,  MANDATORY => true,  UTF8 => false,  
-				TYPE => FK,  ANSWER => orgunit,  ANSMODULE => hrm,  
-				RELATION => OneToMany,  READONLY => true, ),
-
-                requests_count => array(SHOW=> true,  CSS => width_pct_25, CATEGORY => FORMULA, TYPE => "INT", 
-                                EDIT=>true,  READONLY => true,  RETRIEVE => true, ), 
-
-                requests_nb => array(SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  MANDATORY => true,  UTF8 => false,  
-				TYPE => "INT",  READONLY => false, ),
-                                
-                // crm_orgunit_name => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true, EXCEL => true,  
-		// 		EDIT => true,  QEDIT => false, CSS => width_pct_100,  
-		// 		SIZE => 48,  "MIN-SIZE" => 3,  CHAR_TEMPLATE => "ALPHABETIC,SPACE",  REQUIRED => true,  UTF8 => true,  
-		// 		TYPE => "TEXT",  READONLY => false, JUSTPROP=>true, ),
-                                                
-
-		service_category_mfk => array(SHORTNAME => categorys,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  MANDATORY => true,  UTF8 => false,  
-				TYPE => MFK,  ANSWER => service_category,  ANSMODULE => crm,  READONLY => false, ),
-
-		service_mfk => array(SHORTNAME => services,  SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  MANDATORY => true,  UTF8 => false,  
-				TYPE => MFK,  ANSWER => service,  ANSMODULE => crm,  READONLY => false, ),
-
-                allEmployeeList => array(STEP => 2, TYPE => FK, ANSWER => crm_employee, ANSMODULE => crm, CATEGORY => ITEMS, ITEM => '', 
-                                            WHERE=>"orgunit_id = §orgunit_id§",
-                                            FORMAT=>retrieve, // HIDE_COLS=>array("id_sh_org", "id_sh_div", "last_empl_date", "idn"),
-                                            SHOW => true, 
-                                            EDIT => false, ICONS=>true, 'DELETE-ICON'=>false, 
-                                            BUTTONS=>true, "NO-LABEL"=>false, ),                
-
-                assignedRequests => array(STEP => 3, TYPE => FK, ANSWER => request, ANSMODULE => crm, CATEGORY => ITEMS, ITEM => '', 
-                                            WHERE=>"orgunit_id = §orgunit_id§",
-                                            FORMAT=>retrieve, // HIDE_COLS=>array("id_sh_org", "id_sh_div", "last_empl_date", "idn"),
-                                            SHOW => true, 
-                                            EDIT => false, ICONS=>true, 'DELETE-ICON'=>false, 
-                                            BUTTONS=>true, "NO-LABEL"=>false, ),                                
-
-                created_by => array(STEP=>99, SHOW => true, "TECH_FIELDS-RETRIEVE" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                created_at => array(STEP=>99, SHOW => true, "TECH_FIELDS-RETRIEVE" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                updated_by => array(STEP=>99, SHOW => true, "TECH_FIELDS-RETRIEVE" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                updated_at => array(STEP=>99, SHOW => true, "TECH_FIELDS-RETRIEVE" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                validated_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                validated_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                active => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, QEDIT => false, "DEFAULT" => 'Y', TYPE => YN),
-                version => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => INT),
-                update_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                delete_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                display_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                sci_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => scenario_item, ANSMODULE => pag),
-                tech_notes 	    => array(TYPE => TEXT, CATEGORY => FORMULA, "SHOW-ADMIN" => true, 'STEP' =>"all", TOKEN_SEP=>"§", READONLY=>true, "NO-ERROR-CHECK"=>true),
-	);
-	
-	*/ public function __construct(){
+        public static $TABLE			= "crm_orgunit"; 
+        public static $DB_STRUCTURE = null; 
+        
+        
+        public function __construct(){
 		parent::__construct("crm_orgunit","id","crm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 $this->DISPLAY_FIELD = "";

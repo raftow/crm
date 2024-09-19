@@ -26,96 +26,10 @@ class CrmEmployee extends CrmObject
         
 	public static $DATABASE		= ""; 
         public static $MODULE		    = "crm"; 
-        public static $TABLE			= ""; 
-        public static $DB_STRUCTURE = null; /* = array(
-        id => array(SHOW => true, RETRIEVE => true, EDIT => true, TYPE => PK,  CSS => width_pct_25),
-
-		
-	orgunit_id => array(SHORTNAME => orgunit,  SEARCH => true,  QSEARCH => true,  INTERNAL_QSEARCH => true,
-                                SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  EDIT_IF_EMPTY => true,
-				SIZE => 40,  MANDATORY => true,  UTF8 => false,  CSS => width_pct_25,  
-				TYPE => FK,  ANSWER => orgunit,  ANSMODULE => hrm,   
-                                DEPENDENT_OFME=>array("employee_id"),
-                                WHERE => "me.id in (select orgunit_id from c0crm.crm_orgunit where active='Y')",
-				RELATION => OneToMany,   READONLY => true, ),
-
-
-        employee_id => array(SHORTNAME => employee,  SEARCH => true,  QSEARCH => false, INTERNAL_QSEARCH => true,  
-                                SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  EDIT_IF_EMPTY => true,  CSS => width_pct_25,  
-				SIZE => 40,  MANDATORY => true,  UTF8 => false,  
-				TYPE => FK,  ANSWER => employee,  ANSMODULE => hrm,   
-                                WHERE => "id_sh_div = §orgunit_id§ and jobrole_mfk like '%,117,%'",
-                                DEPENDENCY=>orgunit_id, 
-				RELATION => OneToMany,   READONLY => true, ),        
-
-        requests_nb => array(SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  CSS => width_pct_25,  
-				SIZE => 32,  MANDATORY => true,  UTF8 => false,  
-				TYPE => "INT", "DEFAULT" => 15,  READONLY => false, ),
-
-
-        service_category_mfk => array(SHORTNAME => categorys,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  MANDATORY => true,  UTF8 => false,  
-				TYPE => MFK,  ANSWER => service_category, "DEFAULT" => ",1,",  ANSMODULE => crm,  READONLY => false, ),
-
-		service_mfk => array(SHORTNAME => services,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => false,  
-				SIZE => 32,  MANDATORY => true,  UTF8 => false, "DEFAULT" => ",1,",
-				TYPE => MFK,  ANSWER => service,  ANSMODULE => crm,  READONLY => false, ),
-
-
-        active => array(SHOW => true, RETRIEVE => true, EDIT => true, QEDIT => true, "DEFAULT" => 'Y', TYPE => YN),
-
-        admin => array(SHOW => true, RETRIEVE => true,  SEARCH => true,  QSEARCH => true, EDIT => true, QEDIT => true, "DEFAULT" => 'N', TYPE => YN),
-
-        ongoing_requests_count => array(SHOW=> true,  CSS => width_pct_25, CATEGORY => FORMULA, TYPE => "INT", 
-                EDIT=>true,  READONLY => true,  RETRIEVE => true, ), 
-
-        done_requests_count => array(SHOW=> true,  CSS => width_pct_25, CATEGORY => FORMULA, TYPE => "INT", 
-                EDIT=>true,  READONLY => true,  RETRIEVE => true, ), 
+        public static $TABLE			= "crm_employee"; 
+        public static $DB_STRUCTURE = null;
         
-        requests_count => array(SHOW=> true,  CSS => width_pct_25, CATEGORY => FORMULA, TYPE => "INT", 
-                EDIT=>true,  READONLY => true,  RETRIEVE => true, ), 
-
-        statif_pct => array(SHOW=> true,  CSS => width_pct_25, CATEGORY => FORMULA, TYPE => "PCTG", 
-                EDIT=>true,  READONLY => true,  RETRIEVE => true, ), 
-
-
-        'currentRequests' => array('STEP' => 2,  
-				'TYPE' => 'FK',  'ANSWER' => 'request',  'ANSMODULE' => 'crm',  
-				'CATEGORY' => 'ITEMS',  'ITEM' => '', //'HIDE_COLS' => ['employee_id','orgunit_id'],
-				'WHERE' => "(1 or (orgunit_id = §orgunit_id§ and employee_id = §employee_id§) or (§orgunit_id§ = '70' and supervisor_id = §employee_id§)) and status_id not in (5,6,7,8,9)", 
-				 'FORMAT' => 'retrieve',  'SHOW' => true,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				),
-
-	'finishedRequests' => array('STEP' => 2,  
-				'TYPE' => 'FK',  'ANSWER' => 'request',  'ANSMODULE' => 'crm',  
-				'CATEGORY' => 'ITEMS',  'ITEM' => '',  
-				'WHERE' => "((orgunit_id = §orgunit_id§ and employee_id = §employee_id§) or (§orgunit_id§ = '70' and supervisor_id = §employee_id§)) and status_id in (5,6,7,8,9) and request_date >= §archive_date§",
-				 'FORMAT' => 'retrieve',  'SHOW' => true,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',               
-                                
-                
-                created_by => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                created_at => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => DATETIME),
-                updated_by => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                updated_at => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => DATETIME),
-                validated_by => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                validated_at => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => DATETIME),
-                
-                version => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => INT),
-                update_groups_mfk => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                delete_groups_mfk => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                display_groups_mfk => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                sci_id => array(STEP => 99, RETRIEVE => false, SHOW => true, EDIT => true, TYPE => FK, ANSWER => scenario_item, ANSMODULE => pag),
-                tech_notes 	    => array(TYPE => TEXT, EDIT => true, SHOW => true, CATEGORY => FORMULA, STEP => 99, TOKEN_SEP=>"§", READONLY=>true, "NO-ERROR-CHECK"=>true),
-	);
-	
-	*/ public function __construct(){
+        public function __construct(){
 		parent::__construct("crm_employee","id","crm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 $this->DISPLAY_FIELD = "";

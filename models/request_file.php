@@ -26,55 +26,14 @@ class RequestFile extends AFWObject{
         public static $BF_DELETE_PRACTICE_FILE = 104087; 
 
         
-	public static $DATABASE		= ""; public static $MODULE		    = "crm"; public static $TABLE			= ""; public static $DB_STRUCTURE = null; /* = array(
-                id => array(SHOW => true, RETRIEVE => true, EDIT => true, TYPE => PK),
+	public static $DATABASE		= ""; 
+        public static $MODULE		    = "crm"; 
+        public static $TABLE			= "request_file"; 
+        public static $DB_STRUCTURE = null; 
 
-		
-		request_id => array(SHORTNAME => request,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => false,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 32,  REQUIRED => true,  UTF8 => false,  
-				TYPE => FK,  ANSWER => request,  ANSMODULE => crm,  AUTOCOMPLETE => true,  
-				RELATION => OneToMany,  READONLY => false, ),
 
-		description => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 128,  "MIN-SIZE" => 5,  CHAR_TEMPLATE => "",  REQUIRED => true,  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-                
-                doc_type_id => array(SHORTNAME => type,  SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  
-				SIZE => 40,  MAXLENGTH => 40,  REQUIRED => true,  UTF8 => false,  
-				TYPE => FK,  ANSWER => doc_type,  ANSMODULE => pag,
-                                WHERE=>"concat(',',valid_ext,',') like '%,§afile_ext§,%' and id in (§module_config_token_file_types§)",  
-				RELATION => ManyToOne,  READONLY => false, ),
-
-                afile_ext => array(TYPE => TEXT, CATEGORY => SHORTCUT, SHORTCUT=>"afile_id.afile_ext","CAN-BE-SETTED"=>false,"NO-COTE"=>true,),                
-
-		afile_id => array(
-			         SHORTNAME => "file",
-				 SEARCH => true,  QSEARCH => false,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true, INPUT_WIDE=>true,  QEDIT => true,  
-				SIZE => 255,  REQUIRED => true,  UTF8 => false,  
-				TYPE => FK,  ANSWER => afile,  ANSMODULE => pag,  AUTOCOMPLETE => true,
-                                	WHERE => "stakeholder_id=§MY_COMPANY§ and doc_type_id in (§module_config_token_file_types§)",  
-				RELATION => ManyToOne,  READONLY => true, ),
-
-                creation_user_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                creation_date => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                update_user_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                update_date => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                validation_user_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                validation_date => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                active => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => true, QEDIT => false, "DEFAULT" => 'Y', TYPE => YN),
-                version => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => INT),
-                update_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                delete_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                display_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                sci_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => scenario_item, ANSMODULE => pag),
-                tech_notes 	    => array(TYPE => TEXT, CATEGORY => FORMULA, "SHOW-ADMIN" => true, 'STEP' =>"all", TOKEN_SEP=>"§", READONLY=>true, "NO-ERROR-CHECK"=>true),
-	);
-	
-	*/ public function __construct(){
+        
+        public function __construct(){
 		parent::__construct("request_file","id","crm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 $this->DISPLAY_FIELD = "id";

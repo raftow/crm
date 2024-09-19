@@ -51,8 +51,7 @@ alter table c0crm.request add index indx_orgunit(orgunit_id);
 
 $file_dir_name = dirname(__FILE__); 
                 
-// old include of afw.php
-// rafik : obsolete require_once("$file_dir_name/../pag/ hzm_btch_functions.php");
+
 class Request extends AFWObject{
 
         public static $REQUEST_CODE_LENGTH = 7;

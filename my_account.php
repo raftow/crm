@@ -32,5 +32,5 @@ else
  
 
 
-include("$file_dir_name/../pag/my_account.php");
+include("$file_dir_name/../ums/my_account.php");
 ?>
