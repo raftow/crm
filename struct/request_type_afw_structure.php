@@ -31,7 +31,7 @@
 
                         /*        
 			'jobrole_mfk' => array('SHORTNAME' => 'jobroles',  'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 32,  'MANDATORY' => false,  'UTF8' => false,  
-				'TYPE' => 'MFK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'crm',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
+				'TYPE' => 'MFK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'ums',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),*/
 

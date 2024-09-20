@@ -54,7 +54,7 @@
 				),
 
 			'responsibility_1_id' => array('SHORTNAME' => 'responsibility1',  'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 32,  'MANDATORY' => true,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'crm',  
+				'TYPE' => 'FK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'ums',  
 				'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 				),
@@ -71,7 +71,7 @@
 				),
 
 			'responsibility_2_id' => array('SHORTNAME' => 'responsibility2',  'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 32,  'MANDATORY' => true,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'crm',  
+				'TYPE' => 'FK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'ums',  
 				'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 				),
@@ -88,7 +88,7 @@
 				),
 
 			'responsibility_3_id' => array('SHORTNAME' => 'responsibility3',  'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 32,  'MANDATORY' => true,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'crm',  
+				'TYPE' => 'FK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'ums',  
 				'RELATION' => 'ManyToOne',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 				),

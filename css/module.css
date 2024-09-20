@@ -26,7 +26,7 @@ li.hzm_login {
     top: 45px;
     left: 40px;
     float: left;
-    background-color: white;
+    background-color: #ffffff1a;
 }
 
 @media (max-width:640px)
@@ -208,7 +208,7 @@ span.object_id {
 
 
 .home_banner {
-    background-image: url(../../external/pic/bg_1001.png) !important;
+    background-image: url(../pic/home_banner_001.jpg) !important;
     background-color: #c7e7f6;
     background-size: 100% 110% !important;
     background-repeat: no-repeat !important;
@@ -1122,7 +1122,7 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
     font-weight: bold !important;
-    color: #2f2525;
+    color: #023145;
 }
 
 div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
@@ -1160,16 +1160,15 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
 
 .btn-primary {
     color: #fff;
-    background-color: #4fab9c !important;
+    background-color: #4ed157 !important;
     border-color: #4fab9c !important;
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #5ecd9f !important;
-    border-color: #42b384 !important;
+    background-color: #3ac4e1 !important;
+    border-color: #21899f !important;
 }
-
 input.btnbtsp.btn-primary.btnregister {
     width: 90%;
     margin-left: 5%;
@@ -1492,13 +1491,16 @@ table.dataTable thead th.stats_orgunit_id, td.stats_orgunit_id {
     font-size: 110% !important;
 }
 
+
+
 a.btnbtsp.btn_link {
-    color: #44b3a1;
+    color: #c2f9f0;
     /* font-weight: bold; */
     font-size: 95%;
     /* text-decoration: #2892b8; */
-    border: 1px solid #44b3a1;
+    border: none;
     border-radius: 0;
+    background-color: #045c83 !important;
 }
 
 a.btnbtsp.btn_link:hover {
@@ -1690,20 +1692,21 @@ input.respbtn {
     padding-top: 5px;
     padding-bottom: 10px;
     border-bottom: none;
-    background-color: transparent;
+    background-color: #ffffff8f;
     text-shadow: 4px 4px 8px white;
 }
 
 div.qsearch_page {
-    padding-left: 10% !important;
-    padding-right: 2%!important;
+    padding-left: 6% !important;
+    padding-right: 6% !important;
     margin-top: 34px;
 }
 
 table.search_result_table {
-    margin-right: 2% !important;
-    margin-left: 14% !important;
+    margin-right: 6% !important;
+    margin-left: 6% !important;
     width: 84%;
+    background-color: #ffffffc7;
 }
 
 td#bloc_result {
@@ -2199,6 +2202,11 @@ div.content-annonce>ul {
     float: right;
 }
 
+.hzm_home_bloc {
+    background-color: #ffffffa1;
+}
+
+
 div.hzm_home_bloc>h3 {
     font-size: 44px;
     font-weight: bold;
@@ -2395,11 +2403,11 @@ div.body_nav_hzm>p {
     display: inline-block;
     width: 15px;
     height: 15px;
-    background: #23bbb491;
+    background: #50bef1;
     margin-left: 10px;
     border-width: 3px;
     border-style: solid;
-    border-color: #047e7a9c;
+    border-color: #1387d9;
     position: relative;
     top: 0px;
     border-radius: 50%;
@@ -2536,7 +2544,7 @@ div.filebox.editcard>div.panel-heading {
 /* ______________________________________________________________________________________________________ */
 
 /****************************  company colors different items ******************************************/
-
+/*
 table.dataTable thead .sorting {
 	background-image: url(../pic/sort_both.png);
         background-position-x: 5px;
@@ -2557,7 +2565,7 @@ table.dataTable thead .sorting_desc_disabled {
 	background-image: url(../pic/sort_desc_disabled.png);
         background-position-x: 5px;
 }
-
+*/
 
 .form-group.submit-login>input {
     width: 60%;
@@ -2812,9 +2820,6 @@ label.light_label {
     background-color: #ffffff33;
 }
 
-.hzm_home_bloc {
-    background-color: #ffffffa1;
-}
 
 ul.hzm_front_menu_bar>li {
     border: 1px #518ea8 solid;
@@ -2836,11 +2841,34 @@ h1 {
     color: #035c83;
 }
 
-label {
 
-    color: #035c83;
-}
 
 .container {
     background-color: #ffffff7a;
+}
+
+a.hzm3-button.hzm3-block>.hzm4-title {
+    color: #074d7e !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+img.tooltip-icon {
+    border: 1px solid white;
+}
+
+div.qfilter>h1 {
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #07384e;
+}
+
+h5.bluetitle.search {
+    font-size: 200%;
+    font-weight: bold;
+    padding-right: 10px;
+    border-bottom: 1px solid #1280d2;
+    padding-bottom: 15px;
 }
