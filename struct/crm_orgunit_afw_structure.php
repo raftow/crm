@@ -15,15 +15,15 @@
 				'TYPE' => 'FK',  'ANSWER' => 'orgunit',  'ANSMODULE' => 'hrm',  
 				'WHERE' => 'id not in (
 					 			select orgunit_id 
-								from c0crm.crm_orgunit 
+								from §DBPREFIX§crm.crm_orgunit 
 					            where orgunit_id != §orgunit_id§
 								) 
 					        and id in (
-							         select id_sh_org from c0hrm.employee where active=\'Y\' and id_sh_org is not null
+							         select id_sh_org from §DBPREFIX§hrm.employee where active=\'Y\' and id_sh_org is not null
 						              union 
-								     select id_sh_dep from c0hrm.employee where active=\'Y\' and id_sh_dep is not null
+								     select id_sh_dep from §DBPREFIX§hrm.employee where active=\'Y\' and id_sh_dep is not null
 								      union
-								     select id_sh_div from c0hrm.employee where active=\'Y\' and id_sh_div is not null
+								     select id_sh_div from §DBPREFIX§hrm.employee where active=\'Y\' and id_sh_div is not null
 									)',
 				'RELATION' => 'OneToMany',  'READONLY' => false,  'SEARCH-BY-ONE' => false, 
 				'DISPLAY' => true, 'AUTOCOMPLETE' => true,  'STEP' => 1,  

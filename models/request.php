@@ -2,16 +2,16 @@
 /*
 
 
-MariaDB [c0crm]> truncate table response;
+MariaDB [".$server_db_prefix."crm]> truncate table response;
 Query OK, 0 rows affected (0.00 sec)
 
-MariaDB [c0crm]> truncate table request;
+MariaDB [".$server_db_prefix."crm]> truncate table request;
 Query OK, 0 rows affected (0.00 sec)
 
-MariaDB [c0crm]>
-MariaDB [c0crm]>
-MariaDB [c0crm]>
-MariaDB [c0crm]> show indexes from request;
+MariaDB [".$server_db_prefix."crm]>
+MariaDB [".$server_db_prefix."crm]>
+MariaDB [".$server_db_prefix."crm]>
+MariaDB [".$server_db_prefix."crm]> show indexes from request;
 +---------+------------+------------+--------------+---------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
 | Table   | Non_unique | Key_name   | Seq_in_index | Column_name   | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
 +---------+------------+------------+--------------+---------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
@@ -21,30 +21,30 @@ MariaDB [c0crm]> show indexes from request;
 +---------+------------+------------+--------------+---------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
 3 rows in set (0.00 sec)
 
-MariaDB [c0crm]> alter table request drop index uk_request;
+MariaDB [".$server_db_prefix."crm]> alter table request drop index uk_request;
 Query OK, 0 rows affected (0.01 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 
-MariaDB [c0crm]> CREATE UNIQUE INDEX uk_request ON c0crm.request(request_code,customer_id);
+MariaDB [".$server_db_prefix."crm]> CREATE UNIQUE INDEX uk_request ON ".$server_db_prefix."crm.request(request_code,customer_id);
 
 
 // some checks to be sure that data is coherent in CRM DB
 
-select distinct r.orgunit_id from request r left join c0hrm.orgunit o on r.orgunit_id = o.id where o.id is null;
+select distinct r.orgunit_id from request r left join ".$server_db_prefix."hrm.orgunit o on r.orgunit_id = o.id where o.id is null;
 ==> should return empty
 
 
-CREATE INDEX uk_req_customer ON c0crm.request(customer_id);
+CREATE INDEX uk_req_customer ON ".$server_db_prefix."crm.request(customer_id);
 
 alter table request add survey_token varchar(32);
 
 alter table request add key survey_token(survey_token); // should not be unique because can be empty
 
 // 3-oct-2022 rafik :
-alter table c0crm.request add days_investigator smallint not null default 0 after status_time;
-alter table c0crm.request add days_delay smallint not null default 0 after days_investigator;
+alter table ".$server_db_prefix."crm.request add days_investigator smallint not null default 0 after status_time;
+alter table ".$server_db_prefix."crm.request add days_delay smallint not null default 0 after days_investigator;
 
-alter table c0crm.request add index indx_orgunit(orgunit_id);
+alter table ".$server_db_prefix."crm.request add index indx_orgunit(orgunit_id);
 
 
 */                
@@ -954,7 +954,7 @@ class Request extends AFWObject{
         
         public function beforeDelete($id,$id_replace) 
         {
-            $server_db_prefix = AfwSession::config("db_prefix","c0");
+            $server_db_prefix = AfwSession::config("db_prefix","default_db_");
             
             if($id)
             {   
@@ -963,7 +963,7 @@ class Request extends AFWObject{
                    // FK part of me - not deletable 
 
                         
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
                        // crm.response-الإستفسار 	request_id  أنا تفاصيل لها-OneToMany
                         $this->execQuery("delete from ${server_db_prefix}crm.response where request_id = '$id' ");
 
@@ -977,7 +977,7 @@ class Request extends AFWObject{
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
                        // crm.response-الإستفسار 	request_id  أنا تفاصيل لها-OneToMany
                         $this->execQuery("update ${server_db_prefix}crm.response set request_id='$id_replace' where request_id='$id' ");
 
@@ -2084,7 +2084,7 @@ class Request extends AFWObject{
                     {
                         $color = "red";
                         $title_ar = "التحديث من منصة تواصل معنا القديمة"; 
-                        $pbms["xc013B"] = array("METHOD"=>"updateFromNartaqi",
+                        $pbms["x".$server_db_prefix."13B"] = array("METHOD"=>"updateFromNartaqi",
                             "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                             "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12,
                             );
@@ -3098,7 +3098,7 @@ class Request extends AFWObject{
             
             $obj->setForce("employee_id",0);
             $obj->setForce("status_comment","assignInvestigatorForNonAssigned-doing-reset");
-            $obj->where("me.orgunit_id > 0 and ((me.employee_id > 0 and me.employee_id not in (select employee_id from c0crm.crm_employee ce where ce.orgunit_id = me.orgunit_id and ce.active='Y')) or me.employee_id is null) and status_id not in (5,6,7,8,9)");
+            $obj->where("me.orgunit_id > 0 and ((me.employee_id > 0 and me.employee_id not in (select employee_id from ".$server_db_prefix."crm.crm_employee ce where ce.orgunit_id = me.orgunit_id and ce.active='Y')) or me.employee_id is null) and status_id not in (5,6,7,8,9)");
             $obj->update(false);
             
             

@@ -200,10 +200,10 @@ class CustomerType extends AFWObject{
             {   
                if($id_replace==0)
                {
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - not deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - not deletable 
 
                         
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
 
                    
                    // FK not part of me - replaceable 
@@ -219,7 +219,7 @@ class CustomerType extends AFWObject{
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
                        // crm.request-نوع العميل	customer_type_id  حقل يفلتر به-ManyToOne
                         $this->execQuery("update ${server_db_prefix}crm.request set customer_type_id='$id_replace' where customer_type_id='$id' ");
 

@@ -1,7 +1,7 @@
 <?php
 // ------------------------------------------------------------------------------------
 // 7/6/2022 rafik :
-// alter table c0crm.request_file change description description varchar(196);
+// alter table ".$server_db_prefix."crm.request_file change description description varchar(196);
                 
 $file_dir_name = dirname(__FILE__); 
                 
@@ -202,10 +202,10 @@ class RequestFile extends AFWObject{
             {   
                if($id_replace==0)
                {
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - not deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - not deletable 
 
                         
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
 
                    
                    // FK not part of me - replaceable 
@@ -217,7 +217,7 @@ class RequestFile extends AFWObject{
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
 
                         
                         // MFK

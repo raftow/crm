@@ -2,10 +2,10 @@
 // ------------------------------------------------------------------------------------
 // 7/4/2020 :
 // alter table request_status change lookup_code lookup_code  varchar(128) NOT NULL;
-// alter table c0crm.request_status add customer_status_name_ar varchar(128) NOT NULL;
-// alter table c0crm.request_status add customer_status_name_en varchar(128) NOT NULL;
-// update c0crm.request_status set customer_status_name_ar = request_status_name_ar;
-// update c0crm.request_status set customer_status_name_en = request_status_name_en;
+// alter table ".$server_db_prefix."crm.request_status add customer_status_name_ar varchar(128) NOT NULL;
+// alter table ".$server_db_prefix."crm.request_status add customer_status_name_en varchar(128) NOT NULL;
+// update ".$server_db_prefix."crm.request_status set customer_status_name_ar = request_status_name_ar;
+// update ".$server_db_prefix."crm.request_status set customer_status_name_en = request_status_name_en;
 
 
                 
@@ -165,10 +165,10 @@ class RequestStatus extends AFWObject{
             {   
                if($id_replace==0)
                {
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - not deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - not deletable 
 
                         
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
 
                    
                    // FK not part of me - replaceable 
@@ -188,7 +188,7 @@ class RequestStatus extends AFWObject{
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
                        // crm.request-حالة التذكرة	status_id  حقل يفلتر به-ManyToOne
                         $this->execQuery("update ${server_db_prefix}crm.request set status_id='$id_replace' where status_id='$id' ");
                        // crm.response-الحالة الجديدة للطلب	new_status_id  حقل يفلتر به-ManyToOne

@@ -7,7 +7,7 @@ class CrmChannel extends AFWObject{
 
  // lookup Value List codes 
   
-    public static $DATABASE		= "c0crm";
+    public static $DATABASE		= "".$server_db_prefix."crm";
     public static $MODULE		        = "crm";        
     public static $TABLE			= "crm_channel";
 
@@ -177,7 +177,7 @@ class CrmChannel extends AFWObject{
         
         public function beforeDelete($id,$id_replace) 
         {
-            $server_db_prefix = AfwSession::config("db_prefix","c0");
+            $server_db_prefix = AfwSession::config("db_prefix","default_db_");
             
             if(!$id)
             {

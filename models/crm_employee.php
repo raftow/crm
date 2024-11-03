@@ -2,8 +2,8 @@
 // ------------------------------------------------------------------------------------
 // ----             auto generated php class of table crm_orgunit : crm_orgunit - جهات المتابعة و إعداداتها 
 // ------------------------------------------------------------------------------------
-// alter table c0crm.crm_employee add   admin char(1) DEFAULT NULL  after service_mfk;
-// update c0crm.crm_employee set admin = 'N';
+// alter table ".$server_db_prefix."crm.crm_employee add   admin char(1) DEFAULT NULL  after service_mfk;
+// update ".$server_db_prefix."crm.crm_employee set admin = 'N';
                 
 $file_dir_name = dirname(__FILE__); 
                 
@@ -354,10 +354,10 @@ class CrmEmployee extends CrmObject
             {   
                if($id_replace==0)
                {
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - not deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - not deletable 
 
                         
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
 
                    
                    // FK not part of me - replaceable 
@@ -369,7 +369,7 @@ class CrmEmployee extends CrmObject
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
 
                         
                         // MFK

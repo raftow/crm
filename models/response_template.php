@@ -51,7 +51,7 @@ class ResponseTemplate extends AFWObject{
             {
                if($user_type) $cond_user_type = "lookup_code like '%$user_type%' and ";
                else $cond_user_type = "";
-               $obj->where("(new_status in (select id from c0crm.request_status where $cond_user_type response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
+               $obj->where("(new_status in (select id from ".$server_db_prefix."crm.request_status where $cond_user_type response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
             }
            
 
@@ -186,7 +186,7 @@ class ResponseTemplate extends AFWObject{
         
         public function beforeDelete($id,$id_replace) 
         {
-            $server_db_prefix = AfwSession::config("db_prefix","c0");
+            $server_db_prefix = AfwSession::config("db_prefix","default_db_");
             
             if(!$id)
             {

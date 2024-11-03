@@ -173,8 +173,8 @@
 
 			'orgunit_id' => array('FGROUP' => 'assignment',  /* 'STEP' => 3,  */ 'SHORTNAME' => 'orgunit',  'SEARCH' => true,  'QSEARCH' => true,  
 				'SHOW' => true,  'RETRIEVE' => false,  'EXCEL' => true,  'EDIT' => true,  'QEDIT' => true,  
-				'WHERE' => "me.id in (select distinct o.orgunit_id from c0crm.crm_orgunit o 
-				                        inner join c0crm.crm_employee e on e.orgunit_id = o.orgunit_id 
+				'WHERE' => "me.id in (select distinct o.orgunit_id from §DBPREFIX§crm.crm_orgunit o 
+				                        inner join §DBPREFIX§crm.crm_employee e on e.orgunit_id = o.orgunit_id 
 										where o.active='Y' and e.active='Y')", 
 				 'SIZE' => 60,  'UTF8' => false,  
 				'CSS' => 'width_pct_100',  'AUTOCOMPLETE' => true,  

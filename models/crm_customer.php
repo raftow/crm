@@ -524,7 +524,7 @@ class CrmCustomer extends AFWObject{
             {   
                if($id_replace==0)
                {
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - not deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - not deletable 
                        // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)
                         
                         $obj = new Request();
@@ -541,7 +541,7 @@ class CrmCustomer extends AFWObject{
  
  
  
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
  
  
                    // FK not part of me - replaceable 
@@ -553,7 +553,7 @@ class CrmCustomer extends AFWObject{
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
  
  
                         // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)

@@ -21,7 +21,7 @@
 				'CSS' => 'width_pct_25',  
 				'TYPE' => 'FK',  'ANSWER' => 'orgunit',  'ANSMODULE' => 'hrm',  
 				'DEPENDENT_OFME' => ['employee_id'],
-				'WHERE' => "me.id in (select orgunit_id from c0crm.crm_orgunit where active='Y')", 
+				'WHERE' => "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')", 
 				 
 				'RELATION' => 'ManyToOne',  'READONLY' => true,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, ),
