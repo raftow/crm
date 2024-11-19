@@ -31,7 +31,7 @@ if($objme)
                 unset($_GET);
                 $customerMe = null;
         
-                include("$file_dir_name/../lib/afw/afw_main_page.php");
+                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
         }
         elseif($objme_has_crm_employee_role)
         {
@@ -47,7 +47,7 @@ if($objme)
 
                 // AfwRunHelper::simpleError("System under maintenance. contactez RB");
         
-                include("$file_dir_name/../lib/afw/afw_main_page.php");
+                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
         }
         else
         {

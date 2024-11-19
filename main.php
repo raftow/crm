@@ -9,6 +9,6 @@ include_once ("$file_dir_name/module_config.php");
 
 
 $file_dir_name = dirname(__FILE__);
-include("$file_dir_name/../lib/afw/afw_main_page.php");
+require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
 
 ?>

@@ -24,7 +24,7 @@
       */
       $customerMe = null;
 
-      include("$file_dir_name/../lib/afw/afw_main_page.php");
+      require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
    }
    else
    {
