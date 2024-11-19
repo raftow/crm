@@ -31,19 +31,8 @@ class CrmEmployee extends CrmObject
         
         public function __construct(){
 		parent::__construct("crm_employee","id","crm");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->DISPLAY_FIELD = "";
-                $this->ORDER_BY_FIELDS = "orgunit_id, employee_id";
-                 
+                CrmCrmEmployeeAfwStructure::initInstance($this);  
                 
-                $this->UNIQUE_KEY = array('orgunit_id', 'employee_id');
-                $this->editByStep = true;
-                $this->editNbSteps = 3;
-                
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
-
-                $this->OwnedBy = array('module'=>"crm", 'afw'=>"CrmOrgunit");
 	}
 
         

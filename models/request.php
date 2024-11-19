@@ -2084,7 +2084,7 @@ class Request extends AFWObject{
                     {
                         $color = "red";
                         $title_ar = "التحديث من منصة تواصل معنا القديمة"; 
-                        $pbms["x".$server_db_prefix."13B"] = array("METHOD"=>"updateFromNartaqi",
+                        $pbms["xcc13B"] = array("METHOD"=>"updateFromNartaqi",
                             "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
                             "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12,
                             );
@@ -3094,6 +3094,7 @@ class Request extends AFWObject{
 
         public static function assignInvestigatorForNonAssigned($silent=false, $lang="ar", $limit="200")
         {
+            $server_db_prefix = AfwSession::config("db_prefix","default_db_");
             $obj = new Request();
             
             $obj->setForce("employee_id",0);

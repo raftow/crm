@@ -1,22 +1,22 @@
 <?php
 // 28/02/2022 : rafik :
-// alter table crm_employee add super_admin char(1) null;
-// update crm_employee set super_admin = 'N';
+// alter table crm_emp_request add super_admin char(1) null;
+// update crm_emp_request set super_admin = 'N';
 
 
 
-class CrmCrmEmployeeAfwStructure
+class CrmCrmEmpRequestAfwStructure
 {
 	// token separator = §
 	public static function initInstance(&$obj)
 	{
-		if ($obj instanceof CrmEmployee) {
+		if ($obj instanceof CrmEmpRequest) {
 			$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
 			$obj->DISPLAY_FIELD = "";
-			$obj->ORDER_BY_FIELDS = "orgunit_id, employee_id";
+			$obj->ORDER_BY_FIELDS = "orgunit_id, employee_id, email";
 
 
-			$obj->UNIQUE_KEY = array('orgunit_id', 'employee_id');
+			$obj->UNIQUE_KEY = array('orgunit_id', 'employee_id', 'email');
 
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
@@ -29,8 +29,8 @@ class CrmCrmEmployeeAfwStructure
 			$obj->general_check_errors = true;
 			// $obj->after_save_edit = array("class"=>'Road',"attribute"=>'road_id', "currmod"=>'btb',"currstep"=>9);
 		} else {
-			CrmEmployeeArTranslator::initData();
-			CrmEmployeeEnTranslator::initData();
+			CrmEmpRequestArTranslator::initData();
+			CrmEmpRequestEnTranslator::initData();
 		}
 	}
 
@@ -115,8 +115,7 @@ class CrmCrmEmployeeAfwStructure
 			'ANSMODULE' => 'hrm',
 			'WHERE' => "id_sh_div = §orgunit_id§ or id_sh_dep = §orgunit_id§", /* and jobrole_mfk like '%,117,%'*/
 			'DEPENDENCY' => 'orgunit_id',
-			'RELATION' => 'ManyToOne',
-			'READONLY' => true,
+			'RELATION' => 'ManyToOne',			
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => true,
 			'STEP' => 1,
@@ -129,89 +128,33 @@ class CrmCrmEmployeeAfwStructure
 			'SHOW' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
-			'READONLY' => true,
 			'SIZE' => 64,
 			'CSS' => 'width_pct_50',
 			'MB_CSS' => 'width_pct_50',
 			'FORMAT' => 'EMAIL',
 			'UTF8' => false,
 			'TYPE' => 'TEXT',
-			'CATEGORY' => 'SHORTCUT',
-			'SHORTCUT' => 'employee_id.email',
 			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 		),
 
-		'service_category_mfk' => array(
-			'SHORTNAME' => 'categorys',
-			'SEARCH' => true,
-			'QSEARCH' => false,
+		'approved' => array(
 			'SHOW' => true,
-			'RETRIEVE' => false,
+			'RETRIEVE' => true,
+			'SEARCH' => true,
+			'QSEARCH' => true,
 			'EDIT' => true,
-			'QEDIT' => false,
-			'SIZE' => 32,
-			'MANDATORY' => true,
-			'UTF8' => false,
-			'TYPE' => 'MFK',
-			'ANSWER' => 'service_category',
-			'DEFAUT' => ',1,',
-			'ANSMODULE' => 'crm',
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => false,
+			'QEDIT' => true,
+			'DEFAUT' => 'W',
+			'TYPE' => 'YN',
+			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
 			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-		),
-
-		'service_mfk' => array(
-			'SHORTNAME' => 'services',
-			'SEARCH' => true,
-			'QSEARCH' => false,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'SIZE' => 32,
-			'MANDATORY' => true,
-			'UTF8' => false,
-			'DEFAUT' => ',1,',
-			'TYPE' => 'MFK',
-			'ANSWER' => 'service',
-			'ANSMODULE' => 'crm',
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => false,
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-		),
-
-		'requests_nb' => array(
-			'SEARCH' => true,
-			'QSEARCH' => false,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'CSS' => 'width_pct_25',
-			'SIZE' => 32,
-			'MANDATORY' => true,
-			'UTF8' => false,
-			'TYPE' => 'INT',
-			'DEFAUT' => 15,
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => false,
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
+			'READONLY' => true,
 		),
 
 		'active' => array(
@@ -230,198 +173,43 @@ class CrmCrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'approved' => array(
+
+		'reject_reason_ar' => array(
 			'SHOW' => true,
-			'RETRIEVE' => true,
-			'SEARCH' => true,
-			'QSEARCH' => true,
 			'EDIT' => true,
-			'QEDIT' => true,
-			'DEFAUT' => 'N',
-			'TYPE' => 'YN',
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => true,
+			'QEDIT' => false,
+			'UTF8' => true,
+			'SIZE' => 'AEREA',
+			'CSS' => 'width_pct_100',
+			'MB_CSS' => 'width_pct_100',
+			'FORMAT' => 'EMAIL',
+			'ROWS' => 7,
+			'TYPE' => 'TEXT',
 			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-		),
-
-		'admin' => array(
-			'SHOW' => true,
-			'RETRIEVE' => true,
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'DEFAUT' => 'N',
-			'TYPE' => 'YN',
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-		'super_admin' => array(
-			'SHOW' => true,
-			'RETRIEVE' => true,
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'DEFAUT' => 'N',
-			'TYPE' => 'YN',
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-
-		'requests_count' => array(
-			'SHOW' => true,
-			'CSS' => 'width_pct_25',
-			'CATEGORY' => 'FORMULA',
-			'TYPE' => 'INT',
-			'EDIT' => true,
+			//'ERROR-CHECK' => true,
 			'READONLY' => true,
-			'RETRIEVE' => false,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
 		),
 
-
-		'done_requests_count' => array(
+		'reject_reason_en' => array(
 			'SHOW' => true,
-			'CSS' => 'width_pct_25',
-			'CATEGORY' => 'FORMULA',
-			'TYPE' => 'INT',
 			'EDIT' => true,
-			'READONLY' => true,
-			'RETRIEVE' => false,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
+			'QEDIT' => false,
+			'UTF8' => false,
+			'SIZE' => 'AEREA',
+			'CSS' => 'width_pct_100',
+			'MB_CSS' => 'width_pct_100',
+			'FORMAT' => 'EMAIL',
+			'ROWS' => 7,
+			'TYPE' => 'TEXT',
 			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-		),
-
-		'ongoing_requests_count' => array(
-			'SHOW' => true,
-			'CSS' => 'width_pct_25',
-			'CATEGORY' => 'FORMULA',
-			'TYPE' => 'INT',
-			'EDIT' => true,
+			//'ERROR-CHECK' => true,
 			'READONLY' => true,
-			'RETRIEVE' => false,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
 		),
-
-		'inbox_count' => array(
-			'SHOW' => true,
-			'CSS' => 'width_pct_25',
-			'CATEGORY' => 'FORMULA',
-			'TYPE' => 'INT',
-			'EDIT' => true,
-			'READONLY' => true,
-			'RETRIEVE' => false,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-
-		'statif_pct' => array(
-			'SHOW' => true,
-			'CSS' => 'width_pct_25',
-			'CATEGORY' => 'FORMULA',
-			'TYPE' => 'PCTG',
-			'UNIT' => '%',
-			'EDIT' => true,
-			'READONLY' => true,
-			'RETRIEVE' => true,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-		'archive_date' => array('CATEGORY' => 'FORMULA', 'TYPE' => "DATE",),
-
-		'currentRequests' => array(
-			'STEP' => 2,
-			'TYPE' => 'FK',
-			'ANSWER' => 'request',
-			'ANSMODULE' => 'crm',
-			'CATEGORY' => 'ITEMS',
-			'ITEM' => '', //'HIDE_COLS' => ['employee_id','orgunit_id'],
-			'WHERE' => "((orgunit_id = §orgunit_id§ and employee_id = §employee_id§) or (§orgunit_id§ = '70' and supervisor_id = §employee_id§)) and status_id not in (5,6,7,8,9)",
-			'FORMAT' => 'retrieve',
-			'SHOW' => true,
-			'EDIT' => false,
-			'ICONS' => true,
-			'DELETE-ICON' => false,
-			'BUTTONS' => true,
-			'NO-LABEL' => false,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-		'finishedRequests' => array(
-			'STEP' => 2,
-			'TYPE' => 'FK',
-			'ANSWER' => 'request',
-			'ANSMODULE' => 'crm',
-			'CATEGORY' => 'ITEMS',
-			'ITEM' => '',
-			'WHERE' => "((orgunit_id = §orgunit_id§ and employee_id = §employee_id§) or (§orgunit_id§ = '70' and supervisor_id = §employee_id§)) and status_id in (5,6,7,8,9) and request_date >= §archive_date§",
-			'FORMAT' => 'retrieve',
-			'SHOW' => true,
-			'EDIT' => false,
-			'ICONS' => true,
-			'DELETE-ICON' => false,
-			'BUTTONS' => true,
-			'NO-LABEL' => false,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-		'allOrgunitList' => array(
-			'STEP' => 3,
-			'TYPE' => 'FK',
-			'ANSWER' => 'crm_employee',
-			'ANSMODULE' => 'crm',
-			'CATEGORY' => 'ITEMS',
-			'ITEM' => '',
-			'WHERE' => "employee_id = §employee_id§",
-			'HIDE_COLS' => ["employee_id"],
-			'FORMAT' => 'retrieve',
-			'SHOW' => true,
-			'EDIT' => false,
-			'ICONS' => true,
-			'DELETE-ICON' => false,
-			'BUTTONS' => true,
-			'NO-LABEL' => false,
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
+		
 
 		'created_by'         => array(
 			'STEP' => 99,
