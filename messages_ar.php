@@ -27,7 +27,11 @@ $messages = [
     "has been changed to" => "تم تعديلها إلى",
     "Your are registered now, you can contact your administrator to give you privileges" => "تم تسجيل حسابك. يمكنك التواصل مع مشرف المنصة للحصول على الصلاحية",
     "Investigator can't be informed" => "لم نتمكن من ارسال بريد الكتروني للموظف المنسق لإعلامه باسناد هذه التذكرة إليه",
-
+    "This employee is not from" => "هذا الموظف ليس من",
+    "but from" => "بل من",
+    "Are you sure you want to approve this employee on this organization inspite of the aobove explanation ?" => "هل أنت متأكد من اعتماد هذا الموظف على هذه الجهة بعد علمك بالبيان أعلاه؟",
+    "We can not automatically approve that this employee is from this organization"=>"تنبيه : لم نتمكن من التأكد آليا من صحة نسبة هذا الموظف لهذه الجهة",
     
+                                
 ];
      
