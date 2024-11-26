@@ -16,15 +16,8 @@
    }
    elseif($objme)
    {
-      $Main_Page = "stats.php";
-      $My_Module = "crm";
-      /*
-      $cl = "Request";
-      $currmod="crm";
-      */
       $customerMe = null;
-
-      include("$file_dir_name/../lib/afw/afw_main_page.php");
+      include("$file_dir_name/stats.php");
    }
    else
    {

@@ -7,7 +7,6 @@ class CrmChannel extends AFWObject{
 
  // lookup Value List codes 
   
-    public static $DATABASE		= "".$server_db_prefix."crm";
     public static $MODULE		        = "crm";        
     public static $TABLE			= "crm_channel";
 

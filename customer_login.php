@@ -44,7 +44,7 @@ require_once("$file_dir_name/../external/db.php");
 
 $login_button_title = "دخول الموظف";
 $login_page = "login.php";
-if(!$front_header_page) $front_header_page = "lib/hzm/web/hzm_header.php";
+if(!$front_header_page) $front_header_page = "lib/hzm/oldweb/hzm_header.php";
 
 if(AfwSession::customerIsConnected()) 
 {
@@ -63,7 +63,7 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
         
               $customer_login_errors = array();
               
-              list($customer_idn_correct, $customer_idn_type_id) = CrmCustomer::getIdnTypeId($customer_idn);
+              list($customer_idn_correct, $customer_idn_type_id) = AfwFormatHelper::getIdnTypeId($customer_idn);
               if(!$customer_idn_correct)
               {
                    $customer_login_errors[] = "رقم الهوية غير صحيح";
@@ -74,8 +74,8 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
               if(strpos($customer_mobile_or_email, "@") === false) 
               {
                    $customer_email = "";
-                   $customer_mobile = CrmCustomer::formatMobile($customer_mobile_or_email);
-                   if(!CrmCustomer::isCorrectMobileNum($customer_mobile))
+                   $customer_mobile = AfwFormatHelper::formatMobile($customer_mobile_or_email);
+                   if(!AfwFormatHelper::isCorrectMobileNum($customer_mobile))
                    {
                         $customer_login_errors[] = "رقم الجوال غير صحيح";
                         //$customer_mobile = "";
@@ -86,7 +86,7 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
               {
                    $customer_mobile = "";
                    $customer_email = $customer_mobile_or_email;
-                   if(!CrmCustomer::isCorrectEmailAddress($customer_email))
+                   if(!AfwFormatHelper::isCorrectEmailAddress($customer_email))
                    {
                         $customer_login_errors[] = "عنوان البريد الالكتروني غير صحيح";
                         //$customer_email = "";
@@ -116,7 +116,7 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
                                         /*
                                         if(!file_exists("$file_dir_name/../$front_header_page"))
                                         {
-                                                echo "the header file $file_dir_name/../$front_header_page doesn't exist";
+                                                echo "the hea der file $file_dir_name/../$front_header_page doesn't exist";
                                         }
                                         else include_once("$file_dir_name/../$front_header_page");*/
                                         if(!$customer_mobile) 
@@ -171,9 +171,13 @@ else
 $no_menu = AfwSession::config("no_menu_for_login", true);
 if(!file_exists("$file_dir_name/../$front_header_page"))
 {
-     echo "the header file $file_dir_name/../$front_header_page doesn't exist";
+     echo "customer_login : header file $file_dir_name/../$front_header_page doesn't exist";
 }
-else include_once("$file_dir_name/../$front_header_page");
+else 
+{
+        $no_front_header = true;
+        include_once("$file_dir_name/../$front_header_page");
+}
 
 if($desc_site)
 {	
@@ -302,10 +306,10 @@ if($desc_site)
 ?>
 </div>
 <?php
-        if(!$front_footer) $front_footer = "lib/hzm/web/hzm_simple_footer.php";
+        if(!$front_footer) $front_footer = "lib/hzm/oldweb/hzm_simple_footer.php";
         if(!file_exists("$file_dir_name/../$front_footer"))
         {
-                echo "the header file $file_dir_name/../$front_footer doesn't exist";
+                echo "customer_login : the footer file $file_dir_name/../$front_footer doesn't exist";
         }
         include("$file_dir_name/../$front_footer");
 ?>

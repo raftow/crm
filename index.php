@@ -22,32 +22,15 @@ if($objme)
         if($objme->isSuperAdmin())
         {
                 $Main_Page = "monitoring.php";
-                $My_Module = "crm";
-                /*
-                $cl = "Request";
-                $currmod="crm";
-                */
-                unset($_POST);
-                unset($_GET);
-                $customerMe = null;
-        
-                include("$file_dir_name/../lib/afw/afw_main_page.php");
+                $MODULE = $My_Module = "crm";
+                AfwMainPage::echoMainPage($My_Module, $Main_Page, $file_dir_name);
         }
         elseif($objme_has_crm_employee_role)
         {
+                $file_dir_name = dirname(__FILE__);
                 $Main_Page = "workbox.php";
-                $My_Module = "crm";
-                /*
-                $cl = "Request";
-                $currmod="crm";
-                */
-                $customerMe = null;
-                unset($_POST);
-                unset($_GET);
-
-                // AfwRunHelper::simpleError("System under maintenance. contactez RB");
-        
-                include("$file_dir_name/../lib/afw/afw_main_page.php");
+                $MODULE = $My_Module = "crm";
+                AfwMainPage::echoMainPage($My_Module, $Main_Page, $file_dir_name);
         }
         else
         {

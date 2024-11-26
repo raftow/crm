@@ -191,10 +191,10 @@ else
 
 if(!$customer_type_id) $customer_type_id = 1;
 $otp=true;
-if(!$front_header_page) $front_header_page = "lib/hzm/web/hzm_header.php";
+if(!$front_header_page) $front_header_page = "lib/hzm/oldweb/hzm_header.php";
 if(!file_exists("$file_dir_name/../$front_header_page"))
 {
-     echo "the header file $file_dir_name/../$front_header_page doesn't exist";
+     echo "customer_verify : header file $file_dir_name/../$front_header_page doesn't exist";
 }
 else include("$file_dir_name/../$front_header_page");
 
@@ -281,10 +281,10 @@ else
 <?
 }
 
-if(!$front_footer) $front_footer = "lib/hzm/web/hzm_simple_footer.php";
+if(!$front_footer) $front_footer = "lib/hzm/oldweb/hzm_simple_footer.php";
 if(!file_exists("$file_dir_name/../$front_footer"))
 {
-        echo "the header file $file_dir_name/../$front_footer doesn't exist";
+        echo "customer_verify : footer file $file_dir_name/../$front_footer doesn't exist";
 }
 include("$file_dir_name/../$front_footer");
 ?>

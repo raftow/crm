@@ -3,9 +3,6 @@
 $file_dir_name = dirname(__FILE__);
 
 require_once("$file_dir_name/../external/db.php");
-// old include of afw.php
-require_once("$file_dir_name/../lib/afw/modes/afw_config.php");
-require_once("$file_dir_name/../lib/afw/afw_displayer_factory.php");
 
 $datatable_on=1;
 $cl = "Request";
@@ -37,7 +34,7 @@ $stats_arr = Request::aggreg($function="count(*)",
                 $throw_error=true, 
                 $throw_analysis_crash=true);
 
-if(!$lang) $lang = Request::getGlobalLanguage();
+if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
 
 $statsMatrix = array();
 foreach($supList as $supItem)                

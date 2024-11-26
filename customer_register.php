@@ -84,19 +84,19 @@ elseif($_POST["crm_new_go"])
               
               $customer_register_errors = array();
               
-              list($customer_idn_correct, $customer_idn_type_id) = CrmCustomer::getIdnTypeId($customer_idn);
+              list($customer_idn_correct, $customer_idn_type_id) = AfwFormatHelper::getIdnTypeId($customer_idn);
               if((!$customer_idn_correct) or (!$customer_idn_type_id))
               {
                    $customer_register_errors["customer_idn"] = "رقم الهوية غير صحيح";
               }
              
-              $customer_mobile = CrmCustomer::formatMobile($customer_mobile);
-              if(!CrmCustomer::isCorrectMobileNum($customer_mobile))
+              $customer_mobile = AfwFormatHelper::formatMobile($customer_mobile);
+              if(!AfwFormatHelper::isCorrectMobileNum($customer_mobile))
               {
                     $customer_register_errors["customer_mobile"] = "رقم الجوال غير صحيح";
               }
               
-              if(!CrmCustomer::isCorrectEmailAddress($customer_email))
+              if(!AfwFormatHelper::isCorrectEmailAddress($customer_email))
               {
                     $customer_register_errors["customer_email"] = "عنوان البريد الالكتروني غير صحيح";
                     //$customer_email = "";
@@ -161,10 +161,10 @@ else
 
 if(!$customer_type_id) $customer_type_id = 1;
 
-if(!$front_header_page) $front_header_page = "lib/hzm/web/hzm_header.php";
+if(!$front_header_page) $front_header_page = "lib/hzm/oldweb/hzm_header.php";
 if(!file_exists("$file_dir_name/../$front_header_page"))
 {
-     echo "the header file $file_dir_name/../$front_header_page doesn't exist";
+     echo "customer_register : header file $file_dir_name/../$front_header_page doesn't exist";
 }
 else include_once("$file_dir_name/../$front_header_page");
 
@@ -394,10 +394,10 @@ else include_once("$file_dir_name/../$front_header_page");
 </script>
 
 <?
-        if(!$front_footer) $front_footer = "lib/hzm/web/hzm_simple_footer.php";
+        if(!$front_footer) $front_footer = "lib/hzm/oldweb/hzm_simple_footer.php";
         if(!file_exists("$file_dir_name/../$front_footer"))
         {
-                echo "the header file $file_dir_name/../$front_footer doesn't exist";
+                echo "customer_register : the footer file $file_dir_name/../$front_footer doesn't exist";
         }
         include("$file_dir_name/../$front_footer");
 ?>

@@ -12,7 +12,7 @@ class CrmController extends AfwController{
 
         public function myViewSettings($methodName)
         {
-                return array("", "crm/front_header.php", "lib/hzm/web/hzm_simple_footer.php");
+                return array("", "crm/front_header.php", "lib/hzm/oldweb/hzm_simple_footer.php");
         }
 
 
