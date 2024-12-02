@@ -30,7 +30,7 @@ else
 
 
 require_once("$file_dir_name/../external/db.php");
-// here old require of common.php
+// 
 
 $debugg_login = false;
 $debugg_login_die = false; 

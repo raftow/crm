@@ -15,7 +15,7 @@ $module_dir_name = $file_dir_name;
 require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
 AfwSession::startSession();
 $uri_module = AfwUrlManager::currentURIModule();       
-
+AfwAutoLoader::addMainModule($uri_module);
 if(!$uri_module) die("site code not defined !!!");
 else
 { 
@@ -40,7 +40,7 @@ $debugg_after_session_created = true;
 $customer_msg = null;
 
 require_once("$file_dir_name/../external/db.php");
-// here old require of common.php
+// 
 
 $login_button_title = "دخول الموظف";
 $login_page = "login.php";
@@ -194,7 +194,7 @@ if($desc_site)
 }
 ?>
 <div class="home_banner login_banner">
-<div class="modal-dialog popup-login">
+<div class="modal-dialog popup-login-customer">
         <div class="modal-header">                        
                     <?php
                        if($customer_msg)

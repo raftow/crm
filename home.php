@@ -17,12 +17,9 @@
    elseif($objme)
    {
       $customerMe = null;
-<<<<<<< HEAD
-      include("$file_dir_name/stats.php");
-=======
-
-      require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
->>>>>>> fc44ba392bef732750194f6aeb3afd63e52ff420
+      $file_dir_name = dirname(__FILE__);
+      require("$file_dir_name/../lib/afw/afw_main_page.php"); 
+      AfwMainPage::echoMainPage("crm","monitoring.php", $file_dir_name);
    }
    else
    {

@@ -211,9 +211,9 @@ span.object_id {
     background-image: url(../pic/home_banner_001.jpg) !important;
     background-color: #c7e7f6;
     background-size: 100% 110% !important;
-    background-repeat: no-repeat !important;
     background-position-x: center !important;
     background-position-y: 0px !important;
+    background-repeat: repeat-y;
     width: 100%;
     min-height: 1150px !important;
     float: right;
@@ -324,6 +324,21 @@ h2.crm_question {
     color: #167868;
     text-shadow: #6bc9be 1px 1px;
 }
+
+.modal-dialog.popup-login-customer {
+    background: transparent;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 30px;
+    float: right;
+    min-height: 700px;
+    min-width: 300px !important;
+    width: 80% !important;
+    max-width: 350px;
+    margin-right: 10% !important;
+    margin-left: 30px !important;
+    margin-top: 50px !important;
+} 
 
 .modal-dialog.popup-login {
     background: transparent;
@@ -436,6 +451,18 @@ div.popup-sms-verify>.modal-content {
         margin-top: 130px !important;
         margin-bottom: 10px !important;
     }
+
+    .modal-dialog.popup-login-customer{
+        float: right;
+        min-height: 350px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 60% !important;
+        margin-right: 20% !important;
+        margin-left: 20% !important;
+        margin-top: 20px !important;
+
+    }
     
     .modal-dialog.popup-content {
         float: right;
@@ -462,6 +489,17 @@ div.popup-sms-verify>.modal-content {
         margin-top: 130px !important;
         margin-bottom: 10px !important;
     }
+
+    .modal-dialog.popup-login-customer {
+        float: right;
+        min-height: 350px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 70% !important;
+        margin-right: 15% !important;
+        margin-left: 15% !important;
+        margin-top: 20px !important;
+    }
     
     .modal-dialog.popup-content {
         float: right;
@@ -487,6 +525,17 @@ div.popup-sms-verify>.modal-content {
         margin-left: 10% !important;
         margin-top: 130px !important;
         margin-bottom: 10px !important;
+    }
+
+    .modal-dialog.popup-login-customer {
+        float: right;
+        min-height: 350px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 80% !important;
+        margin-right: 10% !important;
+        margin-left: 10% !important;
+        margin-top: 20px !important;
     }
     
     .modal-dialog.popup-content {
@@ -1038,9 +1087,9 @@ div.crm_calendar {
 
 @media screen and (max-width: 980px) {
     .modal-dialog.popup-login {
-        width: 36% !important;
-        margin-right: 32% !important;
-        margin-left: 32% !important;
+        width: 66% !important;
+        margin-right: 17% !important;
+        margin-left: 17% !important;
         max-width: none !important;
         min-height: 650px !important;
         padding-bottom: 50px !important;
@@ -2818,11 +2867,31 @@ h5.bluetitle.search {
 }
 
 div.home_banner>.modal-dialog.popup-login {
-    margin-right: 30% !important;
+    margin-right: 30%;
     max-width: 950px !important;
+}
+
+div.home_banner>.modal-dialog.popup-login-customer {
+    max-width: 500px !important;
 }
 
 div.modal-dialog>.modal-content {
     border: 1px solid #fff !important;
     animation: none !important;
+}
+
+.icon-322:before {
+    content: "\f0e8";
+}
+
+.icon-324:before {
+    content: "\f0a3";
+}
+
+.icon-323:before {
+    content: "\f007";
+}
+
+.icon-327:before {
+    content: "\f7b6";
 }

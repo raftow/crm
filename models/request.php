@@ -2860,7 +2860,7 @@ class Request extends AFWObject{
                             $request_id =  $this->id;
                             $title = $this->getVal("request_title");
                             $body = $this->getVal("request_text");
-                            $subject = AfwLanguageHelper::tt("urgent : High priority ticket has been assigned to you, titled", $lang)." [".truncateArabicJomla($title, 20)."]";
+                            $subject = AfwLanguageHelper::tt("urgent : High priority ticket has been assigned to you, titled", $lang)." [".AfwStringHelper::truncateArabicJomla($title, 20)."]";
             
                             $bodyHtml = "";
                             $bodyHtml .= "<h3>$subject</h3><br>";
@@ -3444,7 +3444,7 @@ class Request extends AFWObject{
 /*
         public function instanciated($numInstance)
         {
-            //_back_trace()
+            //_back_ trace()
             if($numInstance>400)
             {
               AfwRunHelper::lightSafeDie("trop dinstances $numInstance", $this);
