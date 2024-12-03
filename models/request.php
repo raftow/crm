@@ -52,7 +52,7 @@ alter table ".$server_db_prefix."crm.request add index indx_orgunit(orgunit_id);
 $file_dir_name = dirname(__FILE__); 
                 
 
-class Request extends AFWObject{
+class Request extends CrmObject{
 
         public static $REQUEST_CODE_LENGTH = 7;
 
@@ -898,49 +898,7 @@ class Request extends AFWObject{
         }
         
         
-        public function fld_CREATION_USER_ID()
-        {
-                return "created_by";
-        }
- 
-        public function fld_CREATION_DATE()
-        {
-                return "created_at";
-        }
- 
-        public function fld_UPDATE_USER_ID()
-        {
-        	return "updated_by";
-        }
- 
-        public function fld_UPDATE_DATE()
-        {
-        	return "updated_at";
-        }
- 
-        public function fld_VALIDATION_USER_ID()
-        {
-        	return "validated_by";
-        }
- 
-        public function fld_VALIDATION_DATE()
-        {
-                return "validated_at";
-        }
- 
-        public function fld_VERSION()
-        {
-        	return "version";
-        }
- 
-        public function fld_ACTIVE()
-        {
-        	return  "active";
-        }
- 
-        public function isTechField($attribute) {
-            return (($attribute=="created_by") or ($attribute=="created_at") or ($attribute=="updated_by") or ($attribute=="updated_at") or ($attribute=="validated_by") or ($attribute=="validated_at") or ($attribute=="version"));  
-        }
+        
         
         
         public function list_of_customer_type_id() { 

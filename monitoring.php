@@ -41,7 +41,10 @@ foreach($supList as $supItem)
 {
         $supObj = $supItem["obj"];
         $sup_employee_id = $supObj->getVal("employee_id");
-        $statsMatrix[$sup_employee_id] = array('name'=>$supObj->getDisplay($lang), 'missed'=>$stats_arr[$sup_employee_id]);
+        if($stats_arr[$sup_employee_id]>0)
+        {
+            $statsMatrix[$sup_employee_id] = array('name'=>$supObj->getDisplay($lang), 'missed'=>$stats_arr[$sup_employee_id]);
+        }        
 }
                           
 
@@ -59,40 +62,68 @@ $out_scr .= '<div class="row justify-content-center">
                                     <div class="quick_activity_wrap">
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="/lib/images/man.svg" alt="">
+                                                <img src="pic/man.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">520</span> </h3>
-                                                <p>Doctors</p>
+                                                <p>العملاء</p>
                                             </div>
                                         </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="/lib/images/cap.svg" alt="">
+                                                <img src="pic/request.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">6969</span> </h3>
-                                                <p>Nurses</p>
+                                                <p>الطلبات</p>
                                             </div>
                                         </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="/lib/images/wheel.svg" alt="">
+                                                <img src="pic/blocked.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">7509</span> </h3>
-                                                <p>Patients</p>
+                                                <p>الطلبات المتأخرة</p>
                                             </div>
                                         </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="/lib/images/pharma.svg" alt="">
+                                                <img src="pic/to-assign.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">2110</span> </h3>
-                                                <p>Pharmacusts</p>
+                                                <p>طلبات غير مسندة</p>
                                             </div>
                                         </div>
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/quality.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">75%</span> </h3>
+                                                <p>جودة الأداء</p>
+                                            </div>
+                                        </div>
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/feedback.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">2110</span> </h3>
+                                                <p>نسبة رضا العملاء</p>
+                                            </div>
+                                        </div>
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/tasks.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">10</span> </h3>
+                                                <p>مهامي</p>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -102,22 +133,40 @@ $out_scr .= '<div class="row justify-content-center">
     </div>';
 
 $out_scr .= "<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>";
-$out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات الطلبات المتأخر اسنادها</h1></div>";
-$out_scr .= "<br>\n statsMatrix = \n<br><pre style='direction:ltr;text-align: left;'>".var_export($statsMatrix,true)."</pre>";
-$out_scr .= "<br>\n stats_arr = \n<br><pre style='direction:ltr;text-align: left;'>".var_export($stats_arr,true)."</pre>";
-// $out_scr .= "<br>\stats_arr = \n<br>".var_export($stats_arr,true);
 
-$out_scr .= AfwHtmlHelper::tableToHtml($statsMatrix, $header_trad);
+// customer number increasing (cni)
+if(true)
+{
+    $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات نمو عدد العملاء</h1></div>";
+    $out_scr .= "<canvas id=\"cni\" style=\"width:100%;max-width:900px;margin:auto\"></canvas>";
+    $out_scr .= CrmCustomer::oniChartScript("cni", "line");
+}
 
+if(true)
+{
+    $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات نمو عدد الطلبات</h1></div>";
+    $out_scr .= "<canvas id=\"rni\" style=\"width:100%;max-width:900px;margin:auto\"></canvas>";
+    $out_scr .= Request::oniChartScript("rni", "line");
+}
 
-$out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>أمثلة لطلبات تأخر اسنادها جدا</h1></div>";
+if(count($statsMatrix)>0)
+{
+    $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات الطلبات المتأخر اسنادها</h1></div>";
+    // $out_scr .= "<br>\n statsMatrix = \n<br><pre style='direction:ltr;text-align: left;'>".var_export($statsMatrix,true)."</pre>";
+    // $out_scr .= "<br>\n stats_arr = \n<br><pre style='direction:ltr;text-align: left;'>".var_export($stats_arr,true)."</pre>";
+    // $out_scr .= "<br>\stats_arr = \n<br>".var_export($stats_arr,true);
+    $out_scr .= AfwHtmlHelper::tableToHtml($statsMatrix, $header_trad);    
+}
 
+if(count($reqList)>0)
+{
+    $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>أمثلة لطلبات تأخر اسنادها جدا</h1></div>";
+    $header_trad = AfwUmsPagHelper::getRetrieveHeader(new Request());
+    list($data,$isAvail) = AfwLoadHelper::getRetrieveDataFromObjectList($reqList,$header_trad, $lang, $newline="\n<br>");
+    $out_scr .= AfwHtmlHelper::tableToHtml($data, $header_trad);
+    $out_scr .= "</div>";
+}
 
-$header_trad = AfwUmsPagHelper::getRetrieveHeader(new Request());
-list($data,$isAvail) = AfwLoadHelper::getRetrieveDataFromObjectList($reqList,$header_trad, $lang, $newline="\n<br>");
-
-$out_scr .= AfwHtmlHelper::tableToHtml($data, $header_trad);
-
-$out_scr .= "</div></div>";
+$out_scr .= "</div>";
 
 ?>

@@ -46,7 +46,87 @@ class CrmObject extends AFWObject{
             if(!$objme) return false;
             return $objme->isSuperAdmin();
     }
+
+
+    public function fld_CREATION_USER_ID()
+        {
+                return "created_by";
+        }
+ 
+        public function fld_CREATION_DATE()
+        {
+                return "created_at";
+        }
+ 
+        public function fld_UPDATE_USER_ID()
+        {
+        	return "updated_by";
+        }
+ 
+        public function fld_UPDATE_DATE()
+        {
+        	return "updated_at";
+        }
+ 
+        public function fld_VALIDATION_USER_ID()
+        {
+        	return "validated_by";
+        }
+ 
+        public function fld_VALIDATION_DATE()
+        {
+                return "validated_at";
+        }
+ 
+        public function fld_VERSION()
+        {
+        	return "version";
+        }
+ 
+        public function fld_ACTIVE()
+        {
+        	return  "active";
+        }
+ 
+        public function isTechField($attribute) {
+            return (($attribute=="created_by") or ($attribute=="created_at") or ($attribute=="updated_by") or ($attribute=="updated_at") or ($attribute=="validated_by") or ($attribute=="validated_at") or ($attribute=="version"));  
+        }
 	
 
 
+// object number increase chart functions
+        
+public static function objectNumberAt($gdate)
+{
+        $obj = new static();
+        $obj->where("created_at <= '$gdate'");
+        return $obj->count();
+}
+
+// data to use for chart by default 1 year ago
+public static function oniData($start=-360, $end = 0, $step=30)
+{
+    $data = [];
+    for($i=$start; $i<=$end; $i+=$step)
+    {
+        $gdate = AfwDateHelper::shiftGregDate("", $i);
+        $c = static::objectNumberAt($gdate);
+        $data[$i] = $c;
+    }
+
+    return $data;
+}
+
+public static function oniChartScript($idCanvas, $type)
+{
+    $data = static::oniData();
+    if($type=="scatter") return AfwChartHelper::scatterChartScript($data, $idCanvas);    
+    if($type=="line") return AfwChartHelper::lineChartScript($data, $idCanvas);    
+    
+}
+
+
+
+
+     
 }

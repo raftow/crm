@@ -23,7 +23,10 @@ if($objme)
         {
                 $Main_Page = "monitoring.php";
                 $MODULE = $My_Module = "crm";
-                AfwMainPage::echoMainPage($My_Module, $Main_Page, $file_dir_name);
+                $options = [];
+                $options["dashboard-stats"] = true;
+                $options["chart-js"] = true;
+                AfwMainPage::echoMainPage($My_Module, $Main_Page, $file_dir_name, $options);
         }
         elseif($objme_has_crm_employee_role)
         {
