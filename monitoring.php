@@ -139,14 +139,14 @@ if(true)
 {
     $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات نمو عدد العملاء</h1></div>";
     $out_scr .= "<canvas id=\"cni\" style=\"width:100%;max-width:900px;margin:auto\"></canvas>";
-    $out_scr .= CrmCustomer::oniChartScript("cni", "line");
+    $out_scr .= CrmCustomer::oniChartScript("cni", "line", -10, 0, 1, 'y', 'year', '');
 }
 
 if(true)
 {
     $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات نمو عدد الطلبات</h1></div>";
     $out_scr .= "<canvas id=\"rni\" style=\"width:100%;max-width:900px;margin:auto\"></canvas>";
-    $out_scr .= Request::oniChartScript("rni", "line");
+    $out_scr .= Request::oniChartScript("rni", "line", -10, 0, 1, 'y', 'year', '', ['min'=>50, 'max'=>150], 'request_date', 'hijri');
 }
 
 if(count($statsMatrix)>0)

@@ -2888,6 +2888,10 @@ div.modal-dialog>.modal-content {
     content: "\f0a3";
 }
 
+.icon-317:before {
+    content: "\f200";
+}
+
 .icon-323:before {
     content: "\f007";
 }
