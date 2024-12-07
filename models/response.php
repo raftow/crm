@@ -178,7 +178,7 @@ class Response extends CrmObject{
         public function getNodeDisplay($lang="ar")
         {
                $response_text = $this->getVal("response_text");
-               return arabicStartOfJomlaTrim($response_text,98);
+               return AfwStringHelper::arabicStartOfJomlaTrim($response_text,98);
         }
 
         public function getDisplay($lang="ar")
@@ -197,7 +197,7 @@ class Response extends CrmObject{
                $data[2] = implode(":", $rtime_arr);
                // if($this->getId() == 14134) echo("this->getVal(response_text) = ".$this->getVal("response_text")."<br>\n");
                $response_text = $this->getVal("response_text");
-               $subject = arabicStartOfJomlaTrim($response_text,34);
+               $subject = AfwStringHelper::arabicStartOfJomlaTrim($response_text,34);
                // if($this->getId() == 14134) die("$subject = arabicStartOfJomlaTrim($response_text)");
                return $subject." : ".implode(" - ",$data);
         }
@@ -465,7 +465,7 @@ class Response extends CrmObject{
                                 $crmEmplObj = CrmEmployee::auserCrmEmployee($employee_id, $orgunit_id);
                                 if($crmEmplObj)
                                 {
-                                        if($crmEmplObj->est("approved")) return "qinv_";
+                                        if($crmEmplObj->sureIs("approved")) return "qinv_";
                                         
                                 }
                                 
@@ -480,7 +480,7 @@ class Response extends CrmObject{
                                         $crmEmplObj = CrmEmployee::auserCrmEmployee($employee_id, $orgunit_id_request);
                                 }
                                 
-                                if($crmEmplObj and $crmEmplObj->est("approved")) return "qinv_";
+                                if($crmEmplObj and $crmEmplObj->sureIs("approved")) return "qinv_";
 
                                 return "invest_";
                                 

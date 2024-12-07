@@ -649,7 +649,7 @@ class CrmCustomer extends CrmObject{
 
         public function getDateSystem()
         {
-                if($this->est("hijri")) return "hijri";
+                if($this->sureIs("hijri")) return "hijri";
                 else "greg";
         }
 

@@ -204,9 +204,9 @@ class CrmEmpRequest extends CrmObject
                 $orgunit_id = $this->getVal("orgunit_id");
                 $employee_id = $this->getVal("employee_id");
                 $email = $this->getVal("email");
-                $approved = $this->est("approved");
+                $approved = $this->sureIs("approved");
 
-                if ($this->est("active") and ($orgunit_id > 0) and ($email)) {
+                if ($this->sureIs("active") and ($orgunit_id > 0) and ($email)) {
                         if ($employee_id) {
                                 $this->set("email", "");
                         } else {
@@ -252,7 +252,7 @@ class CrmEmpRequest extends CrmObject
                         }*/
                 }
 
-                if ($this->est("active") and $approved and ($orgunit_id > 0) and ($employee_id > 0)) {
+                if ($this->sureIs("active") and $approved and ($orgunit_id > 0) and ($employee_id > 0)) {
                         CrmEmployee::loadByMainIndex($orgunit_id, $employee_id, true);
                 }
 

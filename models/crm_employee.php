@@ -208,7 +208,7 @@ class CrmEmployee extends CrmObject
 
         public function afterInsert($id, $fields_updated) 
         {
-                if($this->est("active") and ($this->getVal("employee_id")>0))
+                if($this->sureIs("active") and ($this->getVal("employee_id")>0))
                 {
                         $empl = $this->het("employee_id");
                         if($empl)
@@ -225,9 +225,9 @@ class CrmEmployee extends CrmObject
                    ($fields_updated["active"] or $fields_updated["admin"] or $fields_updated["super_admin"] or $fields_updated["requests_nb"]))
                 {
                         $empl = $this->het("employee_id");
-                        if($this->est("active"))
+                        if($this->sureIs("active"))
                         {
-                                if($this->est("super_admin"))
+                                if($this->sureIs("super_admin"))
                                 {
                                      //
                                      $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
@@ -236,7 +236,7 @@ class CrmEmployee extends CrmObject
                                      $empl->addMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
                                      $empl->updateMyUserInformation();    
                                 }
-                                elseif($this->est("admin"))
+                                elseif($this->sureIs("admin"))
                                 {
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
