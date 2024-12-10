@@ -696,6 +696,13 @@ class CrmEmployee extends CrmObject
                 if($attribute=="email") return true;
                 return false;
         }
+
+        public function myShortNameToAttributeName($attribute)
+        {
+                if ($attribute == "employee") return "employee_id";
+                
+                return $attribute;
+        }
              
 }
 ?>

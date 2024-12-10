@@ -30,7 +30,7 @@ foreach($requestList as $ticketObj)
                 <div class='front_bloc hzm_crm_bloc ticket status_<?php echo $my_status; ?>'>
                         <div class='mb_long_title my_request'> 
                                 <div class='my_crm_ticket title'>
-                                <?php echo $request_type_decoded; ?> <div class='crm_ticket_num'><?php echo $ticketObj->request_code; ?> </div>                                        
+                                <?php echo $request_type_decoded; ?> <div class='crm_ticket_num'><?php echo $ticketObj->getVal("request_code"); ?> </div>                                        
                                 </div>
                                 <div class='my_crm_ticket status fleft'>
                                        <div class='request_status status_<?php echo $my_status; ?>' ><?php echo $my_status_decoded; ?> </div>
@@ -39,10 +39,10 @@ foreach($requestList as $ticketObj)
                         <div class='front_bloc hzm_data_props my_cms'>
                                 <div class='my_crm_ticket_data'>                        
                                         <div class="row crm_data">
-                                                <span class="hzm_date"><?php echo $full_request_date; ?> س </span><span class="hzm_time"><?php echo $ticketObj->request_time; ?> </span> 
-                                                <label><?php echo $ticketObj->request_title; ?></label>
+                                                <span class="hzm_date"><?php echo $full_request_date; ?> س </span><span class="hzm_time"><?php echo $ticketObj->getVal("request_time"); ?> </span> 
+                                                <label><?php echo $ticketObj->getVal("request_title"); ?></label>
                                                 <div class='hzm_data_prop request_text'>
-                                                <?php echo truncateArabicJomla($ticketObj->request_text, $maxlen=250, $etc="..."); ?> 
+                                                <?php echo AfwStringHelper::truncateArabicJomla($ticketObj->getVal("request_text"), $maxlen=250, $etc="..."); ?> 
                                                 </div>
                                         </div>
                                 <?php 
@@ -57,7 +57,7 @@ foreach($requestList as $ticketObj)
                                                         <?php echo $ticket_status_comment; ?> 
                                                 </div>
                                                 <div class='hzm_small_calendar calendar_left'>
-                                                تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->status_time; ?> </span> 
+                                                تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->getVal("status_time"); ?> </span> 
                                                 </div>
                                         </div>
                                 

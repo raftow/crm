@@ -626,4 +626,14 @@ class Response extends CrmObject
 
                 return false;
         }
+
+        public function myShortNameToAttributeName($attribute)
+        {
+                if ($attribute == "request") return "request_id";
+                if ($attribute == "type") return "response_type_id";
+
+                
+                
+                return $attribute;
+        }
 }

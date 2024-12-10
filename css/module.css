@@ -1243,6 +1243,7 @@ input.btnbtsp.btn-primary.btncheck {
 
 .my_crm_ticket.title {
     width: 55% !important;
+    margin: 0 1% 0 0 !important;
 }
 
 .mb_long_title.my_request {

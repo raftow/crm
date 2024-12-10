@@ -133,7 +133,7 @@
                         {
                 ?>
                 <div id="fg-related_object_id" class="attrib-related_object_id form-group width_pct_100 ">
-                        <label for="related_object_id" class="hzm_label hzm_data_related_object_id"> <?php echo $this->tt("related_object_title",$lang)?> (إختياري)</label>                
+                        <label for="related_object_id" class="hzm_label hzm_data_related_object_id"> <?php echo AfwLanguageHelper::tt("related_object_title",$lang,"crm")?> (إختياري)</label>                
                         <?php echo AfwInputHelper::picture_dropdown($roList, "related_object_id", $selected=array($related_object_id), 
                                                                         "related_object_id",
                                                                         $data_images=false, // no drop dwon pictures
@@ -171,7 +171,7 @@
 
                 
         </div>
-        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo $this->tt("ارسال الطلب", $lang)?>&nbsp;"       style="margin-right: 5px;" >
+        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال الطلب", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
 </div>
 </form>
 </div>

@@ -25,7 +25,7 @@
                 <div class='front_bloc hzm_crm_bloc ticket status_<?php echo $my_status; ?>'>
                         <div class='mb_long_title my_request'> 
                                 <div class='my_crm_ticket'>
-                                <?php echo $request_type_decoded; ?> رقم <div class='crm_ticket_num'><?php echo $ticketObj->request_code; ?> </div>
+                                <?php echo $request_type_decoded; ?> رقم <div class='crm_ticket_num'><?php echo $ticketObj->getVal("request_code"); ?> </div>
                                 </div>
                                 <div class='my_crm_ticket fleft'>
                                        <div class='request_status status_<?php echo $my_status; ?>' ><?php echo $my_status_decoded; ?> </div>
@@ -34,8 +34,8 @@
                         <div class='my_crm_dates'>
                                 <div class='mb_med_title my_ticket'> 
                                         <div class='crm_calendar crm_data'>
-                                        <label> <?php echo $ticketObj->request_title; ?> </label>                                        
-                                        <span class="hzm_date"><?php echo $full_request_date; ?> الساعة</span> <span class="hzm_time"><?php echo $ticketObj->request_time; ?> </span> 
+                                        <label> <?php echo $ticketObj->getVal("request_title"); ?> </label>                                        
+                                        <span class="hzm_date"><?php echo $full_request_date; ?> الساعة</span> <span class="hzm_time"><?php echo $ticketObj->getVal("request_time"); ?> </span> 
                                         </div>
                                 </div>
                         </div>
@@ -45,17 +45,17 @@
                                         <div class="row crm_data">
                                                 <label>نص الطلب</label>
                                                 <div class='hzm_data_prop request_text'>
-                                                <?php echo $ticketObj->request_text; ?> 
+                                                <?php echo $ticketObj->getVal("request_text"); ?> 
                                                 </div>
                                         </div>
                                         <div class="row crm_data">
                                                 
                                                 <?php 
                                                 
-                                                        if($ticketObj->related_request_code and isset($relatedTicketObj) and $relatedTicketObj)
+                                                        if($ticketObj->getVal("related_request_code") and isset($relatedTicketObj) and $relatedTicketObj)
                                                         {
                                                 ?> 
-                                                                                <label>متعلق بطلب سابق : <?php echo $relatedTicketObj->request_title." <div class=\"crm_ticket_num bggray\">".$ticketObj->related_request_code."</div>"; ?></label>
+                                                                                <label>متعلق بطلب سابق : <?php echo $relatedTicketObj->request_title." <div class=\"crm_ticket_num bggray\">".$ticketObj->getVal("related_request_code")."</div>"; ?></label>
                                                                                 <div class='hzm_data_prop related_request_code'>
                                                                                         <div class='hzm_data_prop'>                                                                                                
                                                                                                 <a target='_related_request' href='i.php?cn=crm&mt=view_request&rid=<?php echo $relatedTicketObj->id ?>'>
@@ -86,7 +86,7 @@
                                                         <?php echo $ticket_status_comment; ?> 
                                                 </div>
                                                 <div class='hzm_small_calendar calendar_left'>
-                                                تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->status_time; ?> </span> 
+                                                تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->getVal("status_time"); ?> </span> 
                                                 </div>
                                         </div>
                                 

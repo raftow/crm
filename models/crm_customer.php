@@ -549,6 +549,16 @@ class CrmCustomer extends CrmObject
                 return $fn;
         }
 
+        public function calcFull_name_en()
+        {
+                $fn = "";
+                $fn = trim($fn . " " . $this->valFirst_name_en());
+                $fn = trim($fn . " " . $this->valFather_name_en());
+                $fn = trim($fn . " " . $this->valLast_name_en());
+
+                return $fn;
+        }
+
 
         public function correctIdn()
         {
@@ -785,5 +795,17 @@ class CrmCustomer extends CrmObject
                 } else {
                         return array(false, $this->tm("this customer does not have correct mobile number") . " [$id]");
                 }
+        }
+
+        public function getCustomerPicture()
+        {
+                $html = "";
+                // @todo see in uploaded files of this user if there are picture
+
+                // use initials like RB for Rafik BOUBAKER
+                
+                $initials = AfwStringHelper::initialsOfName($this->calcFull_name_en());                
+                $html = "<div class='user-account'>$initials</div>";
+                return $html;
         }
 }

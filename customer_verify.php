@@ -177,10 +177,20 @@ elseif($customer_mobile)
        if($simulate_sms_to_mobile) $sms_mobile = $simulate_sms_to_mobile;
        else $sms_mobile = $customer_mobile;
 
-       // send SMS to customer       
-       list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $customer_verify_the_message);
-       $sms_info_export = var_export($sms_info,true);
-       if((!$sms_ok) and (!$sms_info)) $sms_info_export = "call to AfwSmsSender::sendSMS($sms_mobile, xxx) failed without known reason, contact admin";
+       // send SMS to customer 
+       $otp_show_in_page = AfwSession::config("otp-show-in-page", false);
+       if($otp_show_in_page)      
+       {
+                AfwSession::pushInformation($customer_verify_the_message);
+                $sms_ok = true;
+       }
+       else
+       {
+                list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $customer_verify_the_message);
+                $sms_info_export = var_export($sms_info,true);
+                if((!$sms_ok) and (!$sms_info)) $sms_info_export = "call to AfwSmsSender::sendSMS($sms_mobile, xxx) failed without known reason, contact admin";
+       }
+       
        
 }
 else
@@ -275,7 +285,7 @@ else
         if(!AfwSession::config("MODE_DEVELOPMENT", false)) $sms_info_export = "<!-- $sms_info_export -->";        
 ?>
 <div class='error'>
-        حدث خطأ ما أو أن هذه العملية غير مسموح بها
+        حدث خطأ أثناء ارسال رسالة قصيرة للعميل تحتوي على رمز التحقق ربما أن هذه العملية غير مسموح بها في البيئة الحالية
         <?php echo $sms_info_export ?>
 </div>
 <?
