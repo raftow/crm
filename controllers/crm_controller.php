@@ -10,9 +10,22 @@ class CrmController extends AfwController{
                 return AfwSession::config("main_module", "");
         }
 
+        // This was old way now we use here below method myNewViewSettings
         public function myViewSettings($methodName)
         {
-                return array("", "crm/front_header.php", "lib/hzm/oldweb/hzm_simple_footer.php");
+                $front_header_template = AfwSession::config("front_header_template", "front");
+                return array("", "crm/$front_header_template"."_header.php", "lib/hzm/oldweb/hzm_simple_footer.php");
+        }
+
+        // now we use here below method myNewViewSettings 
+        public function myNewViewSettings($methodName)
+        {
+                $module = "crm";
+                $is_direct = false;
+                $page = "";
+                $page_path = "";
+                $options = "";
+                return array($module, $is_direct, $page, $page_path, $options);
         }
 
 
@@ -1381,7 +1394,7 @@ class CrmController extends AfwController{
                 }
                 else
                 {
-                        list($first_name, $father_name, $last_name) = arabic_full_name_explode($company_name);
+                        list($first_name, $father_name, $last_name) = AfwStringHelper::arabic_full_name_explode($company_name);
                         if(!$father_name) $father_name = "للعمرة";
                         if(!$last_name) $last_name = "والزيارة";
                         
@@ -1389,7 +1402,7 @@ class CrmController extends AfwController{
                         $crmObj->set("father_name_ar",$father_name);
                         $crmObj->set("last_name_ar",$last_name);
 
-                        list($first_name_en, $father_name_en, $last_name_en) = arabic_full_name_explode($your_full_name);
+                        list($first_name_en, $father_name_en, $last_name_en) = AfwStringHelper::arabic_full_name_explode($your_full_name);
                         $crmObj->set("first_name_en",$first_name_en);
                         $crmObj->set("father_name_en",$father_name_en);
                         $crmObj->set("last_name_en",$last_name_en);

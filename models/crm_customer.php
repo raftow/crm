@@ -1,7 +1,7 @@
 <?php
-                
-$file_dir_name = dirname(__FILE__); 
-                
+
+$file_dir_name = dirname(__FILE__);
+
 // 18/5/2022 : 
 // alter table crm_customer change phone phone varchar(16) NULL;
 
@@ -21,261 +21,245 @@ ALTER TABLE `crm_customer` CHANGE `ref_num` `ref_num` VARCHAR(32) CHARACTER SET 
 
 
 
-class CrmCustomer extends CrmObject{
+class CrmCustomer extends CrmObject
+{
 
-        public static $MY_ATABLE_ID=3610; 
+        public static $MY_ATABLE_ID = 3610;
 
         public static $MAX_ACTIVE_CUSTOMER_PERIOD = 354; // nb of days in hijri year
-        
-	public static $DATABASE		= ""; 
-        public static $MODULE		    = "crm"; 
-        public static $TABLE			= "crm_customer"; 
-        public static $DB_STRUCTURE = null; 
-        
-        
-        public function __construct(){
-		parent::__construct("crm_customer","id","crm");
+
+        public static $DATABASE                = "";
+        public static $MODULE                    = "crm";
+        public static $TABLE                        = "crm_customer";
+        public static $DB_STRUCTURE = null;
+
+
+        public function __construct()
+        {
+                parent::__construct("crm_customer", "id", "crm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 $this->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn", "ref_num", "phone");
                 $this->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
-                 
-                
-                $this->UNIQUE_KEY = array('mobile','email','idn_type_id','idn');
+
+
+                $this->UNIQUE_KEY = array('mobile', 'email', 'idn_type_id', 'idn');
                 $this->editByStep = true;
                 $this->editNbSteps = 3;
                 $this->showQeditErrors = true;
                 $this->showRetrieveErrors = true;
                 $this->STATS_DEFAULT_CODE = "gs001";
-	}
-        
-        
+        }
+
+
         public static $STATS_CONFIG = array(
-                "gs001"=> array("STATS_WHERE"=>"active = 'Y' and last_request_date between [date_start_stats] and [date_end_stats]", // 
-                                "DISABLE-VH" => true,
-                                "FOOTER_TITLES" => false,
-                                "FOOTER_SUM" => true,
-                                "GROUP_SEP"=>".",
-                                "GROUP_COLS"=>array(
-                                                     0=> array("COLUMN"=>"customer_type_id", "DISPLAY-FORMAT"=>"decode","FOOTER_SUM_TITLE"=>"الإجمــالـي"),
-                                                   ),
-                                "DISPLAY_COLS"=>array(
-                                                     1=> array("COLUMN"=>"this_month", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"this_month","FOOTER_SUM"=>true),
-                                                     2=> array("COLUMN"=>"previous_month", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"previous_month","FOOTER_SUM"=>true),
-                                                     3=> array("COLUMN"=>"older_customer", "COLUMN_IS_FORMULA"=>true, "GROUP-FUNCTION"=>"sum", "SHOW-NAME"=>"older_customer","FOOTER_SUM"=>true),
-                                                     4=> array("COLUMN"=>"id", "GROUP-FUNCTION"=>"count", "SHOW-NAME"=>"count_cust","FOOTER_SUM"=>true),
-                                                   ),
+                "gs001" => array(
+                        "STATS_WHERE" => "active = 'Y' and last_request_date between [date_start_stats] and [date_end_stats]", // 
+                        "DISABLE-VH" => true,
+                        "FOOTER_TITLES" => false,
+                        "FOOTER_SUM" => true,
+                        "GROUP_SEP" => ".",
+                        "GROUP_COLS" => array(
+                                0 => array("COLUMN" => "customer_type_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+                        ),
+                        "DISPLAY_COLS" => array(
+                                1 => array("COLUMN" => "this_month", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "this_month", "FOOTER_SUM" => true),
+                                2 => array("COLUMN" => "previous_month", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "previous_month", "FOOTER_SUM" => true),
+                                3 => array("COLUMN" => "older_customer", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "older_customer", "FOOTER_SUM" => true),
+                                4 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_cust", "FOOTER_SUM" => true),
+                        ),
 
-                                                   
 
 
-                                /*"FORMULA_COLS"=>array(
+
+                        /*"FORMULA_COLS"=>array(
                                                 0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
-                                ),*/                   
+                                ),*/
 
-                                "OPTIONS" => array("simple"=> array('count_cust' => true),
-                                        ),
-                                // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
-                                //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
+                        "OPTIONS" => array(
+                                "simple" => array('count_cust' => true),
+                        ),
+                        // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
+                        //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
 
-                               ),
+                ),
 
-                               
+
 
 
         );
-        
-        
-        
+
+
+
         public static function loadById($id)
         {
-           $obj = new CrmCustomer();
-           $obj->select_visibilite_horizontale();
-           if($obj->load($id))
-           {
-                return $obj;
-           }
-           else return null;
+                $obj = new CrmCustomer();
+                $obj->select_visibilite_horizontale();
+                if ($obj->load($id)) {
+                        return $obj;
+                } else return null;
         }
-        
+
         public static function loadByMobileAndFirstName($mobile, $first_name_ar)
         {
-           $obj = new CrmCustomer();
-           if(!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
-           if(!$first_name_ar) throw new AfwRuntimeException("loadByMobileAndFirstName : first_name_ar is mandatory field");
+                $obj = new CrmCustomer();
+                if (!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
+                if (!$first_name_ar) throw new AfwRuntimeException("loadByMobileAndFirstName : first_name_ar is mandatory field");
 
 
-           $obj->select("mobile",$mobile);
-           $obj->select("first_name_ar",$first_name_ar);
-           $obj->where("length(idn)=10");
+                $obj->select("mobile", $mobile);
+                $obj->select("first_name_ar", $first_name_ar);
+                $obj->where("length(idn)=10");
 
-           if($obj->load())
-           {
-                return $obj;
-           }
-           else return null;
+                if ($obj->load()) {
+                        return $obj;
+                } else return null;
         }
 
         public static function loadByMobileAndEmail($mobile, $email)
         {
-           $obj = new CrmCustomer();
-           if(!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
-           if(!$email) throw new AfwRuntimeException("loadByMobileAndFirstName : email is mandatory field");
+                $obj = new CrmCustomer();
+                if (!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
+                if (!$email) throw new AfwRuntimeException("loadByMobileAndFirstName : email is mandatory field");
 
 
-           $obj->select("mobile",$mobile);
-           $obj->select("email",$email);
-           
+                $obj->select("mobile", $mobile);
+                $obj->select("email", $email);
 
-           if($obj->load())
-           {
-                return $obj;
-           }
-           else return null;
+
+                if ($obj->load()) {
+                        return $obj;
+                } else return null;
         }
-        
+
 
         public static function loadByMobile($mobile, $the_incorect_idn)
         {
-           $obj = new CrmCustomer();
-           if(!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
+                $obj = new CrmCustomer();
+                if (!$mobile) throw new AfwRuntimeException("loadByMobileAndFirstName : mobile is mandatory field");
 
-           $obj->select("mobile",$mobile);
-           $obj->where("length(idn)=10");
-           if($the_incorect_idn) $obj->where("idn != '$the_incorect_idn'");
-           if($obj->load())
-           {
-                return $obj;
-           }
-           else return null;
+                $obj->select("mobile", $mobile);
+                $obj->where("length(idn)=10");
+                if ($the_incorect_idn) $obj->where("idn != '$the_incorect_idn'");
+                if ($obj->load()) {
+                        return $obj;
+                } else return null;
         }
-        
-        public static function loadByMainIndex($mobile, $idn_type_id, $idn, $create_obj_if_not_found=false)
+
+        public static function loadByMainIndex($mobile, $idn_type_id, $idn, $create_obj_if_not_found = false)
         {
                 $obj = new CrmCustomer();
-                if(!$mobile) throw new AfwRuntimeException("loadByMainIndex : mobile is mandatory field");
-                if(!$idn_type_id) throw new AfwRuntimeException("loadByMainIndex : idn_type_id is mandatory field");
-                if(!$idn) throw new AfwRuntimeException("loadByMainIndex : idn is mandatory field");
+                if (!$mobile) throw new AfwRuntimeException("loadByMainIndex : mobile is mandatory field");
+                if (!$idn_type_id) throw new AfwRuntimeException("loadByMainIndex : idn_type_id is mandatory field");
+                if (!$idn) throw new AfwRuntimeException("loadByMainIndex : idn is mandatory field");
 
 
-                $obj->select("mobile",$mobile);
-                $obj->select("idn",$idn);
+                $obj->select("mobile", $mobile);
+                $obj->select("idn", $idn);
 
-                if($obj->load())
-                {
-                        
-                        if($create_obj_if_not_found)
-                        {
-                        $obj->set("idn_type_id",$idn_type_id);
-                        $obj->set("customer_type_id",1);
-                        
-                        $obj->activate();
-                        } 
+                if ($obj->load()) {
+
+                        if ($create_obj_if_not_found) {
+                                $obj->set("idn_type_id", $idn_type_id);
+                                $obj->set("customer_type_id", 1);
+
+                                $obj->activate();
+                        }
                         return $obj;
-                }
-                elseif($create_obj_if_not_found)
-                {
-                        $obj->set("mobile",$mobile);
-                        $obj->set("idn",$idn);
-                        $obj->set("idn_type_id",$idn_type_id);
-                        $obj->set("customer_type_id",1);
+                } elseif ($create_obj_if_not_found) {
+                        $obj->set("mobile", $mobile);
+                        $obj->set("idn", $idn);
+                        $obj->set("idn_type_id", $idn_type_id);
+                        $obj->set("customer_type_id", 1);
 
                         $obj->insert();
                         $obj->is_new = true;
                         return $obj;
-                }
-                else return null;
-           
+                } else return null;
         }
 
 
         public function getTaqibCandidate()
         {
                 $req = new Request();
-                $req->select("customer_id",$this->id);
-                $req->select("active","Y");
-                $req->select("survey_sent","Y");
-                $req->select("pb_resolved","N");
-                $req->select("service_satisfied","N");
+                $req->select("customer_id", $this->id);
+                $req->select("active", "Y");
+                $req->select("survey_sent", "Y");
+                $req->select("pb_resolved", "N");
+                $req->select("service_satisfied", "N");
                 $req->where("survey_token is not null and survey_token != ''");
 
-                $reqList = $req->loadMany(1,"id asc");
+                $reqList = $req->loadMany(1, "id asc");
 
                 // return first item (the list tself contain only 1 item max)
-                foreach($reqList as $reqItem) return $reqItem;
+                foreach ($reqList as $reqItem) return $reqItem;
 
                 // if empty return null
 
                 return null;
-
         }
 
-        public static function createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id, $city_id, $customer_type_id=1)
+        public static function createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id, $city_id, $customer_type_id = 1)
         {
-                if(!$idn) throw new AfwRuntimeException("createOrUpdateCustomer : idn is mandatory");
-                if(!$mobile) throw new AfwRuntimeException("createOrUpdateCustomer : mobile is mandatory");
+                if (!$idn) throw new AfwRuntimeException("createOrUpdateCustomer : idn is mandatory");
+                if (!$mobile) throw new AfwRuntimeException("createOrUpdateCustomer : mobile is mandatory");
 
-                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, $authorize_other_sa_idns=true);
-                if(!$idn_correct)  throw new AfwRuntimeException("createOrUpdateCustomer : idn number [$idn] is not correct");
+                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, $authorize_other_sa_idns = true);
+                if (!$idn_correct)  throw new AfwRuntimeException("createOrUpdateCustomer : idn number [$idn] is not correct");
 
-                $customerObj = self::loadByMainIndex($mobile, $idn_type_id, $idn, $create_obj_if_not_found=true);
-                if(!$customerObj->getVal("first_name_ar"))
-                {
+                $customerObj = self::loadByMainIndex($mobile, $idn_type_id, $idn, $create_obj_if_not_found = true);
+                if (!$customerObj->getVal("first_name_ar")) {
                         $customerObj->set("first_name_ar", $first_name);
                         $customerObj->set("last_name_ar", $last_name);
                 }
                 $customerObj->set("city_id", $city_id);
                 $customerObj->set("gender_id", $customer_gender_id);
                 $customerObj->set("customer_type_id", $customer_type_id);
-                
+
 
                 $customerObj->commit();
 
                 return $customerObj;
         }
-        
+
         public static function loadByLoginInfos($mobile, $email, $idn)
         {
-           
-                if(!$idn)  AfwRunHelper::simpleError("loadByLoginInfos : idn is mandatory");
-                if((!$mobile) and (!$email))  AfwRunHelper::simpleError("loadByMainIndex : mobile or email is mandatory");
 
-                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn,false,false);
-                
+                if (!$idn)  AfwRunHelper::simpleError("loadByLoginInfos : idn is mandatory");
+                if ((!$mobile) and (!$email))  AfwRunHelper::simpleError("loadByMainIndex : mobile or email is mandatory");
+
+                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, false, false);
+
                 $obj = new CrmCustomer();
                 $obj->where("idn='$idn' or (idn like 'NID-%' and mobile != '0598988330')");
                 $obj->where("email='$email' or mobile='$mobile'");
-                
 
-                if($obj->load())
-                {
-                        if($idn_correct) // rafik : 19/5/2022, this is to repaire customers who came from old ma3an nartaqi database without IDN 
-                                         // so we have put virtual IDN starting with NID-XXX (XXX is the node ID in old drupal database)
+
+                if ($obj->load()) {
+                        if ($idn_correct) // rafik : 19/5/2022, this is to repaire customers who came from old ma3an nartaqi database without IDN 
+                        // so we have put virtual IDN starting with NID-XXX (XXX is the node ID in old drupal database)
                         {
-                                $obj->set("idn",$idn);    
-                                $obj->set("idn_type_id",$idn_type_id);
+                                $obj->set("idn", $idn);
+                                $obj->set("idn_type_id", $idn_type_id);
                                 $obj->commit();
                         }
                         return $obj;
-                }
-                else return null;           
+                } else return null;
         }
 
         public static function loadByIdn($idn)
         {
-           
-                if(!$idn)  AfwRunHelper::simpleError("loadByLoginInfos : idn is mandatory");
 
-                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn,false,false);
-                
+                if (!$idn)  AfwRunHelper::simpleError("loadByLoginInfos : idn is mandatory");
+
+                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, false, false);
+
                 $obj = new CrmCustomer();
-                $obj->select("idn",$idn);    
-                $obj->select("idn_type_id",$idn_type_id);
+                $obj->select("idn", $idn);
+                $obj->select("idn_type_id", $idn_type_id);
 
-                if($obj->load())
-                {
+                if ($obj->load()) {
                         return $obj;
-                }
-                else return null;           
+                } else return null;
         }
 
 
@@ -334,60 +318,57 @@ class CrmCustomer extends CrmObject{
         }
         */
 
-        public function getShortDisplay($lang="ar")
+        public function getShortDisplay($lang = "ar")
         {
-               
-               $data = array();
-               $link = array();
-               
-               if($lang=="ar")
-               {
-                       list($data[0],$link[0]) = $this->displayAttribute("first_name_ar",false, $lang);
-                       list($data[1],$link[1]) = $this->displayAttribute("father_name_ar",false, $lang);
-                       list($data[2],$link[2]) = $this->displayAttribute("last_name_ar",false, $lang);
-               }
-               else
-               {
-                       list($data[0],$link[0]) = $this->displayAttribute("first_name_en",false, $lang);
-                       list($data[1],$link[1]) = $this->displayAttribute("father_name_en",false, $lang);
-                       list($data[2],$link[2]) = $this->displayAttribute("last_name_en",false, $lang);
-               }
-               
-               $return = trim(implode(" ",$data));  // $this->getId().":".
-               if(!$return) $return = "عميل جديد";
-               
-               return $return;
+
+                $data = array();
+                $link = array();
+
+                if ($lang == "ar") {
+                        list($data[0], $link[0]) = $this->displayAttribute("first_name_ar", false, $lang);
+                        list($data[1], $link[1]) = $this->displayAttribute("father_name_ar", false, $lang);
+                        list($data[2], $link[2]) = $this->displayAttribute("last_name_ar", false, $lang);
+                } else {
+                        list($data[0], $link[0]) = $this->displayAttribute("first_name_en", false, $lang);
+                        list($data[1], $link[1]) = $this->displayAttribute("father_name_en", false, $lang);
+                        list($data[2], $link[2]) = $this->displayAttribute("last_name_en", false, $lang);
+                }
+
+                $return = trim(implode(" ", $data));  // $this->getId().":".
+                if (!$return) $return = "عميل جديد";
+
+                return $return;
         }
 
-        public function getDropDownDisplay($lang="ar")
+        public function getDropDownDisplay($lang = "ar")
         {
-               $displ = $this->getShortDisplay($lang);
-               $idn = $this->getVal("idn");
-               // if($idn) $displ .= " - رقم الهوية  : ".$idn;
-               if($idn) $displ .= " - ".$idn;
+                $displ = $this->getShortDisplay($lang);
+                $idn = $this->getVal("idn");
+                // if($idn) $displ .= " - رقم الهوية  : ".$idn;
+                if ($idn) $displ .= " - " . $idn;
 
-               $mobile = $this->getVal("mobile");               
-               //if($mobile) $displ .= " - رقم الجوال : ".$mobile;
-               if($mobile) $displ .= " - ".$mobile;
-               
-               return $displ;
+                $mobile = $this->getVal("mobile");
+                //if($mobile) $displ .= " - رقم الجوال : ".$mobile;
+                if ($mobile) $displ .= " - " . $mobile;
+
+                return $displ;
         }
-        
 
-        public function getDisplay($lang="ar")
+
+        public function getDisplay($lang = "ar")
         {
-               $displ = $this->getShortDisplay($lang);
-               $idn = $this->getVal("idn");
-               // if($idn) $displ .= " - رقم الهوية  : ".$idn;
-               if($idn) $displ .= " - ".$idn;
-               $mobile = $this->getVal("mobile");
-               //if($mobile) $displ .= " - رقم الجوال : ".$mobile;
-               if($mobile) $displ .= " - ".$mobile;
-               
-               return $displ;
+                $displ = $this->getShortDisplay($lang);
+                $idn = $this->getVal("idn");
+                // if($idn) $displ .= " - رقم الهوية  : ".$idn;
+                if ($idn) $displ .= " - " . $idn;
+                $mobile = $this->getVal("mobile");
+                //if($mobile) $displ .= " - رقم الجوال : ".$mobile;
+                if ($mobile) $displ .= " - " . $mobile;
+
+                return $displ;
         }
-        
-        
+
+
         /*
         public function list_of_customer_type_id() { 
             $list_of_items = array(); 
@@ -397,12 +378,12 @@ class CrmCustomer extends CrmObject{
             $list_of_items[2] = "مواطن";  //     code : PERSON 
             $list_of_items[3] = "متدرب";  //     code : TRAINER 
            return  $list_of_items;
-        }*/ 
+        }*/
 
 
 
-        
-        protected function getOtherLinksArray($mode, $genereLog = false, $step="all")      
+
+        protected function getOtherLinksArray($mode, $genereLog = false, $step = "all")
         {
                 global $me, $lang;
                 $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
@@ -410,12 +391,11 @@ class CrmCustomer extends CrmObject{
                 $displ = $this->getDisplay($lang);
 
 
-                if($mode=="mode_requestList")
-                {
+                if ($mode == "mode_requestList") {
                         unset($link);
                         $link = array();
                         $title = "إضافة تذكرة";
-                        $title_detailed = $title ."لـ : ". $displ;
+                        $title_detailed = $title . "لـ : " . $displ;
                         $link["URL"] = "i.php?cn=crm&mt=request&rt=2&cusid=$my_id";
                         $link["TITLE"] = $title;
                         $link["TARGET"] = "newTicket";
@@ -424,14 +404,14 @@ class CrmCustomer extends CrmObject{
                         $link['ATTRIBUTE_WRITEABLE'] = 'requestList';
                         $otherLinksArray[] = $link;
                 }
-                
-                
+
+
                 return $otherLinksArray;
         }
-        
+
         protected function getPublicMethods()
         {
-            
+
                 $pbms = array();
                 /*should be dynamic @todo rafik
                 if($this->getVal("customer_type_id") == 5) // travel company
@@ -451,8 +431,8 @@ class CrmCustomer extends CrmObject{
                 
                         );
                 }*/
-            
-            
+
+
                 return $pbms;
         }
         /*
@@ -461,130 +441,124 @@ class CrmCustomer extends CrmObject{
 
         }
         */
-        
-        
-        
-        public function beforeDelete($id,$id_replace) 
+
+
+
+        public function beforeDelete($id, $id_replace)
         {
-            
- 
-            if(!$id)
-            {
-                $id = $this->getId();
-                $simul = true;
-            }
-            else
-            {
-                $simul = false;
-            }
- 
-            if($id)
-            {   
-               if($id_replace==0)
-               {
-                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - not deletable 
-                       // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)
-                        
-                        $obj = new Request();
-                        $obj->where("customer_id = '$id' and active='Y' ");
-                        $nbRecords = $obj->count();
-                        // check if there's no record that block the delete operation
-                        if($nbRecords>0)
-                        {
-                            $this->deleteNotAllowedReason = "يوجد لدى هذا العميل طلبات حالية فيتعذر حذفه";
-                            return false;
+
+
+                if (!$id) {
+                        $id = $this->getId();
+                        $simul = true;
+                } else {
+                        $simul = false;
+                }
+
+                if ($id) {
+                        if ($id_replace == 0) {
+                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - not deletable 
+                                // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)
+
+                                $obj = new Request();
+                                $obj->where("customer_id = '$id' and active='Y' ");
+                                $nbRecords = $obj->count();
+                                // check if there's no record that block the delete operation
+                                if ($nbRecords > 0) {
+                                        $this->deleteNotAllowedReason = "يوجد لدى هذا العميل طلبات حالية فيتعذر حذفه";
+                                        return false;
+                                }
+                                // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
+                                if (!$simul) $obj->deleteWhere("customer_id = '$id' and active='N'");
+
+
+
+                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - deletable 
+
+
+                                // FK not part of me - replaceable 
+
+
+
+                                // MFK
+
+                        } else {
+                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
+
+
+                                // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)
+                                if (!$simul) {
+
+                                        Request::updateWhere(array('customer_id' => $id_replace), "customer_id='$id'");
+                                        // $this->execQuery("update ${server_db_prefix}crm.request set customer_id='$id_replace' where customer_id='$id' ");
+
+                                }
+
+
+
+
+                                // MFK
+
+
                         }
-                        // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
-                        if(!$simul) $obj->deleteWhere("customer_id = '$id' and active='N'");
- 
- 
- 
-                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
- 
- 
-                   // FK not part of me - replaceable 
- 
- 
- 
-                   // MFK
- 
-               }
-               else
-               {
-                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
- 
- 
-                        // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)
-                        if(!$simul)
-                        {
-                            
-                            Request::updateWhere(array('customer_id'=>$id_replace), "customer_id='$id'");
-                            // $this->execQuery("update ${server_db_prefix}crm.request set customer_id='$id_replace' where customer_id='$id' ");
- 
-                        } 
- 
- 
- 
- 
-                        // MFK
- 
- 
-               } 
-               return true;
-            }    
-	}
-        
-        public function list_of_idn_type_id() { 
-            $list_of_items = array(); 
-            $list_of_items[1] = "بطاقة أحوال";  //     code : AHWAL 
-            $list_of_items[2] = "إقامة";  //     code : IQAMA 
-            $list_of_items[99] = "أخرى";  //     code : OTHER 
-           return  $list_of_items;
-        } 
- 
- 
-        public function list_of_customer_type_id() { 
-            $list_of_items = array(); 
-            $list_of_items[1] = "فرد من المجتمع";  //     code : ANONYMOUS 
-            $list_of_items[2] = "موظف";  //     code : EMPLOYEE 
-            $list_of_items[3] = "متدرب";  //     code : INDIVIDUAL 
-           return  $list_of_items;
+                        return true;
+                }
         }
-        
-        
-        public function list_of_gender_id() { 
-            $list_of_items = array(); 
-            $list_of_items[1] = "ذكر";
-            $list_of_items[2] = "أنثى";
-             
-           return  $list_of_items;
+
+        public function list_of_idn_type_id()
+        {
+                $list_of_items = array();
+                $list_of_items[1] = "بطاقة أحوال";  //     code : AHWAL 
+                $list_of_items[2] = "إقامة";  //     code : IQAMA 
+                $list_of_items[99] = "أخرى";  //     code : OTHER 
+                return  $list_of_items;
         }
-        
+
+
+        public function list_of_customer_type_id()
+        {
+                $list_of_items = array();
+                $list_of_items[1] = "فرد من المجتمع";  //     code : ANONYMOUS 
+                $list_of_items[2] = "موظف";  //     code : EMPLOYEE 
+                $list_of_items[3] = "متدرب";  //     code : INDIVIDUAL 
+                return  $list_of_items;
+        }
+
+
+        public function list_of_gender_id()
+        {
+                $list_of_items = array();
+                $list_of_items[1] = "ذكر";
+                $list_of_items[2] = "أنثى";
+
+                return  $list_of_items;
+        }
+
         public function stepsAreOrdered()
         {
-           return false;
+                return false;
         }
-        
+
         public function calcFull_name()
         {
-                $fn = ""; 
-                $fn = trim($fn." " . $this->valFirst_name_ar());
-                $fn = trim($fn." " . $this->valFather_name_ar());
-                $fn = trim($fn." " . $this->valLast_name_ar());
-                
-		return $fn;
+                $fn = "";
+                $fn = trim($fn . " " . $this->valFirst_name_ar());
+                $fn = trim($fn . " " . $this->valFather_name_ar());
+                $fn = trim($fn . " " . $this->valLast_name_ar());
+
+                return $fn;
         }
-        
-        
+
+
         public function correctIdn()
         {
-             $idn = $this->getVal("idn");
-             list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn);
-             
-             return $idn_correct;
+                $idn = $this->getVal("idn");
+                list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn);
+
+                return $idn_correct;
         }
-        
-        
+
+
         /*
         public function isPublic()
         {
@@ -600,248 +574,216 @@ class CrmCustomer extends CrmObject{
         {
               return ($this->getVal("customer_type_id") == 3);
         }*/
-        
-        
-        public function getAttributeLabel($attribute, $lang="ar", $short=false)
+
+
+        public function getAttributeLabel($attribute, $lang = "ar", $short = false)
         {
-             if($attribute=="customer_orgunit_id")
-             {
-                  $customerTypeObj = $this->hetType();
-                  if(!$lang) $lang="ar";
-                  if($customerTypeObj) return $customerTypeObj->getVal("org_$lang");
-                  else return "unkown customer type";
-                  
-             }
-             
-             if($attribute=="ref_num")
-             {
-                  $customerTypeObj = $this->hetType();
-                  if(!$lang) $lang="ar";
-                  if($customerTypeObj) return $customerTypeObj->getVal("ref_$lang");
-                  else return "unkown customer type";
-                  
-             } 
-             
-             return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+                if ($attribute == "customer_orgunit_id") {
+                        $customerTypeObj = $this->hetType();
+                        if (!$lang) $lang = "ar";
+                        if ($customerTypeObj) return $customerTypeObj->getVal("org_$lang");
+                        else return "unkown customer type";
+                }
+
+                if ($attribute == "ref_num") {
+                        $customerTypeObj = $this->hetType();
+                        if (!$lang) $lang = "ar";
+                        if ($customerTypeObj) return $customerTypeObj->getVal("ref_$lang");
+                        else return "unkown customer type";
+                }
+
+                return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
         }
-        
+
         public function attributeIsApplicable($attribute)
         {
-                if(($attribute=="customer_orgunit_id") or ($attribute=="ref_num"))
-                {
+                if (($attribute == "customer_orgunit_id") or ($attribute == "ref_num")) {
                         $customerTypeObj = $this->hetType();
-                        if($customerTypeObj) return ($customerTypeObj->estInternal());
-                        else return false; 
+                        if ($customerTypeObj) return ($customerTypeObj->estInternal());
+                        else return false;
                 }
-                
+
                 return true;
         }
 
 
-        public function updateDateSystem($ds, $commit=true)
+        public function updateDateSystem($ds, $commit = true)
         {
-                if($ds=="hijri") $this->set("hijri", "Y"); 
-                else $this->set("hijri", "N"); 
+                if ($ds == "hijri") $this->set("hijri", "Y");
+                else $this->set("hijri", "N");
 
-                if($commit) $this->commit();
+                if ($commit) $this->commit();
         }
 
 
         public function getDateSystem()
         {
-                if($this->sureIs("hijri")) return "hijri";
+                if ($this->sureIs("hijri")) return "hijri";
                 else "greg";
         }
 
 
-        public function getFormuleResult($attribute, $what='value')
+        public function getFormuleResult($attribute, $what = 'value')
         {
-            global $me, $file_dir_name;
+                global $me, $file_dir_name;
 
-                $YYYY_mm = substr($this->getVal("created_at"),0,7);
+                $YYYY_mm = substr($this->getVal("created_at"), 0, 7);
                 $this_month = date("Y-m");
-                $pm = intval(date("m"))-1;
-                if($pm>=10) $pm = "".$pm;
-                else $pm = "0".$pm;
-                $previous_month = date("Y")."-".$pm;
+                $pm = intval(date("m")) - 1;
+                if ($pm >= 10) $pm = "" . $pm;
+                else $pm = "0" . $pm;
+                $previous_month = date("Y") . "-" . $pm;
 
-                switch($attribute)
-                {
-                    case "this_month" : 
-                        
-                        if($YYYY_mm==$this_month) return 1;
-                        return 0;
-                    break;
+                switch ($attribute) {
+                        case "this_month":
 
-                    case "previous_month" : 
-                        
-                        if($YYYY_mm==$previous_month) return 1;
-                        return 0;
-                    break;
-                
-                
-                    case "older_customer" :                         
-                        if(($YYYY_mm!=$this_month) and ($YYYY_mm!=$previous_month)) return 1;
-                        return 0;
-                    break;
+                                if ($YYYY_mm == $this_month) return 1;
+                                return 0;
+                                break;
 
+                        case "previous_month":
+
+                                if ($YYYY_mm == $previous_month) return 1;
+                                return 0;
+                                break;
+
+
+                        case "older_customer":
+                                if (($YYYY_mm != $this_month) and ($YYYY_mm != $previous_month)) return 1;
+                                return 0;
+                                break;
                 }
-               
-                return AfwFormulaHelper::calculateFormulaResult($this,$attribute);
+
+                return AfwFormulaHelper::calculateFormulaResult($this, $attribute);
         }
-  
-        
+
+
         public function calcDate_start_stats()
         {
-            $start_period = self::$MAX_ACTIVE_CUSTOMER_PERIOD;
-            return AfwDateHelper::shiftHijriDate("", -$start_period);
+                $start_period = self::$MAX_ACTIVE_CUSTOMER_PERIOD;
+                return AfwDateHelper::shiftHijriDate("", -$start_period);
         }
 
         public function calcDate_end_stats()
         {
-            return AfwDateHelper::currentHijriDate();
-        }                                                         
+                return AfwDateHelper::currentHijriDate();
+        }
 
-        public function afterInsert($id, $fields_updated) 
+        public function afterInsert($id, $fields_updated)
         {
-                $this->set("last_request_date",AfwDateHelper::currentHijriDate());
+                $this->set("last_request_date", AfwDateHelper::currentHijriDate());
                 $this->commit();
         }
 
 
-        public function beforeMaj($id, $fields_updated) 
-        {                
+        public function beforeMaj($id, $fields_updated)
+        {
                 
-                if($this->getVal("customer_type_id")==CustomerType::$CUSTOMER_TYPE_ANONYMOUS)
-                {
-                        if(AfwStringHelper::stringEndsWith(strtolower($this->getVal("email")),"@company.com"))
+                if ($this->getVal("customer_type_id") == CustomerType::$CUSTOMER_TYPE_ANONYMOUS) {
+                        $employee_email_domain = AfwSession::config("employee_email_domain", "@company.com");
+                        if (AfwStringHelper::stringEndsWith(strtolower($this->getVal("email")), $employee_email_domain)) 
                         {
-                                $this->set("customer_type_id",CustomerType::$CUSTOMER_TYPE_EMPLOYEE);
+                                $this->set("customer_type_id", CustomerType::$CUSTOMER_TYPE_EMPLOYEE);
                         }
-
-                        if(
-                                (AfwStringHelper::stringEndsWith(strtolower($this->getVal("email")),"@company.com")) or 
-                                (AfwStringHelper::stringEndsWith(strtolower($this->getVal("email")),"@company.com.sa"))
-                           )
+                        $trainee_email_domain = AfwSession::config("trainee_email_domain", "@company.com.sa");
+                        $trainee_email_starts_with = AfwSession::config("trainee_email_domain", "");
+                        if (((!$trainee_email_starts_with) or AfwStringHelper::stringStartsWith(strtolower($this->getVal("email")), $trainee_email_starts_with))
+                                and (AfwStringHelper::stringEndsWith(strtolower($this->getVal("email")), $trainee_email_domain)))
                         {
-                                $this->set("customer_type_id",CustomerType::$CUSTOMER_TYPE_TRAINEE);
+                                $this->set("customer_type_id", CustomerType::$CUSTOMER_TYPE_TRAINEE);
                         }
-                        
                 }
 
-                
+
 
                 return true;
         }
 
         public function decideSMSTemplate($sms_template)
         {
-                if($this->getVal("service_satisfied")=="N") return "not_satisfied";
+                if ($this->getVal("service_satisfied") == "N") return "not_satisfied";
                 return $sms_template;
         }
 
 
         public function makeMeTestCustomer()
         {
-                $this->set("first_name_ar", "[اسم العميل]");  
+                $this->set("first_name_ar", "[اسم العميل]");
         }
 
 
-        
 
 
-        public function smsRetrieveAction($lang,$actionParamsArr, $only_get_description=false, $token_arr=array())
-        {                
-                if(!$only_get_description)
-                {
+
+        public function smsRetrieveAction($lang, $actionParamsArr, $only_get_description = false, $token_arr = array())
+        {
+                if (!$only_get_description) {
                         $id = $this->id;
                         $customer_mobile = $this->getVal("mobile");
-                        if($customer_mobile) $customer_mobile = AfwFormatHelper::formatMobile($customer_mobile);
+                        if ($customer_mobile) $customer_mobile = AfwFormatHelper::formatMobile($customer_mobile);
                         $customer_mobile_correct = AfwFormatHelper::isCorrectMobileNum($customer_mobile);
-                }
-                else
-                {
+                } else {
                         $this->makeMeTestCustomer();
                         $customer_mobile = true;
                         $customer_mobile_correct = true;
                 }
 
-                if($customer_mobile and $customer_mobile_correct)
-                {
-                        $file_dir_name = dirname(__FILE__);               
+                if ($customer_mobile and $customer_mobile_correct) {
+                        $file_dir_name = dirname(__FILE__);
                         $sms_template = $actionParamsArr[0];
                         // the SMS template has an origin is the default value this is $sms_template
                         // and we take this default for description 
                         $exceptional_sms_template = $this->decideSMSTemplate($sms_template);
-                        if($exceptional_sms_template != $sms_template)
-                        {
+                        if ($exceptional_sms_template != $sms_template) {
                                 // ...
                                 include("$file_dir_name/tpl/template_sms_$exceptional_sms_template.php");
-                                if($sms_body_arr[$lang])
-                                {
-                                        $exceptional_sms_body = $this->decodeTpl($sms_body_arr[$lang],array(),$lang,$token_arr);
-                                }
-                                else 
-                                {
+                                if ($sms_body_arr[$lang]) {
+                                        $exceptional_sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
+                                } else {
                                         $exceptional_sms_body = "";
                                 }
-                                
-                                $exceptional_template_desc = " : ".$this->translate('action.sms.'.$exceptional_sms_template,$lang);
+
+                                $exceptional_template_desc = " : " . $this->translate('action.sms.' . $exceptional_sms_template, $lang);
                         }
-                        if(!$only_get_description) 
-                        {
+                        if (!$only_get_description) {
                                 // but for case of real execute of action some esxceptional customer can need a different
                                 // template so we decide the template via decideSMSTemplate method
                                 $sms_template = $exceptional_sms_template;
                         }
-                        
+
                         include("$file_dir_name/tpl/template_sms_$sms_template.php");
 
-                        if($sms_body_arr[$lang])
-                        {
-                                $sms_body = $this->decodeTpl($sms_body_arr[$lang],array(),$lang,$token_arr); 
-                        }
-                        else
-                        {
+                        if ($sms_body_arr[$lang]) {
+                                $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
+                        } else {
                                 $sms_body = "";
                         }
 
-                        if(!$only_get_description)
-                        {
-                                
+                        if (!$only_get_description) {
 
-                                if(!$sms_body) return array(false, $this->tm("can't find body of SMS for this template and langue")." [$sms_template, $lang]");
+
+                                if (!$sms_body) return array(false, $this->tm("can't find body of SMS for this template and langue") . " [$sms_template, $lang]");
 
 
                                 $simulate_sms_to_mobile = AfwSession::config("simulate_sms_to_mobile", null);
 
-                                if($simulate_sms_to_mobile) $sms_mobile = $simulate_sms_to_mobile;
+                                if ($simulate_sms_to_mobile) $sms_mobile = $simulate_sms_to_mobile;
                                 else $sms_mobile = $customer_mobile;
 
                                 // send SMS to customer       
                                 list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $sms_body);
-                                
+
                                 return array($sms_ok, $sms_info);
-                        }
-                        else
-                        {
-                                if($exceptional_sms_body)
-                                {
+                        } else {
+                                if ($exceptional_sms_body) {
                                         $exceptional_sms_desc = "نص رسالة أخرى $exceptional_template_desc : <br><pre>$exceptional_sms_body</pre>";
-                                }
-                                else
-                                {
+                                } else {
                                         $exceptional_sms_desc = "";
                                 }
-                                return array(true, "نص الرسالة : <br><pre>$sms_body</pre>".$exceptional_sms_desc);
+                                return array(true, "نص الرسالة : <br><pre>$sms_body</pre>" . $exceptional_sms_desc);
                         }
-                }
-                else
-                {
-                        return array(false, $this->tm("this customer does not have correct mobile number")." [$id]");
+                } else {
+                        return array(false, $this->tm("this customer does not have correct mobile number") . " [$id]");
                 }
         }
-
 }
-        
-?>
