@@ -1,6 +1,36 @@
 <?php
 class CrmRequestAfwStructure
 {
+	public static function initInstance(&$obj)
+	{
+			if ($obj instanceof Request ) 
+			{
+				$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+				$obj->DISPLAY_FIELD = "request_title";
+				// $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
+				$obj->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
+				$obj->AUDIT_DATA = false;
+
+				$obj->STATS_DEFAULT_CODE = "gs001";
+
+				$obj->UNIQUE_KEY = array('request_code', 'customer_id');
+				$obj->editByStep = false;
+				//$obj->editNbSteps = 5;
+				$obj->showQeditErrors = true;
+				$obj->showRetrieveErrors = true;
+
+				$obj->CAN_FORCE_UPDATE_DATE = true; // temporaire pour la migration
+
+				$obj->after_save_edit = array("file" => '../crm/workbox.php');
+				// $obj->after_save_edit = array("mode"=>"qsearch", "currmod"=>'adm', "class"=>'Request',"submit"=>true);
+				$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmCustomer");
+			}
+			else 
+			{
+					RequestArTranslator::initData();
+					RequestEnTranslator::initData();
+			}
+	}
 	public static $DB_STRUCTURE = array(
 
 

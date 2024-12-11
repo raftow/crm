@@ -17,7 +17,7 @@ class CrmResponseAfwStructure
 			'CSS' => 'width_pct_25',
 			'FGROUP' => 'request'
 		),
-
+		
 		'request_id' => array(
 			'SHORTNAME' => 'request',
 			'SEARCH' => true,
@@ -45,7 +45,7 @@ class CrmResponseAfwStructure
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 		),
-
+		
 		'employee_id' => array(
 			'SHORTNAME' => 'employee',
 			'SEARCH' => true,
@@ -70,6 +70,7 @@ class CrmResponseAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
+		
 
 		'orgunit_id' => array(
 			'SHORTNAME' => 'orgunit',
@@ -162,7 +163,7 @@ class CrmResponseAfwStructure
 			'ERROR-CHECK' => true,
 			'FGROUP' => 'request',
 		),
-
+		
 		'response_type_id' => array(
 			'SHORTNAME' => 'type',
 			'SEARCH' => true,
@@ -202,7 +203,6 @@ class CrmResponseAfwStructure
 			'QEDIT' => false,
 			'SIZE' => 'AREA',
 			'ROWS' => 10,
-			'MANDATORY' => true,
 			'UTF8' => true,
 			'TYPE' => 'TEXT',
 			'FORMAT' => 'TOHTML',
@@ -263,7 +263,7 @@ class CrmResponseAfwStructure
 			'ERROR-CHECK' => true,
 			'FGROUP' => 'response',
 		),
-
+		
 		'new_status_id' => array(
 			'SHORTNAME' => 'status',
 			'SEARCH' => true,

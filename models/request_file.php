@@ -243,4 +243,15 @@ class RequestFile extends AFWObject
 
                 return [true, ''];
         }
+
+        public function myShortNameToAttributeName($attribute)
+        {
+                if ($attribute == "file") return "afile_id";
+
+                
+                
+                return $attribute;
+        }
+
+        
 }

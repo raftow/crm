@@ -38,7 +38,7 @@ class CrmCustomer extends CrmObject
         {
                 parent::__construct("crm_customer", "id", "crm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn", "ref_num", "phone");
+                $this->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn", "ref_num");
                 $this->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
 
 

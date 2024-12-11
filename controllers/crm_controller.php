@@ -858,7 +858,7 @@ class CrmController extends AfwController{
 
                         if($data["obj"]->isClosedWithCustomer()) 
                         {
-                                $this->renderError("action aborted ! This ticket is already completed");
+                                $this->renderError("can't edit action aborted ! This ticket is already closed");
                                 return;
                         }
 
@@ -1149,9 +1149,15 @@ class CrmController extends AfwController{
                                 return;
                         }
 
-                        if(($data["obj"]->isClosedWithCustomer()) or (!$data["obj"]->isToComplete())) 
+                        if($data["obj"]->isClosedWithCustomer()) 
                         {
-                                $this->renderError("action aborted ! This ticket is already completed");
+                                $this->renderError("can't complete action aborted ! This ticket is already closed");
+                                return;
+                        }
+
+                        if(!$data["obj"]->isToComplete())
+                        {
+                                $this->renderError("can't complete action aborted ! This ticket is already completed status = ".$data["obj"]->getVal("status_id"));
                                 return;
                         }
 
@@ -1250,7 +1256,7 @@ class CrmController extends AfwController{
                                 {
                                         if(isset($request["_REQUEST_FILES"]) and $request["_REQUEST_FILES"] and (count($request["_REQUEST_FILES"])>0))
                                         {
-                                                $request["comment"] = "تم ارفاق المطلوب";
+                                                $request["comment"] = "شكرا لكم";
                                         }
                                         else
                                         {
@@ -1264,7 +1270,7 @@ class CrmController extends AfwController{
 
                                 if(isset($request["_REQUEST_FILES"]) and $request["_REQUEST_FILES"] and (count($request["_REQUEST_FILES"])>0))
                                 {
-                                        $response_action_type = "استكمال المرفقات";
+                                        $response_action_type = "تم استكمال المرفقات";
                                 }
                                 else
                                 {
@@ -1273,7 +1279,7 @@ class CrmController extends AfwController{
 
                                 $responseObj = Response::createNewResponse($reqObj->getId(), AfwDateHelper::currentHijriDate(), date("H:i:s"), 
                                                     0, 0, $reqObj->getVal("status_id"), 
-                                                    Response::$RESPONSE_TYPE_COMPLETE, $response_action_type, 
+                                                    Response::$RESPONSE_TYPE_COMPLETE, $response_action_type." ".$request["comment"], 
                                                     $response_link="", $internal="N", $module_id = 0);
                                 // die("_REQUEST_FILES => ".var_export($request["_REQUEST_FILES"],true));
 
@@ -1308,7 +1314,7 @@ class CrmController extends AfwController{
 
                                 if($continue_complete)
                                 {
-                                        list($responseObj2,) = $reqObj->changeStatus(Request::$REQUEST_STATUS_ONGOING, $request["comment"]);
+                                        list($responseObj2,) = $reqObj->changeStatus(Request::$REQUEST_STATUS_ONGOING, "تم الانتهاء من رفع المرفقات واعادة الطلب الى مكتب خدمة العملاء");
                                 }
                                 
                                 

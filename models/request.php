@@ -1,6 +1,11 @@
 <?php
 class Request extends CrmObject
 {
+    public function __construct(){
+		parent::__construct("request","id","crm");
+            CrmRequestAfwStructure::initInstance($this);    
+	}
+    
 
     public static $REQUEST_CODE_LENGTH = 7;
 
@@ -619,27 +624,7 @@ class Request extends CrmObject
 
     );
 
-    public function __construct()
-    {
-        parent::__construct("request", "id", "crm");
-        $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-        $this->DISPLAY_FIELD = "";
-        $this->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
-        $this->AUDIT_DATA = false;
-
-        $this->STATS_DEFAULT_CODE = "gs001";
-
-        $this->UNIQUE_KEY = array('request_code', 'customer_id');
-        $this->editByStep = false;
-        $this->editNbSteps = 5;
-        $this->showQeditErrors = true;
-        $this->showRetrieveErrors = true;
-
-        $this->CAN_FORCE_UPDATE_DATE = true; // temporaire pour la migration
-
-        $this->after_save_edit = array("file" => '../crm/workbox.php');
-        $this->OwnedBy = array('module' => "crm", 'afw' => "CrmCustomer");
-    }
+    
 
     public static function loadById($id)
     {

@@ -1906,6 +1906,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     background-color: #ebac38;
     border-color: #b17911;
     color: brown;
+    text-shadow: none;
 }
 
 .collapsed>.hzm_sub_label.response {
@@ -1921,7 +1922,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     text-align: right;
     padding-right: 20px;
     color: black;
-    white-space: break-spaces;
+    /* white-space: break-spaces; */
     font-weight: normal;
     font-size: 16px;
 }
@@ -1935,6 +1936,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     float: right;
     padding: 1px 10px;
     margin-top: 6px;
+    text-shadow: none;
 }
 
 .crm_datetime {
@@ -1962,8 +1964,8 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 }
 
 .hzm_data.hzm_data_request_text.form-control.inputreadonly {
-    border: 1px solid #047e7a;
-    background-color: #ebfdec;
+    border: 1px solid #047e7a !important;
+    background-color: #ebfdec !important;
     font-size: 110% !important;
 }
 
@@ -2602,6 +2604,8 @@ p.for_file {
 input#save_form.wizardbtn {
     margin-top: 13px;
     margin-right: 0 !important;
+    background-color: #22b8b1;
+    color: white;
 }
 
 div.request_response>div>label {
