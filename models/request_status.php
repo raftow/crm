@@ -58,8 +58,10 @@ class RequestStatus extends CrmObject
      public static $DATABASE          = "";
      public static $MODULE              = "crm";
      public static $TABLE               = "request_status";
-
      public static $DB_STRUCTURE = null;
+
+     
+     
 
      public function __construct()
      {

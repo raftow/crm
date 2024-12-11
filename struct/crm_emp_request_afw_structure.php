@@ -3,8 +3,6 @@
 // alter table crm_emp_request add super_admin char(1) null;
 // update crm_emp_request set super_admin = 'N';
 
-
-
 class CrmCrmEmpRequestAfwStructure
 {
 	// token separator = §

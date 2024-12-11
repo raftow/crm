@@ -22,26 +22,18 @@ if($objme)
         if($objme->isSuperAdmin())
         {
                 $Main_Page = "stats.php";
-                $My_Module = "crm";
-                /*
-                $cl = "Request";
-                $currmod="crm";
-                */
+                $MODULE = $My_Module = "crm";
                 $customerMe = null;
         
-                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE);
+                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name);
         }
         elseif($objme_has_crm_employee_role)
         {
                 $Main_Page = "ongoingbox.php";
-                $My_Module = "crm";
-                /*
-                $cl = "Request";
-                $currmod="crm";
-                */
+                $MODULE = $My_Module = "crm";
                 $customerMe = null;
         
-                AfwMainPage::echoMainPage($MODULE);
+                AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name);
         }
         
         

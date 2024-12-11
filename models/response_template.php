@@ -44,6 +44,7 @@ class ResponseTemplate extends AFWObject{
         
         public static function loadAll($response_type=0, $user_type=null)
         {
+            $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
             $obj = new ResponseTemplate();
             $obj->select("active",'Y');
 

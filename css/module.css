@@ -893,6 +893,8 @@ span.prog-name.prog-archive {
     font-weight: normal;
     font-family: cursive;
     color: white;
+    margin-left: 9px;
+    margin-right: 9px;
 }
 
 .crm_ticket_num.bggray {
@@ -1558,6 +1560,20 @@ a.btnbtsp.btn_link:hover {
     border: 1px solid #70acb3;
 }
 
+@media screen and (max-width: 800px)
+{
+    .cms_bg_pic {
+        width: 98% !important;
+        margin-right: 1% !important;
+        margin-left: 1% !important;
+    }
+
+}
+
+
+
+    
+
 .cms_bg.crm_new_request {
     min-height: min-content;
     padding-bottom: 0px;
@@ -2202,24 +2218,6 @@ div.content-annonce>ul {
     padding: 0;
 }
 
-.footer_bg {
-    background-image: url(../../external/pic/bg-footer.jpg);
-    background-color: #60a4b1;
-    background-size: contain;
-    float: right;
-    padding: 15px;
-    width: 100%;
-    margin-top: 0px;
-}
-
-.rowfooter {
-    max-width: 62.5rem;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: #1a6c72;
-    max-width: none;
-}
-
 .xqe_inputtext:active, .xqe_inputtext:focus {
     border-color: #0d938c !important;
 }
@@ -2284,19 +2282,6 @@ table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.
     border-top: 2px solid rgb(119 165 155 / 37%);
 }
 
-
-div.footer_container > div.rowfooter {
-    background-color: #03524f;
-}
-
-.rowfooter.footer {
-    background-color: #60a4b1;
-    width: 100%;
-    max-width: none !important;
-    margin: 0;
-    float: right;
-    padding: 15px;
-}
 
 .filebox.editcard.crm.crmychannel {
     width: 60%;
@@ -2750,6 +2735,22 @@ header.top-header {
     width: auto;
     float: right;
     padding-top: 30px;
+    background-color: white;
+}
+
+.logo_company {
+    min-width: 0 !important;
+    float: left;
+    background-color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .title_company {
+        display: none;
+        visibility: hidden;
+        width: 0px !important;
+        height: 0px !important;
+    }
 }
 
 .hzm_body {
@@ -2899,4 +2900,8 @@ div.modal-dialog>.modal-content {
 
 .icon-327:before {
     content: "\f7b6";
+}
+
+.rowfooter.rowfootercrm {
+    background-color: #156874 !important;
 }
