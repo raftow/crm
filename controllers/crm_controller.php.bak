@@ -270,46 +270,6 @@ class CrmController extends AfwController
                 return array($theCustomer, $candRequestObj);
         }
 
-        /******************************** quicklogin action ********************************************** */
-
-        public function prepareQuicklogin($request)
-        {
-                $custom_scripts = $this->prepareStandard($request);
-
-                return $custom_scripts;
-        }
-
-        public function quicklogin($request)
-        {
-                $data = $request;
-                // echo("request = ".var_export($request,true)."<br><br>");
-                foreach ($request as $key => $value) $$key = $value;
-                // ex of request 
-                // cidn=2343225005 & cref=di1365 & cqlc=5a5f68cb6a759e4c658a9f1a0e79ce1a
-
-
-                $hh = date("YmdH");
-                $hh_1 = $hh - 1;
-                $hh_2 = $hh + 1;
-                $customer_quicklogin_code = md5("customer-$cidn-ref-$cref-qlat-$hh");
-                $customer_quicklogin_code1 = md5("customer-$cidn-ref-$cref-qlat-$hh_1");
-                $customer_quicklogin_code2 = md5("customer-$cidn-ref-$cref-qlat-$hh_2");
-
-                if (($cqlc != $customer_quicklogin_code2) and ($cqlc != $customer_quicklogin_code1) and ($cqlc != $customer_quicklogin_code)) {
-                        $this->renderLogOutMessage("Session not correct !", "customer_login.php");
-                }
-
-                $objQuickLoggedIn = CrmCustomer::loadByIdnAndRefnum($cidn, $cref);
-                if (!$objQuickLoggedIn) {
-                        $this->renderLogOutMessage("Session not found !", "customer_login.php");
-                }
-                $data["customerObj"] = $objQuickLoggedIn;
-                AfwSession::setCustomer($objQuickLoggedIn->id);
-
-                // call the view 1
-                $this->render("crm", "home", $data);
-        }
-
         /******************************** home action ********************************************** */
 
         public function prepareStandard($request)
@@ -1490,7 +1450,7 @@ class CrmController extends AfwController
                         $crmObj->set("other_city", $web_site);
 
                         $crmObj->set("customer_type_id", 5);  // travel company
-                        $crmObj->set("ref_num", trim($trade_idn));
+                        $crmObj->set("license_number", trim($trade_idn));
                         $crmObj->set("city_id", $city_id);
                         $crmObj->set("email", trim($email));
                         $crmObj->set("gender_id", 1);
