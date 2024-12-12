@@ -68,9 +68,5 @@ $config_arr = array(
 
         'register_file' => "customer_register",
 
-        'uploads_root_path' => "/uploads/files/",
-
-        'uploads_http_path' => "../uploads",
-
         );
 

@@ -140,7 +140,7 @@
                                 ?>
                                 <label class="hzm_label <?php echo "for_file comment" ?>">بيانات أخرى أو ملاحظات</label>
                                 <p class="for_file"><textarea name="comment" id="comment" class="form-control" cols="20" rows="5" required></textarea></p>
-                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo $this->tt("ارسال", $lang)?>&nbsp;"       style="margin-right: 5px;" >
+                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال", $lang)?>&nbsp;"       style="margin-right: 5px;" >
                                 <script type="text/javascript">
                                 $(document).ready(function(){
                                 <?php

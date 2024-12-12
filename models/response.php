@@ -478,7 +478,7 @@ class Response extends CrmObject
         public function calcResponse_templates()
         {
                 global $lang;
-
+                // die("here rafik bara salli");
                 if (!$lang) $lang = "ar";
 
                 $AllRespTplList = ResponseTemplate::loadAll($this->getVal("response_type_id"), $this->calcUser_type());
@@ -495,16 +495,21 @@ class Response extends CrmObject
                                 'text' => $itemRespTpl->getBody($lang, true)
                         );
                 }
-                /*
-                $templates["مقدمة"] = array('internal' => 'N', 'new_status' => 0, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم");
-                $templates["طلب مكرر"] = array('internal' => 'N', 'new_status' => 8, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم هذا الطلب مكرر وسبق الرد عليه");
-                $templates["عدم اختصاص"] = array('internal' => 'Y', 'new_status' => 3, 'text' =>  "أرجوا تحويل الطلب إلى الجهة المختصة");
-                */
+                if(count($templates)==0)
+                {
+                        $templates["مقدمة"] = array('internal' => 'N', 'new_status' => 0, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم");
+                        $templates["طلب مكرر"] = array('internal' => 'N', 'new_status' => 8, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم هذا الطلب مكرر وسبق الرد عليه");
+                        $templates["عدم اختصاص"] = array('internal' => 'Y', 'new_status' => 3, 'text' =>  "أرجوا تحويل الطلب إلى الجهة المختصة");
+                }
+                
+                
 
                 $html = "<div class='jsbtns'>";
                 $i = 0;
                 foreach ($templates as $template_title => $template_item) {
                         $template_text = $template_item["text"];
+                        $template_text = str_replace("\n","|", $template_text);
+                        $template_text = str_replace("\r","|", $template_text);
                         $template_internal = $template_item["internal"];
                         $template_new_status = $template_item["new_status"];
 
@@ -631,9 +636,16 @@ class Response extends CrmObject
         {
                 if ($attribute == "request") return "request_id";
                 if ($attribute == "type") return "response_type_id";
-
-                
-                
+                if ($attribute == "employee") return "employee_id";
+                if ($attribute == "orgunit") return "orgunit_id";
+                if ($attribute == "status") return "new_status_id";
+		 
                 return $attribute;
+        }
+
+
+        public function shouldBeCalculatedField($attribute){
+                if($attribute=="request_text") return true;
+                return false;
         }
 }

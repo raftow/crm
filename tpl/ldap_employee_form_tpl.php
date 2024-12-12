@@ -34,7 +34,7 @@
 
                 
         </div>
-        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo $this->tt("ارسال طلب التعريف", $lang)?>&nbsp;"       style="margin-right: 5px;" >
+        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال طلب التعريف", $lang)?>&nbsp;"       style="margin-right: 5px;" >
 </div>
 </form>
 </div>
