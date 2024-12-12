@@ -808,4 +808,18 @@ class CrmCustomer extends CrmObject
                 $html = "<div class='user-account'>$initials</div>";
                 return $html;
         }
+
+        public static function loadByIdnAndRefnum($idn, $ref_num)
+        {
+                $obj = new CrmCustomer();
+                if (!$idn) $obj->throwError("loadByIdnAndRefnum : idn is mandatory field");
+                if (!$ref_num) $obj->throwError("loadByIdnAndRefnum : ref_num is mandatory field");
+
+                $obj->select("idn", $idn);
+                $obj->select("ref_num", $ref_num);
+
+                if ($obj->load()) {
+                        return $obj;
+                } else return null;
+        }
 }
