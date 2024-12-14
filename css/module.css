@@ -2906,6 +2906,10 @@ div.modal-dialog>.modal-content {
     content: "\f7b6";
 }
 
+.icon-347:before {
+    content: "\f1c0";
+}
+
 .rowfooter.rowfootercrm {
     background-color: #156874 !important;
 }
