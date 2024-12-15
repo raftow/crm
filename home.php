@@ -23,7 +23,9 @@
    }
    else
    {
-      die("no one authenticated");
+      // $customer_id = AfwSession::getSessionVar("customer_id");
+      // die("customer_id=$customer_id customerMe=$customerMe is con=".AfwSession::customerIsConnected());
+      include("customer_login.php");
    }
     /*
   

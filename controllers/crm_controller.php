@@ -14,11 +14,12 @@ class CrmController extends AfwController
         }
 
         // This was old way now we use here below method myNewViewSettings
+        /*        
         public function myViewSettings($methodName)
         {
                 $front_header_template = AfwSession::config("front_header_template", "front");
                 return array("", "crm/$front_header_template" . "_header.php", "lib/hzm/oldweb/hzm_simple_footer.php");
-        }
+        }*/
 
         // now we use here below method myNewViewSettings 
         /*
@@ -311,6 +312,15 @@ class CrmController extends AfwController
         }
 
         /******************************** home action ********************************************** */
+
+        public function prepareOptions($methodName)
+        {
+                $options= [];
+                $options["front-application"] = "crm";
+
+
+                return $options;
+        }
 
         public function prepareStandard($request)
         {
@@ -698,6 +708,9 @@ class CrmController extends AfwController
         }
 
         /******************************** oldrequests action ********************************************** */
+
+        
+       
 
         public function prepareOldrequests($request)
         {

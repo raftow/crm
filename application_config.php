@@ -14,7 +14,8 @@ $config_arr = array(
         //'crm_responder' => "اللجنة التنظيمية",
         
         'application_name' => ['ar' => "مركز خدمة العملاء", 'en' => "Customer  Service Center",],
-                                  
+        'crm-application-name' => ['ar' => "تواصل معنا", 'en' => "Contact us",],
+                 
         
 
         // ,
