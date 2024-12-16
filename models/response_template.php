@@ -7,6 +7,7 @@
 class ResponseTemplate extends AFWObject{
 
         public static $MY_ATABLE_ID=13827; 
+        private static $ResponseTemplateGroupCache = [];
   
         public static $DATABASE		= "";
         public static $MODULE		        = "crm";        
@@ -20,7 +21,8 @@ class ResponseTemplate extends AFWObject{
                     $this->DISPLAY_FIELD = "title_ar";
                     // $this->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
                     $this->ORDER_BY_FIELDS = "title_en";
-                    
+                    $this->IS_LOOKUP = true;
+			        $this->IS_SMALL_LOOKUP = true;
                     $this->AUDIT_DATA = true;
                     
                     $this->UNIQUE_KEY = array('title_en');
@@ -44,21 +46,31 @@ class ResponseTemplate extends AFWObject{
         
         public static function loadAll($response_type=0, $user_type=null)
         {
-            $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
-            $obj = new ResponseTemplate();
-            $obj->select("active",'Y');
-
+            $key = "all";
             if($response_type) 
             {
-               if($user_type) $cond_user_type = "lookup_code like '%$user_type%' and ";
-               else $cond_user_type = "";
-               $obj->where("(new_status in (select id from ".$server_db_prefix."crm.request_status where $cond_user_type response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
+                $key = "rt$response_type";
+                if($user_type) $key .= ".ut$user_type";
             }
+            if(!self::$ResponseTemplateGroupCache[$key])
+            {
+                $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+                $obj = new ResponseTemplate();
+                $obj->select("active",'Y');
+    
+                if($response_type) 
+                {
+                   if($user_type) $cond_user_type = "lookup_code like '%$user_type%' and ";
+                   else $cond_user_type = "";
+                   $obj->where("(new_status in (select id from ".$server_db_prefix."crm.request_status where $cond_user_type response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
+                }
+               
+    
+                self::$ResponseTemplateGroupCache[$key] = $obj->loadMany();
+            }
+            
            
-
-           $objList = $obj->loadMany();
-           
-           return $objList;
+            return self::$ResponseTemplateGroupCache[$key];
         }
         
         

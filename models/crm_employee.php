@@ -11,6 +11,7 @@ $file_dir_name = dirname(__FILE__);
 
 class CrmEmployee extends CrmObject
 {
+        public static $orgListOfEmployee = [];
 
         // public static $MY_ATABLE_ID= ??; 
         // 117 CRM_INVESTIGATOR	محقق خدمة العملاء			
@@ -509,12 +510,17 @@ class CrmEmployee extends CrmObject
 
         public static function orgOfEmployee($employee_id, $return_object=false, $return_id = true)
         {
-                $obj = new CrmEmployee();
-                // $obj->select_visibilite_horizontale();
-                $obj->select("employee_id",$employee_id);
-                $obj->select("active", 'Y');
+                if(!self::$orgListOfEmployee[$employee_id])
+                {
+                        $obj = new CrmEmployee();
+                        // $obj->select_visibilite_horizontale();
+                        $obj->select("employee_id",$employee_id);
+                        $obj->select("active", 'Y');
+                        
+                        self::$orgListOfEmployee[$employee_id] = AfwLoadHelper::loadList($obj, "orgunit_id");
+                }
                 
-                $objList = AfwLoadHelper::loadList($obj, "orgunit_id");
+                $objList = self::$orgListOfEmployee[$employee_id];
 
                 if(count($objList)==1)
                 {

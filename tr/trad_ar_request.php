@@ -69,7 +69,7 @@ class RequestArTranslator
 		$trad["request"]["pb_resolved.EUH"] = "محايد";
 
 		$trad["request"]["general_satisfaction"] = "الرضا عموما عن خدمات المؤسسة";
-		$trad["request"]["customer_id"] = "صاحب الطلب";
+		$trad["request"]["customer_id"] = "العميل صاحب الطلب";
 		$trad["request"]["assign_time"] = "وقت التكليف";
 		$trad["request"]["concerned_orgunit_id"] = "الجهة المعنية بالطلب";
 		$trad["request"]["customer_type_id"] = "نوع العميل";

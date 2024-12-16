@@ -1739,8 +1739,8 @@ class Request extends CrmObject
             // notify the supervisor
             if ($supervisorObj) {
                 $receiver = array();
-                $receiver["mobile"] = $supervisorObj->mobile;
-                $receiver["email"] = $supervisorObj->email;
+                $receiver["mobile"] = $supervisorObj->getVal("mobile");
+                $receiver["email"] = $supervisorObj->getVal("email");
                 $notification_sender_result_arr = AfwNotificationManager::sendNotification($notify_supervisor_assign_settings, $receiver, "assign_request", $this, $lang);
                 foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
                     $notification_sender_result_ok = $notification_sender_result_item[0];
@@ -2214,56 +2214,62 @@ class Request extends CrmObject
     }
 
 
-    public function calcMan()
+    public function calcMan($showOnlyCode=false)
     {
-
+        $lang = AfwSession::getSessionVar("current_lang");
+        if(!$lang) $lang = "ar";
         $status_id = $this->getVal("status_id");
-        $empl = $this->showAttribute("employee_id");
-        $sss = $this->showAttribute("supervisor_id");
-        $cust = "العميل"; //$this->showAttribute("customer_id");
+        $return_arr = [];
+        $req_employee_id = $this->getVal("employee_id");
+        $return_arr["man"] = $this->translateOperator("archive",$lang);
+        $return_arr["empl"] = $this->showAttribute("employee_id");
+        $return_arr["sss"] = $this->showAttribute("supervisor_id");
+        $return_arr["cust"] = $this->translate("customer_id",$lang);
 
         // NEW -  مسودة طلب جديد  
-        if ($status_id == self::$REQUEST_STATUS_DRAFT) return $cust;
+        if ($status_id == self::$REQUEST_STATUS_DRAFT) $return = "cust";
 
         // MISSED_INFO -  عودة للعميل لاستكمال البيانات
-        if ($status_id == self::$REQUEST_STATUS_MISSED_INFO) return $cust;
+        if ($status_id == self::$REQUEST_STATUS_MISSED_INFO) $return = "cust";
 
         // MISSED_FILES -  عودة للعميل لاستكمال المرفقات
-        if ($status_id == self::$REQUEST_STATUS_MISSED_FILES) return $cust;
+        if ($status_id == self::$REQUEST_STATUS_MISSED_FILES) $return = "cust";
 
         // SENT - طلب مرسل  للتحقيق
-        if ($status_id == self::$REQUEST_STATUS_SENT) return $empl ? $empl : $sss;
+        if ($status_id == self::$REQUEST_STATUS_SENT) $return = $req_employee_id ? "empl" : "sss";
 
 
         // ASSIGNED - تم اسناده للموظف المختص
-        if ($status_id == self::$REQUEST_STATUS_ASSIGNED) return $empl;
+        if ($status_id == self::$REQUEST_STATUS_ASSIGNED) $return = "empl";
 
         // REDIRECT - طلب إعادة التحويل  
-        if ($status_id == self::$REQUEST_STATUS_REDIRECT) return $sss;
+        if ($status_id == self::$REQUEST_STATUS_REDIRECT) $return = "sss";
 
         // RESPONSE UNDER REVISION - تدقيق الاجابة
-        if ($status_id == self::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) return $sss;
+        if ($status_id == self::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) $return = "sss";
 
         // ONGOING - طلب تحت الإنجاز - جاري العمل
-        if ($status_id == self::$REQUEST_STATUS_ONGOING) return $empl;
+        if ($status_id == self::$REQUEST_STATUS_ONGOING) $return = "empl";
 
         // DONE - تمت الإجابة  
-        if ($status_id == self::$REQUEST_STATUS_DONE) return $cust;
+        if ($status_id == self::$REQUEST_STATUS_DONE) $return = "cust";
 
         // CANCELED - طلب ملغى  
-        if ($status_id == self::$REQUEST_STATUS_CANCELED) return $sss;
+        if ($status_id == self::$REQUEST_STATUS_CANCELED) $return = "sss";
 
         // CLOSED - طلب مغلق  
-        if ($status_id == self::$REQUEST_STATUS_CLOSED) return $sss;
+        if ($status_id == self::$REQUEST_STATUS_CLOSED) $return = "sss";
 
         // REJECTED - طلب مستبعد  
-        if ($status_id == self::$REQUEST_STATUS_REJECTED) return $sss;
+        if ($status_id == self::$REQUEST_STATUS_REJECTED) $return = "sss";
 
         // IGNORED - طلب تم تجاهله  
-        if ($status_id == self::$REQUEST_STATUS_IGNORED) return $sss;
+        if ($status_id == self::$REQUEST_STATUS_IGNORED) $return = "sss";
 
+        $return = "man";
 
-        return "man???";
+        if($showOnlyCode) return $return;
+        else return $return_arr[$return];
     }
 
 
@@ -2956,19 +2962,19 @@ class Request extends CrmObject
         $crmEmplObj = $crmEmpl["obj"];
 
         // assign this Request to this supervisor
-        $empl = null;
+        $emplObj = null;
         if ($crmEmplObj) {
             $crmEmplObj->assignMeAsRequestSupervisor($this, $commit);
-            $empl = $crmEmplObj->hetEmployee();
+            $emplObj = $crmEmplObj->hetEmployee();
         }
         // else AfwRunHelper::safeDie("CrmEmployee::getBestAvailableSupervisor() returned object : ", "", true, $crmRes);
 
         if ($pbm) {
-            if ($empl) return array("", $this->tm("request has beeen assigned to ") . $empl->getDisplay($lang) . " all=" . var_export($stats, true) . " => best best_supervisor_id=$best_supervisor_id ");
+            if ($emplObj) return array("", $this->tm("request has beeen assigned to ") . $emplObj->getDisplay($lang) . " all=" . var_export($stats, true) . " => best best_supervisor_id=$best_supervisor_id ");
             else return array($this->tm("no more available supervisors in the system"), "");
         }
 
-        return $empl;
+        return $emplObj;
     }
 
 
@@ -2984,19 +2990,19 @@ class Request extends CrmObject
         $crmEmplObj = $crmEmpl["obj"];
 
         // assign this Request to this supervisor
-        $empl = null;
+        $emplObj = null;
         if ($crmEmplObj) {
             $crmEmplObj->assignMeAsRequestInvestigator($this, $lang);
-            $empl = $crmEmplObj->hetEmployee();
+            $emplObj = $crmEmplObj->hetEmployee();
         }
         // else die("<pre>CrmEmployee::assignBestAvailableInvestigator() returned object : ". var_export($crmRes, true)."</pre>");
 
         if ($pbm) {
-            if ($empl) return array("", $this->tm("request has beeen assigned to ") . $empl->getDisplay($lang));
+            if ($emplObj) return array("", $this->tm("request has beeen assigned to ") . $emplObj->getDisplay($lang));
             else return array($this->tm("no more available investigators in the system") . " ORG-ID = $orgunit_id", "");
         }
 
-        return $empl;
+        return $emplObj;
     }
 
 
@@ -3008,14 +3014,14 @@ class Request extends CrmObject
 
         $crmEmplObj = CrmEmployee::auserCrmEmployee($authenticated_employee_id);
 
-        $empl = null;
+        $emplObj = null;
         if ($crmEmplObj) {
             $crmEmplObj->assignMeAsRequestInvestigator($this, $lang);
-            $empl = $crmEmplObj->hetEmployee();
+            $emplObj = $crmEmplObj->hetEmployee();
         }
         // else die("<pre>CrmEmployee::assignBestAvailableInvestigator() returned object : ". var_export($crmRes, true)."</pre>");
 
-        return $empl;
+        return $emplObj;
     }
 
 
@@ -3217,5 +3223,11 @@ class Request extends CrmObject
         if ($attribute == "responses") return "responseList";
         if ($attribute == "extresponses") return "doneResponseList";
         return $attribute;
+    }
+
+
+    public function myDisplayStatus()
+    {
+        return $this->calcMan(true);
     }
 }

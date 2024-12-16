@@ -2570,12 +2570,17 @@ table.dataTable thead .sorting_desc_disabled {
 pre.request_instructions {
     background: transparent;
     border: none;
+    overflow: hidden;
 }
 
 label.hzm_label.for_file {
     font-size: 14px;
     margin-bottom: 0;
     font-weight: normal !important;
+}
+
+.hzm_label.for_file.comment.s101 {
+    display: none;
 }
 
 p.for_file {
@@ -2902,4 +2907,13 @@ div.modal-dialog>.modal-content {
 
 .rowfooter.rowfootercrm {
     background-color: #156874 !important;
+}
+
+.filebox.editcard.crm.request {
+    display: block;
+    float: right;
+}
+
+.filebox.editcard.crm.request.sman {
+    border: double 6px silver;
 }
