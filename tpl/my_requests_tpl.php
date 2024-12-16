@@ -4,6 +4,7 @@
 </div>        
 <?php
 // die("requestList=".var_export($requestList,true));
+if(!$requestList) $requestList = [];
 if(count($requestList)>0)
 {
 ?>

@@ -524,7 +524,7 @@ class CrmEmployee extends CrmObject
                                 elseif($return_id) return $objItem->id;
                                 else 
                                 {
-                                        $lang = AfwSession::getSessionVar("lang");
+                                        $lang = AfwSession::getSessionVar("current_lang");
                                         if(!$lang) $lang = "ar";
                                         return AfwLanguageHelper::tt("المنسق(ـة) في") . " " . $objItem->getDisplay($lang);
                                 }

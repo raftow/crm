@@ -324,6 +324,10 @@ class CrmController extends AfwController
 
         public function prepareStandard($request)
         {
+                if($request["all_error"])
+                {
+                        AfwSession::pushError($request["all_error"]);
+                }
                 $custom_scripts = array();
                 $custom_scripts[] = array('type' => 'css', 'path' => "./css/content.css");
                 $custom_scripts[] = array('type' => 'css', 'path' => "../lib/css/sweetalert2.min.css");
@@ -1304,6 +1308,7 @@ class CrmController extends AfwController
                         if (!$data["rid"]) {
                                 $this->request($data);
                         } else {
+                                $this->prepareComplete_request($data);                                
                                 $this->complete_request($data);
                         }
                 }

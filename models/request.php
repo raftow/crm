@@ -1,6 +1,8 @@
 <?php
 class Request extends CrmObject
 {
+    public $itemsMethodExec = [];
+
     public function __construct(){
 		parent::__construct("request","id","crm");
             CrmRequestAfwStructure::initInstance($this);    
@@ -1949,6 +1951,31 @@ class Request extends CrmObject
         return $curr_status_parent;
     }
 
+
+    public function executeItemsMethod($itemsMethod)
+    {
+        if ($itemsMethod) {
+            if(!isset($this->itemsMethodExec[$itemsMethod])) 
+            {
+                $itemsList = $this->$itemsMethod();
+                if (!$itemsList) {
+                    $itemsList = array();
+                }
+                $this->itemsMethodExec[$itemsMethod] = $itemsList;
+            }            
+                    
+        } 
+        else 
+        {
+            $itemsList = array();
+            $itemsList["none"] = array('ar' => "none", 'en' => "none");
+        }
+        
+        
+        return $this->itemsMethodExec[$itemsMethod];
+
+    }
+
     protected function getPublicMethods()
     {
         global $lang;
@@ -2001,90 +2028,20 @@ class Request extends CrmObject
         $curr_status_label = $this->decode("status_id");
 
         foreach (self::$STATUS_MAP[$curr_status_parent] as $methodName0 => $methodProps) {
-            $itemsMethod = self::$PUB_METHODS[$methodName0]["items"];
-            if ($itemsMethod) {
-                $itemsList = $this->$itemsMethod();
-                if (!$itemsList) {
-                    $itemsList = array();
-                    //$itemsList["none"] = array('ar' => "null = this->$itemsMethod() org=".$this->getVal("orgunit_id"), 'en' => "null = this->$itemsMethod() org=".$this->getVal("orgunit_id"));    
-                }
-            } else {
-                $itemsList = array();
-                $itemsList["none"] = array('ar' => "none", 'en' => "none");
-            }
-
             // if($methodName0 == "assignRequest") AfwRunHelper::safeDie("for $methodName0 after call to this->$itemsMethod() itemsList contain : ", "", true, $itemsList);
+            $method_not_allowed_reason = array();
+            $method_not_allowed_reason[] = "current_status : $curr_status_label($curr_status)";
 
-            foreach ($itemsList as $itemId => $itemPbm) {
-                if ($itemId != "none") $methodName = $methodName0 . $itemId;
-                else $methodName = $methodName0;
-                if ($itemPbm and is_array($itemPbm)) $itemTitle = $itemPbm[$lang];
-                elseif ($itemPbm and is_object($itemPbm)) $itemTitle = $itemPbm->getDisplay($lang);
-                else $itemTitle = "???";
+            list($method_allowed, $method_na_reason) = AfwDynamicPublicMethodHelper::checkMethodAllowed($methodProps, $methodName0, $this);                
+            if(!$method_allowed) $method_not_allowed_reason[] = $method_na_reason;
 
-                $method_not_allowed_reason = array();
-                $method_not_allowed_reason[] = "current_status : $curr_status_label($curr_status)";
-                $methodTitle                = $this->getMethodTitle($methodName0, $lang);
-                $methodTitle                = str_replace("[item]", $itemTitle, $methodTitle);
-                $methodTooltip                = $this->getMethodTooltip($methodName0, $lang);
-                $methodColor   = self::$PUB_METHODS[$methodName]["color"];
-                if (!$methodColor) $methodColor = $color;
-                $methodConfirmationNeeded   = self::$PUB_METHODS[$methodName]["'confirmation_needed'"];
-                $methodConfirmationWarning  = $this->decodeTpl(self::$PUB_METHODS[$methodName]["confirmation_warning"]);
-                $methodConfirmationWarningEn  = $this->decodeTpl(AfwLanguageHelper::tt(self::$PUB_METHODS[$methodName]["confirmation_warning"]), "en");
-                $methodConfirmationQuestion = $this->decodeTpl(self::$PUB_METHODS[$methodName]["confirmation_question"]);
-                $methodConfirmationQuestionEn = $this->decodeTpl(AfwLanguageHelper::tt(self::$PUB_METHODS[$methodName]["confirmation_question"]), "en");
-                if (is_array($methodProps)) {
-                    $one_is_sufficiant = $methodProps[0];
-                    unset($methodProps[0]);
-                    $checkMethods = $methodProps;
-                } else {
-                    $one_is_sufficiant = true;
-                    $checkMethods = array($methodProps);
-                }
+            
 
-                $method_allowed = (!$one_is_sufficiant);
-                if (!$method_allowed) $method_not_allowed_reason[] = "$methodName need at least one condition succeeded";
-                else $method_not_allowed_reason[] = "$methodName need all conditions succeed";
-
-                foreach ($checkMethods as $checkMethod) {
-                    if ($one_is_sufficiant) {
-                        if ($this->$checkMethod()) {
-                            $method_allowed = true;
-                            $method_not_allowed_reason[] = "$checkMethod succeeded method allowed";
-                            break;
-                        } else {
-                            $method_not_allowed_reason[] = "$checkMethod failed";
-                        }
-                    } else {
-                        if (!$this->$checkMethod()) {
-                            $method_allowed = false;
-                            $method_not_allowed_reason[] = "$checkMethod failed method not allowed";
-                            break;
-                        } else {
-                            $method_not_allowed_reason[] = "$checkMethod succeeded";
-                        }
-                    }
-                }
-
+            
+            if ($method_allowed) 
+            {
                 $log = implode(" -> ", $method_not_allowed_reason);
-
-                if ($method_allowed) {
-                    $pbms[substr(md5($methodName . $itemTitle), 1, 5)] = array(
-                        "METHOD" => $methodName,
-                        'TOOLTIP' => $methodTooltip,
-                        'LOG' => $log,
-                        "COLOR" => $methodColor,
-                        "LABEL_AR" => $methodTitle,
-                        "PUBLIC" => true,
-                        "BF-ID" => "",
-                        'confirmation_needed' => $methodConfirmationNeeded,
-                        'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
-                        'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
-                    );
-                } else {
-                    // $pbms[substr(md5($methodName),1,5)] = array("METHOD"=>$methodName."LOCK", 'TOOLTIP' =>$tooltip, "COLOR"=>$color, "LABEL_AR"=>$methodTitle." معطلة", "PUBLIC"=>true, "BF-ID"=>"");
-                }
+                $pbms = AfwDynamicPublicMethodHelper::splitMethodToMethodItems($pbms, self::$PUB_METHODS[$methodName0], $methodName0, $this, $log);
             }
         }
 
@@ -3133,8 +3090,8 @@ class Request extends CrmObject
         $link1_title = $this->getVal("link1_title");
         $link1 = $this->getVal("link1");
 
-        if ($link1) $html .= "<li class='smooth-active'>" . str_replace('[title]', $link1_title, self::getLightDownloadUrl($link1, "link")) . "</li>";
-        if ($link2) $html .= "<li class='smooth-active'>" . str_replace('[title]', $link2_title, self::getLightDownloadUrl($link2, "link")) . "</li>";
+        if ($link1) $html .= "<li class='smooth-active'>" . str_replace('[title]', $link1_title, AfwHtmlHelper::getLightDownloadUrl($link1, "link")) . "</li>";
+        if ($link2) $html .= "<li class='smooth-active'>" . str_replace('[title]', $link2_title, AfwHtmlHelper::getLightDownloadUrl($link2, "link")) . "</li>";
 
         $html .= "</ul>";
         return $html;
