@@ -42,7 +42,7 @@ class CrmCrmCustomerAfwStructure
 
 		'idn_type_id' => array(
 			'STEP' => 1,
-			'SHORTNAME' => 'type',
+			'SHORTNAME' => 'idntype',
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,

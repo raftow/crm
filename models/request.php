@@ -754,7 +754,7 @@ class Request extends CrmObject
 
         list($data[0], $link[0]) = $this->displayAttribute("request_title", false, $lang);
         if (!$data[0]) $data[0] = "[بدون عنوان-" . $this->getId() . "]";
-        $data[1] = $this->decode("request_date", "HIJRI_ONLY");
+        $data[1] = $this->showAttribute("request_date"); // $this->decode("status_date", "HIJRI_ONLY");
         if ($this->iamTheSupervisor()) $data[2] = "<span class=\"label_mandatory\">&nbsp;</span>";
         else $data[2] = ">>>>";
 
@@ -770,7 +770,7 @@ class Request extends CrmObject
 
         list($data[0], $link[0]) = $this->displayAttribute("request_title", false, $lang);
         if (!$data[0]) $data[0] = "[بدون عنوان-" . $this->getId() . "]";
-        $data[1] = $this->decode("request_date", "HIJRI_ONLY");
+        $data[1] = $this->showAttribute("request_date"); // $this->decode("status_date", "HIJRI_ONLY");
         list($data[2], $link[2]) = $this->displayAttribute("request_time", false, $lang);
 
         return implode("-", $data);
@@ -785,7 +785,7 @@ class Request extends CrmObject
         $link = array();
         list($status_comment, $link[0]) = $this->displayAttribute("status_comment", false, $lang);
         list($data_status, $link[1]) = $this->displayAttribute("status_id", false, $lang);
-        $status_date = $this->decode("status_date", "HIJRI_ONLY");
+        $status_date = $this->showAttribute("request_date"); // $this->decode("status_date", "HIJRI_ONLY");
         list($status_time, $link[3]) = $this->displayAttribute("status_time", false, $lang);
 
         return "<span class='crm_status_comment'>$status_comment</span> <span class='crm_status'>$data_status</span> <br><span class='status_date'>$status_date</span>&nbsp;&nbsp;<span class='status_time'>$status_time</span>";
@@ -1076,6 +1076,8 @@ class Request extends CrmObject
         if ($fgroup == "props") return array("name" => $fgroup, "css" => "pct_50");
 
         if ($fgroup == "responseList") return array("name" => $fgroup, "css" => "pct_100");
+        if ($fgroup == "request_text") return array("name" => $fgroup, "css" => "pct_100");
+        
 
         return array("name" => $fgroup, "css" => "none");
     }

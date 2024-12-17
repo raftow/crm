@@ -793,12 +793,16 @@ span.prog-name.prog-archive {
         margin-left: 0 !important;
 }
 
+.hzm_sub_label.response.customer {
+    text-shadow: none;
+}
+
 .request_status {
     display: block;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: normal;
     color: white;
-    padding: 4px 5px 8px;
+    padding: 0px 5px 4px;
     border-radius: 12px 0;
     margin-right: 5px;
     margin-left: 5px;
@@ -1944,7 +1948,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     color: #374451;
     background-color: #c3e2a1b5 !important;
     border-radius: 0 15px 15px 0;
-    min-width: 399px;
+    min-width: 249px;
 }
 
 .form-control[readonly] {

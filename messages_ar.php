@@ -31,7 +31,7 @@ $messages = [
     "but from" => "بل من",
     "Are you sure you want to approve this employee on this organization inspite of the aobove explanation ?" => "هل أنت متأكد من اعتماد هذا الموظف على هذه الجهة بعد علمك بالبيان أعلاه؟",
     "We can not automatically approve that this employee is from this organization"=>"تنبيه : لم نتمكن من التأكد آليا من صحة نسبة هذا الموظف لهذه الجهة",
-    
+    "customer" => "عميل",
                                 
 ];
      

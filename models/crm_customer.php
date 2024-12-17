@@ -21,7 +21,7 @@ ALTER TABLE `crm_customer` CHANGE `ref_num` `ref_num` VARCHAR(32) CHARACTER SET 
 
 
 
-class CrmCustomer extends CrmObject
+class CrmCustomer extends CrmObject implements AfwFrontEndUser
 {
 
         public static $MY_ATABLE_ID = 3610;
@@ -803,8 +803,10 @@ class CrmCustomer extends CrmObject
                 // @todo see in uploaded files of this user if there are picture
 
                 // use initials like RB for Rafik BOUBAKER
-                
-                $initials = AfwStringHelper::initialsOfName($this->calcFull_name_en());                
+                $en_name = $this->calcFull_name_en();
+                if(!$en_name) $en_name = AfwStringHelper::arabic_to_latin_chars($this->calcFull_name());
+                if(!$en_name) $en_name = "??";
+                $initials = AfwStringHelper::initialsOfName($en_name);                
                 $html = "<div class='user-account'>$initials</div>";
                 return $html;
         }
@@ -821,5 +823,29 @@ class CrmCustomer extends CrmObject
                 if ($obj->load()) {
                         return $obj;
                 } else return null;
+        }
+
+        public function getMyDepartmentName($lang)
+        {
+                list($return,) = $this->displayAttribute("customer_type_id", false, $lang);
+                return $return;
+        }
+
+        public function getMyJob($lang)
+        {
+                return $this->tm("customer", $lang);
+        }
+        
+        public function getUserPicture()
+        {
+                return $this->getCustomerPicture();
+        }
+
+        public function myShortNameToAttributeName($attribute)
+        {
+                if ($attribute == "type") return "customer_type_id";
+                // if ($attribute == "type") return "customer_type_id";
+                
+                return $attribute;
         }
 }

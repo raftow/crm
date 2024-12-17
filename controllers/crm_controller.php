@@ -80,7 +80,7 @@ class CrmController extends AfwController
                         $user_bg_class = "ubg" . $ord;
                 } else {
                         $user_picture = '<i class="hzm-container-center hzm-vertical-align-middle hzm-icon-std hzm-user-account fa-user"></i></a>';
-                        $user_account_page = "login.php";
+                        $user_account_page = "customer_login.php";
                         $user_bg_class = "ubg0";
                 }
 
@@ -92,11 +92,22 @@ class CrmController extends AfwController
                 $run_mode_var = AfwSession::config("run_mode_var", "run_mode");
                 $run_mode = AfwSession::config($run_mode_var, "");
                 if ($run_mode) $run_mode = "-" . $run_mode;
-
-
-
-
+                
                 $data_tokens = array();
+
+                $enable_search_box = AfwSession::config("crm_enable_search_box", false);
+                if($enable_search_box)
+                {
+                    $data_tokens["enable_search_box_s"] = "";
+                    $data_tokens["enable_search_box_e"] = "";
+                }
+                else
+                {
+                    $data_tokens["enable_search_box_s"] = "<!-- ";
+                    $data_tokens["enable_search_box_e"] = " -->";
+                }
+
+                
 
                 $data_tokens["user_picture"] = $user_picture;
                 $data_tokens["user_bg_class"] = $user_bg_class;
@@ -228,6 +239,11 @@ class CrmController extends AfwController
                 return "newrequest";
         }
 
+        /**
+         * 
+         * @return CrmCustomer
+         */
+
         public function checkLoggedIn()
         {
                 $theCustomer = AfwSession::getCustomerConnected();
@@ -241,32 +257,40 @@ class CrmController extends AfwController
                 return $theCustomer;
         }
 
-        public function initiateStandardDisplay($request)
+        public function initiateStandardDisplay($request, $noTaqib=false)
         {
                 $theCustomer = self::checkLoggedIn();
-                $candRequestObj = $theCustomer->getTaqibCandidate();
-                if ($candRequestObj) {
-                        $token = $candRequestObj->getVal("survey_token");
-
-                        if ($token) {
-                                $limesurvey_url = AfwSession::config("limesurvey_url", "[limesurvey-url]");
-                                $limesurvey_sid = AfwSession::config("limesurvey_url", "[limesurvey_sid]");
-                                $fadhlan_fi_hal = "فضلا، في حال أنه تم حل مشكلتك نرجوا منك تعديل تقييم الخدمة من هنا";
-                                //$a_survey = "<a class='crm response thin-btn width_90' target='_lmsurv' href='http://survey.company/surv/i.php/174363?token=$token&lang=ar'>إعادة تقييم الخدمة</a>" . "<br>";
-                                $a_survey = "<a class='crm response thin-btn width_90' target='_lmsurv' href='$limesurvey_url/$limesurvey_sid?token=$token&lang=ar'>إعادة تقييم الخدمة</a>" . "<br>";
-                                $wafi_hal = "وفي حال أنه لم تتم حل مشكلتك";
-                        } else {
-                                $fadhlan_fi_hal = "";
-                                $wafi_hal = "";
-                                $a_survey = "";
-                        }
-                        $taqib_message = "<div class=\"column btns-qsearch\">لقد أبديت عدم رضاك عن الخدمة بخصوص هذا الطلب  : " . $candRequestObj->getVal("request_title") . ". ";
-                        $taqib_message .= "$fadhlan_fi_hal</div>" . "<br> $a_survey";
-                        $taqib_message .= "<div class=\"column btns-qsearch\">$wafi_hal يمكنك في أقل من دقيقة تقديم تعقيب من هنا : </div>" . "<br>";
-                        $taqib_message .= "<a class='crm question thin-btn width_90' href='i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=" . $candRequestObj->getVal("request_type_id") . "&pt=" . $candRequestObj->id . "'>تقديم طلب تعقيب ذو أولوية عالية</a>" . "<br>";
-
-                        AfwSession::pushWarning($taqib_message);
+                if($noTaqib)
+                {
+                        $candRequestObj = null;
                 }
+                else
+                {
+                        $candRequestObj = $theCustomer->getTaqibCandidate();
+                        if ($candRequestObj) {
+                                $token = $candRequestObj->getVal("survey_token");
+        
+                                if ($token) {
+                                        $limesurvey_url = AfwSession::config("limesurvey_url", "[limesurvey-url]");
+                                        $limesurvey_sid = AfwSession::config("limesurvey_url", "[limesurvey_sid]");
+                                        $fadhlan_fi_hal = "فضلا، في حال أنه تم حل مشكلتك نرجوا منك تعديل تقييم الخدمة من هنا";
+                                        //$a_survey = "<a class='crm response thin-btn width_90' target='_lmsurv' href='http://survey.company/surv/i.php/174363?token=$token&lang=ar'>إعادة تقييم الخدمة</a>" . "<br>";
+                                        $a_survey = "<a class='crm response thin-btn width_90' target='_lmsurv' href='$limesurvey_url/$limesurvey_sid?token=$token&lang=ar'>إعادة تقييم الخدمة</a>" . "<br>";
+                                        $wafi_hal = "وفي حال أنه لم تتم حل مشكلتك";
+                                } else {
+                                        $fadhlan_fi_hal = "";
+                                        $wafi_hal = "";
+                                        $a_survey = "";
+                                }
+                                $taqib_message = "<div class=\"column btns-qsearch\">لقد أبديت عدم رضاك عن الخدمة بخصوص هذا الطلب  : " . $candRequestObj->getVal("request_title") . ". ";
+                                $taqib_message .= "$fadhlan_fi_hal</div>" . "<br> $a_survey";
+                                $taqib_message .= "<div class=\"column btns-qsearch\">$wafi_hal يمكنك في أقل من دقيقة تقديم تعقيب من هنا : </div>" . "<br>";
+                                $taqib_message .= "<a class='crm question thin-btn width_90' href='i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=" . $candRequestObj->getVal("request_type_id") . "&pt=" . $candRequestObj->id . "'>تقديم طلب تعقيب ذو أولوية عالية</a>" . "<br>";
+        
+                                AfwSession::pushWarning($taqib_message);
+                        }
+                }
+                
 
                 return array($theCustomer, $candRequestObj);
         }
@@ -317,7 +341,7 @@ class CrmController extends AfwController
         {
                 $options= [];
                 $options["front-application"] = "crm";
-
+                $options["user-is-customer"] = true;
 
                 return $options;
         }
@@ -668,6 +692,20 @@ class CrmController extends AfwController
 
                 // call the view 1
                 $this->render("crm", "new_request", $data);
+        }
+
+
+        public function initiateNewrequest($request)
+        {
+                // list($theCustomer, ) = $this->initiateStandardDisplay($request, true);
+                $data = $request;
+                $data = array();
+                $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
+                $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
+                $data["title"] = "طلب جديد";
+                
+
+                return $data;
         }
 
         /******************************** myrequests action ********************************************** */

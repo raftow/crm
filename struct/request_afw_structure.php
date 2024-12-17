@@ -35,7 +35,7 @@ class CrmRequestAfwStructure
 
 
 		'id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,*/
+			'FGROUP' => 'request_text',  /* 'STEP' => 1,*/
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'EXCEL' => true,
@@ -45,6 +45,29 @@ class CrmRequestAfwStructure
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
+		),
+
+		'request_text' => array(
+			'FGROUP' => 'request_text',  /* 'STEP' => 2,  */
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EXCEL' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'SIZE' => 'AREA',
+			'ROWS' => 16,
+			'MANDATORY' => true,
+			'UTF8' => true,
+			'TYPE' => 'TEXT',
+			'FORMAT' => 'TOHTML',
+			'READONLY' => false,
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
 		),
 
 
@@ -64,7 +87,7 @@ class CrmRequestAfwStructure
 			'MANDATORY' => true,
 			'UTF8' => false,
 			'TYPE' => 'DATE',
-			'FORMAT' => 'CONVERT_NASRANI_VERY_SIMPLE',
+			'FORMAT' => 'CONVERT_SYSTEM_FORMAT',
 			'RETRIEVE-VALUE' => false,
 			'READONLY' => true,
 			'SEARCH-BY-ONE' => true,
@@ -512,28 +535,7 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_33',
 		),
 
-		'request_text' => array(
-			'FGROUP' => 'props',  /* 'STEP' => 2,  */
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EXCEL' => true,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'SIZE' => 'AREA',
-			'ROWS' => 16,
-			'MANDATORY' => true,
-			'UTF8' => true,
-			'TYPE' => 'TEXT',
-			'FORMAT' => 'TOHTML',
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-		),
+		
 
 		'requestFileList' => array(
 			'FGROUP' => 'props',
@@ -999,9 +1001,9 @@ class CrmRequestAfwStructure
 		'request_late' => array(
 			'FGROUP' => 'status',
 			'TYPE' => 'INT',
-			'SHOW' => true,
+			'SHOW' => false,
 			'RETRIEVE' => false,
-			'EDIT' => true,
+			'EDIT' => false,
 			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
