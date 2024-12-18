@@ -1,31 +1,8 @@
 <div class='hzm_minibox_container'>        
         <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
                 <div class='hzm_label response object_status_[ERROR_STATUS] greentitle expand collapsed' data-toggle='collapse' data-target='#response[id]_minibox'>
-                     <div class="hzm_sub_label response [response_cls]"><i>[response_aut]</i>[OBJECT_NODE_DISPLAY]<br><div class='crm_label crm_author'>[OBJECT_SHORT_DISPLAY]</div><div class='crm_label crm_datetime'>[response_date] [response_time]</div></div>
-                     <!--<div class='hzm_minibox_btns'>            
-                                <p style="/* padding-right: 10px; */margin-top: -10px;text-align: center;">
-                                        <a target="_new" href="main.php?Main_Page=afw_mode_edit.php&popup=&cl=Response&currmod=crm&id=[id]">
-                                                <img src="../lib/images/view_[ERROR_STATUS].png" width="24" heigth="24">
-                                        </a>
-                                </p>
-                                
-                           <table class="simple_grid">
-                                <tbody>
-                                        <tr>   
-                                                <th>
-                                                        <span class="titre_0">التعديل
-                                                        </span>
-                                                </th>   
-                                                <td style="background-color:#fff;">
-                                                        <p style="/* padding-right: 10px; */margin-top: -10px;">
-                                                                <a target="_new" href="main.php?Main_Page=afw_mode_edit.php&popup=&cl=Response&currmod=crm&id=[id]">
-                                                                        <img src="../lib/images/view_[ERROR_STATUS].png" width="24" heigth="24"></a>
-                                                        </p></td>
-                                        </tr>
-                                </tbody>
-                           </table>
-                                
-                    </div>-->
+                     <div class="hzm_sub_label response [response_cls]"><div class='response-resume'><i>[response_aut]</i>[OBJECT_NODE_DISPLAY]</div><div class='crm_label crm_author'>[OBJECT_SHORT_DISPLAY]</div><div class='crm_label crm_datetime'>[response_date] [response_time]</div></div>
+                     
                 </div>        
         </div>        
         <div id='response[id]_minibox' class='hzm_wd4 collapse hzm_minibox_body hzm_minibox_response' aria-expanded='true' style=''>           

@@ -38,6 +38,13 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         {
                 parent::__construct("crm_customer", "id", "crm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+                
+                $arrDisp = [];
+                $arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar"];
+                $arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en"];
+
+                $this->DISPLAY_FIELD_BY_LANG = $arrDisp;
+                $this->DISPLAY_SEPARATOR = " ";
                 $this->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn");
                 $this->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
 
@@ -342,16 +349,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
         public function getDropDownDisplay($lang = "ar")
         {
-                $displ = $this->getShortDisplay($lang);
-                $idn = $this->getVal("idn");
-                // if($idn) $displ .= " - رقم الهوية  : ".$idn;
-                if ($idn) $displ .= " - " . $idn;
-
-                $mobile = $this->getVal("mobile");
-                //if($mobile) $displ .= " - رقم الجوال : ".$mobile;
-                if ($mobile) $displ .= " - " . $mobile;
-
-                return $displ;
+                return $this->getDisplay($lang);
         }
 
 
@@ -363,8 +361,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 if ($idn) $displ .= " - " . $idn;
                 $mobile = $this->getVal("mobile");
                 //if($mobile) $displ .= " - رقم الجوال : ".$mobile;
-                if ($mobile) $displ .= " - " . $mobile;
-
+                if ($mobile) $displ .= " / " . $mobile;
+                //if(AfwStringHelper::stringContain($displ,"sara_4238_@hotmail.com")) throw new AfwRuntimeException("This is case of strange key display : $displ");
                 return $displ;
         }
 

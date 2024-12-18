@@ -1283,6 +1283,10 @@ input.btnbtsp.btn-primary.btncheck {
     margin-bottom: 20px;
 }
 
+.hzm_attribute.hzm_minibox_header0 {
+    min-height: 40px !important;
+    margin-bottom: 0px;
+}
 
 
 .request_container {
@@ -1908,7 +1912,14 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 }
 
 .hzm_label.response.greentitle.collapsed i {
-    margin-right: -20px !important;
+    margin-right: 0px !important;
+}
+
+.response-resume {
+    float: right;
+    max-width: 35% !important;
+    overflow: hidden;
+    margin-left: 5px;
 }
 
 .hzm_sub_label.response {
@@ -1933,11 +1944,13 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     text-shadow: none;
 }
 
+
+
 .crm_datetime {
     font-size: 84%;
     font-family: digi;
-    font-style: italic;
-    color: #304560;
+    /* font-weight: bold; */
+    color: #178f2c;
     background-color: #e2e2a49e !important;
     border-radius: 15px 0 0 15px;
     min-width: 164px;

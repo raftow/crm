@@ -1175,6 +1175,23 @@ class Request extends CrmObject
             return $this->estSent();
         }
 
+        if ($attribute == "request_for") {
+            $val = trim($this->getVal($attribute));
+            return ($val and ($val != "crm-"));
+        }
+        
+        if ($attribute == "request_link") {
+            $val = trim($this->getVal($attribute));
+            return ($val != "");
+        }
+
+        if ($attribute == "related_request_code") {
+            $val = trim($this->getVal($attribute));
+            return ($val != "");
+        }
+
+        
+
         if (($attribute == "easy_fast") or ($attribute == "service_satisfied") or ($attribute == "pb_resolved") or ($attribute == "general_satisfaction")) {
             return $this->estOpened();
         }
@@ -2216,7 +2233,7 @@ class Request extends CrmObject
     }
 
 
-    public function calcMan($showOnlyCode=false)
+    public function calcMan($what="value", $showOnlyCode=false)
     {
         $lang = AfwSession::getSessionVar("current_lang");
         if(!$lang) $lang = "ar";
@@ -3230,6 +3247,6 @@ class Request extends CrmObject
 
     public function myDisplayStatus()
     {
-        return $this->calcMan(true);
+        return $this->calcMan("value", true);
     }
 }

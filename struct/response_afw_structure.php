@@ -153,7 +153,7 @@ class CrmResponseAfwStructure
 			'MANDATORY' => true,
 			'UTF8' => false,
 			'TYPE' => 'TIME',
-			'FORMAT' => 'ARABIC-TIME',
+			'FORMAT' => 'TIME-WITHOUT-SECONDS',
 			'READONLY' => false,
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => false,
