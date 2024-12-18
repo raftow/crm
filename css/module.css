@@ -1917,7 +1917,8 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 
 .response-resume {
     float: right;
-    max-width: 35% !important;
+    max-width: 35% !important;    
+    min-width: 35% !important;
     overflow: hidden;
     margin-left: 5px;
 }
