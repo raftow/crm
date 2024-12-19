@@ -34,7 +34,7 @@ $config_arr = array(
                                   5 => "متعاون من الخارج",
                                   ),
 
-
+        'enable_language_switch' => false,
         //  classes params
         /*TravelTemplate_showId =>true, */
         

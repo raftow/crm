@@ -113,12 +113,6 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
                                 if($custObj)
                                 {
                                         $new_customer = 0;
-                                        /*
-                                        if(!file_exists("$file_dir_name/../$front_header_page"))
-                                        {
-                                                echo "the hea der file $file_dir_name/../$front_header_page doesn't exist";
-                                        }
-                                        else include_once("$file_dir_name/../$front_header_page");*/
                                         if(!$customer_mobile) 
                                         {
                                                 $customer_mobile = $custObj->getVal("mobile");

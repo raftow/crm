@@ -1,3 +1,32 @@
+.modal-header {
+    background-color: white;
+}
+.popup-login-customer>.modal-header {
+    background-color: transparent;
+}
+
+.popup-login-customer>.modal-content>.modal-header {
+    background-color: #b2cfdd !important;
+}
+
+div.home_banner>.modal-dialog.popup-login {
+    margin-right: 30%;
+    max-width: 950px !important;
+}
+
+div.home_banner>.modal-dialog.popup-login-customer {
+    max-width: 500px !important;
+}
+
+div.modal-dialog>.modal-content {
+    border: none !important;
+    animation: none !important;
+}
+
+
+h1.modal-title {
+    background-color: #3d99c2 !important;
+}
 
 .home_banner{
     background-image: url(../pic/home_login_bg.jpg) !important;
@@ -9,6 +38,24 @@
     float: right;
 }
 
+.home_banner {
+    background-image: url(../pic/home_banner_003.jpg) !important;
+    background-color: #c6c6c64a;
+    /* background-size: 100% 110% !important; */
+    background-position-x: center !important;
+    background-position-y: 0px !important;
+    background-repeat: repeat-y;
+    width: 100%;
+    min-height: 1150px !important;
+    float: right;
+    border: none !important;
+}
+
+.modal-body {
+    position: relative;
+    padding: 15px;
+    background-color: #d0e5ef;
+}
 
 
 li.hzm_login {
@@ -207,24 +254,6 @@ span.object_id {
 
 
 
-.home_banner {
-    background-image: url(../pic/home_banner_001.jpg) !important;
-    background-color: #c7e7f6;
-    background-size: 100% 110% !important;
-    background-position-x: center !important;
-    background-position-y: 0px !important;
-    background-repeat: repeat-y;
-    width: 100%;
-    min-height: 1150px !important;
-    float: right;
-    border: none !important;
-}
-
-.modal-body {
-    position: relative;
-    padding: 15px;
-    background-color: #d0e5ef;
-}
 
 .btnbtsp {
     font-size: 18px;
@@ -348,11 +377,7 @@ h2.crm_question {
     float: right;
     min-height: 700px;
     min-width: 300px !important;
-    width: 80% !important;
     max-width: 350px;
-    margin-right: 30% !important;
-    margin-left: 60px !important;
-    margin-top: 50px !important;
 }    
 
   
@@ -604,8 +629,9 @@ div.btnbtsp.btn-success.btnregister {
 .q_new_customer {
     border-radius: 0px;
     padding: 6px 0px 0px 0px;
-    border: 1px solid #85c0c8b0 !important;
-    background-color: #e5f9fbb3;
+    border: 1px solid #8e9b9db0 !important;
+    background-color: #e4eaebb3;
+    width: 100%;
 }
 
 .hzm_minibox_btns {
@@ -1883,20 +1909,21 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 
 
 .hzm_label.response.greentitle i {
-    margin-right: -20px !important;
+    margin-right: 0px !important;
     display: inline-block;
     width: 29px;
     height: 29px;
-    background: #acd53a;
+    background: #c2e3fb70;
     margin-left: 10px;
-    border-width: 2px;
+    border-width: 1px;
     border-style: solid;
-    border-color: #237211;
+    border-radius: 50%;
+    border-color: #167fab;
     position: relative;
     top: 0px;
     font-size: 12px;
     font-weight: bold;
-    padding-right: 8px;
+    padding-right: 9px;
     line-height: 20px;
 }
 
@@ -1917,10 +1944,12 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 
 .response-resume {
     float: right;
-    max-width: 35% !important;    
-    min-width: 35% !important;
+    max-width: 45% !important;
+    width: 45% !important;
     overflow: hidden;
+    min-width: 250px;
     margin-left: 5px;
+    text-shadow: none;
 }
 
 .hzm_sub_label.response {
@@ -1941,7 +1970,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     width: auto !important;
     float: right;
     padding: 1px 10px;
-    margin-top: 6px;
+    margin-top: -2px;
     text-shadow: none;
 }
 
@@ -1951,16 +1980,16 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     font-size: 84%;
     font-family: digi;
     /* font-weight: bold; */
-    color: #178f2c;
-    background-color: #e2e2a49e !important;
+    color: #0e701f;
+    background-color: #c4cbca61 !important;
     border-radius: 15px 0 0 15px;
     min-width: 164px;
 }
 
 .crm_author {
     font-size: 80%;
-    color: #374451;
-    background-color: #c3e2a1b5 !important;
+    color: #4d6857;
+    background-color: #cdcdcdb5 !important;
     border-radius: 0 15px 15px 0;
     min-width: 249px;
 }
@@ -1978,7 +2007,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 }
 
 .hzm_label.greentitle.expand {
-    background-color: #f8fce794 !important;
+    background-color: #d1eaff94 !important;
 }
 
 .hzm_label.greentitle.expand.collapsed {
@@ -2086,17 +2115,25 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     
 }
 
+
+
 @media screen and (max-width: 1100px) {
     .home_banner.login_banner{
-        background-image: url(../pic/home_banner_001.jpg) !important;
+        background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 200% !important;
         min-height: 380px !important;
+    }
+
+    .modal-dialog.popup-login {
+        width: 94% !important;
+        margin-right: 3% !important;
+        margin-left: 3% !important;
     }
 }
 
 @media screen and (max-width: 600px) {
     .home_banner.login_banner{
-        background-image: url(../pic/home_banner_001.jpg) !important;
+        background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 300% !important;
         min-height: 380px !important;
     }
@@ -2105,7 +2142,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 @media screen and (max-width: 510px)
 {
     .home_banner.login_banner {
-        background-image: url(../pic/home_banner_001.jpg) !important;
+        background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 400% !important;
         min-height: 380px !important;
     }
@@ -2114,7 +2151,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 @media screen and (max-width: 460px)
 {
     .home_banner.login_banner {
-        background-image: url(../pic/home_banner_001.jpg) !important;
+        background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 500% !important;
         min-height: 380px !important;
     }
@@ -2123,7 +2160,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 @media screen and (max-width: 410px)
 {
     .home_banner.login_banner {
-        background-image: url(../pic/home_banner_001.jpg) !important;
+        background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 600% !important;
         min-height: 340px !important;
     }
@@ -2771,7 +2808,7 @@ header.top-header {
 }
 
 .hzm_body {
-    background-color: #4a9bbf;
+    background-color: #3b4650;
 }
 
 .cms_container {
@@ -2885,19 +2922,7 @@ h5.bluetitle.search {
     padding-bottom: 15px;
 }
 
-div.home_banner>.modal-dialog.popup-login {
-    margin-right: 30%;
-    max-width: 950px !important;
-}
 
-div.home_banner>.modal-dialog.popup-login-customer {
-    max-width: 500px !important;
-}
-
-div.modal-dialog>.modal-content {
-    border: 1px solid #fff !important;
-    animation: none !important;
-}
 
 .icon-322:before {
     content: "\f0e8";
@@ -2924,7 +2949,7 @@ div.modal-dialog>.modal-content {
 }
 
 .rowfooter.rowfootercrm {
-    background-color: #156874 !important;
+    background-color: #464f50 !important;
 }
 
 .filebox.editcard.crm.request {

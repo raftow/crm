@@ -206,7 +206,11 @@ if(!file_exists("$file_dir_name/../$front_header_page"))
 {
      echo "customer_verify : header file $file_dir_name/../$front_header_page doesn't exist";
 }
-else include("$file_dir_name/../$front_header_page");
+else 
+{
+        $no_front_header = true;
+        include("$file_dir_name/../$front_header_page");
+}
 
 if($sms_ok)
 {

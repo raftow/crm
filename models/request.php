@@ -1951,6 +1951,16 @@ class Request extends CrmObject
     }
 
 
+    public static function satisfactionPct()
+    {
+        $satisfied = Request::aggreg("count(*)", "service_satisfied = 'Y'");
+        $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N'");
+        $neutral = Request::aggreg("count(*)", "service_satisfied = 'W'");
+        $total = $satisfied + $not_satisfied; //  + $neutral
+        $pct = round($satisfied * 1000 / $total)/10;
+
+        return $pct;
+    }
 
     private static function statusFather($curr_status)
     {

@@ -71,6 +71,10 @@ class RequestArTranslator
 		$trad["request"]["general_satisfaction"] = "الرضا عموما عن خدمات المؤسسة";
 		$trad["request"]["customer_id"] = "العميل صاحب الطلب";
 		$trad["request"]["assign_time"] = "وقت التكليف";
+		$trad["request"]["request_subject"] = "مواضيع الطلبات";
+		$trad["request"]["satisfaction"] = "نسبة رضا العملاء";
+		$trad["request"]["tasks"] = "مهام بالانتظار";
+		
 		$trad["request"]["concerned_orgunit_id"] = "الجهة المعنية بالطلب";
 		$trad["request"]["customer_type_id"] = "نوع العميل";
 

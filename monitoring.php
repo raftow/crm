@@ -35,6 +35,7 @@ $stats_arr = Request::aggreg($function="count(*)",
                 $throw_analysis_crash=true);
 
 if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
+if(!$lang) $lang = "ar";
 
 $statsMatrix = array();
 foreach($supList as $supItem)                
@@ -53,84 +54,7 @@ $reqList = Request::loadRecords($where_old_still_not_assigned, $limit="5", $orde
 $header_trad = array("missed"=>"عدد الطلبات", "name" => 'الادارة - المشرف');
 
 
-$out_scr .= '<div class="row justify-content-center">    
-<div class="col-lg-12">
-                    <div class="single_element">
-                        <div class="quick_activity">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="quick_activity_wrap">
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/man.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">520</span> </h3>
-                                                <p>العملاء</p>
-                                            </div>
-                                        </div>
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/request.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">6969</span> </h3>
-                                                <p>الطلبات</p>
-                                            </div>
-                                        </div>
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/blocked.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">7509</span> </h3>
-                                                <p>الطلبات المتأخرة</p>
-                                            </div>
-                                        </div>
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/to-assign.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">2110</span> </h3>
-                                                <p>طلبات غير مسندة</p>
-                                            </div>
-                                        </div>
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/quality.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">75%</span> </h3>
-                                                <p>جودة الأداء</p>
-                                            </div>
-                                        </div>
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/feedback.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">2110</span> </h3>
-                                                <p>نسبة رضا العملاء</p>
-                                            </div>
-                                        </div>
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/tasks.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">10</span> </h3>
-                                                <p>مهامي</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    </div>';
+$out_scr .= Page::showPage("crm", "main-page", $lang);
 
 $out_scr .= "<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>";
 

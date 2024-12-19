@@ -59,6 +59,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
 
         public static $STATS_CONFIG = array(
+                /*
                 "gs001" => array(
                         "STATS_WHERE" => "active = 'Y' and last_request_date between [date_start_stats] and [date_end_stats]", // 
                         "DISABLE-VH" => true,
@@ -78,9 +79,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
 
 
-                        /*"FORMULA_COLS"=>array(
-                                                0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
-                                ),*/
+
 
                         "OPTIONS" => array(
                                 "simple" => array('count_cust' => true),
@@ -88,7 +87,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
                         //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
 
-                ),
+                ),*/
 
 
 
