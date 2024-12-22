@@ -44,3 +44,7 @@
 
 </div>
 </div>
+<?php 
+        $file_dir_name = dirname(__FILE__);
+        include("$file_dir_name/loader_front_tpl.php"); 
+?>

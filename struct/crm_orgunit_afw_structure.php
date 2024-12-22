@@ -73,7 +73,7 @@
 							'WHERE' => "orgunit_id = §orgunit_id§", 
 							'HIDE_COLS' => ["orgunit_id"],
 							'FORCE_COLS' => ["inbox_count"],
-							'FORMAT' => 'retrieve',  'SHOW' => true, 'RETRIEVE' => true,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
+							'FORMAT' => 'retrieve',  'SHOW' => true, 'RETRIEVE' => false,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 							),
 

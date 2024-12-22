@@ -120,6 +120,8 @@ class RequestArTranslator
 		$trad["request"]["stats.gs001"] = "تقرير الأداء لفترة من [date_start_perf] إلى [date_end_perf]";
 		$trad["request"]["stats.gs003"] = "احصائيات الطلبات لفترة من [date_start_stats] إلى [date_end_stats]";
 		$trad["request"]["stats.gs004"] = "الطلبات بحسب حالة الطلب لفترة من [date_start_stats] إلى [date_end_stats]";
+		$trad["request"]["stats.gs005"] = "تقرير رضا العملاء لفترة من [date_start_perf] إلى [date_end_perf]";
+		$trad["request"]["stats.gs006"] = "تقرير حالة الطلبات لفترة من [date_start_perf] إلى [date_end_perf]";
 		return $trad;
 	}
 

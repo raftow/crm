@@ -405,6 +405,7 @@ class CrmRequestAfwStructure
 			'READONLY' => false,
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
+			'NO-LABEL' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
@@ -937,7 +938,7 @@ class CrmRequestAfwStructure
 		),
 
 		'service_satisfied' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 5,  */
+			'FGROUP' => 'status',  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,

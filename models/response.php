@@ -49,7 +49,9 @@ class Response extends CrmObject
 
                 $this->showQeditErrors = true;
                 $this->showRetrieveErrors = true;
-
+                $this->public_display = true;
+                $this->public_edit = true;
+                
                 $this->after_save_edit = array("class" => 'Request', "attribute" => 'request_id', "currmod" => 'crm', "currstep" => 4);
         }
 

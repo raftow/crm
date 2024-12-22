@@ -3,8 +3,6 @@
 $file_dir_name = dirname(__FILE__);
 
 require_once("$file_dir_name/../external/db.php");
-// old include of afw.php
-require_once("$file_dir_name/../lib/afw/modes/afw_config.php");
 require_once("$file_dir_name/../lib/afw/afw_displayer_factory.php");
 
 $datatable_on=1;

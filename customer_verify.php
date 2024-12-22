@@ -168,7 +168,7 @@ elseif($customer_mobile)
        // random code
        $customer_OTP = AfwSmsSender::verifyCode(); 
        AfwSession::setSessionVar("customer_OTP", $customer_OTP);
-       $customer_verify_the_message = "عميلنا العزيز استخدم رمز التحقق " . $customer_OTP;
+       $customer_verify_the_message = "رمز التحقق " . $customer_OTP;
 
        $app_name = AfwSession::config("application_name", "crm");
 

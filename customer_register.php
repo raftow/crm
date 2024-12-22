@@ -17,6 +17,7 @@ $module_dir_name = $file_dir_name;
 
 require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
 $uri_module = AfwUrlManager::currentURIModule();       
+AfwAutoLoader::addMainModule($uri_module);
 AfwSession::startSession();
 
 if(!$uri_module) die("site code not defined !!!");
@@ -166,7 +167,11 @@ if(!file_exists("$file_dir_name/../$front_header_page"))
 {
      echo "customer_register : header file $file_dir_name/../$front_header_page doesn't exist";
 }
-else include_once("$file_dir_name/../$front_header_page");
+else 
+{
+        $no_front_header = true;
+        include_once("$file_dir_name/../$front_header_page");
+}
 
 ?>
 <div class="home_banner login_banner">
@@ -241,9 +246,9 @@ else include_once("$file_dir_name/../$front_header_page");
                                 </div>
                                 
                                 <div class="form-group width_pct_100">
-                                        <label class="hzm_label hzm_label_customer_email">البريد الالكتروني
+                                        <label class="hzm_label hzm_label_customer_email label_mandatory">البريد الالكتروني
                                         </label>
-                                        <input class="form-control" type="text" name="customer_email" id="customer_email" value="<?php echo $customer_email?>">
+                                        <input class="form-control" type="text" name="customer_email" id="customer_email" value="<?php echo $customer_email?>" required>
                                         <?php 
                                                 if($customer_register_errors["customer_email"]) $d_class = ""; else $d_class = "d-none"; 
                                                 echo "<label id='customer_email-error' class='down error $d_class' for='customer_email'>".$customer_register_errors["customer_email"]."</label>"; 

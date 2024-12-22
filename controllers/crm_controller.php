@@ -107,7 +107,13 @@ class CrmController extends AfwController
                     $data_tokens["enable_search_box_e"] = " -->";
                 }
 
-                
+                if ($options["no_calendar"]) {
+                        $data_tokens["calendar_item_s"] = "<!-- ";
+                        $data_tokens["calendar_item_e"] = " -->";
+                } else {
+                        $data_tokens["calendar_item_s"] = "";
+                        $data_tokens["calendar_item_e"] = "";
+                }
 
                 $data_tokens["user_picture"] = $user_picture;
                 $data_tokens["user_bg_class"] = $user_bg_class;
@@ -694,7 +700,7 @@ class CrmController extends AfwController
                 $this->render("crm", "new_request", $data);
         }
 
-
+         
         public function initiateNewrequest($request)
         {
                 // list($theCustomer, ) = $this->initiateStandardDisplay($request, true);
@@ -752,7 +758,22 @@ class CrmController extends AfwController
         /******************************** oldrequests action ********************************************** */
 
         
-       
+        public function initiateOldrequests($request)
+        {
+                list($theCustomer, $candRequestObj) = $this->initiateStandardDisplay($request);
+                $data = $request;
+                $data = array();
+                if ($theCustomer) {
+                        // die("theCustomer = ".var_export($theCustomer,true));
+                        $data["requestList"] = $theCustomer->get("oldRequestList");
+                        $data["title"] = "طلباتي المنتهية";
+                } else {
+                        //$login_module = AfwSession::config("login_module","crm"); $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
+                        $data = null;
+                }
+
+                return $data;
+        }
 
         public function prepareOldrequests($request)
         {
@@ -763,18 +784,9 @@ class CrmController extends AfwController
 
         public function oldrequests($request)
         {
-                foreach ($request as $key => $value) $$key = $value;
+                // foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
-
-
-                $theCustomer = AfwSession::getCustomerConnected();
-
-                if ($theCustomer) {
-                        $data["requestList"] = $theCustomer->get("oldRequestList");
-                        $data["title"] = "طلباتي المنتهية";
-                } else {
-                        return $this->renderPage("crm", "index", []);
-                }
+                
 
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");

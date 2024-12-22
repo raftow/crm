@@ -138,7 +138,7 @@ class Request extends CrmObject
 
 
     public static $MAX_DELAY_BEFORE_CONSIDER_LATE = 7;
-    public static $STATS_PERF_PERIOD = 360;
+    public static $STATS_PERF_PERIOD = 180;
 
 
     public static $PUB_METHODS = array(
@@ -471,6 +471,8 @@ class Request extends CrmObject
 
             "OPTIONS" => array(
                 "perf" => array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf' => true),
+                "MAX_MEMORY_BY_REQUEST" => 400000000,
+                "MODE_BATCH_LOURD" => true,
             ),
             // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
             //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
@@ -813,7 +815,9 @@ class Request extends CrmObject
         $displ = $this->getDisplay($lang);
 
         if ($mode == "mode_responseList") {
+            // throw new AfwRuntimeException("`$mode` == mode_responseList why here");
             if (!$this->isClosedWithCustomer()) {
+                // throw new AfwRuntimeException("not isClosedWithCustomer why here");
                 if ($this->investigatorCanRespond() or $this->iamTheSupervisor()) {
                     unset($link);
                     $link = array();
@@ -821,6 +825,7 @@ class Request extends CrmObject
                     $title_detailed = $title . "بخصوص : " . $displ;
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=1";
                     $link["TITLE"] = $title;
+                    $link["PUBLIC"] = true;
                     $link["UGROUPS"] = array();
                     $otherLinksArray[] = $link;
                 }
@@ -833,6 +838,7 @@ class Request extends CrmObject
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=5";
                     $link["TITLE"] = $title;
                     $link["UGROUPS"] = array();
+                    $link["PUBLIC"] = true;
                     $otherLinksArray[] = $link;
                 }
 
@@ -844,6 +850,7 @@ class Request extends CrmObject
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=2";
                     $link["TITLE"] = $title;
                     $link["UGROUPS"] = array();
+                    $link["PUBLIC"] = true;
                     $otherLinksArray[] = $link;
                 }
 
@@ -855,6 +862,7 @@ class Request extends CrmObject
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=7";
                     $link["TITLE"] = $title;
                     $link["UGROUPS"] = array();
+                    $link["PUBLIC"] = true;
                     $otherLinksArray[] = $link;
                 }
 
@@ -866,9 +874,12 @@ class Request extends CrmObject
                     $title_detailed = $title . "بخصوص : " . $displ;
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=14";
                     $link["TITLE"] = $title;
+                    $link["PUBLIC"] = true;
                     $link["UGROUPS"] = array();
                     $otherLinksArray[] = $link;
                 }
+
+                // throw new AfwRuntimeException("debuggggg otherLinksArray = ".var_export($otherLinksArray, true));
             }
         }
 

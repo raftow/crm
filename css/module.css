@@ -1,3 +1,14 @@
+.popup-sms-verify .modal-header {
+    background-color: #3d5e7c;
+    padding: 5px;
+    border: none !important;
+    margin: 0;
+}
+
+.popup-sms-verify .modal-header > div {
+    width: 100%;
+}
+
 .modal-header {
     background-color: white;
 }
@@ -54,9 +65,13 @@ h1.modal-title {
 .modal-body {
     position: relative;
     padding: 15px;
-    background-color: #d0e5ef;
+    background-color: #c3e6fd;
 }
 
+.container.crm {
+    background-color: white;
+    max-width: 1720px;
+}
 
 li.hzm_login {
     float: left !important;
@@ -196,7 +211,7 @@ span.object_id {
 
 /***     login/home/header nice can be published for all   */
 
-    @media screen and (max-width: 575px) {
+    @media screen and (max-width: 1000px) {
             .calendar_bloc_g{
                display:none;
                visibility:hidden;
@@ -274,6 +289,7 @@ span.object_id {
 
 div.modal-dialog {
     margin-top: 0 !important;
+    pointer-events: auto;
 }
 
 /***     login/home/header nice can be published for all   */
@@ -366,7 +382,7 @@ h2.crm_question {
     max-width: 350px;
     margin-right: 10% !important;
     margin-left: 30px !important;
-    margin-top: 50px !important;
+    margin-top: 150px !important;
 } 
 
 .modal-dialog.popup-login {
@@ -460,7 +476,7 @@ div.popup-sms-verify>.modal-content {
     max-width: none;
     margin-right: 0 !important;
     margin-left: 0 !important;
-    margin-top: 60px !important;
+    margin-top: 160px !important;
 }   
 
 @media (max-width:1042px)
@@ -508,9 +524,9 @@ div.popup-sms-verify>.modal-content {
         min-height: 210px;
         min-width: 0 !important;
         max-width: none !important;
-        width: 70% !important;
-        margin-right: 15% !important;
-        margin-left: 15% !important;
+        width: 80% !important;
+        margin-right: 10% !important;
+        margin-left: 10% !important;
         margin-top: 130px !important;
         margin-bottom: 10px !important;
     }
@@ -601,15 +617,12 @@ div.popup-sms-verify>.modal-content {
     }    
 }
 
-
-
-
 h2.title_register {
     float: right;
     font-weight: normal;
     font-family: title !important;
     font-size: 20px;
-    color: #a59e9e;
+    color: #b0d9f7;
     text-align: center;
     width: 100%;
 }
@@ -736,8 +749,46 @@ span.prog-name.prog-archive {
 }
 
 .front_bloc.hzm_crm_bloc.ticket.status_6 {
-    background-color: #dedcdc6e;
-    border: 2px solid #2a2724db;
+    background-color: white;
+    border: 1px solid #2a2724db;
+}
+
+.status_6 .row.crm_data.title_crm {
+    background-color: #dadbd559;
+}
+
+.status_6 .row.odd.crm_data.crm_response {
+    background-color: #dadbd559;
+}
+
+.status_6 .crm_ticket_num, .status_6 .hzm_time {
+    background-color: #888888;
+    color:white;
+    border-color:#252121;
+}
+
+.status_6 span.hzm_date, .status_6 .hzm_small_calendar{
+    color:#252121;
+}
+
+.front_bloc.hzm_crm_bloc.ticket.status_8 {
+    background-color: #fff3e86e;
+    border: 1px solid #db7841;
+}
+
+.status_8 .crm_ticket_num, .status_8 .hzm_time {
+    background-color: #888888;
+    color:white;
+    border-color:#252121;
+}
+
+.status_8 span.hzm_date, .status_8 .hzm_small_calendar{
+    color:#252121;
+}
+
+.status_8 .mb_long_title.my_request {
+    border-bottom: 1px solid #c17210db;
+    background-color: #ffd0aa4f;
 }
 
 @media screen and (max-width: 410px) {
@@ -828,10 +879,11 @@ span.prog-name.prog-archive {
     font-size: 13px;
     font-weight: normal;
     color: white;
-    padding: 0px 5px 4px;
+    padding: 3px 2px 3px;
     border-radius: 12px 0;
     margin-right: 5px;
     margin-left: 5px;
+    margin-top: 4px;
     min-width: 48px !important;
     max-width: 106px;
     text-align: center;
@@ -840,7 +892,9 @@ span.prog-name.prog-archive {
 }
 
 .request_status.status_1 {
-        background-color: #3eb3c7;
+    background-color: #ffffff;
+    color: #49a1b1;
+    border: 1px solid #60a7b391;
 }
 
 .request_status.status_101 {
@@ -875,6 +929,8 @@ span.prog-name.prog-archive {
 .request_status.status_6 {
     background-color: #8e8282;
     color: #fff;
+    max-width: 166px;
+    font-weight: normal;
 }
 
 .request_status.status_7 {
@@ -884,7 +940,7 @@ span.prog-name.prog-archive {
 
 
 .request_status.status_8 {
-        background-color:#c38f8f;
+        background-color:#db7841;
 }
 
 
@@ -908,7 +964,7 @@ span.prog-name.prog-archive {
 .my_crm_ticket {
         margin-right: 1%;
         margin-left: 0;
-        font-size: 19px;
+        font-size: 14px;
         padding-top: 10px;
         font-weight: normal;
         width: 49%;
@@ -1257,6 +1313,7 @@ input.btnbtsp.btn-primary.btncheck {
     color: white !important;
     padding: 0px;
     font-weight: normal;
+    background-color: #57b0ed;
 }
 
 
@@ -1387,14 +1444,20 @@ span.hzm_date {
     color: #047e7a;
     font-weight: bold;
     padding: 2px !important;
+    width: 70%;
 }
 
 span.hzm_time {
     color: #047e7a;
     font-size: 16px;
     margin-top: -3px;
-    font-weight: bold;
-    padding: 2px !important;
+    font-weight: normal;
+    padding: 3px !important;
+    width: 20%;
+    max-width: 70px;
+    text-align: center;
+    background-color: #e0fbba85;
+    border: 1px solid #3ecd3e;
 }
 
 span.hzm_time.hzm_small_time {
@@ -1591,7 +1654,7 @@ a.btnbtsp.btn_link:hover {
     /* background-size: contain;*/
     background-size: 100%;
     background-position-y: 25px;
-    border: 1px solid #70acb3;
+    border: none; /* 1px solid #70acb3;*/
 }
 
 @media screen and (max-width: 800px)
@@ -1711,7 +1774,7 @@ a.btnbtsp.btn_link:hover {
 
 input.respbtn {
     float: right;
-    width: 150px;
+    width: 250px;
     margin-right: 4px;
     margin-bottom: 4px;
     font-size: 16px !important;
@@ -2001,9 +2064,15 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 }
 
 .hzm_data.hzm_data_request_text.form-control.inputreadonly {
-    border: 1px solid #047e7a !important;
-    background-color: #ebfdec !important;
+    border: 1px solid #1654a4 !important;
+    background-color: #4fb0f7 !important;
     font-size: 110% !important;
+    color: white;
+}
+
+.hzm_label.hzm_label_request_text.label_mandatory {
+    visibility: hidden;
+    display: none;
 }
 
 .hzm_label.greentitle.expand {
@@ -2131,11 +2200,23 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 730px) {
     .home_banner.login_banner{
         background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 300% !important;
         min-height: 380px !important;
+    }
+
+    .modal_login.modal-content{
+        width: 94% !important;
+        margin-right: 3% !important;
+        margin-left: 3% !important;
+    }
+
+    .modal-dialog.popup-login {
+        width: 84% !important;
+        margin-right: 8% !important;
+        margin-left: 8% !important;
     }
 }
 
@@ -2146,6 +2227,18 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
         background-size: 400% !important;
         min-height: 380px !important;
     }
+
+    .modal_login.modal-content{
+        width: 98% !important;
+        margin-right: 1% !important;
+        margin-left: -6% !important;
+    }
+
+    .modal-dialog.popup-login {
+        width: 98% !important;
+        margin-right: 1% !important;
+        margin-left: 1% !important;
+    }
 }
 
 @media screen and (max-width: 460px)
@@ -2154,6 +2247,18 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
         background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 500% !important;
         min-height: 380px !important;
+    }
+
+    .modal_login.modal-content{
+        width: 98% !important;
+        margin-right: 1% !important;
+        margin-left: -8% !important;
+    }
+
+    .modal-dialog.popup-login {
+        width: 98% !important;
+        margin-right: 1% !important;
+        margin-left: 1% !important;
     }
 }
 
@@ -2171,8 +2276,8 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     border: none !important;
     border: 1px solid #85c0c8 !important;
     -webkit-box-shadow: 0px 8px 20px rgb(155 219 225) !important;
-    box-shadow: 0px 8px 20px rgb(155 219 225) !important;
-    background-color: #e5f9fbb0;
+    box-shadow: 0px 8px 20px #4696cacf !important;
+    background-color: #d2ecfdcf;
     padding: 15px;
     font-size: 18px;
     font-weight: bold;
@@ -2416,12 +2521,12 @@ div.body_nav_hzm>p {
 .bluetitle {
     font-size: 168%;
     font-weight: normal !important;
-    color: #047e7a;
-    text-shadow: 4px 4px 8px #74d8c1;
-    margin-bottom: 10px;
+    color: #0670bb;
+    text-shadow: 4px 4px 8px #83c9e3;
+    margin: 0px !important;
     text-align: center;
     padding-top: 19px;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
     background-color: #d9eff18f;
 }
 
@@ -2467,69 +2572,6 @@ table.dataTable.display>tfoot>tr>th
 }
 
 
-.editcard {
-    width: 80%;
-    min-height: 650px;
-    min-width: 400px;
-    margin: auto;
-    margin-top: 120px;
-    background-color: #ffffff00;
-}
-
-@media (max-width:1300px)
-{
-    .editcard {
-        width: 85%;
-    }    
-}
-
-
-@media (max-width:1100px)
-{
-    .editcard {
-        width: 90%;
-    }    
-}
-
-
-@media (max-width:900px)
-{
-    .editcard {
-        width: 95%;
-    } 
-    
-    table.dataTable thead th, table.dataTable thead td, 
-    table.dataTable tfoot th, table.dataTable tfoot td, 
-    table.dataTable tbody td {
-        font-size: 90% !important;
-    }
-    
-}
-
-@media (max-width:700px)
-{
-    .editcard {
-        width: 100%;
-    }    
-
-    table.dataTable thead th, table.dataTable thead td, 
-    table.dataTable tfoot th, table.dataTable tfoot td, 
-    table.dataTable tbody td {
-        font-size: 80% !important;
-    }
-}
-
-div.filebox.editcard>div.panel-heading {
-    width: 100%;
-    float: right;
-    height: 42px !important;
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #a9d4da;
-    background-color: white;
-}
 
 .hzm_form_panel {
     border: none;
@@ -2680,9 +2722,16 @@ div.request_response>div>div.hzm_small_calendar>label {
     color: #047e7a;
 }
 
+.hzm_print {
+    margin: 0;
+    padding: 3px 8px 5px;
+    border: 1px solid silver;
+    color: gray;
+    text-align: center;
+}
 
 .hzm_print:hover {
-    background-color: black;
+    background-color: #047e7a   ;
     color: white;
     font-weight: normal;
     font-size: 100% !important;
@@ -2798,12 +2847,26 @@ header.top-header {
     background-color: white;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 471px) {
+    .title_company {
+        visibility: visible;
+        width: 69% !important;
+        text-align: left;
+        margin-left: 1%;
+    }
+}
+
+@media screen and (max-width: 470px) {
     .title_company {
         display: none;
         visibility: hidden;
         width: 0px !important;
         height: 0px !important;
+    }
+
+    .login.logo_company {
+        margin-right: 30% !important;
+        width: auto !important;
     }
 }
 
@@ -2837,6 +2900,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li.navbar-header>a {
 }
 
 .modal-content {
+    display: grid;
     position: relative;
     background-color: #ffffff69;
     -webkit-background-clip: padding-box;
@@ -2866,7 +2930,7 @@ label.light_label {
     padding: 15px;
     border-top: 1px solid #e5e5e5;
     padding-top: 5px;
-    background-color: #ffffff33;
+    background-color: #d5eefecc;
 }
 
 
@@ -2959,4 +3023,116 @@ h5.bluetitle.search {
 
 .filebox.editcard.crm.request.sman {
     border: double 6px silver;
+}
+
+span.cms-title {
+    font-size: 20px;
+    font-family: 'menu', serif;
+    width: 100%;
+    display: block;
+    /* margin-right: 20%; */
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.hzm_blue.hzm_print.missed:hover {
+    background-color: orange !important;
+    color: white !important;
+    border: none;
+}
+
+.hzm_blue.hzm_print.missed {
+    background-color: transparent !important;
+    border-color: orange !important;
+    color: orange !important;
+    animation: 3000ms cubic-bezier(0.55, 0.055, 0.675, 0.19) 0s infinite normal none running attirant;
+    
+}
+
+div#group_responseList {
+    display: block;
+    min-height: 90px;
+    visibility: visible;
+    float: right;
+}
+
+div#group_responseList a {
+    min-height: 90px;
+    visibility: visible;
+    display: contents;
+}
+
+.calendar_bloc_g {
+    background-image: url(../../external/pic/calendar_school.png) !important;
+}
+
+.calendar_year {
+    text-align: center;
+    color: #09709c;
+    font-family: digi, Montserrat !important;
+    font-weight: normal !important;
+    font-size: 14px !important;
+    margin-left: -32px !important;
+    margin-top: 11px !important;
+}
+
+.calendar_day {
+    height: 60px;
+    text-align: center;
+    color: #0670bb !important;
+    font-family: title, courrier, arial, rgt;
+    font-weight: normal !important;
+    font-size: 12px !important;
+    padding-top: 0px!important;
+    line-height: 13px;
+}
+
+span.dday {
+    font-size: 12px;
+    font-family: digi, Montserrat !important;
+    background-color: #0670bb !important;
+    padding: 0px 3px !important;
+    color: white !important;
+}
+
+table.dataTable {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+table.dataTable thead th.xqe_hf_z, table.dataTable tfoot th.xqe_hf_z {
+    background-color: #b9dff9 !important;
+}
+
+table.dataTable thead th {
+    background-color: #7cc7fb !important;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+    background-color: #70b6e5 !important;
+}
+
+
+table.stats_table .xqe_odd_x {
+    background: rgb(124 199 251 / 53%) !important;
+}
+
+table.stats_table .xqe_odd_z {
+    background: #fff !important;
+}
+
+table.stats_table .xqe_even_x {
+    background: rgba(85, 161, 216, 0.53) !important;
+}
+
+table.stats_table .xqe_even_z {
+    background: #c5d7e7cb !important;
+}
+
+table.stats_table td {    
+    text-align: center !important;
+}
+
+.bf.hzm-menu-item {
+    min-height: 170px !important;
 }

@@ -512,7 +512,7 @@
     ),
     'stats' => 
     array (
-      'id' => '103685',
+      'id' => '104503',
     ),
     'ddb' => 
     array (
@@ -752,23 +752,23 @@
     'id' => '3571',
     'display' => 
     array (
-      'id' => -1,
+      'id' => '103904',
     ),
     'search' => 
     array (
-      'id' => -1,
+      'id' => '103905',
     ),
     'qsearch' => 
     array (
-      'id' => -1,
+      'id' => '103906',
     ),
     'edit' => 
     array (
-      'id' => -1,
+      'id' => '103901',
     ),
     'qedit' => 
     array (
-      'id' => -1,
+      'id' => '103902',
     ),
     'crossed' => 
     array (
@@ -776,7 +776,7 @@
     ),
     'stats' => 
     array (
-      'id' => -1,
+      'id' => '103907',
     ),
     'ddb' => 
     array (
@@ -788,7 +788,7 @@
     ),
     'delete' => 
     array (
-      'id' => -1,
+      'id' => '103903',
     ),
   ),
   'response_data' => 
@@ -796,23 +796,23 @@
     'id' => '3613',
     'display' => 
     array (
-      'id' => -1,
+      'id' => '103933',
     ),
     'search' => 
     array (
-      'id' => -1,
+      'id' => '103934',
     ),
     'qsearch' => 
     array (
-      'id' => -1,
+      'id' => '103935',
     ),
     'edit' => 
     array (
-      'id' => -1,
+      'id' => '103930',
     ),
     'qedit' => 
     array (
-      'id' => -1,
+      'id' => '103931',
     ),
     'crossed' => 
     array (
@@ -820,7 +820,7 @@
     ),
     'stats' => 
     array (
-      'id' => -1,
+      'id' => '103936',
     ),
     'ddb' => 
     array (
@@ -832,7 +832,7 @@
     ),
     'delete' => 
     array (
-      'id' => -1,
+      'id' => '103932',
     ),
   ),
   'response_template' => 
@@ -1230,14 +1230,14 @@
     'name' => 
     array (
       'ar' => 'الإشراف',
-      'en' => 'Administration',
+      'en' => 'arole.324',
     ),
     'menu' => 
     array (
       'need_admin' => false,
       'id' => '324',
       'menu_name_ar' => 'الإشراف',
-      'menu_name_en' => 'Administration',
+      'menu_name_en' => 'arole.324',
       'page' => 'main.php?Main_Page=fm.php&a=1073&r=324',
       'css' => 'info',
       'icon' => ' icon-324',
@@ -1262,15 +1262,6 @@
           'css' => 'bf',
           'icon' => ' bficon-104502 bfc-',
         ),
-        103911 => 
-        array (
-          'id' => '103911',
-          'menu_name_ar' => 'إنشاء عميل',
-          'menu_name_en' => 'create CRM Customer account',
-          'page' => 'main.php?Main_Page=afw_mode_edit.php&cl=CrmCustomer&currmod=crm',
-          'css' => 'bf',
-          'icon' => ' bficon-103911 bfc-',
-        ),
         103916 => 
         array (
           'id' => '103916',
@@ -1279,15 +1270,6 @@
           'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CrmCustomer&currmod=crm',
           'css' => 'bf',
           'icon' => ' bficon-103916 bfc-',
-        ),
-        104821 => 
-        array (
-          'id' => '104821',
-          'menu_name_ar' => 'bf.104821',
-          'menu_name_en' => 'bf.104821',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=CrmCustomer&currmod=crm',
-          'css' => 'bf',
-          'icon' => ' bficon-104821 bfc-',
         ),
         103923 => 
         array (
@@ -1307,6 +1289,58 @@
           'css' => 'bf',
           'icon' => ' bficon-103929 bfc-',
         ),
+        103942 => 
+        array (
+          'id' => '103942',
+          'menu_name_ar' => 'الاستعلام عن جهة متابعة',
+          'menu_name_en' => 'Crm orgunit quick search',
+          'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CrmOrgunit&currmod=crm',
+          'css' => 'bf',
+          'icon' => ' bficon-103942 bfc-',
+        ),
+        104364 => 
+        array (
+          'id' => '104364',
+          'menu_name_ar' => 'الاستعلام عن منسق',
+          'menu_name_en' => 'Crm employee quick search',
+          'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CrmEmployee&currmod=crm',
+          'css' => 'bf',
+          'icon' => ' bficon-104364 bfc-',
+        ),
+        104496 => 
+        array (
+          'id' => '104496',
+          'menu_name_ar' => 'الاستعلام عن نموذج إجابة',
+          'menu_name_en' => 'Response template quick search',
+          'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=ResponseTemplate&currmod=crm',
+          'css' => 'bf',
+          'icon' => ' bficon-104496 bfc-',
+        ),
+      ),
+      'sub-folders' => 
+      array (
+      ),
+    ),
+  ),
+  376 => 
+  array (
+    'name' => 
+    array (
+      'ar' => 'الاشراف العام',
+      'en' => 'arole.376',
+    ),
+    'menu' => 
+    array (
+      'need_admin' => false,
+      'id' => '376',
+      'menu_name_ar' => 'الاشراف العام',
+      'menu_name_en' => 'arole.376',
+      'page' => 'main.php?Main_Page=fm.php&a=1073&r=376',
+      'css' => 'info',
+      'icon' => ' icon-376',
+      'showme' => true,
+      'items' => 
+      array (
         103937 => 
         array (
           'id' => '103937',
@@ -1360,15 +1394,6 @@
           'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=ResponseTemplate&currmod=crm',
           'css' => 'bf',
           'icon' => ' bficon-104496 bfc-',
-        ),
-        104498 => 
-        array (
-          'id' => '104498',
-          'menu_name_ar' => 'إدارة قنوات التواصل',
-          'menu_name_en' => 'Crm channels administration',
-          'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CrmChannel&currmod=crm&ids=all&newo=3',
-          'css' => 'bf',
-          'icon' => ' bficon-104498 bfc-',
         ),
       ),
       'sub-folders' => 
@@ -1482,19 +1507,89 @@
       ),
     ),
   ),
+  317 => 
+  array (
+    'name' => 
+    array (
+      'ar' => 'التقارير',
+      'en' => 'arole.317',
+    ),
+    'menu' => 
+    array (
+      'need_admin' => false,
+      'id' => '317',
+      'menu_name_ar' => 'التقارير',
+      'menu_name_en' => 'arole.317',
+      'page' => 'main.php?Main_Page=fm.php&a=1073&r=317',
+      'css' => 'info',
+      'icon' => ' icon-317',
+      'showme' => true,
+      'items' => 
+      array (
+        103685 => 
+        array (
+          'id' => '103685',
+          'menu_name_ar' => 'تقرير الأداء',
+          'menu_name_en' => 'Media requests statistics',
+          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs001',
+          'css' => 'bf',
+          'icon' => ' bficon-103685 bfc-',
+        ),
+        104503 => 
+        array (
+          'id' => '104503',
+          'menu_name_ar' => 'إحصائيات حول الطلبات',
+          'menu_name_en' => 'requests statistics',
+          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs003',
+          'css' => 'bf',
+          'icon' => ' bficon-104503 bfc-',
+        ),
+        104504 => 
+        array (
+          'id' => '104504',
+          'menu_name_ar' => 'إحصائيات رضى العملاء',
+          'menu_name_en' => 'customers satisfaction statistics',
+          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs005',
+          'css' => 'bf',
+          'icon' => ' bficon-104504 bfc-',
+        ),
+        104505 => 
+        array (
+          'id' => '104505',
+          'menu_name_ar' => 'حالة الطلبات',
+          'menu_name_en' => 'request status',
+          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs006',
+          'css' => 'bf',
+          'icon' => ' bficon-104505 bfc-',
+        ),
+        103917 => 
+        array (
+          'id' => '103917',
+          'menu_name_ar' => 'إجراء إحصائيات حول العملاء',
+          'menu_name_en' => 'CRM Customer accounts statistics',
+          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=CrmCustomer&currmod=crm',
+          'css' => 'bf',
+          'icon' => ' bficon-103917 bfc-',
+        ),
+      ),
+      'sub-folders' => 
+      array (
+      ),
+    ),
+  ),
   323 => 
   array (
     'name' => 
     array (
-      'ar' => 'التحقيق',
-      'en' => 'Investigation',
+      'ar' => 'التنسيق',
+      'en' => 'arole.323',
     ),
     'menu' => 
     array (
       'need_admin' => false,
       'id' => '323',
-      'menu_name_ar' => 'التحقيق',
-      'menu_name_en' => 'Investigation',
+      'menu_name_ar' => 'التنسيق',
+      'menu_name_en' => 'arole.323',
       'page' => 'main.php?Main_Page=fm.php&a=1073&r=323',
       'css' => 'info',
       'icon' => ' icon-323',
@@ -1509,6 +1604,15 @@
           'page' => 'main.php?Main_Page=workbox.php',
           'css' => 'bf',
           'icon' => ' bficon-104366 bfc-',
+        ),
+        104502 => 
+        array (
+          'id' => '104502',
+          'menu_name_ar' => 'صندوق الصادر',
+          'menu_name_en' => 'Outbox',
+          'page' => 'main.php?Main_Page=outbox.php',
+          'css' => 'bf',
+          'icon' => ' bficon-104502 bfc-',
         ),
         103679 => 
         array (
@@ -1534,107 +1638,19 @@
       ),
     ),
   ),
-  317 => 
-  array (
-    'name' => 
-    array (
-      'ar' => 'التقارير',
-      'en' => 'Reports',
-    ),
-    'menu' => 
-    array (
-      'need_admin' => false,
-      'id' => '317',
-      'menu_name_ar' => 'التقارير',
-      'menu_name_en' => 'Reports',
-      'page' => 'main.php?Main_Page=fm.php&a=1073&r=317',
-      'css' => 'info',
-      'icon' => ' icon-317',
-      'showme' => true,
-      'items' => 
-      array (
-        103685 => 
-        array (
-          'id' => '103685',
-          'menu_name_ar' => 'إجراء إحصائيات حول الطلبات الالكترونية',
-          'menu_name_en' => 'Media requests statistics',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs001',
-          'css' => 'bf',
-          'icon' => ' bficon-103685 bfc-',
-        ),
-        104820 => 
-        array (
-          'id' => '104820',
-          'menu_name_ar' => 'bf.104820',
-          'menu_name_en' => 'bf.104820',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs001',
-          'css' => 'bf',
-          'icon' => ' bficon-104820 bfc-',
-        ),
-        104823 => 
-        array (
-          'id' => '104823',
-          'menu_name_ar' => 'bf.104823',
-          'menu_name_en' => 'bf.104823',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs003',
-          'css' => 'bf',
-          'icon' => ' bficon-104823 bfc-',
-        ),
-        104824 => 
-        array (
-          'id' => '104824',
-          'menu_name_ar' => 'bf.104824',
-          'menu_name_en' => 'bf.104824',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs005',
-          'css' => 'bf',
-          'icon' => ' bficon-104824 bfc-',
-        ),
-        104825 => 
-        array (
-          'id' => '104825',
-          'menu_name_ar' => 'bf.104825',
-          'menu_name_en' => 'bf.104825',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs006',
-          'css' => 'bf',
-          'icon' => ' bficon-104825 bfc-',
-        ),
-        103917 => 
-        array (
-          'id' => '103917',
-          'menu_name_ar' => 'إجراء إحصائيات حول العملاء',
-          'menu_name_en' => 'CRM Customer accounts statistics',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=CrmCustomer&currmod=crm',
-          'css' => 'bf',
-          'icon' => ' bficon-103917 bfc-',
-        ),
-        104821 => 
-        array (
-          'id' => '104821',
-          'menu_name_ar' => 'bf.104821',
-          'menu_name_en' => 'bf.104821',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=CrmCustomer&currmod=crm',
-          'css' => 'bf',
-          'icon' => ' bficon-104821 bfc-',
-        ),
-      ),
-      'sub-folders' => 
-      array (
-      ),
-    ),
-  ),
   327 => 
   array (
     'name' => 
     array (
       'ar' => 'طلبات العملاء',
-      'en' => 'Customer\'s requests',
+      'en' => 'arole.327',
     ),
     'menu' => 
     array (
       'need_admin' => false,
       'id' => '327',
       'menu_name_ar' => 'طلبات العملاء',
-      'menu_name_en' => 'Customer\'s requests',
+      'menu_name_en' => 'arole.327',
       'page' => 'main.php?Main_Page=fm.php&a=1073&r=327',
       'css' => 'info',
       'icon' => ' icon-327',
@@ -1668,41 +1684,32 @@
           'css' => 'bf',
           'icon' => ' bficon-103684 bfc-',
         ),
-        104820 => 
+        104503 => 
         array (
-          'id' => '104820',
-          'menu_name_ar' => 'bf.104820',
-          'menu_name_en' => 'bf.104820',
-          'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs001',
-          'css' => 'bf',
-          'icon' => ' bficon-104820 bfc-',
-        ),
-        104823 => 
-        array (
-          'id' => '104823',
-          'menu_name_ar' => 'bf.104823',
-          'menu_name_en' => 'bf.104823',
+          'id' => '104503',
+          'menu_name_ar' => 'إحصائيات حول الطلبات',
+          'menu_name_en' => 'requests statistics',
           'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs003',
           'css' => 'bf',
-          'icon' => ' bficon-104823 bfc-',
+          'icon' => ' bficon-104503 bfc-',
         ),
-        104824 => 
+        104504 => 
         array (
-          'id' => '104824',
-          'menu_name_ar' => 'bf.104824',
-          'menu_name_en' => 'bf.104824',
+          'id' => '104504',
+          'menu_name_ar' => 'إحصائيات رضى العملاء',
+          'menu_name_en' => 'customers satisfaction statistics',
           'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs005',
           'css' => 'bf',
-          'icon' => ' bficon-104824 bfc-',
+          'icon' => ' bficon-104504 bfc-',
         ),
-        104825 => 
+        104505 => 
         array (
-          'id' => '104825',
-          'menu_name_ar' => 'bf.104825',
-          'menu_name_en' => 'bf.104825',
+          'id' => '104505',
+          'menu_name_ar' => 'حالة الطلبات',
+          'menu_name_en' => 'request status',
           'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs006',
           'css' => 'bf',
-          'icon' => ' bficon-104825 bfc-',
+          'icon' => ' bficon-104505 bfc-',
         ),
         103911 => 
         array (
@@ -1722,14 +1729,14 @@
           'css' => 'bf',
           'icon' => ' bficon-103916 bfc-',
         ),
-        104821 => 
+        103917 => 
         array (
-          'id' => '104821',
-          'menu_name_ar' => 'bf.104821',
-          'menu_name_en' => 'bf.104821',
+          'id' => '103917',
+          'menu_name_ar' => 'إجراء إحصائيات حول العملاء',
+          'menu_name_en' => 'CRM Customer accounts statistics',
           'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=CrmCustomer&currmod=crm',
           'css' => 'bf',
-          'icon' => ' bficon-104821 bfc-',
+          'icon' => ' bficon-103917 bfc-',
         ),
       ),
       'sub-folders' => 

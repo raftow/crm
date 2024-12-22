@@ -13,7 +13,7 @@ if($parentTpl != "view_request")
         {
 ?>                                        
         <div class='hzm_data_prop'>
-                <a href='i.php?cn=crm&mt=complete_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print'>استكمال البيانات أو المرفقات</div></a>
+                <a href='i.php?cn=crm&mt=complete_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print missed'>استكمال البيانات أو المرفقات</div></a>
         </div>
 <?php 
         }
@@ -35,7 +35,7 @@ else
         {
         ?>                                        
         <div class='hzm_data_prop'>
-                <a href='i.php?cn=crm&mt=complete_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print'>استكمال البيانات أو المرفقات</div></a>
+                <a href='i.php?cn=crm&mt=complete_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print missed'>استكمال البيانات / المرفقات</div></a>
         </div>
         <?php 
         }
