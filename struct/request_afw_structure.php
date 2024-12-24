@@ -1039,6 +1039,7 @@ class CrmRequestAfwStructure
 			'SHOW' => true,
 			'FORMAT' => 'minibox',
 			'MINIBOX-TPL' => true,
+			'TEMPLATE' => 'accordion',
 			'ICONS' => true,
 			'DELETE-ICON' => true,
 			'BUTTONS' => true,

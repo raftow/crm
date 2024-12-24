@@ -817,6 +817,16 @@ class Request extends CrmObject
         if ($mode == "mode_responseList") {
             // throw new AfwRuntimeException("`$mode` == mode_responseList why here");
             if (!$this->isClosedWithCustomer()) {
+                if(!$this->isStarted()) {
+                    unset($link);
+                    $link = array();
+                    $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' أسفله للتمكن من الاجابة عليه";
+                    $link["URL"] = "@help";
+                    $link["CODE"] = "stop.and.debugg";
+                    $link["TITLE"] = $title;
+                    $link["PUBLIC"] = true;
+                    $otherLinksArray[] = $link;
+                }
                 // throw new AfwRuntimeException("not isClosedWithCustomer why here");
                 if ($this->investigatorCanRespond() or $this->iamTheSupervisor()) {
                     unset($link);
@@ -1629,17 +1639,21 @@ class Request extends CrmObject
                 }
 
                 if ($objme) {
+                    $success_message = "";
                     if (($new_status_id != Request::$REQUEST_STATUS_SENT) and ($new_status_id != Request::$REQUEST_STATUS_ONGOING)) {
                         $success_message = $this->tm("status changed to", $lang) . " \"" . $this->decode("status_id") . "\"";
                     } else {
-                        $success_message = $this->tm("request sent for investigation", $lang);
+                        if($this->getVal("status_id") != Request::$REQUEST_STATUS_ASSIGNED)
+                        {
+                            $success_message = $this->tm("request sent for investigation", $lang);
+                        }                        
                     }
 
                     if ($survey_url) {
                         $success_message .= " خاص بفريق الجودة لعدم انتظار الرسالة القصيرة رابط الاستبيان : " . $survey_url;
                     }
 
-                    AfwSession::pushSuccess($success_message);
+                    if($success_message) AfwSession::pushSuccess($success_message);
                     // rafik @important : put line below in comment because $status_comment is returned as info for PublicM and so no need to sen dit twice
                     //AfwSession::pushSuccess($status_comment);
 
@@ -2001,7 +2015,7 @@ class Request extends CrmObject
                 if (!$itemsList) {
                     $itemsList = array();
                 }
-                $this->itemsMethodExec[$itemsMethod] = $itemsList;
+                $this->itemsMethodExec[$itemsMethod] = $itemsList;                
             }            
                     
         } 
@@ -2009,6 +2023,7 @@ class Request extends CrmObject
         {
             $itemsList = array();
             $itemsList["none"] = array('ar' => "none", 'en' => "none");
+            $this->itemsMethodExec[$itemsMethod] = $itemsList;
         }
         
         
@@ -2066,26 +2081,32 @@ class Request extends CrmObject
         else $curr_status_parent = self::statusMother(intval($this->getVal("status_id")));
 
         $curr_status_label = $this->decode("status_id");
-
+        $log_arr = [];
         foreach (self::$STATUS_MAP[$curr_status_parent] as $methodName0 => $methodProps) {
             // if($methodName0 == "assignRequest") AfwRunHelper::safeDie("for $methodName0 after call to this->$itemsMethod() itemsList contain : ", "", true, $itemsList);
             $method_not_allowed_reason = array();
-            $method_not_allowed_reason[] = "current_status : $curr_status_label($curr_status)";
+            $method_not_allowed_reason[] = "current_status : $curr_status_label($curr_status) => p$curr_status_parent ";
 
             list($method_allowed, $method_na_reason) = AfwDynamicPublicMethodHelper::checkMethodAllowed($methodProps, $methodName0, $this);                
             if(!$method_allowed) $method_not_allowed_reason[] = $method_na_reason;
+            else $method_not_allowed_reason[] = "$methodName0 is allowed";
 
-            
-
-            
+            $log = implode(" -> ", $method_not_allowed_reason);
             if ($method_allowed) 
-            {
-                $log = implode(" -> ", $method_not_allowed_reason);
+            {                
                 $pbms = AfwDynamicPublicMethodHelper::splitMethodToMethodItems($pbms, self::$PUB_METHODS[$methodName0], $methodName0, $this, $log);
             }
-        }
+            else
+            {
+                
+            }
 
-        //die("<pre>pbm=".var_export($pbms,true)."</pre>");
+            $log_arr[] = $log;
+            
+        }
+        
+        // die("We are upgrading the system for you ..., please wait.<br>\nSTATUS_MAP LOG".var_export($log_arr,true)." pbms=".var_export($pbms,true));
+        
         return $pbms;
     }
 

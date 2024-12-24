@@ -1,11 +1,10 @@
-<div class='hzm_minibox_container'>        
-        <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
-                <div class='hzm_label response object_status_[ERROR_STATUS] greentitle expand collapsed' data-toggle='collapse' data-target='#response[id]_minibox'>
-                     <div class="hzm_sub_label response [response_cls]"><div class='response-resume'><i>[response_aut]</i>[OBJECT_NODE_DISPLAY]</div><div class='crm_label crm_author'>[OBJECT_SHORT_DISPLAY]</div><div class='crm_label crm_datetime'>[response_date] [response_time]</div></div>
-                     
-                </div>        
+<div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
+        <div class='hzm_label response object_status_[ERROR_STATUS] greentitle'>
+                <div class="hzm_sub_label response [response_cls]"><div class='response-resume'><i>[response_aut]</i>[OBJECT_NODE_DISPLAY]</div><div class='crm_label crm_author'>[OBJECT_SHORT_DISPLAY]</div><div class='crm_label crm_datetime'>[response_date] [response_time]</div></div>
         </div>        
-        <div id='response[id]_minibox' class='hzm_wd4 collapse hzm_minibox_body hzm_minibox_response' aria-expanded='true' style=''>           
+</div>
+<div class='hzm_minibox_container'>                        
+        <div id='response[id]_minibox' class='hzm_wd4 hzm_minibox_body hzm_minibox_response'>           
                 [OBJECT_ERRORS_START]
                 <div class='hzm_error_container'> [OBJECT_ERRORS]            
                 </div>

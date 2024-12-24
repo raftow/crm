@@ -656,7 +656,10 @@ div.btnbtsp.btn-success.btnregister {
 
 div.hzm_minibox_response {
     min-height: 500px !important;
+    display: block;
 }
+
+
 
 .hzm_data.hzm_data_response_text.form-control.inputreadonly {
     min-height: max-content !important;
@@ -1968,6 +1971,10 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
         float: none !important;
     }
 
+    .crm_datetime, .crm_author {
+        border-radius:0px !important;
+    }
+
 }
 
 
@@ -2032,7 +2039,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     display: inline;
     width: auto !important;
     float: right;
-    padding: 1px 10px;
+    padding: 8px 10px;
     margin-top: -2px;
     text-shadow: none;
 }
@@ -2044,7 +2051,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     font-family: digi;
     /* font-weight: bold; */
     color: #0e701f;
-    background-color: #c4cbca61 !important;
+    background-color: #c6dae9 !important;
     border-radius: 15px 0 0 15px;
     min-width: 164px;
 }
@@ -2052,7 +2059,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 .crm_author {
     font-size: 80%;
     color: #4d6857;
-    background-color: #cdcdcdb5 !important;
+    background-color: #c9e8ff !important;
     border-radius: 0 15px 15px 0;
     min-width: 249px;
 }
@@ -3136,3 +3143,13 @@ table.stats_table td {
 .bf.hzm-menu-item {
     min-height: 170px !important;
 }
+
+.ui-state-active, .ui-widget-content .ui-state-active {
+    background-color: #b2dfff38 !important;
+    border: 1px solid #0670bb85 !important;
+}
+
+.hzm_label.response {
+    border-bottom: none !important;
+}
+
