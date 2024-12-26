@@ -3,33 +3,30 @@ class CrmRequestAfwStructure
 {
 	public static function initInstance(&$obj)
 	{
-			if ($obj instanceof Request ) 
-			{
-				$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-				$obj->DISPLAY_FIELD = "request_title";
-				// $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
-				$obj->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
-				$obj->AUDIT_DATA = false;
+		if ($obj instanceof Request) {
+			$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+			$obj->DISPLAY_FIELD = "request_title";
+			// $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
+			$obj->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
+			$obj->AUDIT_DATA = false;
 
-				$obj->STATS_DEFAULT_CODE = "gs001";
+			$obj->STATS_DEFAULT_CODE = "gs001";
 
-				$obj->UNIQUE_KEY = array('request_code', 'customer_id');
-				$obj->editByStep = false;
-				//$obj->editNbSteps = 5;
-				$obj->showQeditErrors = true;
-				$obj->showRetrieveErrors = true;
+			$obj->UNIQUE_KEY = array('request_code', 'customer_id');
+			$obj->editByStep = false;
+			//$obj->editNbSteps = 5;
+			$obj->showQeditErrors = true;
+			$obj->showRetrieveErrors = true;
 
-				$obj->CAN_FORCE_UPDATE_DATE = true; // temporaire pour la migration
+			$obj->CAN_FORCE_UPDATE_DATE = true; // temporaire pour la migration
 
-				$obj->after_save_edit = array("file" => '../crm/workbox.php');
-				// $obj->after_save_edit = array("mode"=>"qsearch", "currmod"=>'adm', "class"=>'Request',"submit"=>true);
-				$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmCustomer");
-			}
-			else 
-			{
-					RequestArTranslator::initData();
-					RequestEnTranslator::initData();
-			}
+			$obj->after_save_edit = array("file" => '../crm/workbox.php');
+			// $obj->after_save_edit = array("mode"=>"qsearch", "currmod"=>'adm', "class"=>'Request',"submit"=>true);
+			$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmCustomer");
+		} else {
+			RequestArTranslator::initData();
+			RequestEnTranslator::initData();
+		}
 	}
 	public static $DB_STRUCTURE = array(
 
@@ -536,7 +533,7 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_33',
 		),
 
-		
+
 
 		'requestFileList' => array(
 			'FGROUP' => 'props',
@@ -669,13 +666,14 @@ class CrmRequestAfwStructure
 			'FGROUP' => 'assignment',
 			'SHORTNAME' => 'employee',
 			'SHOW' => true,
+			'EDIT' => true,
 			'RETRIEVE' => true,
 			'SIZE' => 60,
 			'MANDATORY' => false,
 			'UTF8' => false,
 			'CATEGORY' => 'FORMULA',
 			'READONLY' => true,
-			'CSS' => 'width_pct_100',
+			'CSS' => 'width_pct_33',
 			'TYPE' => 'TEXT',
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
@@ -689,7 +687,7 @@ class CrmRequestAfwStructure
 			'RETRIEVE' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
-			'CSS' => 'width_pct_50',
+			'CSS' => 'width_pct_33',
 			'SIZE' => 10,
 			'MANDATORY' => true,
 			'UTF8' => false,
@@ -712,7 +710,7 @@ class CrmRequestAfwStructure
 			'RETRIEVE' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
-			'CSS' => 'width_pct_50',
+			'CSS' => 'width_pct_33',
 			'SIZE' => 8,
 			'UTF8' => false,
 			'TYPE' => 'TIME',
@@ -811,6 +809,26 @@ class CrmRequestAfwStructure
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
+		),
+
+		'status_action_enum' => array(
+			'SHORTNAME' => 'action',
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'SHOW' => true,
+			'AUDIT' => false,
+			'RETRIEVE' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'SIZE' => 32,
+			'MAXLENGTH' => 32,
+			'MIN-SIZE' => 1,
+			'CHAR_TEMPLATE' => "ALPHABETIC,SPACE",
+			'UTF8' => false,
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'READONLY' => false,
+			'CSS' => 'width_pct_50',
 		),
 
 		'days_investigator' => array(
@@ -938,7 +956,7 @@ class CrmRequestAfwStructure
 		),
 
 		'service_satisfied' => array(
-			'FGROUP' => 'status',  
+			'FGROUP' => 'status',
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,

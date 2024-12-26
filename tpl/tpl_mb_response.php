@@ -1,6 +1,6 @@
 <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
         <div class='hzm_label response object_status_[ERROR_STATUS] greentitle'>
-                <div class="hzm_sub_label response [response_cls]"><div class='response-resume'><i>[response_aut]</i>[OBJECT_NODE_DISPLAY]</div><div class='crm_label crm_author'>[OBJECT_SHORT_DISPLAY]</div><div class='crm_label crm_datetime'>[response_date] [response_time]</div></div>
+                <div class="hzm_sub_label response [response_cls]"><div class='response-resume'><i>[response_aut]</i>[OBJECT_NODE_DISPLAY]</div><div class='crm_label crm_author'>[OBJECT_SHORT_DISPLAY] - <span class='crm_ticket_num response'>[id]</span></div><div class='crm_label crm_datetime'>[response_date] [response_time]</div></div>
         </div>        
 </div>
 <div class='hzm_minibox_container'>                        

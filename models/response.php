@@ -51,7 +51,7 @@ class Response extends CrmObject
                 $this->showRetrieveErrors = true;
                 $this->public_display = true;
                 $this->public_edit = true;
-                
+
                 $this->after_save_edit = array("class" => 'Request', "attribute" => 'request_id', "currmod" => 'crm', "currstep" => 4);
         }
 
@@ -77,13 +77,8 @@ class Response extends CrmObject
                 $internal = "N",
                 $module_id = 0
         ) {
-                $respObj = self::loadByMainIndex($request_id, $response_date, $response_time, $response_text, $create_obj_if_not_found = true);
-                $respObj->set("orgunit_id", $orgunit_id);
-                $respObj->set("employee_id", $employee_id);
-                $respObj->set("new_status_id", $new_status_id);
-                $respObj->set("response_type_id", $response_type_id);
-                $respObj->set("response_text", $response_text);
-
+                $respObj = self::loadByText($request_id, $response_text, $employee_id, $new_status_id, $response_type_id, $response_date, $response_time, $create_obj_if_not_found = true);
+                $respObj->set("orgunit_id", $orgunit_id);                
                 $respObj->set("response_link", $response_link);
                 $respObj->set("internal", $internal);
                 //$respObj->set("module_id",$module_id);
@@ -92,18 +87,70 @@ class Response extends CrmObject
                 return $respObj;
         }
 
-
-
-        public static function loadByMainIndex($request_id, $response_date, $response_time, $response_text, $create_obj_if_not_found = false)
+        public static function loadByText($request_id, $response_text, $employee_id, $new_status_id, $response_type_id, $response_date, $response_time, $create_obj_if_not_found = false)
         {
                 global $print_debugg, $print_sql;
 
                 $obj = new Response();
-                if (!$request_id) $obj->_error("loadByMainIndex : request_id is mandatory field");
-                if (!$response_date) $obj->_error("loadByMainIndex : response_date is mandatory field");
-                if (!$response_time) $obj->_error("loadByMainIndex : response_time is mandatory field");
-                if (!$response_text) $obj->_error("loadByMainIndex : response_text is mandatory field");
+                if (!$request_id) throw new AfwRuntimeException("loadByMainIndex : request_id is mandatory field");
+                if (!$response_text) throw new AfwRuntimeException("loadByMainIndex : response_text is mandatory field");
 
+                if (!$employee_id) $employee_id = 0; // machine
+                if (!$new_status_id) throw new AfwRuntimeException("loadByMainIndex : new_status_id is mandatory field");
+                if (!$response_type_id) throw new AfwRuntimeException("loadByMainIndex : response_type_id is mandatory field");
+                
+
+                $obj->select("request_id", $request_id);
+                $obj->select("response_text", $response_text);
+                $obj->select("employee_id", $employee_id);
+                $obj->select("new_status_id", $new_status_id);
+                $obj->select("response_type_id", $response_type_id);
+                
+                if ($obj->load()) {
+                        return $obj;
+                } 
+                else
+                {
+                        $obj2 = Response::loadByMainIndex($request_id, $response_date, $response_time, false);
+                        if($obj2)
+                        {
+                                return $obj2;
+                        }
+                        elseif ($create_obj_if_not_found) {
+                                if ($print_debugg and $print_sql) echo "\n <br> not found with [request_id=$request_id response_date=$response_date response_time=$response_time] \n <br>";
+                                $obj->set("request_id", $request_id);
+                                $obj->set("response_text", $response_text);
+                                $obj->set("employee_id", $employee_id);
+                                $obj->set("new_status_id", $new_status_id);
+                                $obj->set("response_type_id", $response_type_id);
+                                if(!$response_date)
+                                {
+                                        $response_date = AfwDateHelper::currentHijriDate();
+                                        $response_time = date("H:i:s");
+                                }
+                                $obj->set("response_date", $response_date);
+                                $obj->set("response_time", $response_time);
+        
+                                $obj->insert();
+                                $obj->is_new = true;
+        
+                                return $obj;
+                        } else return null;
+                }
+                
+                
+        }
+
+        public static function loadByMainIndex($request_id, $response_date, $response_time, $response_text="", $create_obj_if_not_found = false)
+        {
+                global $print_debugg, $print_sql;
+
+                $obj = new Response();
+                if (!$request_id) throw new AfwRuntimeException("loadByMainIndex : request_id is mandatory field");
+                if (!$response_date) throw new AfwRuntimeException("loadByMainIndex : response_date is mandatory field");
+                if (!$response_time) throw new AfwRuntimeException("loadByMainIndex : response_time is mandatory field");
+                
+                if ($create_obj_if_not_found and (!$response_text)) throw new AfwRuntimeException("loadByMainIndex : response_text is mandatory field when create_obj_if_not_found=true");
 
                 $obj->select("request_id", $request_id);
                 $obj->select("response_date", $response_date);
@@ -308,7 +355,8 @@ class Response extends CrmObject
 
         /* 
         rafik : 8/4/2021 : danger
-        it calls changeStatus so it is done twice and the notification also is sent/pushed twice
+        it calls change Status so it is done twice and the notification also is sent/pushed twice
+        and can make infinite loop as change status create a Response object also
         public function afterMaj($id, $fields_updated) 
         {
                 if($fields_updated["new_status_id"])
@@ -323,9 +371,9 @@ class Response extends CrmObject
                             $request = $this->getRequest();   
                             if($request)
                             {
-                                //die("request->changeStatus to ".$this->getVal("new_status_id")." with comment : ".$this->getVal("response_text"));
+                                //die("request->change Status to ".$this->getVal("new_status_id")." with comment : ".$this->getVal("response_text"));
                                 // important keep silent true to avoid infinite loop
-                                $request->changeStatus($this->getVal("new_status_id"), $this->getVal("response_text"), $this->getVal("internal"), $silent=true);
+                                $request->change Status($this->getVal("new_status_id"), $this->getVal("response_text"), $this->getVal("internal"), $silent=true);
                             }
                             
                        }
@@ -345,7 +393,7 @@ class Response extends CrmObject
 
         public function afterMaj($id, $fields_updated)
         {
-                $lang = AfwLanguageHelper::getGlobalLanguage();
+                $lang = AfwSession::getSessionVar("current_lang");
                 if ($fields_updated["new_status_id"] and $this->getVal("new_status_id")) {
                         //$this->throwException("")
 
@@ -353,8 +401,14 @@ class Response extends CrmObject
 
                         $auto_approve_response = true;
                         if ($auto_approve_response) {
+                                /**
+                                 * @var Request $request
+                                 */
                                 $request = $this->hetRequest();
-                                if ($request and ($this->getVal("new_status_id") > 0) and ($this->getVal("new_status_id") != $request->getVal("status_id")))
+                                if ($request and 
+                                    ($this->getVal("new_status_id") > 0) and 
+                                    ($this->getVal("new_status_id") != $request->getVal("status_id"))
+                                    )
                                 // we do this test to avoid twice or infinite loop because change status create new response                   
                                 {
                                         $objme_name = "";
@@ -365,14 +419,13 @@ class Response extends CrmObject
                                                 if ($custme) $objme_name = $custme->getDisplay($lang);
                                                 if (!$objme_name) $objme_name = "المهمة الآلية";
                                         }
-                                        //die("request->changeStatus to ".$this->getVal("new_status_id")." with comment : ".$this->getVal("response_text"));
-                                        // important keep silent true to avoid infinite loop
-                                        $request->changeStatus($this->getVal("new_status_id"), "تم تعديل حالة الطلب من قبل : " . $objme_name, $this->getVal("internal"), $silent = true);
+                                        //die("request->change Status to ".$this->getVal("new_status_id")." with comment : ".$this->getVal("response_text"));                                        
+                                        $action_enum = Request::status_action_by_code("responseCreatedStatusUpdated");
+                                        $silent = true; // important keep silent true to avoid infinite loop
+                                        $request->changeStatus($this->getVal("new_status_id"), "تم تعديل حالة الطلب من قبل : " . $objme_name, $action_enum, $this->getVal("internal"), $silent);
 
                                         // inform customer by SMS if prio <= 3 (prio 4 = low)
                                         if ($request->getVal("request_priority") <= 3) {
-
-
                                                 $title = $request->getVal("request_title");
                                                 $title = trim(AfwStringHelper::truncateArabicJomla($title, 20), " ");
                                                 $success_message = $this->tm("the status of request", $lang) . " \"$title\" " . $this->tm("has been changed to", $lang) . " \"" . $this->decode("new_status_id") . "\"";
@@ -463,11 +516,17 @@ class Response extends CrmObject
                 return "unknown";
         }
 
-        public function calcResponse_aut()
-        {
+        public function calcResponse_aut($what="value", $lang="ar")
+        {                
                 if ($this->getVal("employee_id") > 0) {
-                        return "خ";
-                } else return "ع";
+                        if($lang=="ar") return "خ";
+                        else return "S";
+                } 
+                else
+                {
+                        if($lang=="ar") return "ع";   
+                        else return "C";
+                } 
         }
 
         public function calcResponse_cls()

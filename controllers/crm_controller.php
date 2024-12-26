@@ -2,6 +2,14 @@
 
 class CrmController extends AfwController
 {
+        public static function pushError($message_en, $lang="")
+        {
+                if (!$lang) $lang = AfwSession::getSessionVar("current_lang");
+                if (!$lang) $lang = "ar";
+                $support_mobile_number = AfwSession::config("support_mobile_number","0500000001");
+                self::pushError(Response::translateCompanyMessage($message_en,"crm",$lang));
+                self::pushError(Response::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number","crm",$lang)." ".$support_mobile_number);
+        }
 
         public function getMyModule()
         {
@@ -356,7 +364,7 @@ class CrmController extends AfwController
         {
                 if($request["all_error"])
                 {
-                        AfwSession::pushError($request["all_error"]);
+                        self::pushError($request["all_error"]);
                 }
                 $custom_scripts = array();
                 $custom_scripts[] = array('type' => 'css', 'path' => "./css/content.css");
@@ -400,7 +408,7 @@ class CrmController extends AfwController
 
         public function initiateCancel_request($request)
         {
-                global $lang;
+                $lang = AfwSession::getSessionVar("current_lang");
                 if (!$lang) $lang = "ar";
                 if ($lang == "ar") $lang_suffix = "";
                 else $lang_suffix = "_" . $lang;
@@ -1075,12 +1083,12 @@ class CrmController extends AfwController
                         // be sure before commit that no investigator is working on it
                         if (!$reqObj->customerCanComment()) {
                                 $error_saving = AfwLanguageHelper::tt("Can't add comments, The ticket status deny comments");
-                                AfwSession::pushError($error_saving);
+                                self::pushError($error_saving);
                                 $data["all_error"] = $error_saving;
                         } else {
                                 if (!$request["comment"]) {
                                         $error_saving = AfwLanguageHelper::tt("No comment written");
-                                        AfwSession::pushError($error_saving);
+                                        self::pushError($error_saving);
                                         $data["all_error"] = $error_saving;
                                 } else {
                                         $reqObj->addCustomerComment($request["comment"]);
@@ -1092,7 +1100,7 @@ class CrmController extends AfwController
                         }
                 } else {
                         $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
-                        AfwSession::pushError($error_saving);
+                        self::pushError($error_saving);
                         $data["all_error"] = $error_saving;
                 }
 
@@ -1166,12 +1174,12 @@ class CrmController extends AfwController
                         }
 
                         if ($data["obj"]->isClosedWithCustomer()) {
-                                AfwSession::pushError("This ticket is already closed");
+                                self::pushError("This ticket is already closed");
                                 // return;
                         }
 
                         if (!$data["obj"]->isToComplete()) {
-                                AfwSession::pushError("This ticket is already completed status = " . $data["obj"]->getVal("status_id"));
+                                self::pushError("This ticket is already completed status = " . $data["obj"]->getVal("status_id"));
                                 // return;
                         }
 
@@ -1235,6 +1243,8 @@ class CrmController extends AfwController
 
         public function initiateSubmit_complete($request)
         {
+                $lang = AfwSession::getSessionVar("current_lang");
+                if(!$lang) $lang = "ar";
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
@@ -1256,7 +1266,7 @@ class CrmController extends AfwController
                         // be sure before commit that no investigator is working on it
                         if (($reqObj->isClosedWithCustomer()) or (!$reqObj->isToComplete())) {
                                 $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is already completed");
-                                AfwSession::pushError($error_saving);
+                                self::pushError($error_saving);
                                 $data["all_error"] = $error_saving;
                         } else {
                                 if (!$request["comment"]) {
@@ -1264,7 +1274,7 @@ class CrmController extends AfwController
                                                 $request["comment"] = "شكرا لكم";
                                         } else {
                                                 $error_saving = AfwLanguageHelper::tt("No file attached and no comment written");
-                                                AfwSession::pushError($error_saving);
+                                                self::pushError($error_saving);
                                                 $data["all_error"] = $error_saving;
                                         }
                                 }
@@ -1274,7 +1284,7 @@ class CrmController extends AfwController
                                 if (isset($request["_REQUEST_FILES"]) and $request["_REQUEST_FILES"] and (count($request["_REQUEST_FILES"]) > 0)) {
                                         $response_action_type = "تم استكمال المرفقات";
                                 } else {
-                                        $response_action_type = "استكمال البيانات";
+                                        $response_action_type = "تم استكمال البيانات كالتالي :";
                                 }
 
                                 $responseObj = Response::createNewResponse(
@@ -1290,10 +1300,24 @@ class CrmController extends AfwController
                                         $internal = "N",
                                         $module_id = 0
                                 );
-                                // die("_REQUEST_FILES => ".var_export($request["_REQUEST_FILES"],true));
+                                $responseId = $responseObj->id;
+                                $responseAge = $responseObj->is_new ? "جديد" : "سابق";
 
+                                if($responseId)
+                                {
+                                        AfwSession::pushInformation("تم بحمد الله ارسال ردك ال$responseAge بالرقم التسلسلي $responseId إلى مكتب خدمة العملاء");
+                                }
+                                else
+                                {
+                                        self::pushError("Unfortunately, sending your response to the customer service office failed", $lang);
+                                        
+                                }
+
+                                // die("_REQUEST_FILES => ".var_export($request["_REQUEST_FILES"],true));
+                                $completed_action = "data";
                                 if (isset($request["_REQUEST_FILES"]) and $request["_REQUEST_FILES"] and (count($request["_REQUEST_FILES"]) > 0)) {
                                         foreach ($request["_REQUEST_FILES"] as $file_code => $file_arr) {
+                                                $completed_action = "files";
                                                 if ($continue_complete) {
                                                         $file_title = ${"title_of_$file_code"};
                                                         $uploadResult = AfwFileUploader::completeUpload($file_title, $file_code, $file_arr, $responseObj);
@@ -1307,7 +1331,7 @@ class CrmController extends AfwController
                                                         } else {
                                                                 $responseObj->hide();
                                                                 $error_message = "فشلت عملية تحميل الملف : " . $file_title . ". السبب : " . $message;
-                                                                AfwSession::pushError($error_message);
+                                                                self::pushError($error_message);
                                                                 $data["all_error"] = $error_message;
                                                                 $continue_complete = false;
                                                         }
@@ -1316,7 +1340,17 @@ class CrmController extends AfwController
                                 }
 
                                 if ($continue_complete) {
-                                        list($responseObj2,) = $reqObj->changeStatus(Request::$REQUEST_STATUS_ONGOING, "تم الانتهاء من رفع المرفقات واعادة الطلب الى مكتب خدمة العملاء");
+                                        if($completed_action == "files") 
+                                        {
+                                                $action_completed = "تم الانتهاء من رفع المرفقات واعادة الطلب الى مكتب خدمة العملاء";
+                                                $action_enum = Request::status_action_by_code("filesUploaded");
+                                        }        
+                                        else 
+                                        {
+                                                $action_completed = "تم الانتهاء من استكمال البيانات واعادة الطلب الى مكتب خدمة العملاء";
+                                                $action_enum = Request::status_action_by_code("dataCompleted");
+                                        }
+                                        list($responseObj2,) = $reqObj->changeStatus(Request::$REQUEST_STATUS_ONGOING, $action_completed, $action_enum);
                                 }
                         }
 
@@ -1325,7 +1359,7 @@ class CrmController extends AfwController
                         }
                 } else {
                         $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
-                        AfwSession::pushError($error_saving);
+                        self::pushError($error_saving);
                         $data["all_error"] = $error_saving;
                 }
 
@@ -1405,7 +1439,7 @@ class CrmController extends AfwController
                 // be sure before commit that no investigator is working on it
                 if ($reqObj->isAssigned()) {
                         $error_saving = AfwLanguageHelper::tt("Can't apply changes, The investigator started working on this request");
-                        AfwSession::pushError($error_saving);
+                        self::pushError($error_saving);
                         $data["all_error"] = $error_saving;
                 } else {
                         $reqObj->set("customer_id", $theCustomer->id);

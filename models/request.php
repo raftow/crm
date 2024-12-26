@@ -820,7 +820,7 @@ class Request extends CrmObject
                 if(!$this->isStarted()) {
                     unset($link);
                     $link = array();
-                    $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' أسفله للتمكن من الاجابة عليه";
+                    $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' في أسفل الصفحه للتمكن من التعليق أو الاجابة عليه";
                     $link["URL"] = "@help";
                     $link["CODE"] = "stop.and.debugg";
                     $link["TITLE"] = $title;
@@ -1416,6 +1416,10 @@ class Request extends CrmObject
 
     public function removeLastResponse($lang = "ar")
     {
+        // @todo what to do if a notification by email or SMS is sent about this response
+        //       i suggest to send to customer another SMS saying please ignore the last SMS sent to you
+        //       or block this remove to happen
+        //       or make the SMS sent after 2 hours and not immedialtely to give to employee chance to roll-back  
         if (!$this->iamLastResponderOrSuperAdmin()) return array("هذا الرد لم يأت من قبل لهذا الموظف", "");
         $respObj = $this->getLastResponse();
 
@@ -1424,6 +1428,7 @@ class Request extends CrmObject
             $respObj2 = $this->getLastResponse();
 
             $this->set("status_id", $respObj2->getVal("new_status_id"));
+            $this->set("status_action_enum", self::status_action_by_code("removeLastResponse"));
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", "###");
@@ -1568,25 +1573,33 @@ class Request extends CrmObject
 
     public function sendSmsToCustomer($template, $lang, $token_arr)
     {
+       
+        $customer_id = $this->getVal("customer_id");
         $the_customer = $this->hetCustomer();
+         /**
+         * @var CrmCustomer $the_customer
+         */
         if ($the_customer) {
             $actionParamsArr = [];
             $actionParamsArr[0] = $template;
             return $the_customer->smsRetrieveAction($lang, $actionParamsArr, $only_get_description = false, $token_arr);
         }
 
-        return null;
+        return [false, "No customer id=$customer_id found for this request", ""];
     }
 
 
-    public function changeStatus($new_status_id, $status_comment, $internal = "N", $silent = false)
+    public function changeStatus($new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false)
     {
-        $lang = AfwLanguageHelper::getGlobalLanguage();
+        $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
         $silent_force = false;
         $errors = "";
         $warnings = "";
         $infos = "";
+        $technicals = "";
+        $objme = AfwSession::getUserConnected();
+        $old_status = $this->getVal("status_id");
         if (($new_status_id == Request::$REQUEST_STATUS_DRAFT) and (!$this->getVal("status_id"))) $silent_force = true;
 
         if ($new_status_id != $this->getVal("status_id")) {
@@ -1597,7 +1610,7 @@ class Request extends CrmObject
             }
             $resoObj = null;
             if ((!$silent) and (!$silent_force)) {
-                $objme = AfwSession::getUserConnected();
+                
                 /*
                             $orgunit_id = $this->xxxx
                             if(!$orgunit_id) 
@@ -1607,8 +1620,6 @@ class Request extends CrmObject
                 if ($employee_id == $this->getVal("employee_id")) $orgunit_id = $this->getVal("orgunit_id");
                 if (!$orgunit_id) $orgunit_id = ($objme) ? $objme->getMyDepartmentId() : 0;
 
-                $file_dir_name = dirname(__FILE__);
-                require_once("$file_dir_name/response.php");
                 // AfwSession::pushInformation("rafik-debugg : creating new response"); 
                 $resoObj = Response::createNewResponse(
                     $this->getId(),
@@ -1623,88 +1634,58 @@ class Request extends CrmObject
                     $internal,
                     $module_id = 0
                 );
+                $technicals .= "<br> > response created $status_comment new_status_id=$new_status_id";
                 // AfwSession::pushInformation("rafik-debugg : new response created");                                                     
 
 
 
-                if ($new_status_id == self::$REQUEST_STATUS_CLOSED) {
-                    // AfwSession::pushInformation("rafik-debugg : creating survey token"); 
-                    $survey_url = CrmLimesurvey::surveyClosedTicket($this);
+                
 
-                    if ((!$objme) or (!$objme->isSuperAdmin())) $survey_url = null;
-
-                    // AfwSession::pushInformation("rafik-debugg : survey token created"); 
-                } else {
-                    $survey_url = null;
-                }
-
-                if ($objme) {
-                    $success_message = "";
-                    if (($new_status_id != Request::$REQUEST_STATUS_SENT) and ($new_status_id != Request::$REQUEST_STATUS_ONGOING)) {
-                        $success_message = $this->tm("status changed to", $lang) . " \"" . $this->decode("status_id") . "\"";
-                    } else {
-                        if($this->getVal("status_id") != Request::$REQUEST_STATUS_ASSIGNED)
-                        {
-                            $success_message = $this->tm("request sent for investigation", $lang);
-                        }                        
-                    }
-
-                    if ($survey_url) {
-                        $success_message .= " خاص بفريق الجودة لعدم انتظار الرسالة القصيرة رابط الاستبيان : " . $survey_url;
-                    }
-
-                    if($success_message) AfwSession::pushSuccess($success_message);
-                    // rafik @important : put line below in comment because $status_comment is returned as info for PublicM and so no need to sen dit twice
-                    //AfwSession::pushSuccess($status_comment);
-
-                } else {
-                    if (($new_status_id == Request::$REQUEST_STATUS_SENT) or ($new_status_id != Request::$REQUEST_STATUS_ONGOING)) $success_message = $this->tm("ticket sent to customer care", $lang);
-                    elseif ($new_status_id == Request::$REQUEST_STATUS_CANCELED) $success_message = $this->tm("ticket canceled", $lang);
-                    else $success_message = $this->tm("status changed to", $lang) . " \"" . $this->getCustomerStatus($lang) . "\"";
-
-
-                    if ($survey_url) {
-                        $success_message .= " :  رابط الاستبيان : " . $survey_url;
-                    }
-
-                    AfwSession::pushSuccess($success_message);
-                }
+                
             }
             // AfwSession::pushInformation("rafik-debugg : updating status of request to $new_status_id"); 
 
-            if (
-                ($new_status_id != $this->getVal("status_id")) and
-                (($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES) or
-                    ($new_status_id == Request::$REQUEST_STATUS_MISSED_INFO) or
-                    ($new_status_id == Request::$REQUEST_STATUS_DONE) or
-                    (($this->getVal("status_id") == Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) and ($new_status_id == Request::$REQUEST_STATUS_CLOSED))
-                )
-            ) {
-                // send SMS to warn customer
-                $token_arr = array("[title]" => $this->getVal("request_title"));
-                $this->sendSmsToCustomer($template = "news", $lang, $token_arr);
-                AfwSession::pushSuccess("تم اعلام العميل بهذا التغيير على التذكرة");
-            }
+            
 
             $this->set("status_id", $new_status_id);
+            $this->set("status_action_enum", $status_action_enum);
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", $status_comment);
-            $this->commit();
+            $new_status_decoded = $this->decode("status_id");
+            if($this->commit())
+            {                
+                $technicals .= "<br> > request-status changed to $new_status_id/$new_status_decoded <br> > with comments $status_comment";
+                $technicals .= $this->statusChanged($old_status, $resoObj->id);
+            }
+            else
+            {
+                $errors = "فشلت عملية تحديث حالة الطلب يرجى المحاولة لاحقا";
+                AfwSession::pushError($errors);
+                
+                $technicals .= "<br> > failed changing request-status to $new_status_id/$new_status_decoded / $status_comment";
+            }
             /*
                     $rand = rand(1011,9000);
                     
                     if(!$once) 
                     {
-                        throw new AfwRuntimeException("changeStatus entered first time");
+                        throw new AfwRuntimeException("change Status entered first time");
                         $once = 1;
                     }
-                    else throw new AfwRuntimeException("changeStatus entered second time");
+                    else throw new AfwRuntimeException("change Status entered second time");
                     */
 
             // ." ($rand)"
 
 
+        }
+
+        $customer_id = $this->getVal("customer_id");
+
+        if($customer_id == 11772) // testing rafik customer
+        {
+            AfwSession::pushWarning($technicals);
         }
 
 
@@ -1720,7 +1701,84 @@ class Request extends CrmObject
                 }
                 */
 
-        return array($resoObj, $errors, $warnings, $infos);
+        return array($resoObj, $errors, $warnings, $infos, $technicals);
+    }
+
+    public function statusChanged($old_status, $responseId)
+    {
+        $technicals_log = "<br> > responseId=$responseId ";
+        $new_status_id = $this->getVal("status_id");
+        $lang = AfwSession::getSessionVar("current_lang");
+        if (!$lang) $lang = "ar";
+        $objme = AfwSession::getUserConnected();
+        if ($new_status_id == self::$REQUEST_STATUS_CLOSED) {
+            // AfwSession::pushInformation("rafik-debugg : creating survey token"); 
+            $survey_url = CrmLimesurvey::surveyClosedTicket($this);
+            $technicals_log .= "<br> > surveyClosedTicket done : $survey_url";
+            if ((!$objme) or (!$objme->isSuperAdmin())) $survey_url = null;
+
+            // AfwSession::pushInformation("rafik-debugg : survey token created"); 
+        } else {
+            $survey_url = null;
+        }
+
+        if ($objme) $status_decoded = $this->decode("status_id");
+        else $status_decoded = $this->getCustomerStatus($lang);
+
+        $success_message = "";
+        if ($new_status_id == Request::$REQUEST_STATUS_CANCELED) $success_message = $this->tm("ticket canceled", $lang);
+        elseif (($new_status_id != Request::$REQUEST_STATUS_SENT)    and 
+            ($new_status_id != Request::$REQUEST_STATUS_ONGOING) and 
+            ($new_status_id != Request::$REQUEST_STATUS_ASSIGNED)) 
+        {
+            $success_message = $this->tm("status changed to", $lang) . " \"$status_decoded\"";
+        } 
+        else
+        {
+            $success_message = $this->tm("request sent for investigation", $lang);
+        }
+
+        if ($survey_url) {
+            $success_message .= "<br>رابط الاستبيان : " . $survey_url;
+        }
+
+        if ($responseId) {
+            $success_message .= "<br>مسلسل الرد : " . $responseId;
+        }
+
+        if($success_message) AfwSession::pushSuccess($success_message);
+
+        if (
+            ($new_status_id != $old_status) and
+            (($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES) or
+                ($new_status_id == Request::$REQUEST_STATUS_MISSED_INFO) or
+                ($new_status_id == Request::$REQUEST_STATUS_DONE) or
+                (($old_status == Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) and ($new_status_id == Request::$REQUEST_STATUS_CLOSED))
+            )
+        ) {
+            $customerObj = $this->hetCustomer();
+            // send SMS to warn customer
+            $token_arr = array(
+                        "[title]" => $this->getVal("request_title"),
+                        "[first_name_ar]" => $customerObj->getVal("first_name_ar"),
+                        "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
+                    );
+            list($done, $reason, $sms_body) = $this->sendSmsToCustomer($template = "news", $lang, $token_arr);
+            if($done)
+            {
+                AfwSession::pushSuccess("تم اعلام العميل بهذا التغيير على التذكرة عبر الرسالة التالية : ".$sms_body);
+                $technicals_log .= "<br> > sendSmsToCustomer done with template=$template, lang=$lang, infos=$reason";
+            }
+            else
+            {
+                AfwSession::pushWarning("فشل اعلام العميل بهذا التغيير على التذكرة");
+                $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
+            }
+
+            
+        }
+
+        return $technicals_log;
     }
 
     public function getCustomerStatus($lang = "ar")
@@ -1743,7 +1801,7 @@ class Request extends CrmObject
         $old_supervisor_id = $this->getVal("supervisor_id");
         // send the request 
         $status_comment = "تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة";
-        $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment);
+        $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("sendRequest")); 
 
 
         $development_mode = AfwSession::config("development_mode", false);
@@ -1808,7 +1866,7 @@ class Request extends CrmObject
             else*/
         $status_comment = "يمكن للعميل اجراء التعديلات على طلبه الآن";
 
-        $this->changeStatus(self::$REQUEST_STATUS_DRAFT, $status_comment);
+        $this->changeStatus(self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"));
         return array("", $status_comment);
     }
 
@@ -1832,10 +1890,10 @@ class Request extends CrmObject
         if ($employeeId > 0) {
             $status_comment = date("H:i:s") . ": تم اسناد الطلب [" . $this->id . "] للموظف(ة) $employeeId " . $this->showAttribute("employee_id");
             // if($employeeId == 1790) AfwRunHelper::unSafeDie("case of employeeId = $employeeId");
-            $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, $internal = "Y");
+            $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("assignRequest"), $internal = "Y");
         } else {
             $status_comment = "الطلب في انتظار الاسناد ";
-            $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, $internal = "Y");
+            $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("unAssignRequest"), $internal = "Y");
         }
         // AfwRunHelper::safeDie($status_comment, "employee_id = ". $employeeId);
         return array("", $status_comment);
@@ -1845,14 +1903,14 @@ class Request extends CrmObject
     {
         // die("rafik-debugg : start of redirectRequest");
         $status_comment = "تمت ملاحظة أن هذا الطلب ليس من تخصص هذه الإدارة واخطار مركز خدمة العملاء من أجل إعادة التحويل";
-        $this->changeStatus(self::$REQUEST_STATUS_REDIRECT, $status_comment, $internal = "Y");
+        $this->changeStatus(self::$REQUEST_STATUS_REDIRECT, $status_comment, self::status_action_by_code("redirectRequest"), $internal = "Y");
         return array("", $status_comment);
     }
 
     public function returnRequestToInvestigator($lang = "ar")
     {
         $status_comment = "المنسق المكرم الرجاء إعادة النظر في الرد على هذا الطلب وملاحظة تعليق مشرف خدمة العملاء ";
-        $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, $internal = "Y");
+        $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("returnRequestToInvestigator"), $internal = "Y");
         return array("", "تمت الإعادة للمنسق مع رسالة : " . $status_comment . ". يفضل أيضا أن يضع مشرف خدمة العملاء تعليقا فيه توجيها لسبب إرجاع الطلب إليه");
     }
 
@@ -1864,23 +1922,23 @@ class Request extends CrmObject
         $status_comment = "لقد بدأ العمل على الطلب";
 
         // if level of investigator = starting => internal = W (all responses should be validated by supervisor before show to customer)
-        $this->changeStatus(self::$REQUEST_STATUS_ONGOING, $status_comment);
+        $this->changeStatus(self::$REQUEST_STATUS_ONGOING, $status_comment, self::status_action_by_code("startRequest"));
         return array("", $status_comment);
     }
 
     public function doneRequest($lang = "ar")
     {
-        $status_comment = "تم عمل المطلوب";
+        $status_comment = "تم عمل المطلوب والرد على العميل";
 
         // if level of investigator = starting => internal = W (all responses should be validated by supervisor before show to customer)
-        $this->changeStatus(self::$REQUEST_STATUS_DONE, $status_comment);
+        $this->changeStatus(self::$REQUEST_STATUS_DONE, $status_comment, self::status_action_by_code("doneRequest"));
         return array("", $status_comment);
     }
 
     public function cancelRequest($lang = "ar")
     {
         $status_comment = "تم إلغاء التذكرة بناء على طلب العميل";
-        $this->changeStatus(self::$REQUEST_STATUS_CANCELED, $status_comment);
+        $this->changeStatus(self::$REQUEST_STATUS_CANCELED, $status_comment, self::status_action_by_code("cancelRequest"));
         return array("", $status_comment);
     }
 
@@ -1890,7 +1948,7 @@ class Request extends CrmObject
     public function unCloseRequest($lang = "ar")
     {
         $status_comment = "تم الغاء غلق الطلب";
-        $resoObj = $this->changeStatus(self::$REQUEST_STATUS_DONE, $status_comment);
+        $resoObj = $this->changeStatus(self::$REQUEST_STATUS_DONE, $status_comment, self::status_action_by_code("unCloseRequest"));
 
 
         return array("", $status_comment);
@@ -1898,6 +1956,9 @@ class Request extends CrmObject
 
     public function needResponseApproval()
     {
+        /**
+         * @var Response $respObj
+         */
         // عند غلق أي طلب اذا كانت آخر اجابة هي تحت التدقيق يتم تحويلها الى اجابة معتمدة
         $respObj = $this->getLastResponseCanBeApproved();
         if ($respObj) return $respObj->needApproval();
@@ -1924,7 +1985,7 @@ class Request extends CrmObject
         if ($respObj) $respObj->approveIfNotApproved();
 
         $status_comment = "تم غلق الطلب";
-        $resoObj = $this->changeStatus(self::$REQUEST_STATUS_CLOSED, $status_comment);
+        $resoObj = $this->changeStatus(self::$REQUEST_STATUS_CLOSED, $status_comment, self::status_action_by_code("closeRequest"));
 
 
         return array("", $status_comment);
@@ -1933,7 +1994,7 @@ class Request extends CrmObject
     public function rejectRequest($lang = "ar")
     {
         $status_comment = "تم رفض الطلب";
-        $this->changeStatus(self::$REQUEST_STATUS_REJECTED, $status_comment);
+        $this->changeStatus(self::$REQUEST_STATUS_REJECTED, $status_comment, self::status_action_by_code("rejectRequest"));
         return array("", $status_comment);
     }
 
@@ -2277,6 +2338,7 @@ class Request extends CrmObject
 
     public function calcMan($what="value", $showOnlyCode=false)
     {
+        $return = "man";
         $lang = AfwSession::getSessionVar("current_lang");
         if(!$lang) $lang = "ar";
         $status_id = $this->getVal("status_id");
@@ -2327,7 +2389,7 @@ class Request extends CrmObject
         // IGNORED - طلب تم تجاهله  
         if ($status_id == self::$REQUEST_STATUS_IGNORED) $return = "sss";
 
-        $return = "man";
+        
 
         if($showOnlyCode) return $return;
         else return $return_arr[$return];
@@ -2678,7 +2740,7 @@ class Request extends CrmObject
     public function afterMaj($id, $fields_updated)
     {
         self::lookIfInfiniteLoop();
-        $lang = AfwLanguageHelper::getGlobalLanguage();
+        $lang = AfwSession::getSessionVar("current_lang");
         $objme = AfwSession::getUserConnected();
         // send mail to investigator if is there
         $old_request_priority = 0; // no way to get here in after maj (seems working only in before Maj)
@@ -3142,7 +3204,7 @@ class Request extends CrmObject
         $html = "<ul class=\"smooth-dots\">";
         foreach ($pfiles_arr as $pfileObj) {
             if ($pfileObj) {
-                $p_title = $pfileObj->getVal("description");
+                $p_title = AfwStringHelper::truncateArabicJomla($pfileObj->getVal("description"), 30);
                 $fileObj = $pfileObj->hetFile();
                 if ($fileObj) {
                     $a_li = $fileObj->getFormuleResult("download_light");
@@ -3291,4 +3353,101 @@ class Request extends CrmObject
     {
         return $this->calcMan("value", true);
     }
+
+    public function list_of_status_action_enum()
+    {
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        return self::status_action()[$lang];
+    }
+
+    public static function status_action_by_code($code)
+    {
+        $codesArr = self::status_action()["code"];
+        foreach($codesArr as $id => $codeItem)
+        {
+            if($codeItem==$code) return $id;
+        }
+
+        return 0;
+    }
+    
+    public static function status_action()
+    {
+            $arr_list_of_status_action = array();
+            
+
+             
+            
+            
+
+                    
+            $arr_list_of_status_action["en"][1] = "remove last response";
+            $arr_list_of_status_action["ar"][1] = "حذف آخر رد";
+            $arr_list_of_status_action["code"][1] = "removeLastResponse";
+
+            $arr_list_of_status_action["en"][2] = "Request send";
+            $arr_list_of_status_action["ar"][2] = "إرسال الطلب";
+            $arr_list_of_status_action["code"][2] = "sendRequest";
+
+            $arr_list_of_status_action  ["en"][3] = "Request reset";
+            $arr_list_of_status_action  ["ar"][3] = "تصفير الطلب";
+            $arr_list_of_status_action["code"][3] = "resetRequestNew";
+
+            $arr_list_of_status_action  ["en"][4] = "assign Request";
+            $arr_list_of_status_action  ["ar"][4] = "اسناد الطلب";
+            $arr_list_of_status_action["code"][4] = "assignRequest";
+
+            $arr_list_of_status_action  ["en"][5] = "unAssign Request";
+            $arr_list_of_status_action  ["ar"][5] = "الغاء اسناد الطلب";
+            $arr_list_of_status_action["code"][5] = "unAssignRequest";
+
+            $arr_list_of_status_action  ["en"][6] = "redirect Request";
+            $arr_list_of_status_action  ["ar"][6] = "إعادة تحويل الطلب";
+            $arr_list_of_status_action["code"][6] = "redirectRequest";
+
+            $arr_list_of_status_action  ["en"][7] = "return Request To Investigator";
+            $arr_list_of_status_action  ["ar"][7] = "إعادة الطلب للمنسق";
+            $arr_list_of_status_action["code"][7] = "returnRequestToInvestigator";
+
+            $arr_list_of_status_action  ["en"][8] = "start Request";
+            $arr_list_of_status_action  ["ar"][8] = "بدأ العمل على الطلب";
+            $arr_list_of_status_action["code"][8] = "startRequest";
+
+            $arr_list_of_status_action  ["en"][9] = "done Request";
+            $arr_list_of_status_action  ["ar"][9] = "تم الرد على العميل";
+            $arr_list_of_status_action["code"][9] = "doneRequest";
+
+            $arr_list_of_status_action  ["en"][10] = "cancel Request";
+            $arr_list_of_status_action  ["ar"][10] = "العميل ألغى الطلب";
+            $arr_list_of_status_action["code"][10] = "cancelRequest";
+
+            $arr_list_of_status_action  ["en"][11] = "unClose Request";
+            $arr_list_of_status_action  ["ar"][11] = "الغاء غلق الطلب";
+            $arr_list_of_status_action["code"][11] = "unCloseRequest";
+
+            $arr_list_of_status_action  ["en"][12] = "close Request";
+            $arr_list_of_status_action  ["ar"][12] = "غلق الطلب";
+            $arr_list_of_status_action["code"][12] = "closeRequest";
+
+            $arr_list_of_status_action  ["en"][13] = "reject Request";
+            $arr_list_of_status_action  ["ar"][13] = "رفض الطلب";
+            $arr_list_of_status_action["code"][13] = "rejectRequest";
+
+            $arr_list_of_status_action  ["en"][14] = "files Uploaded";
+            $arr_list_of_status_action  ["ar"][14] = "تم رفع المرفقات";
+            $arr_list_of_status_action["code"][14] = "filesUploaded";
+
+            $arr_list_of_status_action  ["en"][15] = "data Completed";
+            $arr_list_of_status_action  ["ar"][15] = "تم استكمال البيانات";
+            $arr_list_of_status_action["code"][15] = "dataCompleted";
+
+            $arr_list_of_status_action  ["en"][16] = "response Created Status Updated";
+            $arr_list_of_status_action  ["ar"][16] = "تمت كتابة رد مع تغيير الحالة";
+            $arr_list_of_status_action["code"][16] = "responseCreatedStatusUpdated";
+
+            
+
+            
+            return $arr_list_of_status_action;
+    } 
 }

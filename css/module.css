@@ -741,14 +741,38 @@ span.prog-name.prog-archive {
         margin-top: 40px;
         float: right;
 }
-@media screen and (max-width: 1400px) {
-        .hzm_crm_bloc {
+
+.front_bloc.hzm_crm_bloc.ticket {
+    border: 1px solid #0f8480bf;
+    padding-bottom: 25px;
+    min-width: 96% !important;
+    width: 96% !important;
+    border-radius: 8px;
+    margin-right: 2% !important;
+    margin-left: 2% !important;
+    box-shadow: 6px 6px 9px #dff1ee;
+    background-color: #ffffff91;
+}
+
+
+@media screen and (max-width: 1200px) {
+        .front_bloc.hzm_crm_bloc.ticket {
                 min-width: 98%  !important;
                 /* display: block; */
                 margin-right: 1% !important;
                 margin-left: 1% !important;
                 margin-top: 0px !important;
-        }
+        }        
+}
+
+@media screen and (max-width: 900px) {
+    .front_bloc.hzm_crm_bloc.ticket {
+            min-width: 100%  !important;
+            /* display: block; */
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+            margin-top: 0px !important;
+    }        
 }
 
 .front_bloc.hzm_crm_bloc.ticket.status_6 {
@@ -794,28 +818,7 @@ span.prog-name.prog-archive {
     background-color: #ffd0aa4f;
 }
 
-@media screen and (max-width: 410px) {
-    .front_bloc.hzm_crm_bloc.ticket {
-        min-width: 100% !important;
-        width: 100% !important;
-        border-radius: 2px;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-    }
-}
 
-
-.front_bloc.hzm_crm_bloc.ticket {
-    border: 1px solid #0f8480bf;
-    padding-bottom: 25px;
-    min-width: 96% !important;
-    width: 96% !important;
-    border-radius: 8px;
-    margin-right: 2% !important;
-    margin-left: 2% !important;
-    box-shadow: 6px 6px 9px #dff1ee;
-    background-color: #ffffff91;
-}
 
 @supports (-ms-ime-align: auto) {
     .front_bloc.hzm_crm_bloc.ticket {
@@ -901,11 +904,11 @@ span.prog-name.prog-archive {
 }
 
 .request_status.status_101 {
-    background-color: #2b8d9e;
+    background-color: #db6a0d;
 }
 
 .request_status.status_102 {
-    background-color: #2b8d9e;
+    background-color: #db6a0d;
 }
 
 
@@ -926,7 +929,7 @@ span.prog-name.prog-archive {
 }
 
 .request_status.status_5 {
-        background-color: #7ab37d;
+        background-color: #1cab23;
 }
 
 .request_status.status_6 {
@@ -980,7 +983,7 @@ span.prog-name.prog-archive {
     background-color: #047e7a;
     font-size: 12px;
     font-weight: normal;
-    font-family: cursive;
+    font-family: system-ui;
     color: white;
     margin-left: 9px;
     margin-right: 9px;
@@ -1121,7 +1124,7 @@ div.crm_data>label {
     padding: 6px 8px 1px 6px;
     width: 100%;
     color: black;
-    font-weight: bold;
+    font-weight: normal !important;
     /* white-space: nowrap; rafik : cause pb for mobile version see picture bugs/crm-001.png*/ 
     min-height: 26px !important;
     margin-bottom: 0px;
@@ -1413,6 +1416,7 @@ input.btnbtsp.btn-primary.btncheck {
         width: 100% !important;
         margin: 0 0% 23px 0% !important;
         position: relative !important;
+        padding: 0 !important;
     }
 
 }
@@ -1472,14 +1476,31 @@ span.hzm_time.hzm_small_time {
     background-color: #feda9e;
 }
 
-.row.odd.crm_data.crm_response {
-    background-color: #fcffe9;
+
+
+
+
+
+.row.c-crm.odd.crm_data.crm_response {
+    background-color: #FFFFFF;
+}
+
+.row.c-crm.even.crm_data.crm_response {
+    background-color: #F7F7F7;
+}
+
+.row.s-crm.odd.crm_data.crm_response {
+    background-color: #FEFAEB;
+}
+
+.row.s-crm.even.crm_data.crm_response {
+    background-color: #FCFFE9;
 }
 
 .row.odd.crm_data.crm_response.type1 {
     background-color: #d8ffd8;
     border-color: green;
-  }
+}
 
 .row.crm_data.title_crm {
     font-size: 120%;
@@ -1666,6 +1687,16 @@ a.btnbtsp.btn_link:hover {
         width: 98% !important;
         margin-right: 1% !important;
         margin-left: 1% !important;
+    }
+
+}
+
+@media screen and (max-width: 600px)
+{
+    .cms_bg_pic {
+        width: 100% !important;
+        margin-right: 0% !important;
+        margin-left: 0% !important;
     }
 
 }
@@ -2070,9 +2101,21 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
     border: 1px solid #afd4e6;
 }
 
+div#div_data_request_code {
+    display: inline;
+    padding: 4px 8px !important;
+    background-color: #227abb !important;
+    font-size: 12px;
+    font-weight: normal;
+    font-family: system-ui;
+    color: white;
+    margin-left: 9px;
+    margin-right: 9px;
+}
+
 .hzm_data.hzm_data_request_text.form-control.inputreadonly {
     border: 1px solid #1654a4 !important;
-    background-color: #4fb0f7 !important;
+    background-color: #227abb !important;
     font-size: 110% !important;
     color: white;
 }
@@ -3051,7 +3094,7 @@ span.cms-title {
 .hzm_blue.hzm_print.missed {
     background-color: transparent !important;
     border-color: orange !important;
-    color: orange !important;
+    color: #db9006 !important;
     animation: 3000ms cubic-bezier(0.55, 0.055, 0.675, 0.19) 0s infinite normal none running attirant;
     
 }
@@ -3153,3 +3196,10 @@ table.stats_table td {
     border-bottom: none !important;
 }
 
+input.form-control.customer-login {
+    font-size: 32px !important;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    height: 60px !important;
+}

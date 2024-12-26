@@ -34,7 +34,7 @@ $stats_arr = Request::aggreg($function="count(*)",
                 $throw_error=true, 
                 $throw_analysis_crash=true);
 
-if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
+if(!$lang) $lang = AfwSession::getSessionVar("current_lang");
 if(!$lang) $lang = "ar";
 
 $statsMatrix = array();

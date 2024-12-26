@@ -32,6 +32,7 @@ $messages = [
     "Are you sure you want to approve this employee on this organization inspite of the aobove explanation ?" => "هل أنت متأكد من اعتماد هذا الموظف على هذه الجهة بعد علمك بالبيان أعلاه؟",
     "We can not automatically approve that this employee is from this organization"=>"تنبيه : لم نتمكن من التأكد آليا من صحة نسبة هذا الموظف لهذه الجهة",
     "customer" => "عميل",
-                                
+    "Unfortunately, sending your response to the customer service office failed" => "مع الأسف فشلت عملية ارسال ردك إلى مكتب خدمة العملاء",
+    "Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number" => "نرجوا اعادة المحاولة لاحقا أو ارسال طلب دعم فني يمكنك ارسال صورة الشاشة وطرح اشكالك على الواتساب على الرقم",
 ];
      

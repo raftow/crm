@@ -161,9 +161,9 @@ div.content_form>form>.in-group-customer_data {
     }
 
     .cms_bg_pic {
-        width: 94%;
-        margin-right: 3%;
-        margin-left: 3%;
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
     }
 }
 

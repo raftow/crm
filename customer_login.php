@@ -245,14 +245,10 @@ if($desc_site)
                 <div class="modal-body"><h1>من فضلك قم بادخال بياناتك</h1><br>
                         <form id="formlogin1" name="formlogin1" method="post" action="customer_login.php"  onSubmit="return customer_checkForm();" dir="rtl" enctype="multipart/form-data">
                                 <div class="form-group">
-                                        <label>البريد الالكتروني أو الجوال
-                                        </label>
-                                        <input class="form-control" type="text" name="customer_mobile_or_email" value="<?php echo $customer_mobile_or_email?>" required>
+                                        <input class="form-control customer-login mobile_or_email" type="text" name="customer_mobile_or_email" value="<?php echo $customer_mobile_or_email?>" placeholder="البريد الالكتروني أو الجوال" required>
                                 </div>
                                 <div class="form-group">
-                                        <label>رقم الهوية
-                                        </label>
-                                        <input type="text" class="form-control" name="customer_idn" value="<?php echo $customer_idn?>"  autocomplete="off" required>                                        
+                                        <input type="text" class="form-control customer-login idn" name="customer_idn" value="<?php echo $customer_idn?>"  autocomplete="off" placeholder="رقم الهوية" required>                                        
                                         <input type="hidden" name="customer_id" value="<?php echo $customer_id?>">                                        
                                 </div>
 

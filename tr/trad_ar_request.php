@@ -30,7 +30,8 @@ class RequestArTranslator
 		$trad["request"]["orgunit_id"] = "الجهة المعنية بالطلب";
 		$trad["request"]["employee_id"] = "المنسق المكلف";
 		$trad["request"]["supervisor_id"] = "المشرف المكلف";
-		$trad["request"]["man"] = "عند من ؟";
+		$trad["request"]["man"] = "الآن الطلب عند من ؟";
+		$trad["request"]["man.short"] = "عند من ؟";
 		$trad["request"]["mobile"] = "الجوال";
 		$trad["request"]["response_all"] = "الإجابات والتعليقات";
 
@@ -114,7 +115,7 @@ class RequestArTranslator
 
 		$trad["request"]["days_investigator"] = "عدد أيام عمل المنسق";
 		$trad["request"]["days_delay"] = "عدد أيام العمل على التذكرة";
-
+		$trad["request"]["status_action_enum"] = "آخر اجراء على الطلب";
 
 
 		$trad["request"]["stats.gs001"] = "تقرير الأداء لفترة من [date_start_perf] إلى [date_end_perf]";

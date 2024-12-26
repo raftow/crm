@@ -40,8 +40,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 
                 $arrDisp = [];
-                $arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar"];
-                $arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en"];
+                $arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar", "mobile"];
+                $arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en", "mobile"];
 
                 $this->DISPLAY_FIELD_BY_LANG = $arrDisp;
                 $this->DISPLAY_SEPARATOR = " ";
@@ -743,7 +743,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         $exceptional_sms_template = $this->decideSMSTemplate($sms_template);
                         if ($exceptional_sms_template != $sms_template) {
                                 // ...
-                                include("$file_dir_name/tpl/template_sms_$exceptional_sms_template.php");
+                                include("$file_dir_name/../tpl/template_sms_$exceptional_sms_template.php");
                                 if ($sms_body_arr[$lang]) {
                                         $exceptional_sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
                                 } else {
@@ -758,7 +758,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                                 $sms_template = $exceptional_sms_template;
                         }
 
-                        include("$file_dir_name/tpl/template_sms_$sms_template.php");
+                        include("$file_dir_name/../tpl/template_sms_$sms_template.php");
 
                         if ($sms_body_arr[$lang]) {
                                 $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
@@ -769,7 +769,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         if (!$only_get_description) {
 
 
-                                if (!$sms_body) return array(false, $this->tm("can't find body of SMS for this template and langue") . " [$sms_template, $lang]");
+                                if (!$sms_body) return array(false, $this->tm("can't find body of SMS for this template and langue") . " [$sms_template/$exceptional_sms_template, $lang]", $sms_body);
 
 
                                 $simulate_sms_to_mobile = AfwSession::config("simulate_sms_to_mobile", null);
@@ -780,17 +780,17 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                                 // send SMS to customer       
                                 list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $sms_body);
 
-                                return array($sms_ok, $sms_info);
+                                return array($sms_ok, $sms_info, $sms_body);
                         } else {
                                 if ($exceptional_sms_body) {
                                         $exceptional_sms_desc = "نص رسالة أخرى $exceptional_template_desc : <br><pre>$exceptional_sms_body</pre>";
                                 } else {
                                         $exceptional_sms_desc = "";
                                 }
-                                return array(true, "نص الرسالة : <br><pre>$sms_body</pre>" . $exceptional_sms_desc);
+                                return array(true, "نص الرسالة : <br><pre>$sms_body</pre>" . $exceptional_sms_desc, $sms_body);
                         }
                 } else {
-                        return array(false, $this->tm("this customer does not have correct mobile number") . " [$id]");
+                        return array(false, $this->tm("this customer does not have correct mobile number") . " [$id]", "");
                 }
         }
 

@@ -108,14 +108,18 @@
                                         </div>
                                 <?php 
                                         $responseList = $ticketObj->get("externalResponseList");
-                                        $odd = "";
+                                        $odd = "even ";
                                         if(count($responseList)>0)
                                         {
+                                                /**
+                                                 * @var Response $responseItem
+                                                 */
                                                 foreach($responseList as  $responseItem)
                                                 {
+                                                        $css_resp = strtolower($responseItem->calcResponse_aut("value", "en"))."-crm ";
                                                         $full_response_date = ($ds == "hijri") ? $responseItem->fullHijriDate("response_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($responseItem->getVal("response_date")));
                                 ?>
-                                        <div class="row <?php echo $odd?>crm_data crm_response type<?php echo $responseItem->getVal("response_type_id")?>">
+                                        <div class="row <?php echo $odd.$css_resp?>crm_data crm_response type<?php echo $responseItem->getVal("response_type_id")?>">
                                                 <div class='hzm_small_calendar calendar_left'>
                                                         <span class="hzm_small_date"><?php echo $full_response_date; ?> </span> 
                                                         <span class="hzm_small_time"><?php echo $responseItem->response_time; ?> </span> 
@@ -128,8 +132,8 @@
                                         </div>
                                 
                                 <?php 
-                                                        if(!$odd) $odd = "odd ";
-                                                        else $odd = "";
+                                                        if($odd=="even ") $odd = "odd ";
+                                                        else $odd = "even ";
                                                 }        
                                         }
                                         else

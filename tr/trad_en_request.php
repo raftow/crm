@@ -39,11 +39,13 @@ class RequestEnTranslator
 		$trad["request"]["pb_resolved"] = "Pb resolved";
 		$trad["request"]["general_satisfaction"] = "General satisfaction";
 		$trad["request"]["customer_id"] = "Account";
+		$trad["request"]["status_action_enum"] = "Last Status Action";
 		$trad["request"]["step1"] = "customer owner";
 		$trad["request"]["step2"] = "request basis";
 		$trad["request"]["step3"] = "request details";
 		$trad["request"]["step4"] = "answers and comments";
 		$trad["request"]["step5"] = "customer satisfaction";
+
 		return $trad;
 	}
 
