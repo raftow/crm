@@ -812,6 +812,7 @@ class CrmRequestAfwStructure
 		),
 
 		'status_action_enum' => array(
+			'FGROUP' => 'status', 
 			'SHORTNAME' => 'action',
 			'SEARCH' => true,
 			'QSEARCH' => true,

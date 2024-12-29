@@ -1,4 +1,6 @@
 <?php
+// ALTER TABLE c0crm.request add status_action_enum smallint DEFAULT NULL AFTER status_id
+
 class Request extends CrmObject
 {
     public $itemsMethodExec = [];
@@ -1546,11 +1548,8 @@ class Request extends CrmObject
     }
 
 
-    public function addCustomerComment($comment)
+    public function addCustomerComment($comment, $lang)
     {
-        $file_dir_name = dirname(__FILE__);
-        require_once("$file_dir_name/response.php");
-
         // keep same status
         $new_status_id = $this->getVal("status_id");
 
@@ -1589,7 +1588,7 @@ class Request extends CrmObject
     }
 
 
-    public function changeStatus($new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false)
+    public function changeStatus($new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false, $question_id=0, $employee_id=null)
     {
         $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
@@ -1615,7 +1614,7 @@ class Request extends CrmObject
                             $orgunit_id = $this->xxxx
                             if(!$orgunit_id) 
                             */
-                $employee_id = ($objme) ? $objme->getEmployeeId() : 0;
+                if(!$employee_id) $employee_id = ($objme) ? $objme->getEmployeeId() : 0;
                 $orgunit_id = 0;
                 if ($employee_id == $this->getVal("employee_id")) $orgunit_id = $this->getVal("orgunit_id");
                 if (!$orgunit_id) $orgunit_id = ($objme) ? $objme->getMyDepartmentId() : 0;
@@ -1629,7 +1628,7 @@ class Request extends CrmObject
                     $employee_id,
                     $new_status_id,
                     $response_type,
-                    $status_comment,
+                    $status_comment." <!-- QID$question_id -->",
                     $response_link = "",
                     $internal,
                     $module_id = 0

@@ -405,24 +405,32 @@ class Response extends CrmObject
                                  * @var Request $request
                                  */
                                 $request = $this->hetRequest();
-                                if ($request and 
-                                    ($this->getVal("new_status_id") > 0) and 
-                                    ($this->getVal("new_status_id") != $request->getVal("status_id"))
+                                if ($request and // cond 1
+                                    ($this->getVal("new_status_id") > 0) and // cond 2
+                                    ($this->getVal("new_status_id") != $request->getVal("status_id")) // cond 3
                                     )
-                                // we do this test to avoid twice or infinite loop because change status create new response                   
+                                // we do this cond-3 above to be sure that this response inserted is manually inserted not automatic
+                                // to avoid twice or infinite loop because change status create new response                   
                                 {
+                                        $employee_id = null;
                                         $objme_name = "";
                                         $objme = AfwSession::getUserConnected();
                                         if ($objme) $objme_name = $objme->getDisplay($lang);
                                         else {
                                                 $custme = AfwSession::getCustomerConnected();
                                                 if ($custme) $objme_name = $custme->getDisplay($lang);
-                                                if (!$objme_name) $objme_name = "المهمة الآلية";
+                                                if (!$objme_name) 
+                                                {
+                                                        $objme_name = "المهمة الآلية";
+                                                        $employee_id = 2;
+                                                }
                                         }
                                         //die("request->change Status to ".$this->getVal("new_status_id")." with comment : ".$this->getVal("response_text"));                                        
                                         $action_enum = Request::status_action_by_code("responseCreatedStatusUpdated");
                                         $silent = true; // important keep silent true to avoid infinite loop
-                                        $request->changeStatus($this->getVal("new_status_id"), "تم تعديل حالة الطلب من قبل : " . $objme_name, $action_enum, $this->getVal("internal"), $silent);
+                                        $status_comment = "تم الرد على الطلب من قبل : " . $objme_name;
+                                        $question_id = 0;
+                                        $request->changeStatus($this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $employee_id);
 
                                         // inform customer by SMS if prio <= 3 (prio 4 = low)
                                         if ($request->getVal("request_priority") <= 3) {

@@ -1062,6 +1062,7 @@ class CrmController extends AfwController
 
         public function initiateSubmit_comment($request)
         {
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
@@ -1091,7 +1092,7 @@ class CrmController extends AfwController
                                         self::pushError($error_saving);
                                         $data["all_error"] = $error_saving;
                                 } else {
-                                        $reqObj->addCustomerComment($request["comment"]);
+                                        $reqObj->addCustomerComment($request["comment"], $lang);
                                 }
                         }
 
