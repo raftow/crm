@@ -18,6 +18,9 @@ class CrmObject extends AFWObject
         // إدارة البيانات المرجعية للنظام
         public static $AROLE_OF_LOOKUPS = 347;
 
+        // إدارة البيانات المرجعية للنظام
+        public static $AROLE_OF_GENERAL_SUPERVISOR = 376;
+
 
         public static function userConnectedIsSupervisor($objme = null)
         {

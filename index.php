@@ -19,7 +19,7 @@ if($objme)
         );
 
 
-        if($objme->isSuperAdmin())
+        if($objme->isSuperAdmin() or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR))
         {
                 $Main_Page = "monitoring.php";
                 $MODULE = $My_Module = "crm";

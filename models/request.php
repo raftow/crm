@@ -99,6 +99,7 @@ class Request extends CrmObject
     // IGNORED - طلب تم تجاهله  
     public static $REQUEST_STATUS_IGNORED = 9;
 
+    public static $REQUEST_STATUSES_NO_NEED_ASSIGN = "1,5,6,7,8,9,101,102";
 
     public static $REQUEST_STATUSES_ONGOING_SUPERVISOR = "2,3,301";
 
