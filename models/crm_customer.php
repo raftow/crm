@@ -40,8 +40,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 
                 $arrDisp = [];
-                $arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar", "mobile"];
-                $arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en", "mobile"];
+                $arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar", "mobile", "idn"];
+                $arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en", "mobile", "idn"];
 
                 $this->DISPLAY_FIELD_BY_LANG = $arrDisp;
                 $this->DISPLAY_SEPARATOR = " ";
