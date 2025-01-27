@@ -760,7 +760,7 @@ class Request extends CrmObject
         list($data[0], $link[0]) = $this->displayAttribute("request_title", false, $lang);
         if (!$data[0]) $data[0] = "[بدون عنوان-" . $this->getId() . "]";
         $data[1] = $this->showAttribute("request_date"); // $this->decode("status_date", "HIJRI_ONLY");
-        if ($this->iamTheSupervisor()) $data[2] = "<span class=\"label_mandatory\">&nbsp;</span>";
+        if ($this->iamTheSupervisor()) $data[2] = "&star;";
         else $data[2] = ">>>>";
 
         return implode("-", $data);
