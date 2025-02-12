@@ -302,8 +302,7 @@ class CrmRequestFileAfwStructure
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'QEDIT' => false,
-			'TYPE' => 'FK',
-			'ANSWER' => 'scenario_item',
+			'TYPE' => 'INT', /*stepnum-not-the-object*/
 			'ANSMODULE' => 'ums',
 			'FGROUP' => 'tech_fields'
 		),
