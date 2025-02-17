@@ -1771,7 +1771,7 @@ class Request extends CrmObject
             }
             else
             {
-                AfwSession::pushWarning("فشل اعلام العميل بهذا التغيير على التذكرة");
+                AfwSession::pushWarning("فشل اعلام العميل بهذا التغيير على التذكرة <!-- reason=$reason -->");
                 $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
             }
 
