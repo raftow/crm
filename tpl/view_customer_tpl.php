@@ -102,10 +102,13 @@
 
                                                 if(true)
                                                 {
+                                                        $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
+                                                        $lime_survey_domain = AfwSession::config('lime_survey_domain', 'survey.company');
+                                                        $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
                                         ?>
                                         <div class="btn_container survey">
                                                 <div class='content_body contact'>   
-                                                   <a class='crm response thin-btn' target='_lmsurv' href='http://survey.company.com/surv/i.php/174363?token=<?php echo $theCustomer->getVal("survey_token"); ?>&lang=ar'><?php echo $survey_btn_title ?> </a>
+                                                   <a class='crm response thin-btn' target='_lmsurv' href='<?php echo $limesurvey_url?>/<?php echo $crm_survey_id?>?token=<?php echo $theCustomer->getVal("survey_token"); ?>&lang=ar'><?php echo $survey_btn_title ?> </a>
                                                 </div>
                                         </div>
                                         <?php

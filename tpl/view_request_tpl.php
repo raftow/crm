@@ -149,7 +149,7 @@
                                         if($ticketObj->is("survey_sent") and $ticketObj->getVal("survey_token"))
                                         {
                                                 $survey_btn_title = "استبيان تقييم الخدمة";
-                                                if($ticketObj->is("survey_opened"))
+                                                if($ticketObj->is("survey_opened") or true)
                                                 {
                                         ?> 
                                         
@@ -175,7 +175,7 @@
                                                 </div>
                                         </div>
                                         <?php 
-                                                        if(($ticketObj->isNot("service_satisfied")) or ($ticketObj->isNot("pb_resolved")))
+                                                        if(($ticketObj->isNot("service_satisfied")) or ($ticketObj->isNot("pb_resolved")) or true)
                                                         {
                                                                 $survey_btn_title = "إعادة تقييم الخدمة";
                                         ?>
@@ -190,10 +190,13 @@
 
                                                 if(true)
                                                 {
+                                                        $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
+                                                        $lime_survey_domain = AfwSession::config('lime_survey_domain', 'survey.company');
+                                                        $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
                                         ?>
                                         <div class="btn_container survey">
                                                 <div class='content_body contact'>   
-                                                   <a class='crm response thin-btn' target='_lmsurv' href='http://survey.company.com/surv/i.php/174363?token=<?php echo $ticketObj->getVal("survey_token"); ?>&lang=ar'><?php echo $survey_btn_title ?> </a>
+                                                   <a class='crm response thin-btn' target='_lmsurv' href='<?php echo $limesurvey_url?>/<?php echo $crm_survey_id?>?token=<?php echo $ticketObj->getVal("survey_token"); ?>&lang=ar'><?php echo $survey_btn_title ?> </a>
                                                 </div>
                                         </div>
                                         <?php

@@ -1599,6 +1599,7 @@ class Request extends CrmObject
         $infos = "";
         $technicals = "";
         $objme = AfwSession::getUserConnected();
+        if(!$employee_id) $employee_id = ($objme) ? $objme->getEmployeeId() : 0;
         $old_status = $this->getVal("status_id");
         if (($new_status_id == Request::$REQUEST_STATUS_DRAFT) and (!$this->getVal("status_id"))) $silent_force = true;
 
@@ -1615,7 +1616,7 @@ class Request extends CrmObject
                             $orgunit_id = $this->xxxx
                             if(!$orgunit_id) 
                             */
-                if(!$employee_id) $employee_id = ($objme) ? $objme->getEmployeeId() : 0;
+                
                 $orgunit_id = 0;
                 if ($employee_id == $this->getVal("employee_id")) $orgunit_id = $this->getVal("orgunit_id");
                 if (!$orgunit_id) $orgunit_id = ($objme) ? $objme->getMyDepartmentId() : 0;
@@ -1683,7 +1684,7 @@ class Request extends CrmObject
 
         $customer_id = $this->getVal("customer_id");
 
-        if($customer_id == 11772) // testing rafik customer
+        if($customer_id == 11772 and (($employee_id==1) or (!$employee_id))) // testing rafik customer
         {
             AfwSession::pushWarning($technicals);
         }
@@ -3325,6 +3326,7 @@ class Request extends CrmObject
     public function shouldBeCalculatedField($attribute)
     {
         if ($attribute == "mobile") return true;
+        if ($attribute == "email") return true;
         return false;
     }
 

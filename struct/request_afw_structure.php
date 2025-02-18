@@ -329,6 +329,27 @@ class CrmRequestAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
+		'email' => array(
+			'FGROUP' => 'tech_data',
+			'STEP' => 1,
+			'CATEGORY' => 'SHORTCUT',
+			'SHORTCUT' => 'customer_id.email',
+			'SHOW' => true,
+			'EDIT' => true,
+			'SIZE' => 16,
+			'MIN-SIZE' => 7,
+			'MAXLENGTH' => 64,
+			'FORMAT' => 'EMAIL',
+			'UTF8' => false,
+			'TYPE' => 'TEXT',
+			'READONLY' => true,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_100',
+		),
+
 		'lang_id' => array(
 			'FGROUP' => 'tech_data',  /* 'STEP' => 99,  */
 			'SEARCH' => true,

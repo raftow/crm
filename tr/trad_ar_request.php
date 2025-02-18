@@ -78,6 +78,7 @@ class RequestArTranslator
 		
 		$trad["request"]["concerned_orgunit_id"] = "الجهة المعنية بالطلب";
 		$trad["request"]["customer_type_id"] = "نوع العميل";
+		$trad["request"]["email"] = "البريد الالكتروني";
 
 		$trad["request"]["other_data"] = "بيانات أخرى";
 		$trad["request"]["tech_data"] = "بيانات فنية";

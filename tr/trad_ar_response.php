@@ -14,11 +14,11 @@
 	$trad["response"]["response_text"] = "اكتب هنا نص الإجابة / المعلومات";
 	$trad["response"]["response_text.short"] = "نص الإجابة";
 	$trad["response"]["response_link"] = "رابط يتعلق بالرد";
-	$trad["response"]["internal"] = "يتم حجب هذا الرد على العميل";
+	$trad["response"]["internal"] = "هل سيتم حجب هذا الرد على العميل ؟";
 	$trad["response"]["internal.YES"] = "نعم يتم حجبه على العميل";
 	$trad["response"]["internal.NO"] = "لا بل يتم إظهاره للعميل";
-	$trad["response"]["internal.EUH"] = "بحسب الحالة";
-	$trad["response"]["internal.W"] = "بحسب الحالة";
+	$trad["response"]["internal.EUH"] = "لا حتى يتم ارسال طلب للمشرف بذلك";
+	$trad["response"]["internal.W"] = "لا حتى يتم ارسال طلب للمشرف بذلك";
     $trad["response"]["internal_tooltip"] = "في حالة نعم لا نظهر الرد للعميل وإنما هو فقط داخليا لموظفي المؤسسة المشتغلين بمهام خدمة العملاء";
 	$trad["response"]["responseDataList"] = "قائمة المعلومات المعتمدة للرد";
 
