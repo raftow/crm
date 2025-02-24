@@ -1,7 +1,7 @@
 <?php
 $config_arr = array(
         'application_id' => 1073,
-
+        'crm_application_id' => 1073,
         'application_code' => 'crm',
 		'main_module' => 'crm',
 
