@@ -29,7 +29,7 @@ else
 
 
 
-require_once("$file_dir_name/../external/db.php");
+require_once("$file_dir_name/../config/global_config.php");
 // 
 
 $debugg_login = false;

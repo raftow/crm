@@ -2,7 +2,7 @@
 
 $file_dir_name = dirname(__FILE__);
 
-require_once("$file_dir_name/../external/db.php");
+require_once("$file_dir_name/../config/global_config.php");
 require_once("$file_dir_name/../lib/afw/afw_displayer_factory.php");
 
 $datatable_on=1;

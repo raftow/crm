@@ -39,7 +39,7 @@ $debugg_after_session_created = true;
 
 $customer_msg = null;
 
-require_once("$file_dir_name/../external/db.php");
+require_once("$file_dir_name/../config/global_config.php");
 // 
 
 $login_button_title = "دخول الموظف";

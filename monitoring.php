@@ -2,7 +2,7 @@
 
 $file_dir_name = dirname(__FILE__);
 
-require_once("$file_dir_name/../external/db.php");
+require_once("$file_dir_name/../config/global_config.php");
 
 $datatable_on=1;
 $cl = "Request";

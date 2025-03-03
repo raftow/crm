@@ -225,7 +225,7 @@ span.object_id {
     
     .calendar_bloc_g {
             height: 96px;
-            background-image: url(../../external/pic/calendar_crm.png);
+            background-image: url(../../lib/images/calendar_crm.png);
             background-repeat: no-repeat;
             background-size: 60%;
             background-position: 10px 10px;
@@ -3113,7 +3113,7 @@ div#group_responseList a {
 }
 
 .calendar_bloc_g {
-    background-image: url(../../external/pic/calendar_school.png) !important;
+    background-image: url(../../lib/images/calendar_school.png) !important;
 }
 
 .calendar_year {

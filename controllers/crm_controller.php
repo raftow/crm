@@ -46,6 +46,7 @@ class CrmController extends AfwController
                 $login_template = AfwSession::config("customer-login-template", "right-left");
                 $xmodule = AfwSession::getCurrentlyExecutedModule();
                 $module = AfwUrlManager::currentURIModule();
+                $company = AfwSession::currentCompany();
                 $login_out_css = "sign-in";
                 $login_out_cl = "login $login_template";
                 $login_page = "login-$login_template.php";
@@ -132,7 +133,7 @@ class CrmController extends AfwController
                 $data_tokens["run_mode"] = $run_mode;
                 $data_tokens["welcome_div"] = $welcome_div;
                 if (!$options["img-path"]) $options["img-path"] = "pic/";
-                if (!$options["img-company-path"]) $options["img-company-path"] = "../external/pic";
+                if (!$options["img-company-path"]) $options["img-company-path"] = "../client-$company/pic";
                 $data_tokens["img-path"] = $options["img-path"];
                 $data_tokens["img-company-path"] = $options["img-company-path"];
 

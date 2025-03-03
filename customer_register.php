@@ -45,7 +45,7 @@ $gender_id = 1;
 $gender_id_selected_2 = "";
 $gender_id_selected_1 = "selected";
         
-require_once("$file_dir_name/../external/db.php");
+require_once("$file_dir_name/../config/global_config.php");
 // 
 
 if(($_SESSION["user_avail"] == "Y") and ($_SESSION["user_firstname"])) 
