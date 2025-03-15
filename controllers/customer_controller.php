@@ -23,7 +23,7 @@ class CustomerController extends CrmController
 
                 $data["theCustomer"] = $theCustomer;
                 
-                // $data = $theCustomer->prepareAfwTokens("",$lang,[],$data,true,true);
+                // $data = AfwPrevilegeHelper::prepareAfwTokens($theCustomer, "",$lang,[],$data,true,true);
 
                 foreach ($request as $key => $value) $data[$key] = $value;
 

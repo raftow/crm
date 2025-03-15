@@ -7,8 +7,8 @@ class CrmController extends AfwController
                 if (!$lang) $lang = AfwSession::getSessionVar("current_lang");
                 if (!$lang) $lang = "ar";
                 $support_mobile_number = AfwSession::config("support_mobile_number","0500000001");
-                self::pushError(Response::translateCompanyMessage($message_en,"crm",$lang));
-                self::pushError(Response::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number","crm",$lang)." ".$support_mobile_number);
+                self::pushError(AfwLanguageHelper::translateCompanyMessage($message_en,"crm",$lang));
+                self::pushError(AfwLanguageHelper::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number","crm",$lang)." ".$support_mobile_number);
         }
 
         public function getMyModule()
@@ -1098,7 +1098,7 @@ class CrmController extends AfwController
                         }
 
                         if (!$reqObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", $reqObj->getDataErrors());
+                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj, ));
                         }
                 } else {
                         $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
@@ -1357,7 +1357,7 @@ class CrmController extends AfwController
                         }
 
                         if (!$reqObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", $reqObj->getDataErrors());
+                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj, ));
                         }
                 } else {
                         $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
@@ -1464,7 +1464,7 @@ class CrmController extends AfwController
                         $reqObj->set("active", "Y");
 
                         if (!$reqObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", $reqObj->getDataErrors());
+                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj, ));
                         } else {
                                 $reqObj->commit();
                                 if ($oldReqObj) $oldReqObj->commit();
@@ -1601,7 +1601,7 @@ class CrmController extends AfwController
                         $crmObj->commit();
 
                         if (!$crmObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", $crmObj->getDataErrors());
+                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($crmObj, ));
                         }
                 }
 
