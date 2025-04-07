@@ -1630,7 +1630,7 @@ class Request extends CrmObject
                     $employee_id,
                     $new_status_id,
                     $response_type,
-                    $status_comment." <!-- QID$question_id -->",
+                    $status_comment, // ." <!-- QID$question_id -->",
                     $response_link = "",
                     $internal,
                     $module_id = 0

@@ -220,7 +220,7 @@ class Response extends CrmObject
 
         public function getNodeDisplay($lang = "ar")
         {
-                $response_text = $this->getVal("response_text");
+                $response_text = strip_tags($this->getVal("response_text"));
                 return AfwStringHelper::arabicStartOfJomlaTrim($response_text, 98);
         }
 
