@@ -845,4 +845,10 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 
                 return $attribute;
         }
+
+
+        public function generateCacheFile($lang="ar", $onlyIfNotDone=false, $throwError=false)
+        {
+                 
+        }
 }

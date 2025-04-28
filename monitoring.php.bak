@@ -21,7 +21,7 @@ $crm_active_period = AfwSession::config("crm_active_period", 365);
 $oldest_date = AfwDateHelper::shiftGregDate("", -$crm_active_period);
 $newest_date = AfwDateHelper::shiftGregDate("", -2);
 
-$supList = CrmEmployee::getSupervisorList(CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEPARTMENT_ID);
+$supList = CrmEmployee::getSupervisorList();
 
 // genere too much queries, to be seen
 // Request::assignSupervisorForNonAssigned(false,true);

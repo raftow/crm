@@ -413,21 +413,20 @@ class CrmEmployee extends CrmObject
             return round($satisfied_only_count*100/$all_count);
         }
 
-        public static function getSupervisorArray($orgunit_id)
+        public static function getSupervisorArray()
         {
                 $obj = new CrmEmployee();
                 // $obj->select_visibilite_horizontale();
                 $obj->select("admin","Y");
-                $obj->select("orgunit_id",$orgunit_id);
                 $obj->select("active", 'Y');
 
                 return $obj->loadMany();
         }
 
-        public static function getSupervisorList($orgunit_id)
+        public static function getSupervisorList()
         {
                 
-                $objList = self::getSupervisorArray($orgunit_id);
+                $objList = self::getSupervisorArray();
 
                 $supervList = array();
 
@@ -616,10 +615,10 @@ class CrmEmployee extends CrmObject
                 
         }
 
-        public static function getBestAvailableSupervisor($except_supervisor_id=0,$re_distribution=false, $orgunit_id)
+        public static function getBestAvailableSupervisor($except_supervisor_id=0,$re_distribution=false)
         {
                 global $allSupervisorList;
-                if(!$allSupervisorList) $allSupervisorList = self::getSupervisorList($orgunit_id);                
+                if(!$allSupervisorList) $allSupervisorList = self::getSupervisorList();                
                 $supervisorList = $allSupervisorList;
                 if($except_supervisor_id) unset($supervisorList[$except_supervisor_id]);
                 else $except_supervisor_id=0;                 
@@ -671,9 +670,8 @@ class CrmEmployee extends CrmObject
                 
         }
 
-        public function assignMeAsRequestSupervisor($requestObj, $commit = true) // , $orgunit_id
+        public function assignMeAsRequestSupervisor($requestObj, $commit = true)
         {
-                // $requestObj->set("orgunit_id", $orgunit_id);
                 $requestObj->set("supervisor_id", $this->getVal("employee_id"));
                 if($commit) $requestObj->commit();
         }
