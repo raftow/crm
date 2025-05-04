@@ -37,24 +37,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         public function __construct()
         {
                 parent::__construct("crm_customer", "id", "crm");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                
-                $arrDisp = [];
-                $arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar", "mobile", "idn"];
-                $arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en", "mobile", "idn"];
-
-                $this->DISPLAY_FIELD_BY_LANG = $arrDisp;
-                $this->DISPLAY_SEPARATOR = " ";
-                $this->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn");
-                $this->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
-
-
-                $this->UNIQUE_KEY = array('mobile', 'email', 'idn_type_id', 'idn');
-                $this->editByStep = true;
-                $this->editNbSteps = 3;
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
-                $this->STATS_DEFAULT_CODE = "gs001";
+                CrmCrmCustomerAfwStructure::initInstance($this);
         }
 
 

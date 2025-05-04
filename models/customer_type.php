@@ -52,7 +52,7 @@ class CustomerType extends AFWObject{
                 
                 $this->showQeditErrors = true;
                 $this->showRetrieveErrors = true;
-                // $this->after_save_edit = array("class"=>'Road',"attribute"=>'road_id', "currmod"=>''crm'',"currstep"=>9);
+                $this->after_save_edit = array("mode"=>"qsearch", "currmod"=>'adm', "class"=>'CustomerType',"submit"=>true);
 	}
         
         public static function loadById($id)

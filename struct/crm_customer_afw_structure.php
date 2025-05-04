@@ -1,6 +1,38 @@
 <?php
 class CrmCrmCustomerAfwStructure
 {
+	public static function initInstance(&$obj)
+	{
+			if ($obj instanceof CrmCustomer) {
+					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+					
+					$arrDisp = [];
+					$arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar", "mobile", "idn"];
+					$arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en", "mobile", "idn"];
+
+					$obj->DISPLAY_FIELD_BY_LANG = $arrDisp;
+					$obj->DISPLAY_SEPARATOR = " ";
+					$obj->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn");
+					$obj->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
+					
+					$obj->FORMULA_DISPLAY_FIELD  = "concat(IF(ISNULL(first_name_ar), '', first_name_ar) , ' ' , IF(ISNULL(father_name_ar), '', father_name_ar) , ' ' , IF(ISNULL(last_name_ar), '', last_name_ar), ' ' , IF(ISNULL(mobile), '', mobile), ' ' , IF(ISNULL(idn), '', idn))";
+
+					$obj->UNIQUE_KEY = array('mobile', 'email', 'idn_type_id', 'idn');
+					$obj->editByStep = true;
+					$obj->editNbSteps = 3;
+					$obj->showQeditErrors = true;
+					$obj->showRetrieveErrors = true;
+					$obj->STATS_DEFAULT_CODE = "gs001";
+
+					
+					
+					// $obj->after_save_edit = array("class"=>'aconditionOriginType',"attribute"=>'acondition_origin_type_id', "currmod"=>'adm',"currstep"=>1);
+			} else {
+				// CrmCustomerArTranslator::initData();
+				// CrmCustomerEnTranslator::initData();
+			}
+	}
+
 	public static $DB_STRUCTURE = array(
 
 
