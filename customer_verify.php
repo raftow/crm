@@ -26,7 +26,11 @@ else
 }
 
 include_once ("$file_dir_name/../$uri_module/application_config.php");
-AfwSession::initConfig($config_arr);
+AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/application_config.php");
+
+
+, "$file_dir_name/../$uri_module/application_config.php"
+, "system", "$file_dir_name/../hrm/application_config.php"
 
 if(!$NOM_SITE) die("site not configured or not initialized !!!");
 // if(!$simulate_sms_to_mobile) die("simulate_sms_to_mobile not configured or not initialized !!! ".var_export($config_arr,true));

@@ -24,7 +24,7 @@ else
 }
 
 include_once ("$file_dir_name/../$uri_module/application_config.php");
-AfwSession::initConfig($config_arr);
+AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/application_config.php");
 
 
 

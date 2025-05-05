@@ -17,6 +17,6 @@ AfwAutoLoader::addMainModule("crm");
 include_once ("$file_dir_name/../crm/ini.php");
 include_once ("$file_dir_name/../crm/module_config.php");
 include_once ("$file_dir_name/../crm/application_config.php");
-AfwSession::initConfig($config_arr);
+AfwSession::initConfig($config_arr, "system", "$file_dir_name/../crm/application_config.php");
 
 AfwSession::startSession();
