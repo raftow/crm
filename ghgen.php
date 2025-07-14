@@ -2,7 +2,7 @@
 $direct_dir_name = $file_dir_name = dirname(__FILE__);
 include("$file_dir_name/crm_start.php");
 
-if(AfwSession::userIsConnected())
+if(AfwSession::userIsAuthenticated())
 {
         $Direct_Page = "ghgen_work.php";
         
