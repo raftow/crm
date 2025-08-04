@@ -928,14 +928,14 @@ class Request extends CrmObject
 
     public function beforeDelete($id, $id_replace)
     {
-        $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+        $server_db_prefix = AfwSession::currentDBPrefix();
 
         if ($id) {
             if ($id_replace == 0) {
                 // FK part of me - not deletable 
 
 
-                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - deletable 
+                $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - deletable 
                 // crm.response-الإستفسار 	request_id  أنا تفاصيل لها-OneToMany
                 $this->execQuery("delete from ${server_db_prefix}crm.response where request_id = '$id' ");
 
@@ -947,7 +947,7 @@ class Request extends CrmObject
                 // MFK
 
             } else {
-                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
+                $server_db_prefix = AfwSession::currentDBPrefix(); // FK on me 
                 // crm.response-الإستفسار 	request_id  أنا تفاصيل لها-OneToMany
                 $this->execQuery("update ${server_db_prefix}crm.response set request_id='$id_replace' where request_id='$id' ");
 
@@ -3043,7 +3043,7 @@ class Request extends CrmObject
 
     public static function assignInvestigatorForNonAssigned($silent = false, $lang = "ar", $limit = "200")
     {
-        $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+        $server_db_prefix = AfwSession::currentDBPrefix();
         $obj = new Request();
 
         $obj->setForce("employee_id", 0);

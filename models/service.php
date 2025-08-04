@@ -119,10 +119,10 @@ class Service extends AFWObject
 
           if ($id) {
                if ($id_replace == 0) {
-                    $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - not deletable 
+                    $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - not deletable 
 
 
-                    $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - deletable 
+                    $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - deletable 
 
 
                     // FK not part of me - replaceable 
@@ -134,7 +134,7 @@ class Service extends AFWObject
                     // MFK
 
                } else {
-                    $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
+                    $server_db_prefix = AfwSession::currentDBPrefix(); // FK on me 
                     // crm.request-الخدمة	service_id  حقل يفلتر به-ManyToOne
                     $this->execQuery("update ${server_db_prefix}crm.request set service_id='$id_replace' where service_id='$id' ");
 
