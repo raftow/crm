@@ -67,12 +67,12 @@ elseif($_POST["crm_new_go"])
               $last_name_ar = AfwStringHelper::hardSecureCleanString(trim($_POST["last_name_ar"]));
               $org_name = AfwStringHelper::hardSecureCleanString(trim($_POST["org_name"]));
               $ref_num = AfwStringHelper::hardSecureCleanString(trim($_POST["ref_num"]));
-              /*
+              
               for($cti=0;$cti<=3;$cti++)
               {
-                  if($customer_type_id == $cti)  ${"customer_ type_id_selected_$cti"} = "selected";
-                  else ${"customer_ type_id_selected_$cti"} = "";
-              }*/
+                  if($customer_type_id == $cti)  ${"customer_type_id_selected_$cti"} = "selected";
+                  else ${"customer_type_id_selected_$cti"} = "";
+              }
               
               if($gender_id==2)  
               {
@@ -278,7 +278,7 @@ else
                 {
                         $customer_type_id_selected_i = ($customer_type_id == $custTypeId) ? "selected" : "";
                         ?>                                        
-                        <option value="<?php echo $custTypeId?>" <?php echo $customer_type_id_selected_i?>><?php echo $custTypeName['ar']?></option>        
+                        <option value="<?php echo $custTypeId?>" <?php echo $customer_type_id_selected_i?>><?php echo $custTypeName?></option>        
                         <?php
 
                 }

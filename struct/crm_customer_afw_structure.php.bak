@@ -264,8 +264,8 @@ class CrmCrmCustomerAfwStructure
 			'SIZE' => 32,
 			'MANDATORY' => true,
 			'UTF8' => false,
-			'TYPE' => 'ENUM',
-			'ANSWER' => 'FUNCTION',
+			'TYPE' => 'FK',
+			'ANSWER' => 'customer_type',
 			'ANSMODULE' => 'crm',
 			'READONLY' => false,
 			'EDIT-SHORT-LIST' => true,
@@ -378,8 +378,6 @@ class CrmCrmCustomerAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		
-
 		'ref_num' => array(
 			'STEP' => 2,
 			'SEARCH' => true,
@@ -389,27 +387,6 @@ class CrmCrmCustomerAfwStructure
 			'EDIT' => true,
 			'QEDIT' => false,
 			'SIZE' => 32,
-			'MIN-SIZE' => 5,
-			'CHAR_TEMPLATE' => '',
-			'MANDATORY' => false,
-			'UTF8' => true,
-			'TYPE' => 'TEXT',
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => false,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-		'org_name' => array(
-			'STEP' => 2,
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'SHOW' => false,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'SIZE' => 64,
 			'MIN-SIZE' => 5,
 			'CHAR_TEMPLATE' => '',
 			'MANDATORY' => false,
@@ -862,8 +839,7 @@ class CrmCrmCustomerAfwStructure
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'QEDIT' => false,
-			'TYPE' => 'FK',
-			'ANSWER' => 'scenario_item',
+			'TYPE' => 'INT', /*stepnum-not-the-object*/
 			'ANSMODULE' => 'ums',
 			'FGROUP' => 'tech_fields'
 		),

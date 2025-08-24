@@ -1900,9 +1900,10 @@ class Request extends CrmObject
 
     public function assignRequest($employeeId, $lang = "ar")
     {
+        /*
         if ($this->getVal("employee_id") == $employeeId) {
             return array("الطلب مسند من قبل لهذا الموظف", "");
-        }
+        }*/
 
         if ((!$employeeId) and $this->getVal("employee_id") > 0) die("strange attempt to unassign the request ID=" . $this->id);
         $this->set("employee_id", $employeeId);
@@ -2186,7 +2187,7 @@ class Request extends CrmObject
             $method_not_allowed_reason[] = "current_status : $curr_status_label($curr_status) => p$curr_status_parent ";
 
             list($method_allowed, $method_na_reason) = AfwDynamicPublicMethodHelper::checkMethodAllowed($methodProps, $methodName0, $this);                
-            if(!$method_allowed) $method_not_allowed_reason[] = $method_na_reason;
+            if(!$method_allowed) $method_not_allowed_reason[] = "$methodName0 is not allowed ".$method_na_reason;
             else $method_not_allowed_reason[] = "$methodName0 is allowed";
 
             $log = implode(" -> ", $method_not_allowed_reason);
@@ -2451,7 +2452,61 @@ class Request extends CrmObject
     }
 
 
-    public function calcResponse_all()
+    public function calcNotifications($what="value")
+    {
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        $html = "";
+        $status_reel_id = self::statusFather(intval($this->getVal("status_id")));
+        if($this->isSent())
+        {
+            $request_date_h = AfwDateHelper::formatHijriDate($this->getVal("request_date"));
+            $request_date = AfwDateHelper::hijriToGreg($this->getVal("request_date"));
+            
+            $request_time = $this->getVal("request_time");
+            $title_new_request_sms = $this->tm("Request received approval notification", $lang);
+            $new_request_sms = AfwNotificationManager::prepareNotificationBody($this, "new_request", "sms", $lang);        
+            $html .= "<h1>$title_new_request_sms <div class='simple_datetime'>$request_date هـ $request_time </div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$request_date_h : $new_request_sms</p>";
+            
+        }
+        else $html .= "reuqest not yet sent : status_reel_id = $status_reel_id";
+
+
+        if($this->isDone())
+        {
+            // $custObj = $this->het("crm_customer_id");
+            if(true)
+            {
+                $token_arr = array(
+                    "[title]" => $this->getVal("request_title"),
+                    // "[first_name_ar]" => $custObj->getVal("first_name_ar"),
+                    // "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
+                );
+                $file_dir_name = dirname(__FILE__);
+                include("$file_dir_name/../tpl/template_sms_news.php");
+                if ($sms_body_arr[$lang]) 
+                {
+                    $respObj = $this->getLastResponse();
+                    $response_id = $respObj->getVal("id");
+                    $response_date_h = AfwDateHelper::formatHijriDate($respObj->getVal("response_date"));
+                    $response_date = AfwDateHelper::hijriToGreg($respObj->getVal("response_date"));
+                    $response_time = $respObj->getVal("response_time");
+                        $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
+                        $title_new_response_sms = $this->tm("New response received notification", $lang);
+                        $html .= "<h1>$title_new_response_sms <div class='simple_datetime'>$response_date هـ $response_time</div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$response_date_h : $sms_body</p><br>";
+                        
+                } else {
+                        
+                }
+            }
+            
+        }
+        else $html .= "reuqest not yet done : status_reel_id = $status_reel_id";
+
+        return $html;
+        
+    }
+
+    public function calcResponse_all($what="value")
     {
         $responseList = $this->get("responseList");
         //if(count($responseList)>0) die(var_export($responseList,true));
@@ -3214,7 +3269,7 @@ class Request extends CrmObject
     public function getInvestigators()
     {
         if (!$this->getVal("orgunit_id")) return array();
-        return CrmEmployee::getInvestigatorList($this->getVal("orgunit_id"), $this->getVal("employee_id"));
+        return CrmEmployee::getInvestigatorList($this->getVal("orgunit_id"), 0); // $this->getVal("employee_id")
     }
 
 

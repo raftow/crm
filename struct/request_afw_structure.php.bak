@@ -153,6 +153,32 @@ class CrmRequestAfwStructure
 		),
 
 
+		'customer_type_id' => array(
+			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'SHORTNAME' => 'type',
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'CSS' => 'width_pct_33',
+			'QSIZE' => 3,
+			'SIZE' => 32,
+			'REQUIRED' => true,
+			'UTF8' => false,
+			'TYPE' => 'FK',
+			'ANSWER' => 'customer_type',
+			'ANSMODULE' => 'crm',
+			'READONLY' => false,
+			'EDIT-SHORT-LIST' => true,
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'MANDATORY' => true,
+			'ERROR-CHECK' => true,
+		),
 
 		'related_request_code' => array(
 			'FGROUP' => 'tech_data',  /* 'STEP' => 2,  */
@@ -273,34 +299,6 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'customer_type_id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
-			'SHORTNAME' => 'type',
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'SHOW' => true,
-			'RETRIEVE' => true,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'DEFAUT' => 1,
-			'SIZE' => 32,
-			'MANDATORY' => true,
-			'UTF8' => false,
-			'TYPE' => 'ENUM',
-			'ANSWER' => 'FUNCTION',
-			'ANSMODULE' => 'crm',
-			'READONLY' => false,
-			'EDIT-SHORT-LIST' => true,
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-			'CSS' => 'width_pct_33',
-		),
-
-		
-
 		'customer_id' => array(
 			'FGROUP' => 'tech_data',  /* 'STEP' => 1, */
 			'SHORTNAME' => 'customer',
@@ -349,50 +347,6 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
-			'CSS' => 'width_pct_100',
-		),
-
-		'ref_num' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'SHOW' => false,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'SIZE' => 32,
-			'MIN-SIZE' => 5,
-			'CHAR_TEMPLATE' => '',
-			'MANDATORY' => false,
-			'UTF8' => true,
-			'TYPE' => 'TEXT',
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => false,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'CSS' => 'width_pct_100',
-		),
-
-		'org_name' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'SHOW' => false,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'SIZE' => 64,
-			'MIN-SIZE' => 5,
-			'CHAR_TEMPLATE' => '',
-			'MANDATORY' => false,
-			'UTF8' => true,
-			'TYPE' => 'TEXT',
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => false,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
 			'CSS' => 'width_pct_100',
 		),
 

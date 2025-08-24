@@ -54,7 +54,7 @@ $config_arr = array(
         
         'default_controller_name' => "crm",                                  
 
-        /*'simulate_sms_to_mobile' => "0598988330",*/
+        'simulate_sms_to_mobile' => "0598988330",
 
         'notify_customer' => array("new_request" => array("sms"=>true, "email" => false, "web" => false, "whatsup" => false),
         

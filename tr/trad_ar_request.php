@@ -46,6 +46,10 @@ class RequestArTranslator
 		$trad["request"]["status_date"] = "تاريخ الحالة";
 		$trad["request"]["status_time"] = "وقت الحالة";
 
+		$trad["request"]["notifications"] = "الاشعارات";
+
+		
+
 		$trad["request"]["region_id"] = "المنطقة";
 		$trad["request"]["city_id"] = "المدينة";
 		$trad["request"]["other_city"] = "مدينة أخرى";

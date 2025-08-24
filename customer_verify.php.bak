@@ -71,8 +71,6 @@ elseif($_POST["customer_verify_code"])
         $customer_type_id = $_POST["customer_type_id"];
         $first_name_ar = $_POST["first_name_ar"];
         $last_name_ar = $_POST["last_name_ar"];
-        $org_name = $_POST["org_name"];
-        $ref_num = $_POST["ref_num"];
         $new_customer = $_POST["new_customer"];
 
         if(AfwSession::getSessionVar("customer_OTP") == $_POST["customer_verify_code"])
@@ -130,10 +128,6 @@ elseif($_POST["customer_verify_code"])
                                                 //$custObj->set("license_number",$license_number);
                                                 $custObj->set("first_name_ar",$first_name_ar);
                                                 $custObj->set("last_name_ar",$last_name_ar);
-                                                $custObj->set("ref_num",$ref_num);
-                                                $custObj->set("org_name",$org_name);
-                                                
-                                                
                                                 $custObj->commit();
                                                 include("$file_dir_name/../crm/customer_ready.php");
                                         }
@@ -274,8 +268,6 @@ if($sms_ok)
                                         <input type="hidden" name="customer_type_id" value="<?php echo $customer_type_id?>" />
                                         <input type="hidden" name="first_name_ar" value="<?php echo $first_name_ar?>"  >
                                         <input type="hidden" name="last_name_ar" value="<?php echo $last_name_ar?>"  >
-                                        <input type="hidden" name="org_name" value="<?php echo $org_name?>"  >
-                                        <input type="hidden" name="ref_num" value="<?php echo $ref_num?>"  >
                                         <input type="submit" class="btnbtsp btn-primary btncheck" value="تحقق" name="crm_verify_go">&nbsp;        
                                         </form>
                                 </div>
