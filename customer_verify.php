@@ -139,7 +139,7 @@ elseif($_POST["customer_verify_code"])
                                         }
                                         else
                                         {
-                                                $_SESSION["warning"] = "هذا العميل موجود سابقا. قم بتسجيل الدخول ";
+                                                AfwSession::pushWarning("هذا العميل موجود سابقا. قم بتسجيل الدخول ");
                                                 header("Location: customer_login.php");
                                         }
                                 }
@@ -167,7 +167,7 @@ elseif($_POST["customer_verify_code"])
         }
         else
         {
-                    $customer_verify_msg = "الرمز المدخل خطأ ";// . $_POST["customer_cpt"] . " تختلف عن" . $_SESSION["cpt"];
+                    $customer_verify_msg = "الرمز المدخل خطأ ";
         }       
 }
 elseif($customer_mobile)

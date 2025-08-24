@@ -5,7 +5,7 @@ set_time_limit(8400);
 ini_set('error_reporting', E_ERROR | E_PARSE | E_RECOVERABLE_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
 
 
-// die(var_export($_SESSION,true)); 
+// 
 
 $logbl = substr(md5($_SERVER["HTTP_USER_AGENT"] . "-" . date("Y-m-d")),0,10);
 
@@ -53,7 +53,8 @@ if(AfwSession::customerIsConnected())
 } 
 elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_POST["crm_go"]))
 {
-      if((!AfwSession::config("sms-captcha-login",false)) or (strtoupper($_POST["customer_cpt"])==strtoupper($_SESSION["cpt"])))
+      $sessionVarCpt = AfwSession::getSessionVar("cpt");  
+      if((!AfwSession::config("sms-captcha-login",false)) or (strtoupper($_POST["customer_cpt"])==strtoupper($sessionVarCpt)))
       {
               $customer_mobile_or_email = AfwStringHelper::hardSecureCleanString(trim(strtolower($_POST["customer_mobile_or_email"])));
               $customer_idn = AfwStringHelper::hardSecureCleanString(trim($_POST["customer_idn"]));
@@ -145,7 +146,7 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
         
               if(AfwSession::config("sms-captcha-login",false))
               {
-                    $customer_login_message = "الرمز المدخل خطأ ";// . $_POST["customer_cpt"] . " تختلف عن" . $_SESSION["cpt"];
+                    $customer_login_message = "الرمز المدخل خطأ ";// . $_POST["customer_cpt"] . " تختلف عن" . $sessionVarCpt;
               }
         }
         
@@ -160,7 +161,6 @@ else
 
 
 
-//die("before include $file_dir_name/../$front_header_page : _SESSION = ".var_export($_SESSION,true)); 
 
 $no_menu = AfwSession::config("no_menu_for_login", true);
 if(!file_exists("$file_dir_name/../$front_header_page"))

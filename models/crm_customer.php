@@ -437,7 +437,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                 if ($id) {
                         if ($id_replace == 0) {
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - not deletable 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - not deletable 
                                 // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)
 
                                 $obj = new Request();
@@ -453,7 +453,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
 
 
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - deletable 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - deletable 
 
 
                                 // FK not part of me - replaceable 
@@ -463,7 +463,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                                 // MFK
 
                         } else {
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK on me 
 
 
                                 // crm.request-صاحب الطلب	customer_id  أنا تفاصيل لها-OneToMany (required field)

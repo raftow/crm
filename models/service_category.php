@@ -175,10 +175,10 @@ class ServiceCategory extends AFWObject
 
                 if ($id) {
                         if ($id_replace == 0) {
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - not deletable 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - not deletable 
 
 
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - deletable 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - deletable 
 
 
                                 // FK not part of me - replaceable 
@@ -193,7 +193,7 @@ class ServiceCategory extends AFWObject
                                 // crm.crm_orgunit-أصناف الخدمات  التي تقدمها	service_category_mfk  
                                 $this->execQuery("update ${server_db_prefix}crm.crm_orgunit set service_category_mfk=REPLACE(service_category_mfk, ',$id,', ',') where service_category_mfk like '%,$id,%' ");
                         } else {
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK on me 
                                 // crm.request-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne
                                 $this->execQuery("update ${server_db_prefix}crm.request set service_category_id='$id_replace' where service_category_id='$id' ");
                                 // crm.service-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne

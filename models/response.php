@@ -453,10 +453,10 @@ class Response extends CrmObject
 
                 if ($id) {
                         if ($id_replace == 0) {
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - not deletable 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - not deletable 
 
 
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - deletable 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK part of me - deletable 
                                 // crm.response_data-الرد	response_id  أنا تفاصيل لها-OneToMany
                                 $this->execQuery("delete from ${server_db_prefix}crm.response_data where response_id = '$id' ");
 
@@ -468,7 +468,7 @@ class Response extends CrmObject
                                 // MFK
 
                         } else {
-                                $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
+                                $server_db_prefix = AfwSession::currentDBPrefix(); // FK on me 
                                 // crm.response_data-الرد	response_id  أنا تفاصيل لها-OneToMany
                                 $this->execQuery("update ${server_db_prefix}crm.response_data set response_id='$id_replace' where response_id='$id' ");
 

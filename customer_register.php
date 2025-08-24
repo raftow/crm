@@ -48,15 +48,16 @@ $gender_id_selected_1 = "selected";
         
 require_once("$file_dir_name/../config/global_config.php");
 // 
-
-if(($_SESSION["user_avail"] == "Y") and ($_SESSION["user_firstname"])) 
+$sessionVarUser_avail = AfwSession::getSessionVar("user_avail"); 
+$sessionVarUser_firstname = AfwSession::getSessionVar("user_firstname"); 
+if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) 
 {
-	//die("rafik 2019-007 sess = ".var_export($_SESSION,true));
         header("Location: index.php");
 } 
 elseif($_POST["crm_new_go"])
 {
-      if((!AfwSession::config("sms-captcha-register",true)) or (strtoupper($_POST["customer_cpt"])==strtoupper($_SESSION["cpt"])))
+      $sessionVarCpt = AfwSession::getSessionVar("cpt"); 
+      if((!AfwSession::config("sms-captcha-register",true)) or (strtoupper($_POST["customer_cpt"])==strtoupper($sessionVarCpt)))
       {
               $customer_mobile = AfwStringHelper::hardSecureCleanString(trim($_POST["customer_mobile"]));
               $customer_email = AfwStringHelper::hardSecureCleanString(strtolower(trim($_POST["customer_email"])));
@@ -151,7 +152,7 @@ elseif($_POST["crm_new_go"])
         
               if(AfwSession::config("sms-captcha-register",true))
               {
-                    $customer_msg = "الرمز المدخل خطأ ";// . $_POST["customer_cpt"] . " تختلف عن" . $_SESSION["cpt"];
+                    $customer_msg = "الرمز المدخل خطأ ";
               }
         }       
 }

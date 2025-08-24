@@ -43,9 +43,10 @@ $debugg_after_session_created = false;
 $check_student_from_external_system = false;
 
 $msg = "";
-if(($_SESSION["user_avail"] == "Y") and ($_SESSION["user_firstname"])) 
+$sessionVarUser_avail = AfwSession::getSessionVar("user_avail"); 
+$sessionVarUser_firstname = AfwSession::getSessionVar("user_firstname"); 
+if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) 
 {
-	//die("rafik 2019-007 sess = ".var_export($_SESSION,true));
         header("Location: index.php");
 } 
 else //die(var_export($_POST,true));
@@ -57,7 +58,7 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
         //die("AFWDebugg::initialiser(".$DEBUGG_SQL_DIR.$my_debug_file.")");
         AFWDebugg::initialiser($DEBUGG_SQL_DIR,$my_debug_file);
         AFWDebugg::log("login process starting");
-        $_SESSION["error"] = "";
+        AfwSession::setSessionVar("error", ""); 
   
         $user_name_c = AfwStringHelper::hardSecureCleanString(strtolower($_POST["mail"]));
         $pwd_c = $_POST["pwd"];
@@ -199,8 +200,8 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
                 
                 list($err,$info) = $au->createMyStudentAccount($lang,$student_num);
                         
-                $_SESSION["success"] = $info;
-                $_SESSION["error"] = $err;
+                AfwSession::setSessionVar("success", $info); 
+                AfwSession::setSessionVar("error", $err); 
                 
                 //$user_not_connected_reason= "info data not found : (idn='$user_name' or email='$user_name' or username='$user_name' or mobile='$user_name')";
         }
@@ -329,40 +330,26 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
                 //die("s=$time_s  e=$time_e ");
                 if($user_connected)
                 {
-                        $last_page = $_SESSION["lastpage"];
-                        if(count($_SESSION["lastget"])>0)
+                        $last_page = AfwSession::getSessionVar("lastpage");
+                        if(count(AfwSession::getSessionVar("lastget"))>0)
                         {
                                 $last_page .= "?redir=1";
-                                foreach($_SESSION["lastget"] as $param => $paramval) $last_page .= "&$param=$paramval";
+                                foreach(AfwSession::getSessionVar("lastget") as $param => $paramval) $last_page .= "&$param=$paramval";
                         }
         
                         //effacer les var d'une eventuelle session précédente
-                        foreach($_SESSION as $colsess =>$val) $_SESSION[$colsess] = "";
-                
-        		foreach($user_infos_data as $col => $val) 
-                        {
-        			$_SESSION["user_$col"] = $val;
-        		}
+                        AfwSession::resetSession();
+                        AfwSession::initUserSession($user_infos_data);
+        		
         		
         		if($last_page)
         		{
-                             if($debugg_after_session_created)
-                             {
-                                  if($debugg_login) 
-                                  {
-                                        AFWDebugg::log("login success : before redirect to $last_page, session table : ".var_export($_SESSION,true));
-                                  }
-                             }
                              header("Location: ".$last_page);
                         }
                         else
                         { 
         		     if($debugg_after_session_created)
                              {
-                                  if($debugg_login) 
-                                  {
-                                        AFWDebugg::log("login success : before redirect to the home page (index.php) this is session table : ".var_export($_SESSION,true));
-                                  }
                              }
                              header("Location: index.php");
                         }

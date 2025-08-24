@@ -54,7 +54,7 @@ class ResponseTemplate extends AFWObject{
             }
             if(!self::$ResponseTemplateGroupCache[$key])
             {
-                $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+                $server_db_prefix = AfwSession::currentDBPrefix();
                 $obj = new ResponseTemplate();
                 $obj->select("active",'Y');
     
