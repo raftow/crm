@@ -1375,6 +1375,7 @@ input.btnbtsp.btn-primary.btncheck {
 .hzm_attribute.hzm_minibox_header0 {
     min-height: 40px !important;
     margin-bottom: 0px;
+    border-top: 6px double #0670bbbf;
 }
 
 
@@ -1387,6 +1388,10 @@ input.btnbtsp.btn-primary.btncheck {
     background-color: transparent !important;
     border-right: 1px solid #c0c0c024;
     border-left: 1px solid #c0c0c024;
+    float: right;
+}
+
+.hzm_minibox_container {
     float: right;
 }
 
@@ -3145,7 +3150,6 @@ span.dday {
     color: white !important;
 }
 
-
 table.dataTable {
     width: 100% !important;
     margin: 0 !important;
@@ -3203,4 +3207,36 @@ input.form-control.customer-login {
     width: 80%;
     margin: auto;
     height: 60px !important;
+}
+
+.hzm_data_notifications h1 {
+    border: solid 1px #358ece;
+    border-bottom: none;
+    color: #358ece;
+    padding: 5px;
+    border-radius: 18px 18px 0 0;
+    background-color: #dbf0ffab;
+}
+
+.simple_datetime {
+    font-size: 18px;
+    font-family: digi;
+    font-weight: normal;
+    color: white;
+    background-color: #496981 !important;
+    min-width: 164px;
+    float: left;
+    border-radius: 14px;
+    margin-left: 3px;
+    margin-top: 3px;
+    padding: 4px;
+}
+
+.sms-notif {
+    margin: 4px;
+    width: 48px;
+    height: 48px;
+    float: right;
+    background-image: url(../../lib/images/sms.png);
+    background-size: contain;
 }

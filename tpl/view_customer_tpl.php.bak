@@ -5,12 +5,6 @@
 <div class="content_big_title registration">حساب عميل</div>
 <div class="cms_bg">
 <?
-        /* */
-        /**
-         * @var CrmCustomer $theCustomer
-         */
-        
-        
         //if(!$theCustomer) die("this ticket is lost");
         $my_status = 1;
         $my_status_decoded = "نشط";//$theCustomer->getCustomerStatus("ar");
@@ -22,8 +16,6 @@
 
         $customer_type_decoded = $theCustomer->decode("customer_type_id");
                     
-        $ref_num_label = $theCustomer->getAttributeLabel("ref_num", $lang)
-                    
 ?>
 <div class="cms_container ticket_div">
         <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
@@ -31,7 +23,7 @@
                 <div class='front_bloc hzm_crm_bloc ticket status_<?php echo $my_status; ?>'>
                         <div class='mb_long_title my_customer'> 
                                 <div class='my_crm_ticket'>
-                                <?php echo $ref_num_label ?> <div class='crm_ticket_num'><?php echo $theCustomer->getVal("ref_num"); ?> </div>
+                                <?php echo $customer_type_decoded; ?> رقم <div class='crm_ticket_num'><?php echo $theCustomer->getVal("ref_num"); ?> </div>
                                 </div>
                                 <div class='my_crm_ticket fleft'>
                                        <div class='request_status status_<?php echo $my_status; ?>' ><?php echo $my_status_decoded; ?> </div>

@@ -566,14 +566,12 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 }
 
                 if ($attribute == "ref_num") {
-                        // $customerTypeObj = $this->hetType();
+                        $customerTypeObj = $this->hetType();
                         if (!$lang) $lang = "ar";
                         $custTypeLogic = AfwSession::config("cust_type_logic", []);                
-                        // $customerTypeId = $customerTypeObj->id;            
-                        $customerTypeId = $this->getVal("customer_type_id");
+                        $customerTypeId = $customerTypeObj->id;
                         $return = $custTypeLogic[$customerTypeId]["ref_num"]["title_$lang"];
-                        // $customerType is no more object
-                        // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("ref_$lang");
+                        if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("ref_$lang");
                         if (!$return) $return = "unkown ref_num label for customer type $customerTypeId for lang $lang";
 
                         return $return;
@@ -581,13 +579,12 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
 
                 if ($attribute == "org_name") {
-                        // $customerTypeObj = $this->hetType();
+                        $customerTypeObj = $this->hetType();
                         if (!$lang) $lang = "ar";
                         $custTypeLogic = AfwSession::config("cust_type_logic", []);                
-                        // $customerTypeId = $customerTypeObj->id;
-                        $customerTypeId = $this->getVal("customer_type_id");
+                        $customerTypeId = $customerTypeObj->id;
                         $return = $custTypeLogic[$customerTypeId]["org_name"]["title_$lang"];
-                        // $customerType is no more object
+                        // @todo may be 
                         // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("org_name_$lang");
                         if (!$return) $return = "unkown org_name label for customer type $customerTypeId for lang $lang";
 
