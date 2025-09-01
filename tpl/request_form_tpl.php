@@ -111,7 +111,7 @@
                         $request_form_warning_complement = AfwSession::config("request_form_warning_complement","");
                 ?>               
                 <div id="fg-body" class="attrib-warn form-group width_pct_100 ">
-                         تنبيه مهم : لخدمتكم بشكل أسرع فضلا التأكد من اكمال جميع البيانات اللازمة في نص الطلب <?php echo $request_form_warning_complement?>
+                         تنبيه مهم : لخدمتكم بشكل أسرع فضلا اكتب في نص الطلب أدناه شرح كامل لطلبك مع وضع كل المعلومات التي من شأنها مساعدة الموظف في دمتكم بشكل أسرع وأفضل <?php echo $request_form_warning_complement?>
                         <input type="hidden" name="request_priority" id="request_priority" value="3">
                 </div>                
                 <?php
