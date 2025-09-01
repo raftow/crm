@@ -58,7 +58,7 @@
         <div id="group_company_data" class="" aria-expanded="true" style="">
                 <!-- fg-region -->
                 <div id="fg-region" class="attrib-region form-group width_pct_100 ">
-                        <label for="region" class="hzm_label hzm_data_region label_required">المنطقة</label>                  
+                        <label for="region" class="hzm_label hzm_data_region label_required">المنطقة التي يقع فيها الطلب</label>                  
                         <?php echo AfwInputHelper::picture_dropdown($regionList, "region", $selected=array($region), 
                                                                         "region",
                                                                         $data_images=false, // no drop dwon pictures
@@ -73,19 +73,23 @@
                 <!-- fg-region --> 
                 
                 <!-- fg-customer_type_id -->  
-                                <div class="form-group width_pct_50">
-                                        <label class="hzm_label hzm_label_customer_type_id label_mandatory">نوع العميل
+                                <div class="form-group width_pct_100">
+                                        <label class="hzm_label hzm_label_customer_type_id label_mandatory">أنت تقوم بهذا الطلب بصفتك
                                         </label>
                                         <select class="form-control valid" name="customer_type_id" id="customer_type_id" tabindex="0" onchange="register_customer_type_id_changed()" size="1" required="required" aria-invalid="false">
 <?php
                 $custTypeListDefault = array(1=>"عميل");
                 $custTypeList = AfwSession::config("cust_type_list", $custTypeListDefault);
-                foreach($custTypeList as $custTypeId => $custTypeName)
+                foreach($custTypeList as $custTypeId => $custTypeRow)
                 {
+                        $canBecome = $custTypeRow["canBecome"];
+                        if(($customer_type_id == $custTypeId) or in_array($customer_type_id,$canBecome))
+                        {
                         $customer_type_id_selected_i = ($customer_type_id == $custTypeId) ? "selected" : "";
                         ?>                                        
-                        <option value="<?php echo $custTypeId?>" <?php echo $customer_type_id_selected_i?>><?php echo $custTypeName['ar']?></option>        
+                        <option value="<?php echo $custTypeId?>" <?php echo $customer_type_id_selected_i?>><?php echo $custTypeRow['ar']?></option>        
                         <?php
+                        }
 
                 }
 
