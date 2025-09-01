@@ -45,7 +45,12 @@ $config_arr = array(
                 2 => [
                         'ref_num' => ['title_ar'=>'الرقم الوظيفي',],
                         'org_name' => ['title_ar'=>'جهة العمل',]
-                     ],                
+                     ], 
+                     
+                4 => [
+                        'ref_num' => ['title_ar'=>'رقم الحاسب',],
+                        'org_name' => ['title_ar'=>'الوحدة التدريبية',]
+                     ],       
                                   ),
 
         'enable_language_switch' => false,
