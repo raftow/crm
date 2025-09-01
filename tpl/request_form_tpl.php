@@ -70,8 +70,106 @@
                                                                         null,null,["readonly"=>$region_readonly]
                                                                         ); ?>        
                 </div>
-                <!-- fg-region -->        
+                <!-- fg-region --> 
                 
+                <!-- fg-customer_type_id -->  
+                                <div class="form-group width_pct_50">
+                                        <label class="hzm_label hzm_label_customer_type_id label_mandatory">نوع العميل
+                                        </label>
+                                        <select class="form-control valid" name="customer_type_id" id="customer_type_id" tabindex="0" onchange="register_customer_type_id_changed()" size="1" required="required" aria-invalid="false">
+<?php
+                $custTypeListDefault = array(1=>"عميل");
+                $custTypeList = AfwSession::config("cust_type_list", $custTypeListDefault);
+                foreach($custTypeList as $custTypeId => $custTypeName)
+                {
+                        $customer_type_id_selected_i = ($customer_type_id == $custTypeId) ? "selected" : "";
+                        ?>                                        
+                        <option value="<?php echo $custTypeId?>" <?php echo $customer_type_id_selected_i?>><?php echo $custTypeName['ar']?></option>        
+                        <?php
+
+                }
+
+                $custTypeLogic = AfwSession::config("cust_type_logic", []);
+                // $custTypeLogicRow = ;
+                $org_name_label = $custTypeLogic[$customer_type_id]["org_name"]["title_ar"];
+                $org_name_class = $org_name_label ? "org-name" : "org-name hide";
+                
+                $ref_num_label = $custTypeLogic[$customer_type_id]["ref_num"]["title_ar"];
+                $ref_num_class = $ref_num_label ? "ref-num" : "ref-num hide";
+?>                                        
+                                	</select>                                        
+<script>                                        
+<?php
+
+
+$js_of_cust_type = "";
+foreach($custTypeLogic as $custTypeId => $custTypeLogicRow)
+{
+        $ct_org_name_label = $custTypeLogicRow["org_name"]["title_ar"];
+        $ct_ref_num_label = $custTypeLogicRow["ref_num"]["title_ar"];
+
+        if($ct_org_name_label or $ct_ref_num_label)
+        {
+                $js_org_name_label = "";
+                $js_ref_num_label = "";
+
+                if($ct_org_name_label)
+                {
+                        $js_org_name_label = "$(\"#org_name_div\").removeClass(\"hide\");
+                    $(\"#label_org_name\").text('$ct_org_name_label');";
+                }
+
+                if($ct_ref_num_label)
+                {
+                        $js_ref_num_label = "$(\"#ref_num_div\").removeClass(\"hide\");
+                    $(\"#label_ref_num\").text('$ct_ref_num_label');";
+                }
+
+                $js_of_cust_type .= "if(customer_type_id==$custTypeId)
+                {
+                    $js_org_name_label
+                    $js_ref_num_label
+                }";
+        }
+        
+}
+
+$js_for_cust_type = "function register_customer_type_id_changed()
+{
+    customer_type_id = $(\"#customer_type_id\").val();
+    $(\"#org_name_div\").addClass(\"hide\");
+    $(\"#ref_num_div\").addClass(\"hide\");
+    $js_of_cust_type
+}";
+
+echo $js_for_cust_type;
+
+?>
+</script>                                        
+                                </div>
+                                <!-- fg-customer_type_id -->
+
+                                <!-- fg-org_name -->
+                                <div id='org_name_div' class="form-group <?php echo $org_name_class ?>">
+                                        <label id='label_org_name' class="hzm_label hzm_label_org_name label_mandatory"><?php echo $org_name_label ?>
+                                        </label>
+                                        <input type="text" class="form-control" name="org_name" id="org_name" dir="rtl" value="<?php echo $org_name?>" maxlength="48" required>                                        
+                                        <?php 
+                                                echo AfwInputHelper::inputErrorsInRequest("org_name", $data);
+                                        ?>
+                                </div>
+                                <!-- fg-org_name -->
+
+                                <!-- fg-ref_num -->
+                                <div id='ref_num_div' class="form-group <?php echo $ref_num_class ?>">
+                                        <label id='label_ref_num' class="hzm_label hzm_label_ref_num label_mandatory"><?php echo $ref_num_label ?></label>
+                                        <input type="text" class="form-control" name="ref_num" id="ref_num" dir="rtl" value="<?php echo $ref_num?>" maxlength="48" required>                                        
+                                        <?php 
+                                                echo AfwInputHelper::inputErrorsInRequest("ref_num", $data);
+                                        ?>                                        
+                                </div>
+                                <!-- fg-ref_num -->
+
                 <!-- fg-request_type -->
                 <div id="fg-request_type" class="attrib-request_type form-group width_pct_100 ">
                         <label for="request_type" class="hzm_label hzm_data_request_type label_required">نوع الطلب</label>                  

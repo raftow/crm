@@ -348,8 +348,8 @@ echo $js_for_cust_type;
                                         </label>
                                         <input type="text" class="form-control" name="org_name" id="org_name" dir="rtl" value="<?php echo $org_name?>" maxlength="48" required>                                        
                                         <?php 
-                                                if ($invester_register_errors["org_name"]) $d_class = ""; else $d_class = "d-none";
-                                                echo "<label id='org_name-error' class='down error $d_class' for='org_name'>" . $invester_register_errors["org_name"] . "</label>"; 
+                                                if ($customer_register_errors["org_name"]) $d_class = ""; else $d_class = "d-none";
+                                                echo "<label id='org_name-error' class='down error $d_class' for='org_name'>" . $customer_register_errors["org_name"] . "</label>"; 
                                         ?>
                                 </div>
 
@@ -357,8 +357,8 @@ echo $js_for_cust_type;
                                         <label id='label_ref_num' class="hzm_label hzm_label_ref_num label_mandatory"><?php echo $ref_num_label ?></label>
                                         <input type="text" class="form-control" name="ref_num" id="ref_num" dir="rtl" value="<?php echo $ref_num?>" maxlength="48" required>                                        
                                         <?php 
-                                                if ($invester_register_errors["ref_num"]) $d_class = ""; else $d_class = "d-none";
-                                                echo "<label id='ref_num-error' class='down error $d_class' for='ref_num'>" . $invester_register_errors["ref_num"] . "</label>"; 
+                                                if ($customer_register_errors["ref_num"]) $d_class = ""; else $d_class = "d-none";
+                                                echo "<label id='ref_num-error' class='down error $d_class' for='ref_num'>" . $customer_register_errors["ref_num"] . "</label>"; 
                                         ?>
                                 </div>
 
@@ -368,8 +368,8 @@ echo $js_for_cust_type;
                                         </label>
                                         <input type="text" class="form-control" name="first_name_ar" id="first_name_ar" dir="rtl" value="<?php echo $first_name_ar?>" maxlength="48" required>                                        
                                         <?php 
-                                                if ($invester_register_errors["first_name_ar"]) $d_class = ""; else $d_class = "d-none";
-                                                echo "<label id='first_name_ar-error' class='down error $d_class' for='first_name_ar'>" . $invester_register_errors["first_name_ar"] . "</label>"; 
+                                                if ($customer_register_errors["first_name_ar"]) $d_class = ""; else $d_class = "d-none";
+                                                echo "<label id='first_name_ar-error' class='down error $d_class' for='first_name_ar'>" . $customer_register_errors["first_name_ar"] . "</label>"; 
                                         ?>
                                 </div>
                                 
@@ -378,8 +378,8 @@ echo $js_for_cust_type;
                                         </label>
                                         <input type="text" class="form-control" name="last_name_ar" id="last_name_ar" dir="rtl" value="<?php echo $last_name_ar?>" maxlength="48" required>                                        
                                         <?php 
-                                                if ($invester_register_errors["last_name_ar"]) $d_class = ""; else $d_class = "d-none";
-                                                echo "<label id='last_name_ar-error' class='down error $d_class' for='last_name_ar'>" . $invester_register_errors["last_name_ar"] . "</label>"; 
+                                                if ($customer_register_errors["last_name_ar"]) $d_class = ""; else $d_class = "d-none";
+                                                echo "<label id='last_name_ar-error' class='down error $d_class' for='last_name_ar'>" . $customer_register_errors["last_name_ar"] . "</label>"; 
                                         ?>
                                 </div>
                                 
