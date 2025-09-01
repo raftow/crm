@@ -70,7 +70,7 @@ class CrmController extends AfwController
                         $display_date_month = $hijri_date_arr[2];
                 } else {
                         $display_date_day = date("d");
-                        $display_date_month = date("m");
+                        $display_date_month = AfwDateHelper::getFullMonthName(date("m"),$lang);
                         $display_date_year = date("Y");
                 }
                 $customerMe = AfwSession::getCustomerConnected();
