@@ -18,7 +18,7 @@ class CrmCrmEmpRequestAfwStructure
 
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
-
+			$obj->public_display = true;
 			$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmOrgunit");
 			$obj->editByStep = true;
 			$obj->editNbSteps = 3;
@@ -66,7 +66,7 @@ class CrmCrmEmpRequestAfwStructure
 			'ANSWER' => 'orgunit',
 			'ANSMODULE' => 'hrm',
 			'DEPENDENT_OFME' => ['employee_id'],
-			'WHERE' => "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
+			'WHERE' => "1", // "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
 
 			'RELATION' => 'ManyToOne',
 			'READONLY' => true,
