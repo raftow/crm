@@ -1452,7 +1452,9 @@ class CrmController extends AfwController
                         $data["all_error"] = $error_saving;
                 } else {
                         $reqObj->set("customer_id", $theCustomer->id);
-                        $reqObj->set("customer_type_id", $theCustomer->getVal("customer_type_id"));
+                        $reqObj->set("customer_type_id", $customer_type_id);
+                        $reqObj->set("org_name", $org_name);
+                        $reqObj->set("ref_num", $ref_num);
                         $reqObj->set("related_request_code", $old_ticket);
                         if ($old_ticket) {
                                 $oldReqObj = $reqObj->getRelatedTicket();
