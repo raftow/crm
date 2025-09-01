@@ -917,7 +917,7 @@ class Request extends CrmObject
 
 
 
-
+    /*
     public function list_of_customer_type_id()
     {
         $list_of_items = array();
@@ -925,7 +925,7 @@ class Request extends CrmObject
         $list_of_items[2] = "موظف";  //     code : EMPLOYEE 
         $list_of_items[3] = "متدرب";  //     code : INDIVIDUAL 
         return  $list_of_items;
-    }
+    }*/
 
 
     public function beforeDelete($id, $id_replace)

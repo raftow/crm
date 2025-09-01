@@ -96,39 +96,4 @@ class CrmObject extends AFWObject
         {
                 return (($attribute == "created_by") or ($attribute == "created_at") or ($attribute == "updated_by") or ($attribute == "updated_at") or ($attribute == "validated_by") or ($attribute == "validated_at") or ($attribute == "version"));
         }
-
-        public static function code_of_customer_type_id($lkp_id=null)
-        {
-            $lang = AfwLanguageHelper::getGlobalLanguage();
-            if($lkp_id) return self::customer_type()['code'][$lkp_id];
-            else return self::customer_type()['code'];
-        }
-
-        public static function name_of_customer_type_id($customer_type_id, $lang="ar")
-        {
-            return self::customer_type()[$lang][$customer_type_id];            
-        }
-        
-        public static function list_of_customer_type_id($lang = null)
-        {
-            if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
-            return self::customer_type()[$lang];
-        }
-        
-        public static function customer_type()
-        {
-                $arr_list_of_customer_type = array();
-                
-                $custTypeListDefault = array(1=>['ar'=>"عميل"]);
-                $custTypeList = AfwSession::config("cust_type_list", $custTypeListDefault);
-                        
-                foreach($custTypeList as $idct => $custTypeRow)
-                {
-                        $arr_list_of_customer_type["code"][$idct] = "CT".$idct;
-                        $arr_list_of_customer_type["ar"][$idct] = $custTypeRow['ar'];
-                        $arr_list_of_customer_type["en"][$idct] = $custTypeRow['en'];
-                }
-                
-                return $arr_list_of_customer_type;
-        }
 }
