@@ -400,7 +400,7 @@ class CrmCrmCustomerAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
+		
 		'org_name' => array(
 			'STEP' => 2,
 			'SEARCH' => true,

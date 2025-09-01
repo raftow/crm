@@ -836,6 +836,7 @@ class CrmController extends AfwController
 
                 $data["requestTypeList"] = RequestType::loadAll();
                 $data["regionList"] = Region::loadAll();
+                
                 $roClassName = AfwSession::config("roClassName", "");
                 if ($roClassName) $data["roList"] = $roClassName::loadAllMyObjects();
 
@@ -853,6 +854,9 @@ class CrmController extends AfwController
                         return;
                 } else {
                         $data["customer_id"] = $theCustomer->id;
+                        $data["customer_type_id"] = $theCustomer->getVal("customer_type_id");
+                        $data["ref_num"] = $theCustomer->getVal("ref_num");
+                        $data["org_name"] = $theCustomer->getVal("org_name");
                         if ($pt) {
                                 $oldTicketObj = Request::loadById($pt);
                                 if ($oldTicketObj and $oldTicketObj->getVal("customer_id") == $theCustomer->id) {
