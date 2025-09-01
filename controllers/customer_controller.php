@@ -39,4 +39,7 @@ class CustomerController extends CrmController
                 // call the view 1
                 $this->render("crm", "view_customer", $data);
         }    
+
+
+        
 }

@@ -43,6 +43,7 @@ class CrmController extends AfwController
 
         public function prepareMenuTokens($lang, $role, $selected_menu, $options)
         {
+                
                 $login_template = AfwSession::config("customer-login-template", "right-left");
                 $xmodule = AfwSession::getCurrentlyExecutedModule();
                 $module = AfwUrlManager::currentURIModule();
@@ -103,6 +104,8 @@ class CrmController extends AfwController
                 if ($run_mode) $run_mode = "-" . $run_mode;
                 
                 $data_tokens = array();
+                $data_tokens["orgunit_name_s"] = "<!--";
+                $data_tokens["orgunit_name_e"] = "-->";
 
                 $enable_search_box = AfwSession::config("crm_enable_search_box", false);
                 if($enable_search_box)
