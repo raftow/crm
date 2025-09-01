@@ -13,6 +13,7 @@ require_once("$file_dir_name/../config/global_config.php");
 
 
 AfwAutoLoader::addMainModule("crm");
+AfwAutoLoader::addModule("hrm");
 
 include_once ("$file_dir_name/../crm/ini.php");
 include_once ("$file_dir_name/../crm/module_config.php");

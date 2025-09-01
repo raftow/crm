@@ -1109,6 +1109,8 @@ div.crm_data.survey>label {
 
 .hzm_data_prop.hzm_comment {
     width: 100%;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .hzm_small_calendar {

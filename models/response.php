@@ -215,7 +215,10 @@ class Response extends CrmObject
                                 $data[2] = " إلى "    . $data[2];
                         }
                 }
-                return implode(" ", $data);
+                
+                $return = implode(" ", $data);
+                $return = AfwReplacement::trans_replace($return, "crm", $lang);
+                return $return;
         }
 
         public function getNodeDisplay($lang = "ar")
