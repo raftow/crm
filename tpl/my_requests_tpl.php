@@ -47,15 +47,15 @@ foreach($requestList as $ticketObj)
                                                 </div>
                                         </div>
                                 <?php 
-                                        $ticket_status_comment = $ticketObj->getLastActionOnRequest($lang);
+                                        list($lastActionOnRequest, $LAResponseId) = $ticketObj->getLastActionOnRequest($lang);
                                         
-                                        if($ticket_status_comment)
+                                        if($lastActionOnRequest)
                                         {
                                 ?>
-                                        <div class="row crm_data">
-                                                <label>آخر حدث   </label>
+                                        <div class="row crm_data history">
+                                                <label>آخر اجراء   </label>
                                                 <div class='hzm_data_prop hzm_comment'>
-                                                        <?php echo $ticket_status_comment; ?> 
+                                                        <?php echo $lastActionOnRequest; ?> 
                                                 </div>
                                                 <div class='hzm_small_calendar calendar_left'>
                                                 تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->getVal("status_time"); ?> </span> 

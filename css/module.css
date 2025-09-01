@@ -913,7 +913,7 @@ span.prog-name.prog-archive {
 
 
 .request_status.status_2 {
-        background-color: rgb(145, 155, 10);
+        background-color: rgb(4 126 122);
 }
 
 .request_status.status_3 {
@@ -1126,6 +1126,11 @@ div.crm_data.survey>label {
         }
 }
 
+div.crm_data.history>label {
+    border-bottom: 1px solid #8fc8c7;
+    color: #047e7a;
+    font-weight: bold !important;
+}
 
 div.crm_data>label {
     padding: 6px 8px 1px 6px;
@@ -1515,11 +1520,13 @@ span.hzm_time.hzm_small_time {
 }
 
 .row.crm_data.title_crm {
-    font-size: 120%;
+    font-size: 110%;
+    /* font-weight: bold; */
     margin-top: 10px;
     padding: 0;
     min-height: 0;
-    background-color: #eaf4a959;
+    background-color: #b8eded;
+    text-align: center;
 }
 /*
 this is wrong as way to center the ticket_div because 880 is not the width it is the max width

@@ -78,7 +78,7 @@ class Request extends CrmObject
 
     // REDIRECT - طلب إعادة التحويل  
     public static $REQUEST_STATUS_REDIRECT = 3;
-
+    
     // RESPONSE UNDER REVISION - تدقيق الاجابة
     public static $REQUEST_STATUS_RESPONSE_UNDER_REVISION = 301;
 
@@ -1493,12 +1493,13 @@ class Request extends CrmObject
         $respActList = $resp->loadMany(1, "response_date desc, response_time desc");
 
         $lact = array();
-
+        $respActItemId = null;
         foreach ($respActList as $respActItem) {
             $lact[] = $respActItem->getActionTitle($lang);
+            $respActItemId = $respActItem->id;
         }
 
-        return implode("<br>\n", $lact);
+        return [implode("<br>\n", $lact), $respActItemId];
     }
 
 

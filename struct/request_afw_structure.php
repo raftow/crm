@@ -1189,6 +1189,7 @@ class CrmRequestAfwStructure
 			'ANSMODULE' => 'crm',
 			'ITEM' => 'request_id',
 			'WHERE' => 'internal=\'N\' and new_status_id not in (3,301,9)',
+			                                      // 3,301,9 means INTERNAL STATUSES => REDIRECT / UNDER_REVISION / IGNORED
 			'READONLY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',

@@ -72,18 +72,18 @@
 
                                         
                                 <?php 
-                                        $ticket_status_comment = $ticketObj->getLastActionOnRequest($lang);
+                                        list($lastActionOnRequest, $LAResponseId)  = $ticketObj->getLastActionOnRequest($lang);
                                 ?>        
                                         <div class="row crm_data title_crm">
-                                                <label>الاجراءات / الأحداث</label>
+                                                <label>آخر اجراء</label>
                                         </div>
                                 <?php 
-                                        if($ticket_status_comment)
+                                        if($lastActionOnRequest)
                                         {
                                 ?>
                                         <div class="row crm_data">       
                                                 <div class='hzm_data_prop hzm_comment'>
-                                                        <?php echo $ticket_status_comment; ?> 
+                                                        <?php echo $lastActionOnRequest; ?> 
                                                 </div>
                                                 <div class='hzm_small_calendar calendar_left'>
                                                 تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->getVal("status_time"); ?> </span> 
@@ -104,11 +104,12 @@
                                         include_once("ticket_btns.php");
                                 ?>
                                         <div class="row crm_data title_crm">
-                                                <label>الردود / التعليقات السابقة</label>                                                
+                                                <label>الردود / التعليقات / الأحداث</label>                                                
                                         </div>
                                 <?php 
                                         $responseList = $ticketObj->get("externalResponseList");
                                         $odd = "even ";
+                                        $repCount=0;
                                         if(count($responseList)>0)
                                         {
                                                 /**
@@ -116,6 +117,9 @@
                                                  */
                                                 foreach($responseList as  $responseItem)
                                                 {
+                                                        if($responseItem->id != $LAResponseId)
+                                                        {
+                                                        $repCount++;
                                                         $css_resp = strtolower($responseItem->calcResponse_aut("value", "en"))."-crm ";
                                                         $full_response_date = ($ds == "hijri") ? $responseItem->fullHijriDate("response_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($responseItem->getVal("response_date")));
                                 ?>
@@ -134,9 +138,11 @@
                                 <?php 
                                                         if($odd=="even ") $odd = "odd ";
                                                         else $odd = "even ";
+                                                        }
                                                 }        
                                         }
-                                        else
+                                        
+                                        if($repCount==0)
                                         { 
                                 ?>
                                         <div class="row crm_data">
