@@ -1525,7 +1525,7 @@ span.hzm_time.hzm_small_time {
     margin-top: 10px;
     padding: 0;
     min-height: 0;
-    background-color: #b8eded;
+    background-color: #8edada75;
     text-align: center;
 }
 /*
@@ -2871,7 +2871,14 @@ a.crm.thin-btn {
 
 .hzm_data_prop.request_text {
     overflow: hidden;
+    background-color: #83e2e21f;
+    padding: 12px;
+    font-size: 14px;
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid #1e90903d;
 }
+
 
 div.qfilter>h2 {
     font-size: 130%;
