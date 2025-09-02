@@ -703,8 +703,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
         public function decideSMSTemplate($sms_template)
         {
-                // we should well study this bizarre method that change the SMS template like this
-                // if ($this->getVal("service_satisfied") == "N") return "not_satisfied";
+                if ($this->getVal("service_satisfied") == "N") return "not_satisfied";
                 return $sms_template;
         }
 
@@ -727,7 +726,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         $customer_mobile_correct = AfwFormatHelper::isCorrectMobileNum($customer_mobile);
                 } else {
                         $this->makeMeTestCustomer();
-                        $customer_mobile = "anyThing";
+                        $customer_mobile = true;
                         $customer_mobile_correct = true;
                 }
 
@@ -749,7 +748,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                                 $exceptional_template_desc = " : " . $this->translate('action.sms.' . $exceptional_sms_template, $lang);
                         }
                         if (!$only_get_description) {
-                                // but for case of real execute of action some exceptional customer can need a different
+                                // but for case of real execute of action some esxceptional customer can need a different
                                 // template so we decide the template via decideSMSTemplate method
                                 $sms_template = $exceptional_sms_template;
                         }

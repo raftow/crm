@@ -914,6 +914,20 @@ class Request extends CrmObject
         return $otherLinksArray;
     }
 
+
+
+
+    /*
+    public function list_of_customer_type_id()
+    {
+        $list_of_items = array();
+        $list_of_items[1] = "فرد من المجتمع";  //     code : ANONYMOUS 
+        $list_of_items[2] = "موظف";  //     code : EMPLOYEE 
+        $list_of_items[3] = "متدرب";  //     code : INDIVIDUAL 
+        return  $list_of_items;
+    }*/
+
+
     public function beforeDelete($id, $id_replace)
     {
         $server_db_prefix = AfwSession::currentDBPrefix();
@@ -2657,19 +2671,9 @@ class Request extends CrmObject
             and $this->getVal("assign_date")
             and $this->getVal("assign_time")
         ) {
-            $assign_hdate = $this->getVal("assign_date");
-            $assign_time = $this->getVal("assign_time");
-            $return = AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $assign_hdate, $assign_time, $round);
-            // return "$return = h-now() - (assign = $assign_hdate $assign_time)";
-            return $return;
-            
+            return AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $this->getVal("assign_date"), $this->getVal("assign_time"), $round);
         } else {
-            $request_hdate = $this->getVal("request_date");
-            $request_time = $this->getVal("request_time");
-            $return = AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $request_hdate, $request_time, $round);
-            // return "$return = h-now() - (requestdatetime = $request_hdate $request_time)";
-            return $return;
-            
+            return AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $this->getVal("request_date"), $this->getVal("request_time"), $round);
         }
     }
 
