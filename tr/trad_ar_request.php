@@ -88,10 +88,9 @@ class RequestArTranslator
 		$trad["request"]["tech_data"] = "بيانات فنية";
 
 		$trad["request"]["step1"] = "أساسيات الطلب";
-		$trad["request"]["step2"] = "نص الطلب";
-		$trad["request"]["step3"] = "حالة التذكرة";
-		$trad["request"]["step4"] = "الإجابات والتعليقات";
-		$trad["request"]["step5"] = "رضا العميل";
+		$trad["request"]["step2"] = "الردود والتعليقات";
+		$trad["request"]["step3"] = "الاشعارات";
+		$trad["request"]["step4"] = "رضا العميل";
 
 		$trad["request"]["perf"] = "مؤشر الأداء";
 		$trad["request"]["request_ongoing"] = "جاري";

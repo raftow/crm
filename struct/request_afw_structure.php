@@ -13,8 +13,8 @@ class CrmRequestAfwStructure
 			$obj->STATS_DEFAULT_CODE = "gs001";
 
 			$obj->UNIQUE_KEY = array('request_code', 'customer_id');
-			$obj->editByStep = false;
-			//$obj->editNbSteps = 5;
+			$obj->editByStep = true;
+			$obj->editNbSteps = 4;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 
@@ -32,7 +32,7 @@ class CrmRequestAfwStructure
 
 
 		'id' => array(
-			'FGROUP' => 'request_text',  /* 'STEP' => 1,*/
+			'FGROUP' => 'request_text',  'STEP' => 1,
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'EXCEL' => true,
@@ -45,7 +45,7 @@ class CrmRequestAfwStructure
 		),
 
 		'request_text' => array(
-			'FGROUP' => 'request_text',  /* 'STEP' => 2,  */
+			'FGROUP' => 'request_text',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -69,7 +69,7 @@ class CrmRequestAfwStructure
 
 
 		'request_date' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'QSEARCH_OPER' => 'between',
@@ -95,7 +95,7 @@ class CrmRequestAfwStructure
 		),
 
 		'request_time' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -118,7 +118,7 @@ class CrmRequestAfwStructure
 
 
 		'request_code' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -141,7 +141,7 @@ class CrmRequestAfwStructure
 		),
 
 		'prio_icon' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 99,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -155,7 +155,7 @@ class CrmRequestAfwStructure
 
 
 		'related_request_code' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 2,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -177,7 +177,7 @@ class CrmRequestAfwStructure
 
 
 		'request_type_id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SHORTNAME' => 'type',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -205,7 +205,7 @@ class CrmRequestAfwStructure
 		),
 
 		'region_id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SHORTNAME' => 'region',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -230,7 +230,7 @@ class CrmRequestAfwStructure
 		),
 
 		'city_id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -254,7 +254,7 @@ class CrmRequestAfwStructure
 		),
 
 		'other_city' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -274,7 +274,7 @@ class CrmRequestAfwStructure
 		),
 
 		'customer_type_id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SHORTNAME' => 'type',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -302,7 +302,7 @@ class CrmRequestAfwStructure
 		
 
 		'customer_id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1, */
+			'FGROUP' => 'tech_data',  'STEP' => 1,
 			'SHORTNAME' => 'customer',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -353,7 +353,7 @@ class CrmRequestAfwStructure
 		),
 
 		'ref_num' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => false,
@@ -375,7 +375,7 @@ class CrmRequestAfwStructure
 		),
 
 		'org_name' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => false,
@@ -397,7 +397,7 @@ class CrmRequestAfwStructure
 		),
 
 		'lang_id' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 99,  */
+			'FGROUP' => 'tech_data',  'STEP' => 99,
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => false,
@@ -421,13 +421,13 @@ class CrmRequestAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
-
+		/* No need as we dont neither show nor retrieve **
 		'mobile' => array(
-			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'FGROUP' => 'tech_data',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
-			'SHOW' => false,
-			'RETRIEVE' => false,
+			'SHOW' => false,**
+			'RETRIEVE' => false,**
 			'EXCEL' => true,
 			'EDIT' => false,
 			'QEDIT' => false,
@@ -446,12 +446,12 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
-		),
+		),*/
 
 
 
 		'request_title' => array(
-			'FGROUP' => 'props',  /* 'STEP' => 2,  */
+			'FGROUP' => 'props',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -476,7 +476,7 @@ class CrmRequestAfwStructure
 		),
 
 		'request_for' => array(
-			'FGROUP' => 'props',  /* 'STEP' => 2,  */
+			'FGROUP' => 'props',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -498,7 +498,7 @@ class CrmRequestAfwStructure
 		),
 
 		'request_link' => array(
-			'FGROUP' => 'props',  /* 'STEP' => 2,  */
+			'FGROUP' => 'props',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -510,6 +510,7 @@ class CrmRequestAfwStructure
 			'CHAR_TEMPLATE' => 'ALPHABETIC,COMMAS,MATH-SYMBOLS,NUMERIC,SPACE,UNDERSCORE',
 			'UTF8' => true,
 			'TYPE' => 'TEXT',
+			'FORMAT' => 'LINK',
 			'READONLY' => false,
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
@@ -519,7 +520,7 @@ class CrmRequestAfwStructure
 		),
 
 		'request_priority' => array(
-			'FGROUP' => 'props',  /* 'STEP' => 3,  */
+			'FGROUP' => 'props',  'STEP' => 1,
 			'SHORTNAME' => 'priority',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -547,7 +548,7 @@ class CrmRequestAfwStructure
 
 
 		'service_category_id' => array(
-			'FGROUP' => 'props',  /* 'STEP' => 2,  */
+			'FGROUP' => 'props',  'STEP' => 1,
 			'SHORTNAME' => 'category',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -574,7 +575,7 @@ class CrmRequestAfwStructure
 		),
 
 		'service_id' => array(
-			'FGROUP' => 'props',  /* 'STEP' => 2,  */
+			'FGROUP' => 'props',  'STEP' => 1,
 			'SHORTNAME' => 'service',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -603,7 +604,7 @@ class CrmRequestAfwStructure
 
 
 		'requestFileList' => array(
-			'FGROUP' => 'props',
+			'FGROUP' => 'props', 'STEP' => 99, // see the next formula attribute
 			'SHORTNAME' => 'files',
 			'SHOW' => false,
 			/*'FORMAT' => 'minibox',  'ICONS' => true,  'DELETE-ICON' => true,  'BUTTONS' => true,  */
@@ -632,7 +633,7 @@ class CrmRequestAfwStructure
 		),
 
 		'ul_cl_files' => array(
-			'FGROUP' => 'props',
+			'FGROUP' => 'props', 'STEP' => 1,
 			'SIZE' => 255,
 			'SHOW' => true,
 			'EDIT' => true,
@@ -644,7 +645,7 @@ class CrmRequestAfwStructure
 
 
 		'supervisor_id' => array(
-			'FGROUP' => 'assignment',  /* 'STEP' => 3,  */
+			'FGROUP' => 'assignment',  'STEP' => 1,
 			'SHORTNAME' => 'supervisor',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -669,7 +670,7 @@ class CrmRequestAfwStructure
 		),
 
 		'orgunit_id' => array(
-			'FGROUP' => 'assignment',  /* 'STEP' => 3,  */
+			'FGROUP' => 'assignment',  'STEP' => 1,
 			'SHORTNAME' => 'orgunit',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -678,7 +679,7 @@ class CrmRequestAfwStructure
 			'EXCEL' => true,
 			'EDIT' => true,
 			'QEDIT' => true,
-			'WHERE' => "me.id in (select distinct o.orgunit_id from §DBPREFIX§crm.crm_orgunit o 
+			'WHERE' => "id in (select distinct o.orgunit_id from §DBPREFIX§crm.crm_orgunit o 
 				                        inner join §DBPREFIX§crm.crm_employee e on e.orgunit_id = o.orgunit_id 
 										where o.active='Y' and e.active='Y')",
 			'SIZE' => 60,
@@ -702,7 +703,7 @@ class CrmRequestAfwStructure
 		),
 
 		'employee_id' => array(
-			'FGROUP' => 'assignment',  /* 'STEP' => 3,  */
+			'FGROUP' => 'assignment', 'STEP' => 1,
 			'SHORTNAME' => 'employee',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -730,7 +731,7 @@ class CrmRequestAfwStructure
 
 
 		'man' => array(
-			'FGROUP' => 'assignment',
+			'FGROUP' => 'assignment', 'STEP' => 1,
 			'SHORTNAME' => 'employee',
 			'SHOW' => true,
 			'EDIT' => true,
@@ -747,7 +748,7 @@ class CrmRequestAfwStructure
 		),
 
 		'assign_date' => array(
-			'FGROUP' => 'assignment',  /* 'STEP' => 3,  */
+			'FGROUP' => 'assignment',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -770,7 +771,7 @@ class CrmRequestAfwStructure
 		),
 
 		'assign_time' => array(
-			'FGROUP' => 'assignment',  /* 'STEP' => 3,  */
+			'FGROUP' => 'assignment',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -789,7 +790,7 @@ class CrmRequestAfwStructure
 		),
 
 		'status_id' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 3,  */
+			'FGROUP' => 'status',  'STEP' => 1,
 			'SHORTNAME' => 'status',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -818,7 +819,7 @@ class CrmRequestAfwStructure
 		),
 
 		'status_date' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 3,  */
+			'FGROUP' => 'status',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -838,7 +839,7 @@ class CrmRequestAfwStructure
 		),
 
 		'status_time' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 3,  */
+			'FGROUP' => 'status',  'STEP' => 1,
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -859,7 +860,7 @@ class CrmRequestAfwStructure
 		),
 
 		'status_comment' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 3,  */
+			'FGROUP' => 'status',  'STEP' => 1,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -879,7 +880,7 @@ class CrmRequestAfwStructure
 		),
 
 		'status_action_enum' => array(
-			'FGROUP' => 'status', 
+			'FGROUP' => 'status', 'STEP' => 1,
 			'SHORTNAME' => 'action',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -900,7 +901,7 @@ class CrmRequestAfwStructure
 		),
 
 		'days_investigator' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 3,  */
+			'FGROUP' => 'status',  'STEP' => 4,
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -919,10 +920,11 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_50',
 		),
 
 		'days_delay' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 3,  */
+			'FGROUP' => 'status',  'STEP' => 4, 
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -941,10 +943,11 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_50',
 		),
 
 		'survey_sent' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 5, */
+			'FGROUP' => 'status',  'STEP' => 4,
 			'SHORTNAME' => 'sent',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -965,7 +968,7 @@ class CrmRequestAfwStructure
 		),
 
 		'survey_opened' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 5,*/
+			'FGROUP' => 'status',  'STEP' => 4,
 			'SHORTNAME' => 'opened',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -986,7 +989,7 @@ class CrmRequestAfwStructure
 		),
 
 		'survey_token' => array(
-			'STEP' => 99,
+			'STEP' => 4,
 			'FGROUP' => 'status',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -1004,7 +1007,7 @@ class CrmRequestAfwStructure
 
 
 		'easy_fast' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 5,  */
+			'FGROUP' => 'status',  'STEP' => 4,
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -1024,7 +1027,7 @@ class CrmRequestAfwStructure
 		),
 
 		'service_satisfied' => array(
-			'FGROUP' => 'status',
+			'FGROUP' => 'status', 'STEP' => 4,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -1045,7 +1048,7 @@ class CrmRequestAfwStructure
 		),
 
 		'pb_resolved' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 5,  */
+			'FGROUP' => 'status',  'STEP' => 4,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -1066,7 +1069,7 @@ class CrmRequestAfwStructure
 		),
 
 		'general_satisfaction' => array(
-			'FGROUP' => 'status',  /* 'STEP' => 5,  */
+			'FGROUP' => 'status',  'STEP' => 4, 
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -1094,15 +1097,15 @@ class CrmRequestAfwStructure
 			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 4,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
 
 		'notifications' => array(
-			'FGROUP' => 'notifications',
+			'FGROUP' => 'notifications', 
+			'STEP' => 3,
 			'SHOW' => true,
-			'STEP' => 1,
 			'RETRIEVE' => false,
 			'EXCEL' => false,
 			'EDIT' => true,
@@ -1139,7 +1142,7 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'responseList' => array('STEP' => 1,
+		'responseList' => array('STEP' => 2,
 			'SHORTNAME' => 'responses',
 			'SHOW' => true,
 			'FORMAT' => 'minibox',
@@ -1173,7 +1176,7 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'externalResponseList' => array(/*'STEP' => 4,*/
+		'externalResponseList' => array('STEP' => 99,
 			//'SHORTNAME' => 'extresponses',
 			'FORMAT' => 'minibox',
 			'MINIBOX-TPL' => true,
@@ -1195,7 +1198,7 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'doneResponseList' => array(/*'STEP' => 4,*/
+		'doneResponseList' => array('STEP' => 99,
 			//'SHORTNAME' => 'doneresponses',
 			'FORMAT' => 'minibox',
 			'MINIBOX-TPL' => true,
@@ -1220,7 +1223,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1229,7 +1232,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1238,7 +1241,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1247,7 +1250,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1256,7 +1259,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1265,7 +1268,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1274,7 +1277,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1,  */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1283,7 +1286,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1292,7 +1295,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1,*/
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1301,7 +1304,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1311,7 +1314,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1320,7 +1323,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1329,7 +1332,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1339,7 +1342,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1350,7 +1353,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1361,7 +1364,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1,*/
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1370,7 +1373,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1379,7 +1382,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1389,7 +1392,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1398,7 +1401,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1412,7 +1415,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'YN',
 			'AUDIT' => false,
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  /* 'STEP' => 1, */
+			'DISPLAY' => '',  'STEP' => 99, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),

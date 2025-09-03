@@ -883,7 +883,7 @@ class Request extends CrmObject
                 if ($this->investigatorCanShareInfo() or $this->iamTheSupervisor()) {
                     unset($link);
                     $link = array();
-                    $title = "تحرير معلومات داخلية لغاية تدريب الزملاء";
+                    $title = "تحرير معلومات داخلية (تهم الزملاء لغاية تدريبهم أو مساعدنهم أو غير ذلك)";
                     $title_detailed = $title . "بخصوص : " . $displ;
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=7";
                     $link["TITLE"] = $title;
@@ -1212,6 +1212,18 @@ class Request extends CrmObject
             $val = trim($this->getVal($attribute));
             return ($val != "");
         }
+
+        if ($attribute == "ref_num") {
+            $val = trim($this->getVal($attribute));
+            return ($val != "");
+        }
+
+        if ($attribute == "org_name") {
+            $val = trim($this->getVal($attribute));
+            return ($val != "");
+        }
+
+        
 
         
 

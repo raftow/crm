@@ -2029,7 +2029,7 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 
 
 .hzm_label.response.greentitle i {
-    margin-right: 0px !important;
+    margin-right: -5px !important;
     display: inline-block;
     width: 29px;
     height: 29px;
@@ -2064,12 +2064,19 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a.navbar-brand:hover 
 
 .response-resume {
     float: right;
-    max-width: 45% !important;
-    width: 45% !important;
+    max-width: 100% !important;
+    width: 100% !important;
     overflow: hidden;
     min-width: 250px;
     margin-left: 5px;
+    margin-bottom: 8px;
     text-shadow: none;
+    font-size: 13px;
+    border: 1px solid #5495c5;
+    border-radius: 0 25px 25px 0;
+    background-color: #e8f5ff;
+    color: #2375b1;
+    padding-top: 0;
 }
 
 .hzm_sub_label.response {
@@ -2531,19 +2538,6 @@ div.channel_desc {
     color: #047e7a;
     font-size: 17px;
     font-family: title;
-}
-
-.messages--success {
-    /* color: #321c5e; */
-    background-color: #b1ecf159 !important;
-    border-color: #23bbb4 transparent #23bbb4 #23bbb4;
-    /* background-image: url(../../../lib/images/blue-check.png); */
-    box-shadow: 8px 0 0 #23bbb4;
-    padding-left: 10px !important;
-    background-position-x: 15px;
-    background-position-y: 30%;
-    width: 95% !important;
-    margin-right: 3.5% !important;
 }
 
 .alert.messages--success>a.close {
@@ -3277,4 +3271,35 @@ input.form-control.customer-login {
 
 .crm_div {
     float: right;
+}
+
+div.signin-form>h2.form-title {
+    font-size: 16px !important;
+}
+
+.wizardv1 .steps_wizardv1 {
+    width: 10% !important;
+    min-width: 90px !important;
+}
+
+.steps_wizardv1 li a {
+    font-size: 70% !important;
+    padding-right: 3px !important;
+}
+
+.steps_wizardv1 li.CurrentStep a {
+    font-size: 70% !important;
+    padding-right: 3px !important;
+}
+
+.in-group-tech_data.cssgroup_pct_50,
+.in-group-props.cssgroup_pct_50,
+.in-group-assignment.cssgroup_pct_50,
+.in-group-status.cssgroup_pct_50
+{
+    min-height: 540px !important;
+}
+
+.form_right.form_wizard_body.form_wizard_request {
+    min-height: 488px;
 }

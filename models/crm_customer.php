@@ -149,7 +149,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                         if ($create_obj_if_not_found) {
                                 $obj->set("idn_type_id", $idn_type_id);
-                                $obj->set("customer_type_id", 1);
+                                if(!$obj->getVal("customer_type_id")) $obj->set("customer_type_id", 1);
 
                                 $obj->activate();
                         }
@@ -574,8 +574,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         $return = $custTypeLogic[$customerTypeId]["ref_num"]["title_$lang"];
                         // $customerType is no more object
                         // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("ref_$lang");
-                        if (!$return) $return = "unkown ref_num label for customer type $customerTypeId for lang $lang";
-
+                        if (!$return) $return = "<!-- unnkown ref_num label for customer type $customerTypeId for lang $lang -->";
                         return $return;
                 }
 
@@ -680,7 +679,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
         public function beforeMaj($id, $fields_updated)
         {
-                
+                /*
                 if ($this->getVal("customer_type_id") == CustomerType::$CUSTOMER_TYPE_ANONYMOUS) {
                         $employee_email_domain = AfwSession::config("employee_email_domain", "@company.com");
                         if (AfwStringHelper::stringEndsWith(strtolower($this->getVal("email")), $employee_email_domain)) 
@@ -694,7 +693,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         {
                                 $this->set("customer_type_id", CustomerType::$CUSTOMER_TYPE_TRAINEE);
                         }
-                }
+                }*/
 
 
 

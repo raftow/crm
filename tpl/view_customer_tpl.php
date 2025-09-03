@@ -44,7 +44,7 @@
                         <div class='my_crm_dates'>
                                 <div class='mb_med_title my_ticket'> 
                                         <div class='crm_calendar crm_data'>
-                                        <label> <?php echo $theCustomer->getDisplay("ar"); ?> </label>                                        
+                                        <label> <?php echo $customer_type_decoded." : ".$theCustomer->getDisplay("ar"); ?> </label>                                        
                                         </div>
                                 </div>
                         </div>
