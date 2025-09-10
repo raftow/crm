@@ -1405,6 +1405,15 @@ input.btnbtsp.btn-primary.btncheck {
 
 .hzm_minibox_container {
     float: right;
+    border: 1px solid #2889b3;
+}
+
+.ui-accordion-header-active.ui-state-active {
+    border: 1px #2889b3 solid !important;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: rgb(40, 137, 179);
+    border-bottom: none !important;
 }
 
 @media (max-width:660px)
@@ -3283,12 +3292,10 @@ div.signin-form>h2.form-title {
 }
 
 .steps_wizardv1 li a {
-    font-size: 70% !important;
     padding-right: 3px !important;
 }
 
 .steps_wizardv1 li.CurrentStep a {
-    font-size: 70% !important;
     padding-right: 3px !important;
 }
 
@@ -3302,4 +3309,16 @@ div.signin-form>h2.form-title {
 
 .form_right.form_wizard_body.form_wizard_request {
     min-height: 488px;
+}
+
+h5.greentitle.tip_of_day {
+    background-color: #d4ffd4 !important;
+    color: #0670bb;
+}
+
+div#div_data_tip_of_day {
+    background-color: #d4ffd4 !important;
+    width: 100% !important;
+    color: #467304;
+    margin-top: -10px;
 }

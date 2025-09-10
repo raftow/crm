@@ -114,7 +114,12 @@ class RequestArTranslator
 
 
 		$trad["request"]["sms"] = "رسالة قصيرة";
+		$trad["request"]["org_name"] = "اسم الجهة";
+		$trad["request"]["ref_num"] = "الرقم المرجعي";
+		
+
 		$trad["request"]["email"] = "بريد الكتروني";
+		$trad["request"]["tip_of_day"] = "نصيحة حول الاصدار الجدبد";
 
 
 		$trad["request"]["days_investigator"] = "عدد أيام عمل المنسق";
@@ -127,6 +132,8 @@ class RequestArTranslator
 		$trad["request"]["stats.gs004"] = "الطلبات بحسب حالة الطلب لفترة من [date_start_stats] إلى [date_end_stats]";
 		$trad["request"]["stats.gs005"] = "تقرير رضا العملاء لفترة من [date_start_perf] إلى [date_end_perf]";
 		$trad["request"]["stats.gs006"] = "تقرير حالة الطلبات لفترة من [date_start_perf] إلى [date_end_perf]";
+		$trad["request"]["stats.gs007"] = "تقرير الأداء لجهة معينة لفترة من [date_start_perf] إلى [date_end_perf]";
+		$trad["request"]["stats.gs008"] = "تقرير الأداء لمكتب العلاقات مع العملاء لفترة من [date_start_perf] إلى [date_end_perf]";
 		return $trad;
 	}
 

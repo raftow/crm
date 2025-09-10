@@ -575,6 +575,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         // $customerType is no more object
                         // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("ref_$lang");
                         if (!$return) $return = "<!-- unnkown ref_num label for customer type $customerTypeId for lang $lang -->";
+
                         return $return;
                 }
 
@@ -588,7 +589,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         $return = $custTypeLogic[$customerTypeId]["org_name"]["title_$lang"];
                         // $customerType is no more object
                         // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("org_name_$lang");
-                        if (!$return) $return = "unkown org_name label for customer type $customerTypeId for lang $lang";
+                        if (!$return) $return = "<!-- unknown org_name label for customer type $customerTypeId for lang $lang -->";
 
                         return $return;
                 }

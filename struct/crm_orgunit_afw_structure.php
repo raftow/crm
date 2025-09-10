@@ -112,6 +112,17 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
 
+
+			'tempEmployeeList' => array('STEP' => 4, 'FGROUP' => 'tempEmployeeList',  
+							'TYPE' => 'FK',  'ANSWER' => 'crm_emp_request',  'ANSMODULE' => 'crm',  
+							'CATEGORY' => 'ITEMS',  'ITEM' => '',  
+							'WHERE' => "orgunit_id = §orgunit_id§", 
+							'HIDE_COLS' => ["orgunit_id"],
+							'FORMAT' => 'retrieve',  'SHOW' => true, 'RETRIEVE' => false,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
+							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+							),
+
+
                         'created_by'         => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'TECH_FIELDS-RETRIEVE' => true, 'RETRIEVE' => false, 
                                                                 'QEDIT' => false, 'TYPE' => 'FK', 'ANSWER' => 'auser', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields'),
 

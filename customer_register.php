@@ -52,6 +52,7 @@ $sessionVarUser_avail = AfwSession::getSessionVar("user_avail");
 $sessionVarUser_firstname = AfwSession::getSessionVar("user_firstname"); 
 if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) 
 {
+	//die("rafik 2019-007 sess = ".var_export($_SESSION,true));
         header("Location: index.php");
 } 
 elseif($_POST["crm_new_go"])
@@ -152,7 +153,7 @@ elseif($_POST["crm_new_go"])
         
               if(AfwSession::config("sms-captcha-register",true))
               {
-                    $customer_msg = "الرمز المدخل خطأ ";
+                    $customer_msg = "الرمز المدخل خطأ ";// . $_POST["customer_cpt"] . " تختلف عن" . $_SESSION["cpt"];
               }
         }       
 }
@@ -288,9 +289,11 @@ else
                 // $custTypeLogicRow = ;
                 $org_name_label = $custTypeLogic[$customer_type_id]["org_name"]["title_ar"];
                 $org_name_class = $org_name_label ? "org-name" : "org-name hide";
+                $org_name_required = $org_name_label ? "required" : "";
                 
                 $ref_num_label = $custTypeLogic[$customer_type_id]["ref_num"]["title_ar"];
                 $ref_num_class = $ref_num_label ? "ref-num" : "ref-num hide";
+                $ref_num_required = $ref_num_label ? "required" : ""; 
 ?>                                        
                                 	</select>                                        
 <script>                                        
@@ -346,7 +349,7 @@ echo $js_for_cust_type;
                                 <div id='org_name_div' class="form-group <?php echo $org_name_class ?>">
                                         <label id='label_org_name' class="hzm_label hzm_label_org_name label_mandatory"><?php echo $org_name_label ?>
                                         </label>
-                                        <input type="text" class="form-control" name="org_name" id="org_name" dir="rtl" value="<?php echo $org_name?>" maxlength="48" required>                                        
+                                        <input type="text" class="form-control" name="org_name" id="org_name" dir="rtl" value="<?php echo $org_name?>" maxlength="48" <?php echo $org_name_required ?>>                                        
                                         <?php 
                                                 if ($customer_register_errors["org_name"]) $d_class = ""; else $d_class = "d-none";
                                                 echo "<label id='org_name-error' class='down error $d_class' for='org_name'>" . $customer_register_errors["org_name"] . "</label>"; 
@@ -355,7 +358,7 @@ echo $js_for_cust_type;
 
                                 <div id='ref_num_div' class="form-group <?php echo $ref_num_class ?>">
                                         <label id='label_ref_num' class="hzm_label hzm_label_ref_num label_mandatory"><?php echo $ref_num_label ?></label>
-                                        <input type="text" class="form-control" name="ref_num" id="ref_num" dir="rtl" value="<?php echo $ref_num?>" maxlength="48" required>                                        
+                                        <input type="text" class="form-control" name="ref_num" id="ref_num" dir="rtl" value="<?php echo $ref_num?>" maxlength="48" <?php echo $ref_num_required ?>>                                        
                                         <?php 
                                                 if ($customer_register_errors["ref_num"]) $d_class = ""; else $d_class = "d-none";
                                                 echo "<label id='ref_num-error' class='down error $d_class' for='ref_num'>" . $customer_register_errors["ref_num"] . "</label>"; 

@@ -40,19 +40,8 @@ class Response extends CrmObject
         public function __construct()
         {
                 parent::__construct("response", "id", "crm");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->DISPLAY_FIELD = "";
-                $this->ORDER_BY_FIELDS = "request_id, response_date desc, response_time desc";
+                CrmResponseAfwStructure::initInstance($this);    
 
-
-                $this->UNIQUE_KEY = array('request_id', 'response_date', 'response_time');
-
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
-                $this->public_display = true;
-                $this->public_edit = true;
-
-                $this->after_save_edit = array("class" => 'Request', "attribute" => 'request_id', "currmod" => 'crm', "currstep" => 4);
         }
 
         public static function loadById($id)
@@ -235,7 +224,7 @@ class Response extends CrmObject
 
 
                 list($data[0], $link[0]) = $this->displayAttribute("employee_id", false, $lang);
-                list($data[1], $link[1]) = $this->displayAttribute("response_date", false, $lang);
+                list($data[1], $link[1]) = $this->displayAttribute("dyn_response_date", false, $lang);
                 list($rtime, $link[2]) = $this->displayAttribute("response_time", false, $lang);
 
                 $rtime_arr = explode(":", $rtime);
@@ -356,6 +345,17 @@ class Response extends CrmObject
                 return true;
         }
 
+
+        public function calcDyn_response_date($what="value")
+        {
+                $system_date_format = AfwSession::currentSystemDateFormat();
+                if($system_date_format=="greg")
+                {
+                        return AfwDateHelper::hijriToGreg($this->getVal("response_date"));
+                }
+                else return $this->getVal("response_date");
+        }
+
         /* 
         rafik : 8/4/2021 : danger
         it calls change Status so it is done twice and the notification also is sent/pushed twice
@@ -415,25 +415,33 @@ class Response extends CrmObject
                                 // we do this cond-3 above to be sure that this response inserted is manually inserted not automatic
                                 // to avoid twice or infinite loop because change status create new response                   
                                 {
-                                        $employee_id = null;
-                                        $objme_name = "";
+                                        $objOrgunit = null;
+                                        $objEmployee = null;
+                                        $employee_name = "unknown";
                                         $objme = AfwSession::getUserConnected();
-                                        if ($objme) $objme_name = $objme->getDisplay($lang);
-                                        else {
-                                                $custme = AfwSession::getCustomerConnected();
-                                                if ($custme) $objme_name = $custme->getDisplay($lang);
-                                                if (!$objme_name) 
+                                        if ($objme) 
                                                 {
-                                                        $objme_name = "المهمة الآلية";
-                                                        $employee_id = 2;
+                                                $objEmployee = $objme->getEmployee();
                                                 }
+                                        if(!$objEmployee) 
+                                        {
+                                                $objEmployee = Employee::getStandardJobEmployee();//$request->het("employee_id");
                                         }
-                                        //die("request->change Status to ".$this->getVal("new_status_id")." with comment : ".$this->getVal("response_text"));                                        
+                                                /*
+                                                $custme = AfwSession::getCustomerConnected();
+                                                if ($custme) $employee_name = $custme->getDisplay($lang);
+                                                if (!$employee_name) 
+                                                {
+                                                        $employee_name = "المهمة الآلية";
+                                                        وش هالخرابيط هل المهمة الآلية لا ترد على الطلبات
+                                                }*/
+                                        if($objEmployee) $employee_name = $objEmployee->getDisplay($lang);
+                                        
                                         $action_enum = Request::status_action_by_code("responseCreatedStatusUpdated");
                                         $silent = true; // important keep silent true to avoid infinite loop
-                                        $status_comment = "تم الرد على الطلب من قبل : " . $objme_name;
+                                        $status_comment = "تم الرد على الطلب من قبل : " . $employee_name;
                                         $question_id = 0;
-                                        $request->changeStatus($this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $employee_id);
+                                        $request->changeStatus($this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $objOrgunit, $objEmployee);
 
                                         // inform customer by SMS if prio <= 3 (prio 4 = low)
                                         if ($request->getVal("request_priority") <= 3) {

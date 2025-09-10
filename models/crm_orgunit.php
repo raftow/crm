@@ -31,7 +31,7 @@ class CrmOrgunit extends CrmObject{
                 
                 $this->UNIQUE_KEY = array('orgunit_id');
                 $this->editByStep = true;
-                $this->editNbSteps = 3;
+                $this->editNbSteps = 4;
                 
                 $this->showQeditErrors = true;
                 $this->showRetrieveErrors = true;
@@ -151,6 +151,23 @@ class CrmOrgunit extends CrmObject{
                         $link['ATTRIBUTE_WRITEABLE'] = 'allEmployeeList';
                         $otherLinksArray[] = $link;
                 }
+
+                if($mode=="mode_tempEmployeeList")
+                {
+                        unset($link);
+                        $link = array();
+                        $title = "إضافة طلب تعيين منسق ";
+                        $title_detailed = $title ."لـ : ". $displ;
+                        $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=CrmEmpRequest&currmod=crm&sel_orgunit_id=$orgunit_id";
+                        $link["TITLE"] = $title;
+                        $link["TARGET"] = "newEmployeeRequest";
+                        $link["PUBLIC"] = true;
+                        $link["UGROUPS"] = array();
+                        $link['ATTRIBUTE_WRITEABLE'] = 'tempEmployeeList';
+                        $otherLinksArray[] = $link;
+                }
+
+                
              
              
              

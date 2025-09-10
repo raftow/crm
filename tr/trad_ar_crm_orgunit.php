@@ -20,6 +20,9 @@
 	$trad["crm_orgunit"]["step1"] = "البيانات العامة";
 	$trad["crm_orgunit"]["step2"] = "الموظفون";
 	$trad["crm_orgunit"]["step3"] = "الطلبات المسندة";
+	$trad["crm_orgunit"]["step4"] = "تعيين الموظفين";
+
+	$trad["crm_orgunit"]["tempEmployeeList"] = "طلبات تعيين موظف";
 	 
 
 	 

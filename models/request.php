@@ -106,7 +106,7 @@ class Request extends CrmObject
 
     public static $REQUEST_STATUSES_ONGOING_INVESTIGATOR = "201,4";
 
-    public static $REQUEST_STATUSES_WAITING_CUSTOMER = "101,102";
+    public static $REQUEST_STATUSES_WAITING_CUSTOMER = "1,101,102";
 
     public static $REQUEST_STATUSES_ONGOING_ALL = "101,102,2,201,3,301,4";
 
@@ -119,6 +119,8 @@ class Request extends CrmObject
     public static $REQUEST_STATUSES_INTERNAL = "3,301,9";
 
     public static $REQUEST_STATUSES_ABORTED = "6,8,9"; // canceled or rejected or ignored
+
+
 
 
     // APPROVE - رد معتمد  
@@ -630,6 +632,77 @@ class Request extends CrmObject
         ),
 
 
+        "gs007" => array(
+            "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date between [date_start_perf] and [date_end_perf] and status_id in (201,4)", // 
+            "DISABLE-VH" => true,
+            "FOOTER_TITLES" => true,
+            "FOOTER_SUM" => true,
+            "GROUP_SEP" => ".",
+            "GROUP_COLS" => array(
+                0 => array("COLUMN" => "employee_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+            ),
+            "DISPLAY_COLS" => array(
+                1 => array("COLUMN" => "is_request", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_request", "FOOTER_SUM" => true),
+                2 => array("COLUMN" => "is_enquiry", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_enquiry", "FOOTER_SUM" => true),
+                3 => array("COLUMN" => "is_complaint", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_complaint", "FOOTER_SUM" => true),
+                4 => array("COLUMN" => "is_suggestion", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_suggestion", "FOOTER_SUM" => true),
+                5 => array("COLUMN" => "is_support", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_support", "FOOTER_SUM" => true),
+                6 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_request", "FOOTER_SUM" => true),
+                7 => array("COLUMN" => "request_done", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_done", "FOOTER_SUM" => true),
+                8 => array("COLUMN" => "request_late", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_late", "FOOTER_SUM" => true),
+                9 => array("COLUMN" => "request_ongoing", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_ongoing", "FOOTER_SUM" => true),
+            ),
+
+            "FORMULA_COLS" => array(
+                0 => array("SHOW-NAME" => "perf", "METHOD" => "getPerf"),
+            ),
+
+            "OPTIONS" => array(
+                "perf" => array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf' => true),
+                "MAX_MEMORY_BY_REQUEST" => 400000000,
+                "MODE_BATCH_LOURD" => true,
+            ),
+            // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
+            //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
+
+        ),
+
+        "gs008" => array(
+            "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date between [date_start_perf] and [date_end_perf] and status_id in (2,3,301)", // 
+            "DISABLE-VH" => true,
+            "FOOTER_TITLES" => true,
+            "FOOTER_SUM" => true,
+            "GROUP_SEP" => ".",
+            "GROUP_COLS" => array(
+                0 => array("COLUMN" => "supervisor_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+            ),
+            "DISPLAY_COLS" => array(
+                1 => array("COLUMN" => "is_request", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_request", "FOOTER_SUM" => true),
+                2 => array("COLUMN" => "is_enquiry", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_enquiry", "FOOTER_SUM" => true),
+                3 => array("COLUMN" => "is_complaint", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_complaint", "FOOTER_SUM" => true),
+                4 => array("COLUMN" => "is_suggestion", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_suggestion", "FOOTER_SUM" => true),
+                5 => array("COLUMN" => "is_support", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_support", "FOOTER_SUM" => true),
+                6 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_request", "FOOTER_SUM" => true),
+                7 => array("COLUMN" => "request_done", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_done", "FOOTER_SUM" => true),
+                8 => array("COLUMN" => "request_late", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_late", "FOOTER_SUM" => true),
+                9 => array("COLUMN" => "request_ongoing", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_ongoing", "FOOTER_SUM" => true),
+            ),
+
+            "FORMULA_COLS" => array(
+                0 => array("SHOW-NAME" => "perf", "METHOD" => "getPerf"),
+            ),
+
+            "OPTIONS" => array(
+                "perf" => array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf' => true),
+                "MAX_MEMORY_BY_REQUEST" => 400000000,
+                "MODE_BATCH_LOURD" => true,
+            ),
+            // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
+            //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
+
+        ),
+
+
 
 
     );
@@ -746,6 +819,12 @@ class Request extends CrmObject
         return self::loadByMainIndex($r_request_code, $customer_id, $create_obj_if_not_found = false);
     }
 
+    public function calcRelated_request_id($what="value")
+    {
+        $rrObj = $this->getRelatedTicket();
+        return ($what=="value") ? $rrObj->id : $rrObj;
+    }
+
 
     public function getWideDisplay($lang = "ar")
     {
@@ -833,16 +912,9 @@ class Request extends CrmObject
         if ($mode == "mode_responseList") {
             // throw new AfwRuntimeException("`$mode` == mode_responseList why here");
             if (!$this->isClosedWithCustomer()) {
-                if(!$this->isStarted()) {
-                    unset($link);
-                    $link = array();
-                    $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' في أسفل الصفحه للتمكن من التعليق أو الاجابة عليه";
-                    $link["URL"] = "@help";
-                    $link["CODE"] = "stop.and.debugg";
-                    $link["TITLE"] = $title;
-                    $link["PUBLIC"] = true;
-                    $otherLinksArray[] = $link;
-                }
+                
+
+                $canRespondOrComment = false;
                 // throw new AfwRuntimeException("not isClosedWithCustomer why here");
                 if ($this->investigatorCanRespond() or $this->iamTheSupervisor()) {
                     unset($link);
@@ -854,6 +926,7 @@ class Request extends CrmObject
                     $link["PUBLIC"] = true;
                     $link["UGROUPS"] = array();
                     $otherLinksArray[] = $link;
+                    $canRespondOrComment = true;
                 }
 
                 if ($this->investigatorCanAsk() or $this->iamTheSupervisor()) {
@@ -866,6 +939,7 @@ class Request extends CrmObject
                     $link["UGROUPS"] = array();
                     $link["PUBLIC"] = true;
                     $otherLinksArray[] = $link;
+                    $canRespondOrComment = true;
                 }
 
                 if ($this->investigatorCanComment() or $this->iamTheSupervisor()) {
@@ -876,6 +950,18 @@ class Request extends CrmObject
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=2";
                     $link["TITLE"] = $title;
                     $link["UGROUPS"] = array();
+                    $link["PUBLIC"] = true;
+                    $otherLinksArray[] = $link;
+                    $canRespondOrComment = true;
+                }
+
+                if(!$canRespondOrComment and (!$this->isStarted())) {
+                    unset($link);
+                    $link = array();
+                    $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' في أسفل الصفحه للتمكن من التعليق أو الاجابة عليه";
+                    $link["URL"] = "@help";
+                    $link["CODE"] = "stop.and.debugg";
+                    $link["TITLE"] = $title;
                     $link["PUBLIC"] = true;
                     $otherLinksArray[] = $link;
                 }
@@ -1208,10 +1294,12 @@ class Request extends CrmObject
             return ($val != "");
         }
 
+        /* rafik 5/9/2026 even if related_request_code is empty investigators and supervisors can fill it
+           so keep it applicable
         if ($attribute == "related_request_code") {
             $val = trim($this->getVal($attribute));
             return ($val != "");
-        }
+        }*/
 
         if ($attribute == "ref_num") {
             $val = trim($this->getVal($attribute));
@@ -1315,18 +1403,20 @@ class Request extends CrmObject
 
     public function isExecuted()
     {
-        $currStatus = self::statusFather(intval($this->getVal("status_id")));
+        $orgunit_id = $this->getVal("orgunit_id");
+        $status_id = $this->getVal("status_id");
 
-        // REDIRECT - طلب إعادة التحويل  
-        if (self::$REQUEST_STATUS_REDIRECT == $currStatus) return true;
+        $status_ongoing_arr = [];
+        if($orgunit_id == self::$CRM_CENTER_ID)
+        {
+            $status_ongoing_arr = explode(",", self::$REQUEST_STATUSES_ONGOING_SUPERVISOR);
+        }
+        else
+        {
+            $status_ongoing_arr = explode(",", self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR);
+        }
 
-        // عند العميل 
-        if (self::$REQUEST_STATUS_DRAFT == $currStatus) return true;
-
-        // DONE - تمت الإجابة  
-        if (self::$REQUEST_STATUS_DONE <= $currStatus) return true;
-
-        return false;
+        return (!in_array($status_id, $status_ongoing_arr));
     }
 
     public function isOngoing()
@@ -1608,8 +1698,13 @@ class Request extends CrmObject
         return [false, "No customer id=$customer_id found for this request", ""];
     }
 
+    public function customerChangeStatus($new_status_id, $status_comment, $status_action_enum)
+    {
+        return $this->changeStatus($new_status_id, $status_comment, $status_action_enum, "N", false, 0, null, null, true);
+    }
 
-    public function changeStatus($new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false, $question_id=0, $employee_id=null)
+
+    public function changeStatus($new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false, $question_id=0, $objOrgunit=null, $objEmployee=null, $fromCustomer=false, $fromJob=false)
     {
         $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
@@ -1618,8 +1713,44 @@ class Request extends CrmObject
         $warnings = "";
         $infos = "";
         $technicals = "";
-        $objme = AfwSession::getUserConnected();
-        if(!$employee_id) $employee_id = ($objme) ? $objme->getEmployeeId() : 0;
+        /**
+         * @var Employee $objEmployee
+         */
+        $objEmployee= null;
+
+        if($fromCustomer)
+        {
+            $objEmployee = Employee::getCustomerEmployee();
+            $objOrgunit = null;
+        }
+        elseif($fromJob)
+        {
+            $objEmployeeUser = AfwSession::getUserConnected();
+            if($objEmployeeUser) $objEmployee = $objEmployeeUser->getEmployee();
+            if(!$objEmployee) $objEmployee = Employee::getStandardJobEmployee();
+            $objOrgunit = null;
+        }
+        else
+        {
+            if(!$objEmployee) $objEmployee = $this->het("employee_id");
+            if(!$objOrgunit) $objOrgunit = $this->het("orgunit_id");
+            if((!$objOrgunit) and $objEmployee) $objOrgunit = $objEmployee->het("id_sh_dep");
+        }
+        
+        
+        /*if($objEmployee) $objEmployeeUser = $objEmployee->het("auser_id");
+        
+        if(!$objEmployeeUser) 
+        {
+            $objEmployeeUser = AfwSession::getUserConnected();
+            $orgunit_id = ($objEmployeeUser) ? $objEmployeeUser->getMyDepartmentId() : 0;
+        }*/
+        
+        
+        $employee_id = ($objEmployee) ? $objEmployee->id : 0;
+        $orgunit_id = ($objOrgunit) ? $objOrgunit->id : 0;
+        
+        
         $old_status = $this->getVal("status_id");
         if (($new_status_id == Request::$REQUEST_STATUS_DRAFT) and (!$this->getVal("status_id"))) $silent_force = true;
 
@@ -1637,9 +1768,8 @@ class Request extends CrmObject
                             if(!$orgunit_id) 
                             */
                 
-                $orgunit_id = 0;
-                if ($employee_id == $this->getVal("employee_id")) $orgunit_id = $this->getVal("orgunit_id");
-                if (!$orgunit_id) $orgunit_id = ($objme) ? $objme->getMyDepartmentId() : 0;
+                
+                
 
                 // AfwSession::pushInformation("rafik-debugg : creating new response"); 
                 $resoObj = Response::createNewResponse(
@@ -1816,13 +1946,13 @@ class Request extends CrmObject
     }
 
 
-    public function sendRequest($lang = "ar")
+    public function sendRequest($lang = "ar", $internal = "N", $objOrgunit = null, $objEmployee = null)
     {
         $old_status = $this->getVal("status_id");
         $old_supervisor_id = $this->getVal("supervisor_id");
         // send the request 
         $status_comment = "تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة";
-        $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("sendRequest")); 
+        $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("sendRequest"), $internal, $silent = false, $question_id = 0, $objOrgunit, $objEmployee); 
 
 
         $development_mode = AfwSession::config("development_mode", false);
@@ -1881,13 +2011,14 @@ class Request extends CrmObject
     public function resetRequestNew($lang = "ar")
     {
         $objme = AfwSession::getUserConnected();
+        $employeeObj = $objme->getEmployee(); // , "N", false, 0, null, $employeeObj
         /*
             if($objme) 
                $status_comment = "تعديل حالة التذكرة بطلب من الموظف ".$objme->getDisplay($lang);
             else*/
         $status_comment = "يمكن للعميل اجراء التعديلات على طلبه الآن";
 
-        $this->changeStatus(self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"));
+        $this->changeStatus(self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"), "N", false, 0, null, $employeeObj);
         return array("", $status_comment);
     }
 
@@ -1897,25 +2028,31 @@ class Request extends CrmObject
     }
 
 
-    public function assignRequest($employeeId, $lang = "ar")
+    public function assignRequest($employeeId, $lang = "ar", $internal = "Y")
     {
         /*
         if ($this->getVal("employee_id") == $employeeId) {
             return array("الطلب مسند من قبل لهذا الموظف", "");
         }*/
 
-        if ((!$employeeId) and $this->getVal("employee_id") > 0) die("strange attempt to unassign the request ID=" . $this->id);
+        if ((!$employeeId) and $this->getVal("employee_id") > 0) throw new AfwRuntimeException("strange attempt to unassign the request ID=" . $this->id);
+        if (!$employeeId) return array("", "attempt to unassign the request nothing-done");
+
         $this->set("employee_id", $employeeId);
+
+        $objOrgunit = null;
+        $objEmployee = $this->het("employee_id");
         $this->set("assign_date", AfwDateHelper::currentHijriDate());
         $this->set("assign_time", date("H:i:s"));
         $this->commit();
         if ($employeeId > 0) {
             $status_comment = date("H:i:s") . ": تم اسناد الطلب [" . $this->id . "] للموظف(ة) $employeeId " . $this->showAttribute("employee_id");
             // if($employeeId == 1790) AfwRunHelper::unSafeDie("case of employeeId = $employeeId");
-            $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("assignRequest"), $internal = "Y");
+            $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("assignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         } else {
+            // should never happen as above we test  if (!$employeeId) return ....
             $status_comment = "الطلب في انتظار الاسناد ";
-            $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("unAssignRequest"), $internal = "Y");
+            $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("unAssignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         }
         // AfwRunHelper::safeDie($status_comment, "employee_id = ". $employeeId);
         return array("", $status_comment);
@@ -2007,7 +2144,30 @@ class Request extends CrmObject
         if ($respObj) $respObj->approveIfNotApproved();
 
         $status_comment = "تم غلق الطلب";
-        $resoObj = $this->changeStatus(self::$REQUEST_STATUS_CLOSED, $status_comment, self::status_action_by_code("closeRequest"));
+        $internal = "N";
+        $silent = false;
+        $question_id = 0;
+        $objOrgunit = null;
+        $objme = AfwSession::getUserConnected();
+        $objEmployee = ($objme) ? $objme->getEmployee() : null;
+        
+        $resoObj = $this->changeStatus(self::$REQUEST_STATUS_CLOSED, $status_comment, self::status_action_by_code("closeRequest"),$internal, $silent, $question_id, $objOrgunit, $objEmployee);
+
+
+        return array("", $status_comment);
+    }
+
+    public function archiveRequest($lang = "ar")
+    {
+        $status_comment = "تم أرشفة الطلب";
+        $internal = "Y";
+        $silent = false;
+        $question_id = 0;
+        $objOrgunit = null;
+        $objme = AfwSession::getUserConnected();
+        $objEmployee = ($objme) ? $objme->getEmployee() : null;
+        
+        $resoObj = $this->changeStatus(self::$REQUEST_STATUS_IGNORED, $status_comment, self::status_action_by_code("archiveRequest"), $internal, $silent, $question_id, $objOrgunit, $objEmployee);
 
 
         return array("", $status_comment);
@@ -2016,7 +2176,14 @@ class Request extends CrmObject
     public function rejectRequest($lang = "ar")
     {
         $status_comment = "تم رفض الطلب";
-        $this->changeStatus(self::$REQUEST_STATUS_REJECTED, $status_comment, self::status_action_by_code("rejectRequest"));
+        $internal = "N";
+        $silent = false;
+        $question_id = 0;
+        $objOrgunit = null;
+        $objme = AfwSession::getUserConnected();
+        $objEmployee = ($objme) ? $objme->getEmployee() : null;
+
+        $this->changeStatus(self::$REQUEST_STATUS_REJECTED, $status_comment, self::status_action_by_code("rejectRequest"),$internal, $silent, $question_id, $objOrgunit, $objEmployee);
         return array("", $status_comment);
     }
 
@@ -2388,6 +2555,23 @@ class Request extends CrmObject
 
         $selects = array();
         $this->select_visibilite_horizontale_default($dropdown, $selects);
+    }
+
+    
+
+    public function calcTip_of_day($what="value")
+    {
+        $tip_of_day_arr = [];
+        $tip_of_day_arr[] = ["ar"=>"في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en"=>"In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
+        $lang = AfwSession::getSessionVar("current_lang");
+        if(!$lang) $lang = "ar";
+        $countTOD = count($tip_of_day_arr);
+        $k = rand(0, $countTOD-1);
+        $tip_of_day = $tip_of_day_arr[$k][$lang];
+        if(!$tip_of_day) $tip_of_day = " tip_of_day_arr[$k][$lang] from tip_of_day_arr = ".var_export($tip_of_day_arr, true);
+        $html = "<div class='tip_of_day'>$tip_of_day</div>";
+
+        return $html;
     }
 
 
@@ -2978,12 +3162,17 @@ class Request extends CrmObject
 
     public static function silentAssignSupervisorForNonAssigned($lang = "ar", $limit = "200")
     {
-        return self::assignSupervisorForNonAssigned($reset = false, $silent = true, $lang, $limit);
+        return self::assignSupervisorForNonAssigned($reset = true, $silent = true, $lang, $limit, $jobContext="silentAssignSupervisorForNonAssigned");
     }
 
     public static function silentCloseOldDoneRequests($lang = "ar", $limit = "200")
     {
         return self::closeOldDoneRequests($silent = true, $lang, $limit);
+    }
+
+    public static function silentArchiveOldRequests($lang = "ar", $limit = "200")
+    {
+        return self::archiveOldRequests($silent = true, $lang, $limit, $jobContext="silentArchiveOldRequests");
     }
 
     public static function silentRestoreLostRequests($lang = "ar", $limit = "100")
@@ -3008,6 +3197,10 @@ class Request extends CrmObject
 
         $errors_arr = array();
         $infos_arr = array();
+
+        /**
+         * @var Request $reqItem
+         */
 
         foreach ($reqList as $reqItem) {
             list($err, $info) = $reqItem->sendRequest($lang);
@@ -3052,6 +3245,56 @@ class Request extends CrmObject
         $nb_errs = count($errors_arr);
 
         $infos_arr[] = "bootstrapped " . count($reqList) . " request(s) with $nb_errs error(s)";
+
+        if ((!$silent) and (count($errors_arr) > 0)) {
+            AfwSession::pushError(implode("<br>", $errors_arr));
+        }
+
+        if ((!$silent) and (count($infos_arr) > 0)) {
+            AfwSession::pushInformation(implode("<br>", $infos_arr));
+        }
+
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+    }
+
+
+
+    public static function archiveOldRequests($silent = false, $lang = "ar", $limit = "200", $jobContext=null)
+    {
+        $obj = new Request();
+
+        // we consider old 3 days after status become done 
+        $period_archive = AfwSession::config("period_archive_requests", 90);
+        $old_request_date = AfwDateHelper::shiftHijriDate("", -$period_archive);
+        $finished_or_ongoing = explode(",", self::$REQUEST_STATUSES_FINISHED);
+        $finished_or_ongoing[] = self::$REQUEST_STATUS_ONGOING;
+        $finished_or_ongoing[] = self::$REQUEST_STATUS_ASSIGNED;
+        // missed info missed files we wait more than 90 days will be defined later
+        $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_INFO;
+        $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_FILES;
+        $obj->selectNotIn("status_id", $finished_or_ongoing);
+        $obj->where("request_date <= '$old_request_date'");
+
+        $reqList = $obj->loadMany($limit, "request_date asc");
+
+        $errors_arr = array();
+        $infos_arr = array();
+
+        $total = count($reqList);
+        $doing = 0;
+
+        foreach ($reqList as $reqId => $reqItem) {
+            $doing++;
+            if($jobContext) AfwBatch::print_comment("----------------------- JOB archiveOldRequests Context : ".$jobContext." For Request ID = $reqId ($doing / $total) -----------------------");
+            list($err, $info) = $reqItem->archiveRequest($lang);
+
+            if ($err) $errors_arr[] = $err;
+            if ($info) $infos_arr[] = $info;
+        }
+
+        $nb_errs = count($errors_arr);
+
+        $infos_arr[] = "closed " . count($reqList) . " request(s) with $nb_errs error(s)";
 
         if ((!$silent) and (count($errors_arr) > 0)) {
             AfwSession::pushError(implode("<br>", $errors_arr));
@@ -3148,7 +3391,7 @@ class Request extends CrmObject
     }
 
 
-    public static function assignSupervisorForNonAssigned($reset = false, $silent = false, $lang = "ar", $limit = "200")
+    public static function assignSupervisorForNonAssigned($reset = false, $silent = false, $lang = "ar", $limit = "200", $jobContext=null)
     {
         $errors_arr = array();
         $infos_arr = array();
@@ -3158,15 +3401,16 @@ class Request extends CrmObject
         $nb_done = 0;
 
         $obj = new Request();
-
+        if($jobContext) AfwBatch::print_comment("----------------------- JOB Context : ".$jobContext." -----------------------");
         if ($reset) {
             $obj->setForce("supervisor_id", 0);
             $obj->setForce("employee_id", 0);
             $obj->setForce("status_comment", "assignSupervisorForNonAssigned-with-reset");
-            $obj->where("(employee_id = 0 and status_id not in (".self::$REQUEST_STATUSES_NO_NEED_ASSIGN.")) or (orgunit_id = " . self::$CRM_CENTER_ID . ")"); //  or (supervisor_id = 1917 and employee_id = 1791)
+            $obj->where("employee_id = 0 and status_id not in (".self::$REQUEST_STATUSES_NO_NEED_ASSIGN.")"); //  or (supervisor_id = 1917 and employee_id = 1791) //  or (orgunit_id = " . self::$CRM_CENTER_ID . ")
             $nb_rows_rest = $obj->update(false);
             $warn_arr[] = "$nb_rows_rest request(s) assignment has been reset";
         }
+        elseif($jobContext) AfwBatch::print_error("$jobContext >> assignSupervisorForNonAssigned->reset should be true for the moment");
 
         $silent = false;
 
@@ -3174,13 +3418,18 @@ class Request extends CrmObject
         $obj->where("status_id not in (".self::$REQUEST_STATUSES_NO_NEED_ASSIGN.")");
 
         $reqList = $obj->loadMany($limit);
-
-        
-
-        foreach ($reqList as $reqItem) {
+        $total = count($reqList);
+        $doing = 0;
+        foreach ($reqList as $reqId => $reqItem) 
+        {
+            $doing++;
+            if($jobContext) AfwBatch::print_comment("----------------------- JOB Context : ".$jobContext." assignBestAvailableSupervisor For Request ID = $reqId ($doing / $total) -----------------------");
             list($err, $info) = $reqItem->assignBestAvailableSupervisor($lang, $pbm = true, $commit = true, $re_distribution = false);
 
-            if ($err) { $tech_arr[] = "Error : ".$err; $nb_errs++; }
+            if ($err) { 
+                $tech_arr[] = "Error : ".$err; $nb_errs++; 
+                if($jobContext) AfwBatch::print_error(">> $jobContext >> Error : .$err");
+            }
             else $nb_done++; 
             if ($info) $tech_arr[] = $info;
         }
@@ -3209,6 +3458,10 @@ class Request extends CrmObject
         $crmRes = array("best" => $best_supervisor_id, "res" => $crmEmpl, 'all' => $allList);
         // AfwRunHelper::safeDie("CrmEmployee::get BestAvailableSupervisor() returned object : ", "", true, $crmRes);
 
+        /**
+         * @var CrmEmployee $crmEmplObj
+         * 
+         */
         $crmEmplObj = $crmEmpl["obj"];
 
         // assign this Request to this supervisor
@@ -3356,8 +3609,8 @@ class Request extends CrmObject
 
     public static function inboxSqlCond($role, $employee_id, $prefix = "me.")
     {
-        if ($role == "supervisor") return "${prefix}supervisor_id='$employee_id' and ${prefix}status_id in (2, 3, 301)";
-        if ($role == "investigator") return "${prefix}employee_id='$employee_id' and ${prefix}status_id in (2, 201, 4) ";
+        if ($role == "supervisor")   return $prefix."supervisor_id='$employee_id' and ".$prefix."status_id in (".self::$REQUEST_STATUSES_ONGOING_SUPERVISOR.")";
+        if ($role == "investigator") return $prefix."employee_id='$employee_id' and ".$prefix."status_id in (".self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR.") ";
     }
 
     public function maxRecordsUmsCheck()
@@ -3573,9 +3826,49 @@ class Request extends CrmObject
             $arr_list_of_status_action  ["ar"][16] = "تمت كتابة رد مع تغيير الحالة";
             $arr_list_of_status_action["code"][16] = "responseCreatedStatusUpdated";
 
+            $arr_list_of_status_action  ["en"][17] = "request archived";
+            $arr_list_of_status_action  ["ar"][17] = "تمت أرشفة الطلب";
+            $arr_list_of_status_action["code"][17] = "archiveRequest";
+
+            
+
             
 
             
             return $arr_list_of_status_action;
     } 
+
+    public function getAttributeLabel($attribute, $lang = "ar", $short = false)
+    {
+            if ($attribute == "ref_num") {
+                    // $customerTypeObj = $this->hetType();
+                    if (!$lang) $lang = "ar";
+                    $custTypeLogic = AfwSession::config("cust_type_logic", []);                
+                    // $customerTypeId = $customerTypeObj->id;            
+                    $customerTypeId = $this->getVal("customer_type_id");
+                    $return = $custTypeLogic[$customerTypeId]["ref_num"]["title_$lang"];
+                    // $customerType is no more object
+                    // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("ref_$lang");
+                    if (!$return) $return = "<!-- unnkown ref_num label for customer type $customerTypeId for lang $lang -->";
+
+                    return $return;
+            }
+
+
+            if ($attribute == "org_name") {
+                    // $customerTypeObj = $this->hetType();
+                    if (!$lang) $lang = "ar";
+                    $custTypeLogic = AfwSession::config("cust_type_logic", []);                
+                    // $customerTypeId = $customerTypeObj->id;
+                    $customerTypeId = $this->getVal("customer_type_id");
+                    $return = $custTypeLogic[$customerTypeId]["org_name"]["title_$lang"];
+                    // $customerType is no more object
+                    // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("org_name_$lang");
+                    if (!$return) $return = "<!-- unknown org_name label for customer type $customerTypeId for lang $lang -->";
+
+                    return $return;
+            }
+
+            return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+    }
 }

@@ -1359,7 +1359,7 @@ class CrmController extends AfwController
                                                 $action_completed = "تم الانتهاء من استكمال البيانات واعادة الطلب الى مكتب خدمة العملاء";
                                                 $action_enum = Request::status_action_by_code("dataCompleted");
                                         }
-                                        list($responseObj2,) = $reqObj->changeStatus(Request::$REQUEST_STATUS_ONGOING, $action_completed, $action_enum);
+                                        list($responseObj2,) = $reqObj->customerChangeStatus(Request::$REQUEST_STATUS_ONGOING, $action_completed, $action_enum);
                                 }
                         }
 
@@ -1523,111 +1523,5 @@ class CrmController extends AfwController
         }
 
 
-        /******************************** register action ********************************************** */
-        /*
-        public function prepareRegister($request)
-        {
-                $custom_scripts = $this->prepareStandard($request);
 
-                return $custom_scripts;
-        }
-
-        public function register($request)
-        {
-                $data = $request;
-                // echo("request = ".var_export($request,true)."<br><br>");
-                foreach ($request as $key => $value) $$key = $value;
-                $data["cityList"] = City::loadAll();
-
-                $theCustomer = AfwSession::getCustomerConnected();
-
-                if ($theCustomer) {
-                        $data["city_id"] = $theCustomer->getVal("city_id");
-                        $data["your_full_name"] = $theCustomer->getVal("full_name");
-                        $data["customer_mobile"] = $theCustomer->getVal("mobile");
-                        $data["customer_idn"] = $theCustomer->getVal("idn");
-                }
-
-                if (!$data["city_id"]) $data["city_id"] = 301; //RIYADH
-                // call the view 1
-                $this->render("crm", "register_company", $data);
-
-                // call the view 2
-                $this->render("crm", "best_offers", $data);
-        }
-
-
-        public function prepareSubmit_register($request)
-        {
-                $custom_scripts = $this->prepareStandard($request);
-
-                return $custom_scripts;
-        }
-
-        public function submit_register($request)
-        {
-                foreach ($request as $key => $value) $$key = $value;
-                $data = $request;
-                AfwAutoLoader::addMainModule("crm");
-
-                if ((!$customer_idn) or (!$customer_mobile)) {
-                        $theCustomer = AfwSession::getCustomerConnected();
-                        if ($theCustomer) {
-                                $customer_mobile = $theCustomer->getVal("mobile");
-                                $customer_idn = $theCustomer->getVal("idn");
-                                $your_full_name = $theCustomer->getVal("full_name");
-                        }
-
-                        if (!$customer_idn) $customer_idn = "ANONYM-" . date("YmdHis");
-                }
-                if (!$trade_idn) $trade_idn = "NIN-" . $customer_idn . "-" . $customer_mobile;
-                $mobile = trim($mobile);
-                $crmObj = CrmCustomer::loadByMainIndex($mobile, 70, $customer_idn, $create_obj_if_not_found = true);
-                if ($crmObj->getVal("customer_orgunit_id") > 0) {
-                        $data["all_error"] = "هذا السجل التجاري تم تسجيله سابقا";
-                } else {
-                        list($first_name, $father_name, $last_name) = AfwStringHelper::arabic_full_name_explode($company_name);
-                        if (!$father_name) $father_name = "للعمرة";
-                        if (!$last_name) $last_name = "والزيارة";
-
-                        $crmObj->set("first_name_ar", $first_name);
-                        $crmObj->set("father_name_ar", $father_name);
-                        $crmObj->set("last_name_ar", $last_name);
-
-                        list($first_name_en, $father_name_en, $last_name_en) = AfwStringHelper::arabic_full_name_explode($your_full_name);
-                        $crmObj->set("first_name_en", $first_name_en);
-                        $crmObj->set("father_name_en", $father_name_en);
-                        $crmObj->set("last_name_en", $last_name_en);
-
-                        $crmObj->set("phone", $customer_mobile);
-                        $crmObj->set("other_city", $web_site);
-
-                        $crmObj->set("customer_type_id", 5);  // travel company
-                        $crmObj->set("ref_num", trim($trade_idn));
-                        $crmObj->set("city_id", $city_id);
-                        $crmObj->set("email", trim($email));
-                        $crmObj->set("gender_id", 1);
-                        $crmObj->commit();
-
-                        if (!$crmObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($crmObj, ));
-                        }
-                }
-
-                if (!$data["all_error"]) {
-                        // call the view 1
-                        $this->render("crm", "register_company_done", $data);
-
-                        // call the view 2
-                        $this->render("crm", "best_offers", $data);
-                } else {
-                        $data["cityList"] = City::loadAll();
-                        // call the view 1
-                        $this->render("crm", "register_company", $data);
-
-                        // call the view 2
-                        $this->render("crm", "best_offers", $data);
-                }
-        }
-        */
 }

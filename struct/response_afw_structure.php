@@ -1,6 +1,28 @@
 <?php
 class CrmResponseAfwStructure
 {
+	public static function initInstance(&$obj)
+	{
+		if ($obj instanceof Response) {
+				$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+                $obj->DISPLAY_FIELD = "";
+                $obj->ORDER_BY_FIELDS = "request_id, response_date desc, response_time desc";
+
+
+                $obj->UNIQUE_KEY = array('request_id', 'response_date', 'response_time');
+
+                $obj->showQeditErrors = true;
+                $obj->showRetrieveErrors = true;
+                $obj->public_display = true;
+                $obj->public_edit = true;
+
+                $obj->after_save_edit = array("class" => 'Request', "attribute" => 'request_id', "currmod" => 'crm', "currstep" => 4);
+		} else {
+			// ResponseArTranslator::initData();
+			// ResponseEnTranslator::initData();
+		}
+	}
+
 	public static $DB_STRUCTURE = array(
 
 
@@ -141,6 +163,23 @@ class CrmResponseAfwStructure
 			'ERROR-CHECK' => true,
 			'FGROUP' => 'request',
 		),
+
+						'dyn_response_date' => array(
+							'SHOW' => false,
+							'EDIT' => false,
+							'QEDIT' => false,
+							'SIZE' => 10,
+							'CATEGORY' => 'FORMULA',
+							'UTF8' => false,
+							'TYPE' => 'TEXT',
+							'READONLY' => false,
+							'SEARCH-BY-ONE' => false,
+							'DISPLAY' => false,
+							'STEP' => 99,
+							'DISPLAY-UGROUPS' => '',
+							'EDIT-UGROUPS' => '',
+							'ERROR-CHECK' => true,
+						),
 
 		'response_time' => array(
 			'SEARCH' => true,

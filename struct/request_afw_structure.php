@@ -32,11 +32,11 @@ class CrmRequestAfwStructure
 
 
 		'id' => array(
-			'FGROUP' => 'request_text',  'STEP' => 1,
+			'FGROUP' => 'request_text',  'STEP' => 99,
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'EXCEL' => true,
-			'EDIT' => true,
+			'EDIT' => false,
 			'TYPE' => 'PK',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => true,
@@ -898,6 +898,21 @@ class CrmRequestAfwStructure
 			'ANSWER' => 'FUNCTION',
 			'READONLY' => false,
 			'CSS' => 'width_pct_50',
+		),
+		
+		'tip_of_day' => array(
+			'FGROUP' => 'tip_of_day',  
+			'STEP' => 1,
+			'TYPE' => 'TEXT',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'NO-LABEL' => true,
+			'CATEGORY' => 'FORMULA',
+			'ROWS' => 5,
+			'FORMAT' => 'TOHTML',
+			'READONLY' => true,
+			'CSS' => 'width_pct_100',
 		),
 
 		'days_investigator' => array(
