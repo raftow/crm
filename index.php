@@ -57,5 +57,12 @@ elseif($customerMe)  // يدخل كعميل
 }
 else
 {
-        include("$file_dir_name/../crm/customer_login.php");
+        if(AfwSession::wasUser())
+        {
+                include("$file_dir_name/../crm/login.php");
+        }
+        else
+        {
+                include("$file_dir_name/../crm/customer_login.php");
+        }        
 }

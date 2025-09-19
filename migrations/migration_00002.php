@@ -3,7 +3,14 @@ if(!class_exists("AfwSession")) die("Denied access");
 
 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 try
-{
+{   
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add late_days smallint;"); 
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add perf_stats_days smallint;");
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add standard_stats_days smallint;");
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add satisfaction_stats_days smallint;");
+    
+
+    /*
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response CONVERT TO CHARACTER SET utf8mb4;");
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_customer add org_name varchar(64) after ref_num;");
 
@@ -14,7 +21,7 @@ try
     AfwDatabase::db_query("INSERT INTO ".$server_db_prefix."hrm.`employee` VALUES 
             (2,1,'2024-12-26 07:54:05',1,'2024-12-26 07:54:05',NULL,NULL,'Y',NULL,NULL,NULL,NULL,NULL,2,1,'المهمة',NULL,NULL,'الآلية','Scheduled',NULL,NULL,'Task',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
             (3,1,'2025-09-07 18:05:23',1,'2025-09-07 18:06:31',0,NULL,'Y',3,NULL,NULL,NULL,0,1654,1,'عميل','','','المؤسسة','Customer','','','TVTC','',183,'',1,1,9323,33,NULL,'customer@tvtc.com','102050','','','customer@tvtc.com','','',NULL,'','',NULL,'',NULL,NULL,NULL,NULL,'');    ");
-    
+    */
     
 }
 catch(Exception $e)

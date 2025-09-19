@@ -1,12 +1,12 @@
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
-            <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $customer_module_banner ?>" class="award_home_image"></a>
+            <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
 </div>    
 <div class="content_form_bg">
 <div class="content_big_title registration">تقديم طلب إلى <?php echo AfwSession::config("crm_responder", "مكتب خدمة العملاء"); ?></div>
 <div id="container_div" class="table_div">
 <div id="container_right_div" class="table_cell_div content_form">
-<form id="crm_form" method="POST">
+<form id="crm_form" method="POST" enctype="multipart/form-data" action="i.php">
 <?php
         $customer_mobile_readonly = "readonly";
         $customer_idn_readonly = "readonly";
@@ -25,7 +25,7 @@
         <div class="">
                 <h5 class="greentitle"><i></i>بيانات صاحب الطلب </h5>
         </div>        
-        <div id="group_customer_data" class="" aria-expanded="true" style="">
+        <div id="group_customer_data" class="" aria-expanded="true">
                 <!-- fg-your_full_name -->
                 <div id="fg-your_full_name" class="attrib-your_full_name form-group width_pct_100 ">
                         <label for="your_full_name" class="hzm_label hzm_data_your_full_name label_required">اسمك الكامل  
@@ -55,7 +55,7 @@
         <div class="">
                 <h5 class="greentitle"><i></i>بيانات الطلب </h5>
         </div>        
-        <div id="group_company_data" class="" aria-expanded="true" style="">
+        <div id="group_company_data" class="" aria-expanded="true">
                 <!-- fg-region -->
                 <div id="fg-region" class="attrib-region form-group width_pct_100 ">
                         <label for="region" class="hzm_label hzm_data_region label_required">المنطقة التي يقع فيها الطلب</label>                  
@@ -120,12 +120,14 @@ foreach($custTypeLogic as $custTypeId => $custTypeLogicRow)
                 if($ct_org_name_label)
                 {
                         $js_org_name_label = "$(\"#org_name_div\").removeClass(\"hide\");
+                    $(\"#org_name\").attr(\"required\", \"true\");    
                     $(\"#label_org_name\").text('$ct_org_name_label');";
                 }
 
                 if($ct_ref_num_label)
                 {
                         $js_ref_num_label = "$(\"#ref_num_div\").removeClass(\"hide\");
+                    $(\"#ref_num\").attr(\"required\", \"true\");
                     $(\"#label_ref_num\").text('$ct_ref_num_label');";
                 }
 
@@ -143,6 +145,8 @@ $js_for_cust_type = "function register_customer_type_id_changed()
     customer_type_id = $(\"#customer_type_id\").val();
     $(\"#org_name_div\").addClass(\"hide\");
     $(\"#ref_num_div\").addClass(\"hide\");
+    $(\"#org_name\").attr(\"required\", \"false\");
+    $(\"#ref_num\").attr(\"required\", \"false\");
     $js_of_cust_type
 }";
 
@@ -157,7 +161,7 @@ echo $js_for_cust_type;
                                 <div id='org_name_div' class="form-group <?php echo $org_name_class ?>">
                                         <label id='label_org_name' class="hzm_label hzm_label_org_name label_mandatory"><?php echo $org_name_label ?>
                                         </label>
-                                        <input type="text" class="form-control" name="org_name" id="org_name" dir="rtl" value="<?php echo $org_name?>" maxlength="48" required>                                        
+                                        <input type="text" class="form-control" name="org_name" id="org_name" dir="rtl" value="<?php echo $org_name?>" maxlength="48"  <?php echo $org_name_required?>>                                        
                                         <?php 
                                                 echo AfwInputHelper::inputErrorsInRequest("org_name", $data);
                                         ?>
@@ -167,7 +171,7 @@ echo $js_for_cust_type;
                                 <!-- fg-ref_num -->
                                 <div id='ref_num_div' class="form-group <?php echo $ref_num_class ?>">
                                         <label id='label_ref_num' class="hzm_label hzm_label_ref_num label_mandatory"><?php echo $ref_num_label ?></label>
-                                        <input type="text" class="form-control" name="ref_num" id="ref_num" dir="rtl" value="<?php echo $ref_num?>" maxlength="48" required>                                        
+                                        <input type="text" class="form-control" name="ref_num" id="ref_num" dir="rtl" value="<?php echo $ref_num?>" maxlength="48" <?php echo $ref_num_required?>>                                        
                                         <?php 
                                                 echo AfwInputHelper::inputErrorsInRequest("ref_num", $data);
                                         ?>                                        

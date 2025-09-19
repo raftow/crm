@@ -1,6 +1,6 @@
 <div class="cms_bg_pic contact">    
 <div class='hzm_left_image award award_glue'>
-            <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $customer_module_banner ?>" class="award_home_image"></a>
+            <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
 </div>  
 <div class="content_big_title registration">بطاقة طلب</div>
 <div class="cms_bg">
@@ -117,17 +117,19 @@
                                                  */
                                                 foreach($responseList as  $responseItem)
                                                 {
-                                                        if($responseItem->id != $LAResponseId)
+                                                        if(true) // ($responseItem->id != $LAResponseId) because it hides also last responses/questions/comments
                                                         {
-                                                        $repCount++;
-                                                        $css_resp = strtolower($responseItem->calcResponse_aut("value", "en"))."-crm ";
-                                                        $full_response_date = ($ds == "hijri") ? $responseItem->fullHijriDate("response_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($responseItem->getVal("response_date")));
+                                                                $repCount++;
+                                                                $css_resp = strtolower($responseItem->calcResponse_aut("value", "en"))."-crm ";
+                                                                $full_response_date = ($ds == "hijri") ? $responseItem->fullHijriDate("response_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($responseItem->getVal("response_date")));
+                                                                $short_response = $responseItem->getShortDisplay($lang);
+                                                                $short_response = AfwReplacement::trans_replace($short_response, "crm", $lang);
                                 ?>
                                         <div class="row <?php echo $odd.$css_resp?>crm_data crm_response type<?php echo $responseItem->getVal("response_type_id")?>">
                                                 <div class='hzm_small_calendar calendar_left'>
                                                         <span class="hzm_small_date"><?php echo $full_response_date; ?> </span> 
                                                         <span class="hzm_small_time"><?php echo $responseItem->response_time; ?> </span> 
-                                                        <label><?php echo $responseItem->getShortDisplay($lang);?> </label>
+                                                        <label><?php echo $short_response;?> </label>
                                                 </div>                                                
                                                 <div class='hzm_data_prop hzm_comment'>
                                                         <?php echo $responseItem->showAttribute("response_text"); ?> 
@@ -136,8 +138,8 @@
                                         </div>
                                 
                                 <?php 
-                                                        if($odd=="even ") $odd = "odd ";
-                                                        else $odd = "even ";
+                                                                if($odd=="even ") $odd = "odd ";
+                                                                else $odd = "even ";
                                                         }
                                                 }        
                                         }

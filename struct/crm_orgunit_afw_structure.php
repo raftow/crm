@@ -83,7 +83,9 @@
 
 					'currentRequests' => array('STEP' => 3,  
 							'TYPE' => 'FK',  'ANSWER' => 'request',  'ANSMODULE' => 'crm',  
-							'CATEGORY' => 'ITEMS',  'ITEM' => '', 'DO-NOT-RETRIEVE-COLS' => ['man','service_satisfied'],
+							'CATEGORY' => 'ITEMS',  'ITEM' => '', 
+							'DO-NOT-RETRIEVE-COLS' => ['man','service_satisfied','supervisor_id'],
+							'FORCE-RETRIEVE-COLS' => ['days_delay'],
 							'WHERE' => "request_date >= §archive_date§ 
 							        and supervisor_id > 0 and orgunit_id > 0 
 									and orgunit_id = §orgunit_id§ 
@@ -120,6 +122,35 @@
 							'HIDE_COLS' => ["orgunit_id"],
 							'FORMAT' => 'retrieve',  'SHOW' => true, 'RETRIEVE' => false,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+							),
+							
+
+						'perf_stats_days' => array('SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  
+							'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32, 'CSS' => 'width_pct_25', 
+							'MANDATORY' => true,  'UTF8' => false,  
+							'TYPE' => 'INT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 5,  
+							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
+							),	
+
+						'standard_stats_days' => array('SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  
+							'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32, 'CSS' => 'width_pct_25', 
+							'MANDATORY' => true,  'UTF8' => false,  
+							'TYPE' => 'INT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 5,  
+							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
+							),
+							
+						'satisfaction_stats_days' => array('SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  
+							'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32, 'CSS' => 'width_pct_25', 
+							'MANDATORY' => true,  'UTF8' => false,  
+							'TYPE' => 'INT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 5,  
+							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
+							),
+
+						'late_days' => array('SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  
+							'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32, 'CSS' => 'width_pct_25', 
+							'MANDATORY' => true,  'UTF8' => false,  
+							'TYPE' => 'INT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 5,  
+							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 							),
 
 

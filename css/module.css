@@ -366,8 +366,8 @@ h2.crm_question {
     font-family: title !important;
     font-size: 21px;
     text-align: center;
-    color: #167868;
-    text-shadow: #6bc9be 1px 1px;
+    color: #ffffff;
+    text-shadow: #1a6383 1px 1px;
 }
 
 .modal-dialog.popup-login-customer {
@@ -382,7 +382,7 @@ h2.crm_question {
     max-width: 350px;
     margin-right: 10% !important;
     margin-left: 30px !important;
-    margin-top: 150px !important;
+    margin-top: 50px !important;
 } 
 
 .modal-dialog.popup-login {
@@ -476,7 +476,7 @@ div.popup-sms-verify>.modal-content {
     max-width: none;
     margin-right: 0 !important;
     margin-left: 0 !important;
-    margin-top: 160px !important;
+    margin-top: 30px !important;
 }   
 
 @media (max-width:1042px)
@@ -642,8 +642,8 @@ div.btnbtsp.btn-success.btnregister {
 .q_new_customer {
     border-radius: 0px;
     padding: 6px 0px 0px 0px;
-    border: 1px solid #8e9b9db0 !important;
-    background-color: #e4eaebb3;
+    border: none;
+    background-color: #e4eaeb26;
     width: 100%;
 }
 
@@ -798,6 +798,9 @@ span.prog-name.prog-archive {
     color:#252121;
 }
 
+
+
+
 .front_bloc.hzm_crm_bloc.ticket.status_8 {
     background-color: #fff3e86e;
     border: 1px solid #db7841;
@@ -897,6 +900,7 @@ span.prog-name.prog-archive {
     float: left;
 }
 
+
 .request_status.status_1 {
     background-color: #ffffff;
     color: #49a1b1;
@@ -927,6 +931,10 @@ span.prog-name.prog-archive {
 .request_status.status_4 {
         background-color: #3599c5;
 }
+
+
+
+
 
 .request_status.status_5 {
         background-color: #1cab23;
@@ -1110,7 +1118,7 @@ div.crm_data.survey>label {
 .hzm_data_prop.hzm_comment {
     width: 100%;
     font-size: 14px;
-    font-weight: bold;
+    /* font-weight: bold;*/
 }
 
 .hzm_small_calendar {
@@ -1284,13 +1292,15 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
 
 .hzm_small_calendar > label {
     display: revert;
-    background-color: #eee6c85c;
-    color: #064839;
+    background-color: #e6ffc1a8;
+    color: #289d0c;
+    border: 1px solid #289d0c;
     font-weight: normal !important;
     line-height: 20px;
     min-height: 20px;
-    padding: 5px 30px;
+    padding: 2px 10px;
     font-size: 14px;
+    margin-right: 10px;
 }
 
 .hzm-quick-view {
@@ -1312,11 +1322,12 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
 
 
 input.btnbtsp.btn-primary.btnregister {
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
     height: 64px;
     font-size: 20px !important;
+    border-radius: 0;
 }
 
 
@@ -1682,17 +1693,15 @@ table.dataTable thead th.stats_orgunit_id, td.stats_orgunit_id {
 
 
 a.btnbtsp.btn_link {
-    color: #c2f9f0;
-    /* font-weight: bold; */
-    font-size: 95%;
-    /* text-decoration: #2892b8; */
+    color: #ffffff;
+    font-size: 80%;
     border: none;
     border-radius: 0;
     background-color: #045c83 !important;
 }
 
 a.btnbtsp.btn_link:hover {
-    background-color: #3eb8bd;
+    background-color: #147578 !important;
     color: white;
     font-weight: normal;
 }
@@ -2950,7 +2959,7 @@ header.top-header {
 }
 
 .hzm_body {
-    background-color: #3b4650;
+    background-color: #559fc2;
 }
 
 .cms_container {
@@ -3065,7 +3074,9 @@ h5.bluetitle.search {
     padding-bottom: 15px;
 }
 
-
+.icon-376:before {
+    content: "\f0ac";
+}
 
 .icon-322:before {
     content: "\f0e8";
@@ -3284,6 +3295,7 @@ input.form-control.customer-login {
 
 div.signin-form>h2.form-title {
     font-size: 16px !important;
+    color: #0a547a;
 }
 
 .wizardv1 .steps_wizardv1 {
@@ -3321,4 +3333,291 @@ div#div_data_tip_of_day {
     width: 100% !important;
     color: #467304;
     margin-top: -10px;
+}
+
+.signin-content>.signin-image {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 0;
+}
+
+.signin-image figure {
+    margin : 0;
+}
+
+.signin-image figure>img {
+    width: 100%;
+}
+
+.signin-content {
+    background-image: url(../../crm/pic/login_banner.jpg) !important;
+    background-size: 82% 100% !important;
+    background-color: transparent !important;
+    background-position: left top !important;
+}
+
+.signin-form {
+    padding-right: 90px !important;
+    border-right: none !important;
+    padding-left: 80px !important;
+    background-color: #70d1ff87 !important;
+}
+
+#signin {
+    margin-bottom: 16px !important;
+    margin-top: 10px !important;
+    margin-left: 40px !important;
+    padding-top: 9px !important;
+    background-color: #0a547a !important;
+}
+
+.signin-form>.register-form>.form-group>input#mail {
+    background-color: #cbefff69 !important;
+}
+
+.signin-form>.register-form>.form-group>input#pwd {
+    background-color: #cbefff69 !important;
+}
+
+.signin-form>.register-form>.form-group>select{
+    background-color: #cbefff69 !important;
+}
+
+body.hzm_body.login {
+    background-color: #def4ff !important;
+}
+
+body.hzm_body.login>.main {
+    background-color: #def4ff !important;
+}
+
+@media screen and (max-width: 832px) {
+    .signin-content {
+        background-size: 200% 100% !important;
+    }
+    
+    #signin {
+        margin-left: 0px !important;
+    }
+
+    .signin-form {
+        padding: 0 40px !important;
+    }
+}
+
+@media screen and (max-width: 688px) {
+    .signin-form {
+        padding: 0 30px !important;
+    }
+}
+
+@media screen and (max-width: 544px) {
+    .signin-form {
+        padding: 0 20px !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .signin-form {
+        padding: 0 10px !important;
+    }
+}
+
+.request-desc {
+    background-color: #53cdf9;
+    padding: 10px;
+    float: right;
+    width: 100%;
+}
+
+h3.request-type {
+    float: right;
+    width: auto;
+    text-align: right;
+    color: white;
+    padding: 2.5px 4px;
+    margin: 0;
+}
+
+h1.request-title {
+    font-family: menu !important;
+    text-shadow: none !important;
+    float: right;
+    margin: 0;
+    text-align: right !important;
+    font-size: 14px !important;
+    padding: 2.2px 4px !important;
+}
+
+h1.request-title.opened {
+    background-color: #179bf8;
+    color: #bcefff;
+}
+
+h1.request-title.closed {
+    background-color: #4e575e;
+    color: #dcdfe0;
+    padding: 1px 4px;
+}
+
+h2.request-text {
+    width: 100%;
+    color: black;
+    float: right;
+    font-size: 15px;
+}
+
+
+h1.request-title.ST1 {
+    background-color: #ffffff;
+}
+
+h1.request-title.ST101 {
+    background-color: #db6a0d;
+}
+
+h1.request-title.ST102 {
+    background-color: #db6a0d;
+}
+
+h1.request-title.ST2 {
+    background-color: #175bc8;
+}
+
+h1.request-title.ST201 {
+    background-color: #179bf8;
+}
+
+h1.request-title.ST3 {
+    background-color: #a035c5;
+}
+  
+h1.request-title.ST301 {
+    background-color: #3599c5;
+}
+  
+h1.request-title.ST4 {
+    background-color: #3599c5;
+}
+  
+h1.request-title.ST5 {
+    background-color: #1cab23;
+}
+
+h1.request-title.ST6 {
+    background-color: #8e8282;
+}
+
+h1.request-title.ST7 {
+    background-color: #649e0e;
+}
+
+h1.request-title.ST8 {
+    background-color: #db7841;
+}
+  
+h1.request-title.ST9 {
+    background-color: red;
+}
+
+
+h3.request-type.complaint {
+    background-color: rgb(178, 18, 87);
+}
+
+h3.request-type.enquiry {
+    background-color: rgb(18, 178, 85);
+}
+
+h3.request-type.grievance {
+    background-color: rgb(213, 22, 28);
+}
+
+h3.request-type.HI {
+    background-color: rgb(31, 1, 14);
+}
+
+h3.request-type.request {
+    background-color: rgb(31, 69, 219);
+}
+
+h3.request-type.suggestion {
+    background-color: rgb(119, 151, 14);
+}
+
+h3.request-type.support {
+    background-color: rgb(39, 136, 232);
+}
+
+
+p.request-status {
+    font-size: 14px;
+    color: white;
+    float: right;
+    background-color: black;
+    margin: 0;
+    padding: 0 3px;
+}
+
+p.request-status.closed {
+    background-color: #5a930c;
+}
+
+p.request-status.closed.waiting {
+    background-color: #e07b07;
+}
+
+div#body_group_request_text {
+    padding: 0;
+    border-radius: 0;
+    border: none !important;
+}
+
+div#group_request_text {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    border: none !important;
+}
+
+div#fg-request_html {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    border: none !important;
+}
+
+div#div_data_request_html {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* late requests */
+tr.csr_request_late.hzm_row_1 {
+    background-color: #fadf208f;
+}
+
+tr.csr_request_late.hzm_row_1>td>span {
+    color: #c20909;
+}
+/* late requests */
+
+table.dataTable.display.stats_table>thead>tr>th.xqe_hf_z, table.dataTable.display.stats_table>tfoot>tr>th.xqe_hf_z {
+    background-color: #53a5e1 !important;
+    color: white !important;
+    font-weight: normal;
+}
+
+table.dataTable.display.stats_table>thead>tr>th.xqe_hf_x, table.dataTable.display.stats_table>tfoot>tr>th.xqe_hf_x {
+    background-color: #165e91 !important;
+    color: white !important;
+    font-weight: normal;
+}
+
+a.stats-cell {
+    padding: 3px 7px;
+    border-radius: 50%;
+    background-color: #0e456a;
+    color: white;
 }

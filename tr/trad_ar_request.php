@@ -14,6 +14,7 @@ class RequestArTranslator
 		$trad["request"]["request_for"] = "متعلق الطلب";
 		$trad["request"]["request_for_help"] = "الجهة المبلغ عنها أو المعنية بالطلب";
 		$trad["request"]["request_text"] = "نص الطلب";
+		$trad["request"]["request_html"] = "الطلب";
 		$trad["request"]["body"] = "نص الطلب";
 		$trad["request"]["props"] = "خصائص الطلب";
 		$trad["request"]["request_code"] = "رمز الطلب";
@@ -26,6 +27,8 @@ class RequestArTranslator
 		$trad["request"]["service_id"] = "الخدمة";
 		$trad["request"]["request_priority"] = "أولوية الطلب";
 		$trad["request"]["prio_icon"] = "الأولوية";
+		$trad["request"]["intitled"] = "بعنوان";
+		
 
 		$trad["request"]["orgunit_id"] = "الجهة المعنية بالطلب";
 		$trad["request"]["employee_id"] = "المنسق المكلف";
@@ -124,16 +127,18 @@ class RequestArTranslator
 
 		$trad["request"]["days_investigator"] = "عدد أيام عمل المنسق";
 		$trad["request"]["days_delay"] = "عدد أيام العمل على التذكرة";
+		$trad["request"]["days_delay.short"] = "أيام التأخير";
 		$trad["request"]["status_action_enum"] = "آخر اجراء على الطلب";
 
 
-		$trad["request"]["stats.gs001"] = "تقرير الأداء لفترة من [date_start_perf] إلى [date_end_perf]";
-		$trad["request"]["stats.gs003"] = "احصائيات الطلبات لفترة من [date_start_stats] إلى [date_end_stats]";
-		$trad["request"]["stats.gs004"] = "الطلبات بحسب حالة الطلب لفترة من [date_start_stats] إلى [date_end_stats]";
-		$trad["request"]["stats.gs005"] = "تقرير رضا العملاء لفترة من [date_start_perf] إلى [date_end_perf]";
-		$trad["request"]["stats.gs006"] = "تقرير حالة الطلبات لفترة من [date_start_perf] إلى [date_end_perf]";
-		$trad["request"]["stats.gs007"] = "تقرير الأداء لجهة معينة لفترة من [date_start_perf] إلى [date_end_perf]";
-		$trad["request"]["stats.gs008"] = "تقرير الأداء لمكتب العلاقات مع العملاء لفترة من [date_start_perf] إلى [date_end_perf]";
+		$trad["request"]["stats.gs001"] = "تقرير الأداء لفترة من [date_start_perf_greg] إلى اليوم";
+		$trad["request"]["stats.gs002"] = "احصائيات الطلبات الجارية";
+		$trad["request"]["stats.gs003"] = "احصائيات الطلبات لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]";
+		$trad["request"]["stats.gs004"] = "عدد التذاكر بحسب حالة الطلب لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]";
+		$trad["request"]["stats.gs005"] = "تقرير رضا العملاء لفترة من [date_start_satisfaction_greg] إلى [date_end_satisfaction_greg]";
+		$trad["request"]["stats.gs006"] = "تقرير حالة الطلبات لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]";
+		$trad["request"]["stats.gs007"] = "تقرير الأداء لجهة معينة لفترة من [date_start_perf_greg]";
+		$trad["request"]["stats.gs008"] = "تقرير الأداء لمكتب العلاقات مع العملاء لفترة من [date_start_perf_greg]";
 		return $trad;
 	}
 

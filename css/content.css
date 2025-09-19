@@ -147,7 +147,7 @@ div.content_form>form>.in-group-customer_data {
     float: right;
     font-size: 34px;
     font-weight: bold;
-    color: #93959f !important;
+    color: #636c6c !important
     /* text-shadow: 4px 4px 8px #f2f9f8;*/
 }
 
@@ -236,6 +236,7 @@ div#fg-warn {
     padding: 25px;
     border: none;
     background-color: #ffffff47;
+    color: #4e7274;
 }
 
 

@@ -139,6 +139,7 @@ class CrmController extends AfwController
                 if (!$options["img-company-path"]) $options["img-company-path"] = "../client-$company/pic";
                 $data_tokens["img-path"] = $options["img-path"];
                 $data_tokens["img-company-path"] = $options["img-company-path"];
+                $data_tokens["img_company_path"] = $options["img-company-path"];
 
                 if ($xmodule) $data_tokens["xmodule"] = "-" . $xmodule;
                 else $data_tokens["xmodule"] = "";
@@ -376,6 +377,7 @@ class CrmController extends AfwController
                 $custom_scripts[] = array('type' => 'js',   'path' => "../lib/js/sweetalert2.min.js");
                 $custom_scripts[] = array('type' => 'js',   'path' => "../lib/js/sweetalert.min.js");
                 $custom_scripts[] = array('type' => 'js',   'path' => "./js/jquery.nicefileinput.js");
+                $custom_scripts[] = array('type' => 'js',   'path' => "./js/edit_request.js");
                 $custom_scripts[] = array('type' => 'css',   'path' => "./css/jquery-nicefileinput-js.css");
 
 
@@ -857,6 +859,11 @@ class CrmController extends AfwController
                         $data["customer_type_id"] = $theCustomer->getVal("customer_type_id");
                         $data["ref_num"] = $theCustomer->getVal("ref_num");
                         $data["org_name"] = $theCustomer->getVal("org_name");
+                        $custTypeLogic = AfwSession::config("cust_type_logic", []);
+                        $org_name_label = $custTypeLogic[$customer_type_id]["org_name"]["title_ar"];
+                        $ref_num_label = $custTypeLogic[$customer_type_id]["ref_num"]["title_ar"];
+                        $data["ref_num_required"] = $ref_num_label ? "required" : "";
+                        $data["org_name_required"] = $org_name_label ? "required" : "";
                         if ($pt) {
                                 $oldTicketObj = Request::loadById($pt);
                                 if ($oldTicketObj and $oldTicketObj->getVal("customer_id") == $theCustomer->id) {
@@ -886,6 +893,8 @@ class CrmController extends AfwController
                 if (!$data["city_id"]) $data["city_id"] = 301; //RIYADH
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
+                $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
+                
                 // call the view 1
                 $this->render("crm", "request_form", $data);
         }

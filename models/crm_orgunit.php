@@ -31,7 +31,7 @@ class CrmOrgunit extends CrmObject{
                 
                 $this->UNIQUE_KEY = array('orgunit_id');
                 $this->editByStep = true;
-                $this->editNbSteps = 4;
+                $this->editNbSteps = 5;
                 
                 $this->showQeditErrors = true;
                 $this->showRetrieveErrors = true;
@@ -82,8 +82,20 @@ class CrmOrgunit extends CrmObject{
            }
            else return null;
         }
+
+        /**
+         * @return CrmOrgunit:
+         */
         
+        public static function loadByCode($code)
+        {
+           list($a, $orgunit_id) = explode("-", $code);    
+           return CrmOrgunit::loadByMainIndex($orgunit_id);           
+        }
         
+        /**
+         * @return CrmOrgunit:
+         */
         
         public static function loadByMainIndex($orgunit_id,$create_obj_if_not_found=false)
         {
@@ -459,6 +471,16 @@ class CrmOrgunit extends CrmObject{
         {
                 return 0;
         }
-             
+
+        public function attributeIsApplicable($attribute)
+        {
+                if (($attribute == "perf_stats_days") or ($attribute == "standard_stats_days") or ($attribute == "satisfaction_stats_days")) {
+                        return ($this->getVal("orgunit_id") == self::$CRM_CENTER_ID);
+                }
+
+                return true;
+        }
+
+
 }
 ?>

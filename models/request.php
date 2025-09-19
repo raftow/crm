@@ -34,7 +34,7 @@ class Request extends CrmObject
     public static $JOB_ROLE_CRM_SUPERVISOR = 107;
     public static $JOB_ROLE_CRM_INVESTIGATOR = 117;
 
-    public static $CRM_CENTER_ID = 70;
+    
 
 
     // COMPLAINT - شكوى  
@@ -144,9 +144,6 @@ class Request extends CrmObject
     // STATUS_CHANGE - تغيير حالة التذكرة  
     public static $RESPONSE_TYPE_STATUS_CHANGE = 3;
 
-
-    public static $MAX_DELAY_BEFORE_CONSIDER_LATE = 7;
-    public static $STATS_PERF_PERIOD = 180;
 
 
     public static $PUB_METHODS = array(
@@ -453,9 +450,10 @@ class Request extends CrmObject
 
     public static $STATS_CONFIG = array(
         "gs001" => array(
-            "STATS_WHERE" => "active = 'Y' and request_date between [date_start_perf] and [date_end_perf]", // 
+            "STATS_WHERE" => "active = 'Y' and request_date >= [date_start_perf]", // [date_end_perf]
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
+            "REPEAT_TITLES_NB_ROWS" => 10,
             "FOOTER_SUM" => true,
             "GROUP_SEP" => ".",
             "GROUP_COLS" => array(
@@ -469,8 +467,10 @@ class Request extends CrmObject
                 5 => array("COLUMN" => "is_support", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_support", "FOOTER_SUM" => true),
                 6 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_request", "FOOTER_SUM" => true),
                 7 => array("COLUMN" => "request_done", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_done", "FOOTER_SUM" => true),
-                8 => array("COLUMN" => "request_late", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_late", "FOOTER_SUM" => true),
-                9 => array("COLUMN" => "request_ongoing", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_ongoing", "FOOTER_SUM" => true),
+                8 => array("COLUMN" => "request_late", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_late", "FOOTER_SUM" => true, 
+                            "URL"=>"main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"),
+                9 => array("COLUMN" => "request_ongoing", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_ongoing", "FOOTER_SUM" => true, 
+                            "URL"=>"main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"),
             ),
 
             "FORMULA_COLS" => array(
@@ -583,7 +583,7 @@ class Request extends CrmObject
 
         ),
         "gs005" => array(
-            "STATS_WHERE" => "active = 'Y' and status_id = 7 and status_date between [date_start_perf] and [date_end_perf]", // 
+            "STATS_WHERE" => "active = 'Y' and status_id = 7 and status_date between [date_start_satisfaction] and [date_end_satisfaction]", // 
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -607,7 +607,7 @@ class Request extends CrmObject
         ),
         
         "gs006" => array(
-            "STATS_WHERE" => "active = 'Y' and status_id not in (5,6,7,8,9) and status_date between [date_start_perf] and [date_end_perf]", // 
+            "STATS_WHERE" => "active = 'Y' and status_id in (101,102,2,201,3,301,4) and request_date between [date_start_stats] and [date_end_stats]", // 
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -633,7 +633,7 @@ class Request extends CrmObject
 
 
         "gs007" => array(
-            "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date between [date_start_perf] and [date_end_perf] and status_id in (201,4)", // 
+            "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date >= [date_start_perf] and status_id in (201,4)", // 
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -668,7 +668,7 @@ class Request extends CrmObject
         ),
 
         "gs008" => array(
-            "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date between [date_start_perf] and [date_end_perf] and status_id in (2,3,301)", // 
+            "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date >= [date_start_perf] and status_id in (2,3,301)", // 
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -2069,7 +2069,7 @@ class Request extends CrmObject
     public function returnRequestToInvestigator($lang = "ar")
     {
         $status_comment = "المنسق المكرم الرجاء إعادة النظر في الرد على هذا الطلب وملاحظة تعليق مشرف خدمة العملاء ";
-        $this->changeStatus(self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("returnRequestToInvestigator"), $internal = "Y");
+        $this->changeStatus(self::$REQUEST_STATUS_ONGOING, $status_comment, self::status_action_by_code("returnRequestToInvestigator"), $internal = "Y");
         return array("", "تمت الإعادة للمنسق مع رسالة : " . $status_comment . ". يفضل أيضا أن يضع مشرف خدمة العملاء تعليقا فيه توجيها لسبب إرجاع الطلب إليه");
     }
 
@@ -2813,30 +2813,69 @@ class Request extends CrmObject
 
     public function calcDate_start_perf()
     {
-        global $period;
-        if (!$period) $period = self::$STATS_PERF_PERIOD;
-        $start_period = self::$MAX_DELAY_BEFORE_CONSIDER_LATE + $period;
+        $start_period = CrmOrgunit::getGlobalCRMCenter()->getVal("perf_stats_days");
         return AfwDateHelper::shiftHijriDate("", -$start_period);
+    }
+
+    public function calcDate_start_perf_greg()
+    {
+        $start_period = CrmOrgunit::getGlobalCRMCenter()->getVal("perf_stats_days");
+        return AfwDateHelper::shiftGregDate("", -$start_period);
     }
 
     public function calcDate_end_perf()
     {
-        $end_period = self::$MAX_DELAY_BEFORE_CONSIDER_LATE;
-        return AfwDateHelper::shiftHijriDate("", -$end_period);
+        return AfwDateHelper::currentHijriDate();
+    }
+
+    public function calcDate_end_perf_greg()
+    {
+        return date("Y-m-d");
+    }
+    
+
+    public function calcDate_start_stats()
+    {
+        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
+        return AfwDateHelper::shiftHijriDate("", -$period);
+    }
+
+    public function calcDate_start_stats_greg()
+    {
+        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
+        return AfwDateHelper::shiftGregDate("", -$period);
     }
 
     public function calcDate_end_stats()
     {
-        global $end;
-        if (!$end) $end = -1;
         return AfwDateHelper::shiftHijriDate("", -1);
     }
 
-    public function calcDate_start_stats()
+    public function calcDate_end_stats_greg()
     {
-        global $period;
-        if (!$period) $period = 30;
+        return AfwDateHelper::shiftGregDate("", -1);
+    }
+
+    public function calcDate_start_satisfaction()
+    {
+        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_stats_days");
         return AfwDateHelper::shiftHijriDate("", -$period);
+    }
+
+    public function calcDate_start_satisfaction_greg()
+    {
+        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_stats_days");
+        return AfwDateHelper::shiftGregDate("", -$period);
+    }
+
+    public function calcDate_end_satisfaction()
+    {
+        return AfwDateHelper::shiftHijriDate("", -1);
+    }
+
+    public function calcDate_end_satisfaction_greg()
+    {
+        return AfwDateHelper::shiftGregDate("", -1);
     }
 
     public function calcRequest_done()
@@ -2871,17 +2910,25 @@ class Request extends CrmObject
 
 
 
-
-    public function calcRequest_late()
+    public static function getLatePeriod()
     {
-        if ($this->isExecuted()) return 0;
+        return CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
+    }
 
-        return ($this->executionDelay() > self::$MAX_DELAY_BEFORE_CONSIDER_LATE) ? 1 : 0;
+    public function calcRequest_late($what="value")
+    {
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        if ($this->isExecuted()) $return = 0;
+        else $return = ($this->executionDelay() > self::getLatePeriod()) ? 1 : 0;
+
+        return ($what=="value") ? $return : self::name_of_boolean($return, $lang);
     }
 
     public function calcDays_delay()
     {
-        return $this->executionDelay();
+        $return = $this->executionDelay();
+        if($return <= self::getLatePeriod()) return 0;
+        else return $return;
     }
 
     public function calcDays_investigator()
@@ -3043,7 +3090,7 @@ class Request extends CrmObject
     public function afterMaj($id, $fields_updated)
     {
         self::lookIfInfiniteLoop();
-        $lang = AfwSession::getSessionVar("current_lang");
+        $lang = AfwLanguageHelper::getGlobalLanguage();
         $objme = AfwSession::getUserConnected();
         // send mail to investigator if is there
         $old_request_priority = 0; // no way to get here in after maj (seems working only in before Maj)
@@ -3263,15 +3310,19 @@ class Request extends CrmObject
     {
         $obj = new Request();
 
-        // we consider old 3 days after status become done 
-        $period_archive = AfwSession::config("period_archive_requests", 90);
-        $old_request_date = AfwDateHelper::shiftHijriDate("", -$period_archive);
+        // the archive operation should be at the end of the period of performance report
+        // for coeherence of reports when he click on late or ongoing requests should see same number        
+        $perf_stats_days = self::getGlobalCRMCenter()->getVal("perf_stats_days");
+        $old_request_date = AfwDateHelper::shiftHijriDate("", -$perf_stats_days);
         $finished_or_ongoing = explode(",", self::$REQUEST_STATUSES_FINISHED);
-        $finished_or_ongoing[] = self::$REQUEST_STATUS_ONGOING;
-        $finished_or_ongoing[] = self::$REQUEST_STATUS_ASSIGNED;
-        // missed info missed files we wait more than 90 days will be defined later
-        $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_INFO;
-        $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_FILES;
+        if(false)
+        {
+            $finished_or_ongoing[] = self::$REQUEST_STATUS_ONGOING;
+            $finished_or_ongoing[] = self::$REQUEST_STATUS_ASSIGNED;
+            $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_INFO;
+            $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_FILES;
+    
+        }
         $obj->selectNotIn("status_id", $finished_or_ongoing);
         $obj->where("request_date <= '$old_request_date'");
 
@@ -3515,7 +3566,7 @@ class Request extends CrmObject
 
         $authenticated_employee_id = ($objme) ? $objme->getEmployeeId() : 0;
 
-        $crmEmplObj = CrmEmployee::auserCrmEmployee($authenticated_employee_id);
+        $crmEmplObj = CrmEmployee::findCrmEmployee($authenticated_employee_id);
 
         $emplObj = null;
         if ($crmEmplObj) {
@@ -3807,11 +3858,11 @@ class Request extends CrmObject
             $arr_list_of_status_action["code"][11] = "unCloseRequest";
 
             $arr_list_of_status_action  ["en"][12] = "close Request";
-            $arr_list_of_status_action  ["ar"][12] = "غلق الطلب";
+            $arr_list_of_status_action  ["ar"][12] = "تم غلق الطلب";
             $arr_list_of_status_action["code"][12] = "closeRequest";
 
             $arr_list_of_status_action  ["en"][13] = "reject Request";
-            $arr_list_of_status_action  ["ar"][13] = "رفض الطلب";
+            $arr_list_of_status_action  ["ar"][13] = "تم رفض الطلب";
             $arr_list_of_status_action["code"][13] = "rejectRequest";
 
             $arr_list_of_status_action  ["en"][14] = "files Uploaded";
@@ -3871,4 +3922,45 @@ class Request extends CrmObject
 
             return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
     }
+
+    public function calcRequest_html($what = "value")
+    {
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        $request_late = $this->calc("request_late");
+        if($request_late>=2) $request_late_color = "red";
+        elseif($request_late>=1) $request_late_color = "orange";
+        else $request_late_color = "good";
+        $request_typeObj = $this->het("request_type_id");
+        if($request_typeObj) $request_type_code = $request_typeObj->getVal("lookup_code");
+        else $request_type_code = "unknown";
+        $status_id = $this->getVal("status_id");
+        $request_title = $this->getVal("request_title");
+        $intitled = $this->getAttributeLabel("intitled", $lang);
+        $request_text = $this->getVal("request_text");
+        $request_type = $this->showAttribute("request_type_id", null, true, $lang);
+        $request_status = $this->showAttribute("status_id", null, true, $lang);
+        $request_status_title = $this->getAttributeLabel("status_id", $lang);
+        $pb_resolved = $this->sureIs("pb_resolved");
+        $resolved_class = $pb_resolved ? "resolved" : "waiting";
+        $isClosed = $this->isClosed();
+        $status_class = $isClosed ? "closed" : "opened";
+        
+        $html = "<div class='request-desc $request_late_color'>";
+        $html .= "<h3 class='request-type $request_type_code'>$request_type $intitled</h3>";
+        $html .= "<h1 class='request-title ST$status_id $status_class'>$request_title</h1>";
+        $html .= "<h2 class='request-text $status_class'>$request_text</h2>";
+        $html .= "<p class='request-status $status_class $resolved_class'>$request_status_title : $request_status</p>";
+        $html .= "</div>";
+
+
+        return $html;
+    }
+
+
+    public function rowCategoryAttribute()
+    {
+        return "request_late:FORMULA";
+    }
+
+
 }

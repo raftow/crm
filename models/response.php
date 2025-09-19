@@ -277,7 +277,14 @@ class Response extends CrmObject
                                 $data[2] = " إلى "    . $data[2];
                         }*/
                 }
-                return implode(" ", $data);
+                $return = implode(" ", $data);
+
+                if(!$this->id) 
+                {
+                        $return = AfwReplacement::trans_replace($return, "crm", $lang);
+                }
+
+                return $return;
         }
 
 
@@ -335,23 +342,14 @@ class Response extends CrmObject
                 return true;
         }
 
-        public function beforeInsert($id, $fields_updated)
-        {
-                $this->set("response_date", AfwDateHelper::currentHijriDate());
-                $this->set("response_time", date("H:i:s"));
-                $reqObj = $this->hetRequest();
-                if ($reqObj) $this->set("orgunit_id", $reqObj->getVal("orgunit_id"));
-
-                return true;
-        }
-
-
+        
         public function calcDyn_response_date($what="value")
         {
                 $system_date_format = AfwSession::currentSystemDateFormat();
                 if($system_date_format=="greg")
                 {
-                        return AfwDateHelper::hijriToGreg($this->getVal("response_date"));
+                        if(!$this->getVal("response_date")) return date("Y-m-d");
+                        else return AfwDateHelper::hijriToGreg($this->getVal("response_date"));
                 }
                 else return $this->getVal("response_date");
         }
@@ -391,6 +389,33 @@ class Response extends CrmObject
                         $this->set("internal", "N");
                 }
 
+                if (!intval($this->getVal("new_status_id"))) {
+                        
+                        $orgunit_id = $this->getVal("orgunit_id");                                
+                        $employee_id = $this->getVal("employee_id");                        
+                        $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
+                        /*
+                        if($employee_id==1748) // bilel
+                        {
+                                throw new AfwRuntimeException("see bilel data : crmEmplObj=".var_export($crmEmplObj, true));
+                        }
+                        */        
+                        if($crmEmplObj->sureIs("approved"))
+                        {
+                                $this->set("new_status_id", Request::$REQUEST_STATUS_DONE);                                  
+                        }
+                        else
+                        {
+                                $this->set("new_status_id", Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION);  
+                                $this->set("internal", "Y");
+                        }
+                        
+                }
+                else
+                {
+                        // throw new AfwRuntimeException("see = this->getVal(new_status_id)=".$this->getVal("new_status_id"));
+                }
+
                 return true;
         }
 
@@ -420,9 +445,9 @@ class Response extends CrmObject
                                         $employee_name = "unknown";
                                         $objme = AfwSession::getUserConnected();
                                         if ($objme) 
-                                                {
+                                        {
                                                 $objEmployee = $objme->getEmployee();
-                                                }
+                                        }
                                         if(!$objEmployee) 
                                         {
                                                 $objEmployee = Employee::getStandardJobEmployee();//$request->het("employee_id");
@@ -511,7 +536,7 @@ class Response extends CrmObject
                                         $orgunit_id = $employeeObj->getVal("id_sh_dep");
                                 }
 
-                                $crmEmplObj = CrmEmployee::auserCrmEmployee($employee_id, $orgunit_id);
+                                $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
                                 if ($crmEmplObj) {
                                         if ($crmEmplObj->sureIs("approved")) return "qinv_";
                                 }
@@ -522,7 +547,7 @@ class Response extends CrmObject
                                         $orgunit_id_request = $reqObj->getVal("orgunit_id");
                                 }
                                 if ($orgunit_id_request != $orgunit_id) {
-                                        $crmEmplObj = CrmEmployee::auserCrmEmployee($employee_id, $orgunit_id_request);
+                                        $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id_request);
                                 }
 
                                 if ($crmEmplObj and $crmEmplObj->sureIs("approved")) return "qinv_";

@@ -21,8 +21,17 @@
 	$trad["crm_orgunit"]["step2"] = "الموظفون";
 	$trad["crm_orgunit"]["step3"] = "الطلبات المسندة";
 	$trad["crm_orgunit"]["step4"] = "تعيين الموظفين";
+	$trad["crm_orgunit"]["step5"] = "إعدادات الاحصائيات";
 
 	$trad["crm_orgunit"]["tempEmployeeList"] = "طلبات تعيين موظف";
+
+	$trad["crm_orgunit"]["perf_stats_days"] = "عدد أيام تقرير الأداء";
+	$trad["crm_orgunit"]["standard_stats_days"] = "عدد أيام تقارير الاحصائيات";
+	$trad["crm_orgunit"]["satisfaction_stats_days"] = "عدد أيام تقرير رضا العملاء";
+	$trad["crm_orgunit"]["late_days"] = "عدد الأيام الأقصى للرد على العميل";
+	$trad["crm_orgunit"]["late_days.tooltip"] = "بعدها يحسب الطلب متأخرا في التقارير";
+	
+	  
 	 
 
 	 

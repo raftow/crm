@@ -53,12 +53,18 @@ $employee_title = $objme->getDisplay($lang);
 $reqList = Request::loadRecords($where_old_still_not_assigned, $limit="5", $order_by="id asc");
 
 $header_trad = array("missed"=>"عدد الطلبات", "name" => 'الادارة - المشرف');
-
-$wb_prefix = AfwLanguageHelper::tt("مرحبا بالمشرف العام لمتابعة عمل مكتب العلاقات مع العملاء");
+if($objme->isSuperAdmin())
+{
+    $wb_prefix = AfwLanguageHelper::tt("Welcome to the General Supervisor of the Customer Happiness and Comfort Platform",$lang);
+}
+else 
+{
+    $wb_prefix = AfwLanguageHelper::tt("Welcome to the General Supervisor of the Customer Relations Office",$lang);
+}
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix $employee_title</div>";
 
-$out_scr .= Page::showPage("crm", "main-page", $lang);
+// $out_scr .= Page::showPage("crm", "main-page", $lang);
 
 $out_scr .= "<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>";
 

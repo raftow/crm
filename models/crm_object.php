@@ -3,6 +3,8 @@
 class CrmObject extends AFWObject
 {
 
+        public static $CRM_CENTER_ID = 70;
+
         // إدارة المنتج	إدارة البيانات العامة للنظام
         public static $AROLE_OF_DATA_SITE = 322;
 
@@ -20,6 +22,15 @@ class CrmObject extends AFWObject
 
         // إدارة البيانات المرجعية للنظام
         public static $AROLE_OF_GENERAL_SUPERVISOR = 376;
+        
+        public static $objCRMCenter = null;
+
+        public static function getGlobalCRMCenter()
+        {
+                if(!self::$objCRMCenter) self::$objCRMCenter = CrmOrgunit::loadByMainIndex(self::$CRM_CENTER_ID);
+
+                return self::$objCRMCenter;
+        }
 
 
         public static function userConnectedIsSupervisor($objme = null)
@@ -97,6 +108,7 @@ class CrmObject extends AFWObject
                 return (($attribute == "created_by") or ($attribute == "created_at") or ($attribute == "updated_by") or ($attribute == "updated_at") or ($attribute == "validated_by") or ($attribute == "validated_at") or ($attribute == "version"));
         }
 
+        
         public static function code_of_customer_type_id($lkp_id=null)
         {
             $lang = AfwLanguageHelper::getGlobalLanguage();
@@ -108,7 +120,8 @@ class CrmObject extends AFWObject
         {
             return self::customer_type()[$lang][$customer_type_id];            
         }
-        
+
+
         public static function list_of_customer_type_id($lang = null)
         {
             if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();

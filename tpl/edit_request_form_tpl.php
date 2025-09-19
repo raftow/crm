@@ -1,12 +1,12 @@
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
-            <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $customer_module_banner ?>" class="award_home_image"></a>
+            <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
 </div>    
 <div class="content_form_bg">
 <div class="content_big_title registration">تقديم طلب إلى <?php echo AfwSession::config("crm_responder", "مكتب خدمة العملاء"); ?></div>
 <div id="container_div" class="table_div">
 <div id="container_right_div" class="table_cell_div content_form">
-<form id="crm_form" method="POST">
+<form id="crm_form" method="POST" enctype="multipart/form-data" action="i.php">
 <?php
         $customer_mobile_readonly = "readonly";
         $customer_idn_readonly = "readonly";

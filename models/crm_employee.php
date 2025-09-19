@@ -92,6 +92,9 @@ class CrmEmployee extends CrmObject
                 $this->select_visibilite_horizontale_default($dropdown, $selects);
         }
         
+        /**
+         * @return CrmEmployee
+         */
         
         public static function loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found=false)
         {
@@ -130,23 +133,25 @@ class CrmEmployee extends CrmObject
         }
 
 
-        public static function auserCrmEmployee($employee_id, $orgunit_id=0)
+        /**
+         * @return CrmEmployee
+         */
+        public static function findCrmEmployee($employee_id, $orgunit_id=0)
         {
                 if(!$orgunit_id) $orgunit_id = CrmEmployee::orgOfEmployee($employee_id, false, true);
-
-                if($orgunit_id>0) return CrmEmployee::checkExistance($orgunit_id, $employee_id);
-                else return null;
+                return CrmEmployee::checkExistance($orgunit_id, $employee_id);
         }
         
+        /**
+         * @return CrmEmployee
+         */
 
         public static function checkExistance($orgunit_id, $employee_id)
         {
-                if(!$orgunit_id) return false;
-                if(!$employee_id) return false;
+                if(!$orgunit_id) return null;
+                if(!$employee_id) return null;
 
-                $objcrmemp = self::loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found=false);
-
-                return $objcrmemp;
+                return self::loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found=false);
         }
 
 

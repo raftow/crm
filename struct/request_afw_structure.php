@@ -43,9 +43,26 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
+				'request_html' => array(
+					'FGROUP' => 'request_text',  'STEP' => 'all',
+					'SHOW' => true,
+					'READONLY' => true,
+					'EDIT' => true,
+					'NO-LABEL' => true,
+					'SIZE' => 'AREA',
+					'ROWS' => 16,
+					'UTF8' => true,
+					'TYPE' => 'TEXT',
+					'FORMAT' => 'HTML',
+					'CATEGORY' => 'FORMULA',
+					'DISPLAY' => true,
+					'DISPLAY-UGROUPS' => '',
+					'EDIT-UGROUPS' => '',
+					'ERROR-CHECK' => true,
+				),
 
 		'request_text' => array(
-			'FGROUP' => 'request_text',  'STEP' => 1,
+			'FGROUP' => 'request_text',  'STEP' => 99,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -451,7 +468,7 @@ class CrmRequestAfwStructure
 
 
 		'request_title' => array(
-			'FGROUP' => 'props',  'STEP' => 1,
+			'FGROUP' => 'props',  'STEP' => 99,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -896,8 +913,23 @@ class CrmRequestAfwStructure
 			'UTF8' => false,
 			'TYPE' => 'ENUM',
 			'ANSWER' => 'FUNCTION',
-			'READONLY' => false,
+			'READONLY' => true,
 			'CSS' => 'width_pct_50',
+		),
+
+		'request_late' => array(
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => false,
+			'READONLY' => true,
+			'CATEGORY' => 'FORMULA',			
+			'DISPLAY' => true,  'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
 		),
 		
 		'tip_of_day' => array(
@@ -916,7 +948,7 @@ class CrmRequestAfwStructure
 		),
 
 		'days_investigator' => array(
-			'FGROUP' => 'status',  'STEP' => 4,
+			'FGROUP' => 'status',  'STEP' => 1,
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -928,6 +960,33 @@ class CrmRequestAfwStructure
 			'MANDATORY' => false,
 			'UTF8' => false,
 			'TYPE' => 'INT',
+			'CATEGORY' => 'FORMULA',
+			'UNIT' => 'يوم',
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_50',
+		),
+
+		
+
+		'days_delay' => array(
+			'FGROUP' => 'status',  'STEP' => 1, 
+			'SEARCH' => false,
+			'QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'CSS' => 'width_pct_33',
+			'SIZE' => 8,
+			'MANDATORY' => false,
+			'UTF8' => false,
+			'TYPE' => 'INT',
+			'UNIT' => 'يوم',
 			'CATEGORY' => 'FORMULA',
 			'READONLY' => true,
 			'SEARCH-BY-ONE' => false,
@@ -938,28 +997,7 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_50',
 		),
 
-		'days_delay' => array(
-			'FGROUP' => 'status',  'STEP' => 4, 
-			'SEARCH' => false,
-			'QSEARCH' => false,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'CSS' => 'width_pct_33',
-			'SIZE' => 8,
-			'MANDATORY' => false,
-			'UTF8' => false,
-			'TYPE' => 'INT',
-			'CATEGORY' => 'FORMULA',
-			'READONLY' => true,
-			'SEARCH-BY-ONE' => false,
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-			'CSS' => 'width_pct_50',
-		),
+		
 
 		'survey_sent' => array(
 			'FGROUP' => 'status',  'STEP' => 4,
@@ -1103,19 +1141,7 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_50',
 		),
 
-		'request_late' => array(
-			'FGROUP' => 'status',
-			'TYPE' => 'INT',
-			'SHOW' => false,
-			'RETRIEVE' => false,
-			'EDIT' => false,
-			'READONLY' => true,
-			'CATEGORY' => 'FORMULA',
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',  'STEP' => 4,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
+		
 
 		'notifications' => array(
 			'FGROUP' => 'notifications', 
@@ -1421,6 +1447,45 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+		//----------- greg
+
+		'date_start_perf_greg' => array(
+			'TYPE' => 'GDATE',
+			'CATEGORY' => 'FORMULA',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',  'STEP' => 99, 
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'date_end_perf_greg' => array(
+			'TYPE' => 'GDATE',
+			'CATEGORY' => 'FORMULA',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',  'STEP' => 99, 
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+
+		'date_start_stats_greg' => array(
+			'TYPE' => 'GDATE',
+			'CATEGORY' => 'FORMULA',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',  'STEP' => 99, 
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'date_end_stats_greg' => array(
+			'TYPE' => 'DATE',
+			'CATEGORY' => 'FORMULA',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',  'STEP' => 99, 
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
 		'active' => array(
 			'SHOW-ADMIN' => true,
 			'RETRIEVE' => false,
@@ -1505,9 +1570,6 @@ class CrmRequestAfwStructure
 			'FGROUP' => 'tech_fields'
 		),
 
-		/* 'active'                   => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 
-                                                                'QEDIT' => false, "DEFAULT" => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields'),*/
-
 		'version'                  => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
@@ -1517,9 +1579,6 @@ class CrmRequestAfwStructure
 			'TYPE' => 'INT',
 			'FGROUP' => 'tech_fields'
 		),
-
-		// 'draft'                         => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 
-		//                                        'QEDIT' => false, "DEFAULT" => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields'),
 
 		'update_groups_mfk'             => array(
 			'STEP' => 99,

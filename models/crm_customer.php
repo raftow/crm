@@ -600,9 +600,13 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         public function attributeIsApplicable($attribute)
         {
                 if (($attribute == "customer_orgunit_id") or ($attribute == "ref_num")) {
-                        $customerTypeObj = $this->hetType();
-                        if ($customerTypeObj) return ($customerTypeObj->estInternal());
-                        else return false;
+                        // rafik 15/09/2025 below is obsolete because customerType is now an enum not FK
+                        //                  also ref_num has sens for students which are external customers not internal
+                        // $customerTypeObj = $this->hetType();
+                        // if ($customerTypeObj) return ($customerTypeObj->estInternal());
+                        // else return false;
+
+                        return true;
                 }
 
                 return true;
