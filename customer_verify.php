@@ -257,13 +257,29 @@ if($sms_ok)
                                         <label class='light_label'>أدخل الرمز المرسل على جوالك <?php echo $sms_mobile_3dig  .  " <!-- [sms_i:$sms_info_export , simulate_sms_to_mobile=$simulate_sms_to_mobile,cd=$cdifdev] -->"; ?>
                                         </label> 
                                         <form id="form_register" name="form_register" method="post" class="digit-group" direction="ltr" action="customer_verify.php" data-group-name="digits" data-autosubmit="true" autocomplete="off" onSubmit="return customer_verify_before_submit();" dir="rtl" enctype="multipart/form-data">                                       
+                                        <?php                                                
+                                        if(AfwSession::config("MODE_OTP_SEPARAED_DIGITS", false))
+                                        {
+                                        ?>                                                
                                         <input type="hidden" class="form-control" id="customer_verify_code" name="customer_verify_code" value="" tabindex=0 autocomplete="off" required>
-
                                         <input type="text" id="digit-1" name="digit-1" data-next="digit-2" pattern="[0-9]" tabindex="0" autofocus />
                                         <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" pattern="[0-9]"/>
                                         <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" pattern="[0-9]"/>
                                         <input type="text" id="digit-4" name="digit-4" data-previous="digit-3" pattern="[0-9]"/>
-
+                                        <?php  
+                                        }
+                                        else
+                                        {
+                                        ?>                                                
+                                        <div class='otp-digits-div'>        
+                                                <div class='bg-digits'>8888</div>
+                                                <div class='otp-digits-input'>
+                                                        <input type="text" class="form-control otp-digits" id="customer_verify_code" name="customer_verify_code" value="" tabindex=0 autocomplete="off" required>
+                                                </div>
+                                        </div>
+                                        <?php   
+                                        }
+                                        ?>
                                         
                                         <input type="hidden" name="new_customer" value="<?php echo $new_customer?>" >
                                         <input type="hidden" name="customer_mobile" value="<?php echo $customer_mobile?>" >
@@ -310,9 +326,11 @@ if(!file_exists("$file_dir_name/../$front_footer"))
         echo "customer_verify : footer file $file_dir_name/../$front_footer doesn't exist";
 }
 include("$file_dir_name/../$front_footer");
+
+if(AfwSession::config("MODE_OTP_SEPARAED_DIGITS", false))
+{
 ?>
 <script>
-
 function customer_verify_before_submit()
 {
         var grouped_digits = '';
@@ -375,3 +393,6 @@ $('.digit-group').find('input').each(function() {
 });
 
 </script>
+<?php
+}
+?>
