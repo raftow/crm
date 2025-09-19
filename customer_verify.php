@@ -272,7 +272,7 @@ if($sms_ok)
                                         {
                                         ?>                                                
                                         <div class='otp-digits-div'>        
-                                                <div class='bg-digits'>8888</div>
+                                                <!-- <div class='bg-digits'>8888</div> can not work it is difficult because digit 1 is thin -->
                                                 <div class='otp-digits-input'>
                                                         <input type="number" class="form-control otp-digits" id="customer_verify_code" name="customer_verify_code" value="" tabindex=0 autocomplete="off" required>
                                                 </div>

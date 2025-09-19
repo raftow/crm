@@ -3621,3 +3621,21 @@ a.stats-cell {
     background-color: #0e456a;
     color: white;
 }
+
+input#customer_verify_code {
+    background-color: #6cbafb78;
+    font-size: 54px !important;
+    font-family: DIGI;
+    color: #0c5893;
+    padding: 7px !important;
+    height: 50px !important;
+    text-align: center;
+    border: none !important;
+}
+
+.otp-digits-input {
+    background-color: #9ad2fc !important;
+    padding: 9px !important;
+    width: 50%;
+    margin: auto;
+}
