@@ -8,7 +8,9 @@
         //if(!$ticketObj) die("this ticket is lost");
         $my_status = $ticketObj->getVal("status_id");
         $my_status_decoded = $ticketObj->getCustomerStatus("ar");
-        
+        $confidential_class = $ticketObj->sureIs("confidential") ? "confidential" : "non-confidential";
+
+        $confidential_button = $ticketObj->sureIs("confidential") ? "<button id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class' />" : "";
         // test of ->showAttribute(..) after ->set(..)
         // $ticketObj->set("status_id", Request::$REQUEST_STATUS_REDIRECT);
         // $my_status_show = $ticketObj->showAttribute("status_id");
@@ -44,9 +46,11 @@
                                 <div class='my_crm_ticket_data'>                        
                                         <div class="row crm_data">
                                                 <label>نص الطلب</label>
-                                                <div class='hzm_data_prop request_text'>
-                                                <?php echo $ticketObj->getVal("request_text"); ?> 
+                                                <div class='security hzm_data_prop request_text <?php echo $confidential_class; ?>'>
+                                                <?php echo $ticketObj->getVal("request_text"); ?>                                                 
                                                 </div>
+                                                <?php echo $confidential_button; ?>
+
                                         </div>
                                         <div class="row crm_data">
                                                 

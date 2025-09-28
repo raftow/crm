@@ -1476,6 +1476,8 @@ class CrmController extends AfwController
                         if ($request_priority) $reqObj->set("request_priority", $request_priority);
                         $reqObj->set("request_for", "crm-" . $related_object_id);
                         $reqObj->set("request_text", $request_body);
+                        $confidentialYN = $confidential ? "Y" : "N";
+                        $reqObj->set("confidential", $confidentialYN);
                         $reqObj->set("request_title", $request_subject);
                         $reqObj->set("request_type_id", $request_type);
                         $reqObj->set("region_id", $region);

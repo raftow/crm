@@ -84,6 +84,9 @@ class CrmRequestAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
+		'confidential' => array('FGROUP' => 'request_text',  'STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => true, /* 'FORMAT' => 'ICON'*/ ),
+
 
 		'request_date' => array(
 			'FGROUP' => 'tech_data',  'STEP' => 1,  
@@ -932,19 +935,51 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 		
-		'tip_of_day' => array(
-			'FGROUP' => 'tip_of_day',  
-			'STEP' => 1,
-			'TYPE' => 'TEXT',
+		
+
+		'nb_taqibs' => array(
+                        'SEARCH' => true,
+                        'QSEARCH' => false,
+                        'SHOW' => true,
+                        'RETRIEVE' => false,
+                        'EDIT' => true,
+                        'QEDIT' => true,
+                        'CSS' => 'width_pct_50',
+                        'SIZE' => 32,
+                        'UTF8' => false,
+                        'TYPE' => 'INT',
+                        'DEFAUT' => 0,
+                        'READONLY' => true,
+                        'SEARCH-BY-ONE' => false,
+                        'DISPLAY' => true,
+                        'STEP' => 1,
+                        'DISPLAY-UGROUPS' => '',
+                        'EDIT-UGROUPS' => '',
+                        'ERROR-CHECK' => true,
+                        'FGROUP' => 'status',
+                ),
+
+		'hours_investigator_work' => array(
+			'FGROUP' => 'status',  'STEP' => 1,
+			'SEARCH' => false,
+			'QSEARCH' => false,
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'EDIT' => true,
-			'NO-LABEL' => true,
-			'CATEGORY' => 'FORMULA',
-			'ROWS' => 5,
-			'FORMAT' => 'TOHTML',
+			'QEDIT' => false,
+			'CSS' => 'width_pct_33',
+			'SIZE' => 8,
+			'MANDATORY' => false,
+			'UTF8' => false,
+			'TYPE' => 'INT',
+			'UNIT' => 'ساعة',
 			'READONLY' => true,
-			'CSS' => 'width_pct_100',
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_50',
 		),
 
 		'days_investigator' => array(
@@ -995,6 +1030,22 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 			'CSS' => 'width_pct_50',
+		),
+
+
+		'tip_of_day' => array(
+			'FGROUP' => 'tip_of_day',  
+			'STEP' => 1,
+			'TYPE' => 'TEXT',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'NO-LABEL' => true,
+			'CATEGORY' => 'FORMULA',
+			'ROWS' => 5,
+			'FORMAT' => 'TOHTML',
+			'READONLY' => true,
+			'CSS' => 'width_pct_100',
 		),
 
 		

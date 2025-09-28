@@ -96,6 +96,18 @@
                 </div>
                 <!-- fg-request_body -->
 
+                <!-- fg-confidential -->
+                <div id="fg-confidential" class="attrib-confidential form-group width_pct_100 ">
+                        <div class="form-control form-ckbox confidential"><input type="checkbox" value="1" id="confidential" name="confidential" class="echeckbox "></div>        
+                        <label for="confidential" class="hzm_label hzm_data_confidential">البيانات التي يشتمل عليها هذا الطلب سرية للغاية أطلب المحافظة على تشفيرها إلا على المسؤولين المعنيين بمعالجة هذا الطلب
+                        </label>                    				
+                        <?php echo AfwInputHelper::inputErrorsInRequest("confidential", $data); ?>
+                </div>
+                <!-- fg-confidential -->
+
+
+                
+
                 <!-- fg-related_object_id -->
                 <?php
                         if($roList)

@@ -1,6 +1,6 @@
 <?php
         //effacer les var d'une eventuelle session précédente
-        AfwSession::resetSession();
+        AfwSession::resetSession("main_company");
         AfwSession::setCustomer($custObj->getId());
          
         $customer_default_page = $login_page_options["customer_default_page"];

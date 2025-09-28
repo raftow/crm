@@ -285,6 +285,8 @@ class CrmResponseAfwStructure
 			'FGROUP' => 'the_response',
 		),
 
+		
+
 		'response_type_id' => array(
 			'SHORTNAME' => 'type',
 			'SEARCH' => true,

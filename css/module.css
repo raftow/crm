@@ -1194,8 +1194,9 @@ div.crm_calendar {
         margin-left: 2%;
         margin-right: 2%;
         margin-top: 20px;
-        height: max-content;
+        height: 60px !important;
         float: right;
+        /* border-bottom: 1px solid black;*/
 }
 
 
@@ -1379,6 +1380,9 @@ input.btnbtsp.btn-primary.btncheck {
     margin-left: 2%;
     margin-right: 2%;
     background-color: #ffffff3b;
+    vertical-align: top !important;
+    padding-top: 0px !important;
+    /* border-top: 1px solid blue; */
 }
 
 
@@ -3638,4 +3642,54 @@ input#customer_verify_code {
     padding: 9px !important;
     width: 50%;
     margin: auto;
+}
+
+.form-control.form-ckbox.confidential {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0;
+    float: right;
+    width: 6%;
+    min-width: 22px;
+}
+
+label.hzm_label.hzm_data_confidential {
+    width: 90% !important;
+    float: right;
+    white-space: pre-wrap;
+}
+
+div.confidential>div.request-desc {
+    visibility: hidden;
+}
+
+.security.confidential,
+.hzm_data_request_html.confidential {
+    background-color: #a4d2da;
+    color: transparent;
+    background-image: url(../pic/top-secret.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 180px;
+}
+
+#confidentialbtn {
+    width: 12%;
+    min-width: 52px;
+    height: 52px;
+    border: none;
+    margin-right: 44%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    float: right;
+}
+
+#confidentialbtn.confidential {
+    background-image: url(../pic/shown_eye.png);
+}
+
+#confidentialbtn.non-confidential {
+    background-image: url(../pic/hidden_eye.png);
 }

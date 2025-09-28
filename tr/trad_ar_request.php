@@ -124,11 +124,21 @@ class RequestArTranslator
 		$trad["request"]["email"] = "بريد الكتروني";
 		$trad["request"]["tip_of_day"] = "نصيحة حول الاصدار الجدبد";
 
-
+		$trad["request"]["hours_investigator_work"] = "عدد ساعات عمل المنسق";
 		$trad["request"]["days_investigator"] = "عدد أيام عمل المنسق";
 		$trad["request"]["days_delay"] = "عدد أيام العمل على التذكرة";
 		$trad["request"]["days_delay.short"] = "أيام التأخير";
 		$trad["request"]["status_action_enum"] = "آخر اجراء على الطلب";
+
+		$trad["request"]["days_avg"] = "متوسط مدة الرد (بالأيام)";
+		$trad["request"]["response_avg"] = "متوسط مدة بدأ العمل على الطلب (بالأيام)";
+
+		$trad["request"]["nb_closed"] = "عدد التذاكر المغلقة";
+		$trad["request"]["nb_with"] = "عدد التذاكر المعقب عليها";
+		$trad["request"]["nb_without"] = "عدد التذاكر الغير معقب عليها";
+		$trad["request"]["pct_without"] = "نسبة التذاكر الغير معقب عليها";
+		$trad["request"]["nb_taqibs"] = "عدد التعقيبات";
+		
 
 
 		$trad["request"]["stats.gs001"] = "تقرير الأداء لفترة من [date_start_perf_greg] إلى اليوم";

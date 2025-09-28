@@ -24,6 +24,7 @@ class ResponseArTranslator{
 		$trad["response"]["response_text.short"] = "نص الإجابة";
 		$trad["response"]["response_link"] = "رابط يتعلق بالرد";
 		$trad["response"]["internal"] = "هل سيتم حجب هذا الرد على العميل ؟";
+		
 		$trad["response"]["internal.YES"] = "نعم يتم حجبه على العميل";
 		$trad["response"]["internal.NO"] = "لا بل يتم إظهاره للعميل";
 		$trad["response"]["internal.EUH"] = "لا حتى يتم ارسال طلب للمشرف بذلك";

@@ -9,4 +9,6 @@
 	$trad["response_type"]["verb_en"] = "الفعل بالانجليزي";
 
 	$trad["response_type"]["internal"] = "داخلي";
+	$trad["response_type"]["from_employee"] = "هل الموظف هو محرر هذا النوع من الرد ؟";
+	$trad["response_type"]["from_employee.short"] = "من الموظف ؟";
 ?>

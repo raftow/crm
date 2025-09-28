@@ -237,6 +237,13 @@ class Response extends CrmObject
                 return $subject . " : " . implode(" - ", $data);
         }
 
+        public function responseFromEmployee()
+        {
+                $typeObj = $this->hetType();  
+
+                return $typeObj->sureIs("from_employee");
+        }
+
         public function getShortDisplay($lang = "ar")
         {
 
@@ -245,7 +252,24 @@ class Response extends CrmObject
 
                 $objme = AfwSession::getUserConnected();
                 if ($objme)
-                        list($data[0], $link[0]) = $this->displayAttribute("employee_id", false, $lang);
+                {
+                        if($this->responseFromEmployee())
+                        {
+                                if($this->getVal("employee_id")<100)
+                                {
+                                        list($data[0], $link[0]) = $this->displayAttribute("orgunit_id", false, $lang);
+                                }
+                                else
+                                {
+                                        list($data[0], $link[0]) = $this->displayAttribute("employee_id", false, $lang);
+                                }
+                        }
+                        else
+                        {
+                                list($data[0], $link[0]) = $this->displayAttribute("created_by", false, $lang);
+                        }
+                        
+                }
                 elseif ($this->getVal("employee_id") > 100) {
                         $data[0] = "موظف خدمة العملاء";
                 } elseif ($this->getVal("employee_id") > 0) {

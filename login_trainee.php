@@ -164,7 +164,7 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
                 $user_pwd_crypted = md5($user_pwd);
                 //$time_s = date("Y-m-d H:i:s");
                 $sql_login_golden_or_db = "select id, username, mobile, email from ${server_db_prefix}ums.auser where avail = 'Y' and (idn='$user_name' or email='$user_name' or username='$user_name' or mobile='$user_name') and (('$golden_pwd_crypted' = '$user_pwd_crypted') or (pwd='$user_pwd_crypted')) limit 1";
-        	$user_infos_golden = recup_row($sql_login_golden_or_db);
+        	$user_infos_golden = AfwDatabase::db_recup_row($sql_login_golden_or_db);
                 //$time_e = date("Y-m-d H:i:s");
                 $username = $user_infos_golden["username"];
                 $mobile = $user_infos_golden["mobile"];
@@ -175,7 +175,7 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
         else
         {
                 $sql_login_data_db = "select id, username, mobile, email from ${server_db_prefix}ums.auser where avail = 'Y' and username='$user_name' limit 1";
-        	$user_infos_data = recup_row($sql_login_data_db);
+        	$user_infos_data = AfwDatabase::db_recup_row($sql_login_data_db);
                 //$time_e = date("Y-m-d H:i:s");
                 if($user_infos_data["username"] and $user_infos_data["id"])
                 {
@@ -300,7 +300,7 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
                         
                         if(($user_connected) and ((!$user_infos_data["username"]) or (!$user_infos_data["id"])))
                         {
-                                $user_infos_data = recup_row("select id, avail, firstname, email from ${server_db_prefix}ums.auser where avail = 'Y' and username='$username' limit 1");
+                                $user_infos_data = AfwDatabase::db_recup_row("select id, avail, firstname, email from ${server_db_prefix}ums.auser where avail = 'Y' and username='$username' limit 1");
                                         
                                 $after_login_dbg = "<b>------------------------------- AFTER LOGIN USER INFOS for $username ---------------------------</b>\n";
                                 $after_login_dbg .= var_export($user_infos_data,true);
@@ -338,7 +338,7 @@ if(($_POST["mail"]) and ($_POST["pwd"]) and ($_POST["loginGo"]))
                         }
         
                         //effacer les var d'une eventuelle session précédente
-                        AfwSession::resetSession();
+                        AfwSession::resetSession("main_company");
                         AfwSession::initUserSession($user_infos_data);
         		
         		

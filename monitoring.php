@@ -25,6 +25,7 @@ $supList = CrmEmployee::getSupervisorList(CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEP
 
 // genere too much queries, to be seen
 // Request::assignSupervisorForNonAssigned(false,true);
+/*
 $no_need_assign_statuses = Request::$REQUEST_STATUSES_NO_NEED_ASSIGN;
 $where_old_still_not_assigned="active='Y' and status_id not in ($no_need_assign_statuses) and (orgunit_id=0 or employee_id=0) and created_at between '$oldest_date' and '$newest_date'";
 
@@ -47,10 +48,10 @@ foreach($supList as $supItem)
             $statsMatrix[$sup_employee_id] = array('name'=>$supObj->getDisplay($lang), 'missed'=>$stats_arr[$sup_employee_id]);
         }        
 }
-                          
+*/                          
 $employee_title = $objme->getDisplay($lang);
 
-$reqList = Request::loadRecords($where_old_still_not_assigned, $limit="5", $order_by="id asc");
+// 
 
 $header_trad = array("missed"=>"عدد الطلبات", "name" => 'الادارة - المشرف');
 if($objme->isSuperAdmin())
@@ -64,26 +65,26 @@ else
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix $employee_title</div>";
 
-// $out_scr .= Page::showPage("crm", "main-page", $lang);
+$out_scr .= Page::showPage("crm", "main-page", $lang);
 
 $out_scr .= "<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>";
 
 // customer number increasing (cni)
-if(true)
+if(false)
 {
     $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات نمو عدد العملاء الخمس سنوات الأخيرة</h1></div>";
     $out_scr .= "<canvas id=\"cni\" style=\"width:100%;max-width:900px;margin:auto\"></canvas>";
     $out_scr .= AfwChartHelper::oniChartScript("CrmCustomer", "cni", "line", -60, 0, 1, 'm', 'month', 'never');
 }
 
-if(true)
+if(false)
 {
     $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات نمو عدد الطلبات الخمس سنوات الأخيرة</h1></div>";
     $out_scr .= "<canvas id=\"rni\" style=\"width:100%;max-width:900px;margin:auto\"></canvas>";
     $out_scr .= AfwChartHelper::oniChartScript("Request", "rni", "line", -60, 0, 1, 'm', 'month', 'never', ['min'=>50, 'max'=>150], 'request_date', 'hijri');
 }
 
-if(count($statsMatrix)>0)
+if(false and count($statsMatrix)>0)
 {
     $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات الطلبات المتأخر اسنادها</h1></div>";
     // $out_scr .= "<br>\n statsMatrix = \n<br><pre style='direction:ltr;text-align: left;'>".var_export($statsMatrix,true)."</pre>";
@@ -92,7 +93,8 @@ if(count($statsMatrix)>0)
     $out_scr .= AfwHtmlHelper::tableToHtml($statsMatrix, $header_trad);    
 }
 
-if(count($reqList)>0)
+// $reqList = Request::loadRecords($where_old_still_not_assigned, $limit="5", $order_by="id asc");
+if(false and count($reqList)>0)
 {
     $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>أمثلة لطلبات تأخر اسنادها جدا</h1></div>";
     $header_trad = AfwUmsPagHelper::getRetrieveHeader(new Request());

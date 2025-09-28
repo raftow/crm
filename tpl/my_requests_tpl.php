@@ -19,7 +19,9 @@ foreach($requestList as $ticketObj)
         $my_status = $ticketObj->getVal("status_id");
         $my_status_decoded = $ticketObj->getCustomerStatus("ar");
         $request_type_decoded = $ticketObj->decode("request_type_id");
-        
+        $confidential_class = $ticketObj->sureIs("confidential") ? "confidential" : "";
+
+        $confidential_button = $ticketObj->sureIs("confidential") ? "<button id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class' />" : "";
 
         $full_request_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("request_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("request_date")));
         $full_status_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("status_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("status_date")));
@@ -42,9 +44,10 @@ foreach($requestList as $ticketObj)
                                         <div class="row crm_data">
                                                 <span class="hzm_date"><?php echo $full_request_date; ?> س </span><span class="hzm_time"><?php echo $ticketObj->getVal("request_time"); ?> </span> 
                                                 <label><?php echo $ticketObj->getVal("request_title"); ?></label>
-                                                <div class='hzm_data_prop request_text'>
-                                                <?php echo AfwStringHelper::truncateArabicJomla($ticketObj->getVal("request_text"), $maxlen=250, $etc="..."); ?> 
+                                                <div class='security hzm_data_prop request_text <?php echo $confidential_class; ?>'>
+                                                <?php echo AfwStringHelper::truncateArabicJomla($ticketObj->getVal("request_text"), $maxlen=250, $etc="..."); ?>                                                 
                                                 </div>
+                                                <?php echo $confidential_button; ?>
                                         </div>
                                 <?php 
                                         list($lastActionOnRequest, $LAResponseId) = $ticketObj->getLastActionOnRequest($lang);

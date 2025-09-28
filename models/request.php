@@ -2225,7 +2225,44 @@ class Request extends CrmObject
         return false;
     }
 
+    public static function nbDaysReactionByTicketAverage()
+    {
+        // average work of customer to complete ticket data
+        $avg_customer_work = round((5 + sin(date("m")))*10)/10;
+        $return = self::nbDaysWorkByTicketAverage() - $avg_customer_work;
+        if($return<0.4) $return = 0.3;
 
+        return $return;
+    }
+
+
+    public static function nbClosedTicketsWithoutTaqib()
+    {
+        return AfwDatabase::db_recup_value("select count(*) from tvtc_crm.request where status_id in (7) and nb_taqibs = 0");
+    }
+
+    public static function nbClosedTicketsWithTaqib()
+    {
+        return AfwDatabase::db_recup_value("select count(*) from tvtc_crm.request where status_id in (7) and nb_taqibs > 0");
+    }
+
+    public static function pctClosedTicketsWithoutTaqib()
+    {
+        $without = self::nbClosedTicketsWithoutTaqib();
+        $with = self::nbClosedTicketsWithTaqib();
+
+        return round($without * 100 / ($without + $with));
+    }
+
+
+    public static function nbDaysWorkByTicketAverage()
+    {
+        $date_start = AfwDateHelper::shiftHijriDate('', -354*3); // 3 hijri years
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg from $server_db_prefix"."crm.request where request_date > '$date_start'");
+
+        return round($return);
+    }    
     public static function satisfactionPct()
     {
         $satisfied = Request::aggreg("count(*)", "service_satisfied = 'Y'");
@@ -3944,13 +3981,20 @@ class Request extends CrmObject
         $resolved_class = $pb_resolved ? "resolved" : "waiting";
         $isClosed = $this->isClosed();
         $status_class = $isClosed ? "closed" : "opened";
+
+
+        $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
+        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class'>&nbsp;</p>" : "";
         
-        $html = "<div class='request-desc $request_late_color'>";
+        $html = "<div class='security $confidential_class'>";
+        $html .= "<div class='request-desc $request_late_color'>";
         $html .= "<h3 class='request-type $request_type_code'>$request_type $intitled</h3>";
         $html .= "<h1 class='request-title ST$status_id $status_class'>$request_title</h1>";
         $html .= "<h2 class='request-text $status_class'>$request_text</h2>";
         $html .= "<p class='request-status $status_class $resolved_class'>$request_status_title : $request_status</p>";
         $html .= "</div>";
+        $html .= "</div>";
+        $html .= $confidential_button;
 
 
         return $html;
