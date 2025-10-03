@@ -21,7 +21,7 @@ class CrmRequestAfwStructure
 			$obj->CAN_FORCE_UPDATE_DATE = true; // temporaire pour la migration
 
 			$obj->after_save_edit = array("file" => '../crm/workbox.php');
-			// $obj->after_save_edit = array("mode"=>"qsearch", "currmod"=>'adm', "class"=>'Request',"submit"=>true);
+			// $obj->after_save_edit = array("mode"=>"qsearch", "currmod"=>'xxx', "class"=>'Request',"submit"=>true);
 			$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmCustomer");
 		} else {
 			RequestArTranslator::initData();
@@ -1307,6 +1307,21 @@ class CrmRequestAfwStructure
 			'ITEM' => 'request_id',
 			'WHERE' => 'internal=\'N\' ',
 			'READONLY' => true, // and new_status_id = 5
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'last_response_id' => array('STEP' => 99,
+			'FORMAT' => 'minibox',
+			'MINIBOX-TPL' => true,
+			'ICONS' => true,
+			'QSEARCH' => false,
+			'RETRIEVE' => false,
+			'NO-CACHE' => true,
+			'TYPE' => 'FK',
+			'ANSWER' => 'response',
+			'ANSMODULE' => 'crm',
+			'READONLY' => true, 
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),

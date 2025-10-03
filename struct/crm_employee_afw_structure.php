@@ -145,6 +145,26 @@ class CrmCrmEmployeeAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
+		'mobile' => array(
+			'SHOW' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'READONLY' => true,
+			'SIZE' => 64,
+			'CSS' => 'width_pct_50',
+			'MB_CSS' => 'width_pct_50',
+			'FORMAT' => 'MOBILE',
+			'UTF8' => false,
+			'TYPE' => 'TEXT',
+			'CATEGORY' => 'SHORTCUT',
+			'SHORTCUT' => 'employee_id.mobile',
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
+
+
 		'service_category_mfk' => array(
 			'SHORTNAME' => 'categorys',
 			'SEARCH' => true,

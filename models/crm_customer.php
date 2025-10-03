@@ -737,11 +737,11 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                 if ($customer_mobile and $customer_mobile_correct) {
                         $file_dir_name = dirname(__FILE__);
-                        $sms_template = $actionParamsArr[0];
-                        // the SMS template has an origin is the default value this is $sms_template
-                        // and we take this default for description 
-                        $exceptional_sms_template = $this->decideSMSTemplate($sms_template);
-                        if ($exceptional_sms_template != $sms_template) {
+                        $sms_template = $actionParamsArr[0];                        
+                        /*
+                        if (!$only_get_description) {
+                                $exceptional_sms_template = $this->decideSMSTemplate($sms_template);
+                                if ($exceptional_sms_template != $sms_template) {
                                 // ...
                                 include("$file_dir_name/../tpl/template_sms_$exceptional_sms_template.php");
                                 if ($sms_body_arr[$lang]) {
@@ -752,11 +752,12 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                                 $exceptional_template_desc = " : " . $this->translate('action.sms.' . $exceptional_sms_template, $lang);
                         }
-                        if (!$only_get_description) {
+
                                 // but for case of real execute of action some exceptional customer can need a different
                                 // template so we decide the template via decideSMSTemplate method
                                 $sms_template = $exceptional_sms_template;
                         }
+                        */
 
                         include("$file_dir_name/../tpl/template_sms_$sms_template.php");
 
@@ -766,9 +767,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                                 $sms_body = "";
                         }
 
-                        if (!$only_get_description) {
-
-
+                        if (!$only_get_description) 
+                        {
                                 if (!$sms_body) return array(false, $this->tm("can't find body of SMS for this template and langue") . " [$sms_template/$exceptional_sms_template, $lang]", $sms_body);
 
 
@@ -782,15 +782,16 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                                 return array($sms_ok, $sms_info, $sms_body);
                         } else {
+                                /*
                                 if ($exceptional_sms_body) {
                                         $exceptional_sms_desc = "نص رسالة أخرى $exceptional_template_desc : <br><pre>$exceptional_sms_body</pre>";
                                 } else {
                                         $exceptional_sms_desc = "";
-                                }
-                                return array(true, "نص الرسالة : <br><pre>$sms_body</pre>" . $exceptional_sms_desc, $sms_body);
+                                }*/
+                                return array(true, "نص الرسالة : <br><pre>$sms_body</pre>", $sms_body);
                         }
                 } else {
-                        return array(false, $this->tm("this customer does not have correct mobile number") . " [$id]", "");
+                        return array(false, $this->tm("this customer does not have correct mobile number") . " [id=$id] [mobile=$customer_mobile]", "");
                 }
         }
 

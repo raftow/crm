@@ -26,7 +26,7 @@ class CrmCrmCustomerAfwStructure
 
 					
 					
-					// $obj->after_save_edit = array("class"=>'aconditionOriginType',"attribute"=>'acondition_origin_type_id', "currmod"=>'adm',"currstep"=>1);
+					// $obj->after_save_edit = array("class"=>'aconditionOriginType',"attribute"=>'ccccc', "currmod"=>'xxxx',"currstep"=>1);
 			} else {
 				// CrmCustomerArTranslator::initData();
 				// CrmCustomerEnTranslator::initData();

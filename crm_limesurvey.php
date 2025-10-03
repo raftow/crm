@@ -63,132 +63,164 @@ class CrmLimesurvey
         return array('nb_survey_update_back' => $nb_survey_update_back, 'nb_bad_customer' => $nb_bad_customer, 'nb_bad_request' => $nb_bad_request);
     }
 
+    public static function proposeToken($start_num, $length = 15)
+    {
+        $k=$start_num;
+        $found = false;
+        while(!$found)
+        {
+            $token = substr(md5("mp".$k."his".date("His")), 0, $length);
+            $server_db_prefix = AfwSession::currentDBPrefix();
+            $nb = AfwDatabase::db_recup_value("select count(*) as nb from $server_db_prefix"."crm.request where survey_token = '$token'");
+            if($nb==0)
+            {
+                $found = true;
+            }            
+            else $k++;
+        }
+
+        return $token;
+        
+    }
+
 
     public static function surveyClosedTicket($ticketObj, $lang = "ar")
     {
-        $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
-        $lime_survey_domain = AfwSession::config('lime_survey_domain', 'survey.company');
-        $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
-        $customerObj = $ticketObj->hetCustomer();
-        $firstname_value = $customerObj->getVal("first_name_ar");
-        $lastname_value = $customerObj->getVal("last_name_ar");
-        $email_value = $customerObj->getVal("email");
         $mpid_value = 100000 + $ticketObj->id;
-        $language_value = "ar";
-        $token = substr(md5(trim($firstname_value) . trim($lastname_value) . trim($email_value) . $mpid_value), 0, 15);
-
-        // field_ticket_number_value as attribute_1,
-        $request_code = $ticketObj->getVal("request_code");
-        // title as attribute_2,
-        $ticket_title = addslashes($ticketObj->getVal("request_title"));
-        // body_value as attribute_3,
-        $ticket_body = addslashes($ticketObj->getVal("request_text"));
-        // field_mobile_number_value as attribute_5,
-        $ticket_mobile = $customerObj->getVal("mobile");
-        // if(!$ticket_mobile) 
-        // die("no mobile number for this customer : $firstname_value $lastname_value ( $email_value ) => [$ticket_mobile] ".$customerObj->id);
-        // field_final_decision_value as attribute_7,
-        $final_decision = $ticketObj->getFinalDecisionOnRequest($language_value);
-        // tdep.name as attribute_8,        
-        $ticket_orgunit = $ticketObj->showAttribute("orgunit_id");
-
-        $now_YmdHis = AfwDateHelper::shiftGregDate('', -1);
-
-        $crm_survey_method = AfwSession::config('crm_survey_method', 'DB');
-
-        if ($crm_survey_method == "DB") {
-            $sql_migrate_to_survey_system = "insert into lime_tokens_$crm_survey_id(token,firstname,lastname,email,emailstatus,language,mpid,
-                attribute_1, attribute_2, attribute_3, attribute_5, attribute_7, attribute_8, validfrom, usesleft)
-            values('$token', _utf8'$firstname_value', _utf8'$lastname_value','$email_value','OK','$language_value', '$mpid_value',
-                '$request_code', _utf8'$ticket_title', _utf8'$ticket_body', '$ticket_mobile', _utf8'$final_decision', _utf8'$ticket_orgunit', '$now_YmdHis',40)";
-
-
-
-            $execRes = AfwDB::execQuery("limesurvey", $sql_migrate_to_survey_system);
-            if ($execRes['affected_rows'] > 0) {
-                //$sql_log = "";
-                $sql_log = " SQL=" . $sql_migrate_to_survey_system;
-                $ticketObj->set("survey_token", $token);
-                $ticketObj->set("survey_sent", "Y");
-                $ticketObj->commit();
-
-                $return = "$limesurvey_url/$crm_survey_id?token=$token" . $sql_log;
-            } else $return = "failed to create record in limesurvey";
-        } 
-        elseif ($crm_survey_method == "LS-JSON-RCP") // LimeSurvey (JSON)JavaScript Object Notation-(RPC)Remote Procedure Call, ex : LimeSurvey RemoteControl 2 see : https://www.limesurvey.org/manual/RemoteControl_2_API
+        $token = self::proposeToken($mpid_value, $length = 15);
+        $crm_survey_plateform = AfwSession::config('crm_survey_plateform', 'crm_survey');
+        if($crm_survey_plateform == "limesurvey")
         {
-            
-            /*
-            $file_dir_name = dirname(__FILE__);
-            require("$file_dir_name/../lib/api/jsonrpcphp-master/src/org/jsonrpcphp/JsonRPCClient.php");
-            $rpcuser = AfwSession::config('rpcuser', 'rpcuser');
-            $rpcuser_password = AfwSession::config('rpcuser-password', 'rpcuser-password');
-            $rpcuser_url = AfwSession::config('rpcuser-url', 'https://localhost/limesurvey/admin/remotecontrol');
-            $myJSONRPCClient = new org\jsonrpcphp\JsonRPCClient($rpcuser_url);
-            // receive session key
-            $sessionKey = $myJSONRPCClient->get_session_key($rpcuser, $rpcuser_password, 'Authdb');
+            $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
+            $lime_survey_domain = AfwSession::config('lime_survey_domain', 'survey.company');
+            $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
+            $customerObj = $ticketObj->hetCustomer();
+            $firstname_value = $customerObj->getVal("first_name_ar");
+            $lastname_value = $customerObj->getVal("last_name_ar");
+            $email_value = $customerObj->getVal("email");
+            $language_value = "ar";
 
-            // receive surveys list current user can read
-            $groups = $myJSONRPCClient->list_surveys($sessionKey);
-            $err = "";
-            $war = "";
-            $tech = "";
-            $inf = print_r($groups, true);
+            // field_ticket_number_value as attribute_1,
+            $request_code = $ticketObj->getVal("request_code");
+            // title as attribute_2,
+            $ticket_title = addslashes($ticketObj->getVal("request_title"));
+            // body_value as attribute_3,
+            $ticket_body = addslashes($ticketObj->getVal("request_text"));
+            // field_mobile_number_value as attribute_5,
+            $ticket_mobile = $customerObj->getVal("mobile");
+            // if(!$ticket_mobile) 
+            // die("no mobile number for this customer : $firstname_value $lastname_value ( $email_value ) => [$ticket_mobile] ".$customerObj->id);
+            // field_final_decision_value as attribute_7,
+            $final_decision = $ticketObj->getFinalDecisionOnRequest($language_value);
+            // tdep.name as attribute_8,        
+            $ticket_orgunit = $ticketObj->showAttribute("orgunit_id");
 
-            // release the session key
-            $myJSONRPCClient->release_session_key($sessionKey);
+            $now_YmdHis = AfwDateHelper::shiftGregDate('', -1);
 
-            // still testing because not working so I use in public method inside Request class
-            $return = [$err, $inf, $war, $tech];*/
-        } 
-        elseif ($crm_survey_method == "EXTERNAL-API") // more simple developped by Rafik if RPC not exactly the requirement or not work as needed
-        {
-            $limesurvey_api_external_url = AfwSession::config('limesurvey_api_external', "http://$lime_survey_domain/api-external/");
+            $crm_survey_method = AfwSession::config('crm_survey_method', 'DB');
 
-            $project_name   = 'external-ls-apis';
-            $gmtime = gmdate('U');
-            $dynamic_token = md5($project_name.gmdate('Y-m-d H', $gmtime));
-            $request["debugg"] = "mar2010iem";
-            $request["method"] = "create_participant_token";
-            $request["token"] = $dynamic_token;
-            $request["crm_survey_id"] = $crm_survey_id;
+            if ($crm_survey_method == "DB") {
+                $sql_migrate_to_survey_system = "insert into lime_tokens_$crm_survey_id(token,firstname,lastname,email,emailstatus,language,mpid,
+                    attribute_1, attribute_2, attribute_3, attribute_5, attribute_7, attribute_8, validfrom, usesleft)
+                values('$token', _utf8'$firstname_value', _utf8'$lastname_value','$email_value','OK','$language_value', '$mpid_value',
+                    '$request_code', _utf8'$ticket_title', _utf8'$ticket_body', '$ticket_mobile', _utf8'$final_decision', _utf8'$ticket_orgunit', '$now_YmdHis',40)";
 
-            $request["first_name_ar"] = $firstname_value;
-            $request["last_name_ar"] = $lastname_value;
-            $request["email"] = $email_value;
-            $request["language"] = $language_value;
-            $request["mpid"] = $mpid_value;
 
-            $request["mandatory_attributes"] = "1,2,3,5,7";
-            $request["skip_attributes"] = "4,6";
-            $request["nb_attributes"] = 8;
 
-            $request["attribute_1"] = $request_code;
-            $request["attribute_2"] = $ticket_title;
-            $request["attribute_3"] = $ticket_body;
-            // $request["attribute_4"] = "Not used";
-            $request["attribute_5"] = $ticket_mobile;
-            // $request["attribute_6"] = "Not used";
-            $request["attribute_7"] = $final_decision;
-            $request["attribute_8"] = $ticket_orgunit;
+                $execRes = AfwDB::execQuery("limesurvey", $sql_migrate_to_survey_system);
+                if ($execRes['affected_rows'] > 0) {
+                    //$sql_log = "";
+                    $sql_log = " SQL=" . $sql_migrate_to_survey_system;
+                    $ticketObj->set("survey_token", $token);
+                    $ticketObj->set("survey_sent", "W");
+                    $ticketObj->commit();
 
-            $jsonExternalApi = AfwApi::getResponseFromApi($limesurvey_api_external_url, $request);
-            if (is_array($jsonExternalApi) and $jsonExternalApi["status"] == "done") {
-                $token = $jsonExternalApi["token"];
-                $case = $jsonExternalApi["case"];
-                /* rmove after publish of limesurvey web site
-                $ticketObj->set("survey_token", $token);
-                $ticketObj->set("survey_sent", "Y");
-                $ticketObj->commit();
-                */
-                $return = "$limesurvey_url/$crm_survey_id?token=$token done by api-external (case $case)";
+                    $return = "$limesurvey_url/$crm_survey_id?token=$token" . $sql_log;
+                } else $return = "failed to create record in limesurvey";
+            } 
+            elseif ($crm_survey_method == "LS-JSON-RCP") // LimeSurvey (JSON)JavaScript Object Notation-(RPC)Remote Procedure Call, ex : LimeSurvey RemoteControl 2 see : https://www.limesurvey.org/manual/RemoteControl_2_API
+            {
+                
+                /*
+                $file_dir_name = dirname(__FILE__);
+                require("$file_dir_name/../lib/api/jsonrpcphp-master/src/org/jsonrpcphp/JsonRPCClient.php");
+                $rpcuser = AfwSession::config('rpcuser', 'rpcuser');
+                $rpcuser_password = AfwSession::config('rpcuser-password', 'rpcuser-password');
+                $rpcuser_url = AfwSession::config('rpcuser-url', 'https://localhost/limesurvey/admin/remotecontrol');
+                $myJSONRPCClient = new org\jsonrpcphp\JsonRPCClient($rpcuser_url);
+                // receive session key
+                $sessionKey = $myJSONRPCClient->get_session_key($rpcuser, $rpcuser_password, 'Authdb');
+
+                // receive surveys list current user can read
+                $groups = $myJSONRPCClient->list_surveys($sessionKey);
+                $err = "";
+                $war = "";
+                $tech = "";
+                $inf = print_r($groups, true);
+
+                // release the session key
+                $myJSONRPCClient->release_session_key($sessionKey);
+
+                // still testing because not working so I use in public method inside Request class
+                $return = [$err, $inf, $war, $tech];*/
+            } 
+            elseif ($crm_survey_method == "EXTERNAL-API") // more simple developped by Rafik if RPC not exactly the requirement or not work as needed
+            {
+                $limesurvey_api_external_url = AfwSession::config('limesurvey_api_external', "http://$lime_survey_domain/api-external/");
+
+                $project_name   = 'external-ls-apis';
+                $gmtime = gmdate('U');
+                $dynamic_token = md5($project_name.gmdate('Y-m-d H', $gmtime));
+                $request["debugg"] = "mar2010iem";
+                $request["method"] = "create_participant_token";
+                $request["token"] = $dynamic_token;
+                $request["crm_survey_id"] = $crm_survey_id;
+
+                $request["first_name_ar"] = $firstname_value;
+                $request["last_name_ar"] = $lastname_value;
+                $request["email"] = $email_value;
+                $request["language"] = $language_value;
+                $request["mpid"] = $mpid_value;
+
+                $request["mandatory_attributes"] = "1,2,3,5,7";
+                $request["skip_attributes"] = "4,6";
+                $request["nb_attributes"] = 8;
+
+                $request["attribute_1"] = $request_code;
+                $request["attribute_2"] = $ticket_title;
+                $request["attribute_3"] = $ticket_body;
+                // $request["attribute_4"] = "Not used";
+                $request["attribute_5"] = $ticket_mobile;
+                // $request["attribute_6"] = "Not used";
+                $request["attribute_7"] = $final_decision;
+                $request["attribute_8"] = $ticket_orgunit;
+
+                $jsonExternalApi = AfwApi::getResponseFromApi($limesurvey_api_external_url, $request);
+                if (is_array($jsonExternalApi) and $jsonExternalApi["status"] == "done") {
+                    $token = $jsonExternalApi["token"];
+                    $case = $jsonExternalApi["case"];                
+                    $ticketObj->set("survey_token", $token);
+                    $ticketObj->set("survey_sent", "W");
+                    $ticketObj->commit();
+                    
+                    $return = "$limesurvey_url/$crm_survey_id?token=$token done by api-external (case $case)";
+                } else {
+                    $return = "ExternalApi failed to create record in limesurvey var=" . var_export($jsonExternalApi, true);
+                }
             } else {
-                $return = "ExternalApi failed to create record in limesurvey var=" . var_export($jsonExternalApi, true);
+                throw new AfwRuntimeException("The method $crm_survey_method to link CRM with LimeSurvey is unknown");
             }
-        } else {
-            throw new AfwRuntimeException("The method $crm_survey_method to link CRM with LimeSurvey is unknown");
         }
-
+        else
+        {
+            if(!$ticketObj->sureIs("survey_sent"))
+            {
+                $ticketObj->set("survey_token", $token);
+                $ticketObj->set("survey_sent", "W");
+                $ticketObj->commit();
+            }
+            
+        }
 
 
         return $return;

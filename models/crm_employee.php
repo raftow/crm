@@ -200,8 +200,20 @@ class CrmEmployee extends CrmObject
             $pbms = array();
             
             $color = "green";
-            $title_ar = "xxxxxxxxxxxxxxxxxxxx"; 
-            //$pbms["xc123B"] = array("METHOD"=>"methodName","COLOR"=>$color, "LABEL_AR"=>$title_ar, "ADMIN-ONLY"=>true, "BF-ID"=>"");
+            $title_ar = "اشعرني بايميل"; 
+            $methodName = "notifyMe"; 
+            $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                                "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
+                                "PUBLIC"=>true, "BF-ID"=>"", 'STEP' => 1,
+                                
+                                /*'CONFIRMATION_NEEDED'=>true,
+                                'CONFIRMATION_QUESTION' =>  array('ar' => "سيتم انشاء حساب حقيقي لهذا العميل على أنه مكتب رحلات هل أنت متأكد", 
+                                                                'en' => "You will create travel company. Sure ?"),
+                                'CONFIRMATION_WARNING' => array('ar' => "من المفروض أن تكون تواصلت مع العميل وتأكدت من جديته بارسال البيانات الضروروية", 
+                                                                'en' => "please check data is correct bedore and this company exists"),*/
+
+                
+                        );
             
             
             
@@ -707,6 +719,8 @@ class CrmEmployee extends CrmObject
 
         public function shouldBeCalculatedField($attribute){
                 if($attribute=="email") return true;
+                if($attribute=="mobile") return true;
+                
                 return false;
         }
 
@@ -715,6 +729,109 @@ class CrmEmployee extends CrmObject
                 if ($attribute == "employee") return "employee_id";
                 
                 return $attribute;
+        }
+
+
+
+        public static function notifyCrmEmployees($silent = false, $lang="ar")
+        {
+                $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+                $sql_inbox = "select orgunit_id, employee_id, count(*) as waiting from $server_db_prefix"."crm.request where status_id in (201,4) group by orgunit_id, employee_id order by count(*) desc";
+                $sql_inbox .= " limit 30";
+
+                $inbox_data = AfwDatabase::db_recup_rows($sql_inbox);
+
+                $errors_arr = array();
+                $infos_arr = array();
+
+                foreach($inbox_data as $inbox_row)
+                {
+                        $token_arr=[];
+                        $token_arr["[waiting]"] = $inbox_row["waiting"];
+                        $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
+                        $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tvtc.gov.sa");
+
+                        $crmEmployeeObj = CrmEmployee::loadByMainIndex($inbox_row["orgunit_id"],$inbox_row["employee_id"]);
+                        list($err, $info) = $crmEmployeeObj->notifyMe($lang, $token_arr);
+                        if ($err) $errors_arr[] = $err;
+                        if ($info) $infos_arr[] = $info;
+                }
+
+                $nb_errs = count($errors_arr);
+
+                $infos_arr[] = "notified " . count($inbox_data) . " employee(s) with $nb_errs error(s)";
+
+                if ((!$silent) and (count($errors_arr) > 0)) {
+                        AfwSession::pushError(implode("<br>", $errors_arr));
+                }
+
+                if ((!$silent) and (count($infos_arr) > 0)) {
+                        AfwSession::pushInformation(implode("<br>", $infos_arr));
+                }
+
+                return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+        }
+
+        public function notifyMe($lang = "ar", $token_arr=[])
+        {       
+                $employeeObj = $this->het("employee_id");
+                if(!$employeeObj) return ["This crm employee has no hrm employee defined : crm-employee-id=".$this->id, ""];
+                 
+                $my_employee_id = $employeeObj->id;
+                if(count($token_arr)==0)
+                {
+                        $token_arr=[];
+                        $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+                        $sql_inbox = "select orgunit_id, employee_id, count(*) as waiting from $server_db_prefix"."crm.request where employee_id = $my_employee_id and status_id in (201,4) group by orgunit_id, employee_id";
+
+                        $inbox_row = AfwDatabase::db_recup_row($sql_inbox);
+                        $token_arr["[waiting]"] = $inbox_row["waiting"];
+                        $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
+                        $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tvtc.gov.sa");                                                
+                }
+
+                $token_arr["[the_orgunit]"] = $this->showAttribute("orgunit_id",null,true,$lang);
+
+                $errors_arr = array();
+                $infos_arr = array();
+
+                $notify_employee_arr = AfwSession::config("notify_employee", null);
+                $notify_employee_daily_waiting_requests_settings = $notify_employee_arr["daily_waiting_requests"];
+                $development_mode = AfwSession::devMode();
+                $receiver = array();
+                
+                $receiver["mobile"] = $employeeObj->getVal("mobile");
+                $receiver["email"] = $employeeObj->getVal("email");
+                // $receiver["mobile"] = "0598988330";
+                // $receiver["email"] = "rboubaker@tvtc.gov.sa";
+
+                $cc_to = "rboubaker@tvtc.gov.sa";
+
+                $file_dir_name = dirname(__FILE__);
+
+                $from_template_file = "$file_dir_name/../tpl/template_[notification_type]_[notification_code].php";
+
+                
+                $receiver_label = $receiver["email"]."/".$receiver["mobile"];
+                $notification_sender_result_arr = AfwNotificationManager::sendNotification($notify_employee_daily_waiting_requests_settings, $receiver, "waiting_requests_notification", $employeeObj, $lang, $from_template_file, $token_arr, $cc_to);
+                foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
+                        $notification_sender_result_ok = $notification_sender_result_item[0];
+                        $notification_sender_result_message = $notification_sender_result_item[1];
+                        $notification_message = $notification_sender_result_item[2];
+                        if (!$notification_sender_result_ok) {
+                                $notif_error = $this->tr($notification_type) . " &larr; " . $notification_message . " &larr; " . $notification_sender_result_message;   
+                                if($development_mode) AfwSession::pushError($notif_error);
+                                $errors_arr[] = $notif_error;
+                        }
+                        else 
+                        {
+                                $notif_info = $this->tr($notification_type) . " &larr; " . $notification_message . " &larr; " . $notification_sender_result_message ." >> sent successfully to $receiver_label";      
+                                $infos_arr[]  = $notif_info;
+                        }
+                }
+
+
+                return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
              
 }

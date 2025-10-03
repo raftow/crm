@@ -4,6 +4,8 @@ if(!class_exists("AfwSession")) die("Denied access");
 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 try
 {   
+    
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add last_response_id int(11);"); 
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add confidential char(1) after request_text;"); 
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add nb_taqibs smallint after status_time;"); 
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add hours_investigator_work int after status_time;"); 

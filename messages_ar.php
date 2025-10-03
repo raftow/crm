@@ -37,6 +37,10 @@ $messages = [
     "Unfortunately, sending your response to the customer service office failed" => "مع الأسف فشلت عملية ارسال ردك إلى مكتب خدمة العملاء",
     "Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number" => "نرجوا اعادة المحاولة لاحقا أو ارسال طلب دعم فني يمكنك ارسال صورة الشاشة وطرح اشكالك على الواتساب على الرقم",
     "Welcome to the General Supervisor of the Customer Relations Office"=>"مرحبا بالمشرف العام لمتابعة عمل مكتب العلاقات مع العملاء",
-    "Welcome to the General Supervisor of the Customer Happiness and Comfort Platform"=>"مرحباً بالمشرف العام لمنصة خدمة سعادة وراحة العميل",
+    "Welcome to the General Supervisor of the Customer Happiness and Comfort Platform"=>"مرحباً بالمشرف العام لمنصة خدمة سعادة وراحة العميل",    
+
+
+    "The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text."=>"ظهور رمز [سري للغاية] يعني أن العميل لا يرغب بمشاركة معلومات طلبه مع أي شخص غير ذي صلة نظرًا لحساسية الأمر. بناءً على مدى أمان الوضع، وما إذا كان هناك أشخاص حولك لا ينبغي أن يطلعوا على هذه المعلومات، انقر على رمز العين لإظهار نص الطلب أو إخفائه.",
+
 ];
      

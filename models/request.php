@@ -777,6 +777,16 @@ class Request extends CrmObject
         } else return null;
     }
 
+    public static function loadByToken($token)
+    {
+        $obj = new Request();
+        $obj->select("survey_token", $token);
+        $obj->select("active", "Y");
+        if ($obj->load()) {
+            return $obj;
+        } else return null;
+    }
+
 
     public static function loadByMainIndex($request_code, $customer_id, $create_obj_if_not_found = false)
     {
@@ -1855,6 +1865,23 @@ class Request extends CrmObject
         return array($resoObj, $errors, $warnings, $infos, $technicals);
     }
 
+    public function mySurveyUrl()
+    {
+        $token = $this->getVal("survey_token");
+        if($token) // means that survey record and url are ready
+        {
+            $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
+            $lime_survey_domain = AfwSession::config('lime_survey_domain', '');
+            if($lime_survey_domain and $crm_survey_id)
+            {
+                $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
+                return "$limesurvey_url/$crm_survey_id?token=$token";
+            }
+        }
+        return null;
+
+    }
+
     public function statusChanged($old_status, $responseId)
     {
         $technicals_log = "<br> > responseId=$responseId ";
@@ -1865,12 +1892,14 @@ class Request extends CrmObject
         if ($new_status_id == self::$REQUEST_STATUS_CLOSED) {
             // AfwSession::pushInformation("rafik-debugg : creating survey token"); 
             $survey_url = CrmLimesurvey::surveyClosedTicket($this);
+            $my_survey_url = $this->mySurveyUrl();
             $technicals_log .= "<br> > survey Closed Ticket done : $survey_url";
             if ((!$objme) or (!$objme->isSuperAdmin())) $survey_url = null;
 
             // AfwSession::pushInformation("rafik-debugg : survey token created"); 
         } else {
             $survey_url = null;
+            $my_survey_url = null;
         }
 
         if ($objme) $status_decoded = $this->decode("status_id");
@@ -1898,8 +1927,34 @@ class Request extends CrmObject
         }
 
         if($success_message) AfwSession::pushSuccess($success_message);
+        
+        if (($new_status_id != $old_status) and
+            ($new_status_id == Request::$REQUEST_STATUS_CLOSED) and $my_survey_url
+            ) 
+        {
+            // $customerObj = $this->hetCustomer();
+            // send SMS to warn customer
+            $token_arr = array(
+                        "title" => $this->getVal("request_title"),
+                        // "first_name_ar" => $customerObj->getVal("first_name_ar"),
+                        "survey_url" => $my_survey_url,
+                    );
+            list($done, $reason, $sms_body) = $this->sendSmsToCustomer($template = "survey", $lang, $token_arr);
+            if($done)
+            {
+                $this->set("survey_sent", "Y");
+                $this->commit();
+                AfwSession::pushSuccess("تم اعلام العميل بهذا التغيير على التذكرة عبر الرسالة التالية : ".$sms_body);
+                $technicals_log .= "<br> > sendSmsToCustomer done with template=$template, lang=$lang, infos=$reason";
+            }
+            else
+            {
+                AfwSession::pushWarning("فشل اعلام العميل بهذا التغيير على التذكرة <!-- reason=$reason -->");
+                $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
+            }
 
-        if (
+            
+        } elseif (
             ($new_status_id != $old_status) and
             (($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES) or
                 ($new_status_id == Request::$REQUEST_STATUS_MISSED_INFO) or
@@ -1910,9 +1965,9 @@ class Request extends CrmObject
             $customerObj = $this->hetCustomer();
             // send SMS to warn customer
             $token_arr = array(
-                        "[title]" => $this->getVal("request_title"),
-                        "[first_name_ar]" => $customerObj->getVal("first_name_ar"),
-                        "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
+                        "title" => $this->getVal("request_title"),
+                        "first_name_ar" => $customerObj->getVal("first_name_ar"),
+                        "crm_site_url" => AfwSession::config("crm_site_url", "[crm-site]"),
                     );
             list($done, $reason, $sms_body) = $this->sendSmsToCustomer($template = "news", $lang, $token_arr);
             if($done)
@@ -1955,7 +2010,9 @@ class Request extends CrmObject
         $this->changeStatus(self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("sendRequest"), $internal, $silent = false, $question_id = 0, $objOrgunit, $objEmployee); 
 
 
-        $development_mode = AfwSession::config("development_mode", false);
+        $development_mode = AfwSession::devMode();
+
+        
 
         // select notification type depending on settings 
         $notify_customer_arr = AfwSession::config("notify_customer", null);
@@ -2238,12 +2295,14 @@ class Request extends CrmObject
 
     public static function nbClosedTicketsWithoutTaqib()
     {
-        return AfwDatabase::db_recup_value("select count(*) from tvtc_crm.request where status_id in (7) and nb_taqibs = 0");
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix"."crm.request where status_id in (7) and nb_taqibs = 0");
     }
 
     public static function nbClosedTicketsWithTaqib()
     {
-        return AfwDatabase::db_recup_value("select count(*) from tvtc_crm.request where status_id in (7) and nb_taqibs > 0");
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix"."crm.request where status_id in (7) and nb_taqibs > 0");
     }
 
     public static function pctClosedTicketsWithoutTaqib()
@@ -3341,6 +3400,49 @@ class Request extends CrmObject
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
     }
 
+    public static function setNewStatusForRespondedRequestsWithoutNewStatus($silent = false, $lang = "ar", $limit = "100")
+    {
+        $obj = new Request();
+        $obj->whereEqual("status_id", self::$REQUEST_STATUS_ONGOING);
+        $obj->where("last_response_id > 0");
+
+        $reqList = $obj->loadMany($limit);
+
+        $errors_arr = array();
+        $infos_arr = array();
+
+        foreach ($reqList as $reqItem) 
+        {
+            $lastResponseId = $reqItem->getVal("last_response_id");
+            /**
+             * @var Response $lastResponse
+             */
+            $lastResponse = $reqItem->het("last_response_id");
+            if($lastResponse) 
+            {
+                $lastResponse->calcNewStatusNeeded();
+                $lastResponse->commit();
+                $newstatus = $lastResponse->showAttribute("new_status_id",null,true,$lang);
+                $infos_arr[] = "الرد المسلسل ب $lastResponseId تم تعديل حالته الجديدة إلى $newstatus";            
+            }
+            else $errors_arr[] = "الرد المسلسل ب $lastResponseId غير موجود";            
+        }
+
+        $nb_errs = count($errors_arr);
+
+        $infos_arr[] = "NewStatus-ed " . count($reqList) . " request(s) with $nb_errs error(s)";
+
+        if ((!$silent) and (count($errors_arr) > 0)) {
+            AfwSession::pushError(implode("<br>", $errors_arr));
+        }
+
+        if ((!$silent) and (count($infos_arr) > 0)) {
+            AfwSession::pushInformation(implode("<br>", $infos_arr));
+        }
+
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+    }
+
 
 
     public static function archiveOldRequests($silent = false, $lang = "ar", $limit = "200", $jobContext=null)
@@ -3982,9 +4084,10 @@ class Request extends CrmObject
         $isClosed = $this->isClosed();
         $status_class = $isClosed ? "closed" : "opened";
 
+        $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
 
         $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
-        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class'>&nbsp;</p>" : "";
+        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class'>&nbsp;</p><p class='help p-helper'>$help</p>" : "";
         
         $html = "<div class='security $confidential_class'>";
         $html .= "<div class='request-desc $request_late_color'>";

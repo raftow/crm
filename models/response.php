@@ -406,34 +406,39 @@ class Response extends CrmObject
         }
         */
 
+        
+        public function calcNewStatusNeeded()
+        {
+                $orgunit_id = $this->getVal("orgunit_id");                                
+                $employee_id = $this->getVal("employee_id");                        
+                $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
+                /*
+                if($employee_id==1748) // bilel
+                {
+                        throw new AfwRuntimeException("see bilel data : crmEmplObj=".var_export($crmEmplObj, true));
+                }
+                */        
+                if($crmEmplObj->sureIs("approved"))
+                {
+                        $this->set("new_status_id", Request::$REQUEST_STATUS_DONE);                                  
+                }
+                else
+                {
+                        $this->set("new_status_id", Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION);  
+                        $this->set("internal", "Y");
+                }
+        }
+
 
         public function beforeMaj($id, $fields_updated)
         {
+
                 if ($this->getVal("internal") == "W") {
                         $this->set("internal", "N");
                 }
 
                 if (!intval($this->getVal("new_status_id"))) {
-                        
-                        $orgunit_id = $this->getVal("orgunit_id");                                
-                        $employee_id = $this->getVal("employee_id");                        
-                        $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
-                        /*
-                        if($employee_id==1748) // bilel
-                        {
-                                throw new AfwRuntimeException("see bilel data : crmEmplObj=".var_export($crmEmplObj, true));
-                        }
-                        */        
-                        if($crmEmplObj->sureIs("approved"))
-                        {
-                                $this->set("new_status_id", Request::$REQUEST_STATUS_DONE);                                  
-                        }
-                        else
-                        {
-                                $this->set("new_status_id", Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION);  
-                                $this->set("internal", "Y");
-                        }
-                        
+                        $this->calcNewStatusNeeded();
                 }
                 else
                 {
@@ -443,9 +448,24 @@ class Response extends CrmObject
                 return true;
         }
 
+
+        public function afterInsert($id, $fields_updated)
+        {
+                if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == self::$RESPONSE_TYPE_RESPONSE)) {
+                                $objRequest = $this->het("request_id");
+                                $objRequest->set("last_response_id", $this->id);
+                                $objRequest->commit();
+                }
+
+                return self::afterMaj($id, $fields_updated);
+        }
+
         public function afterMaj($id, $fields_updated)
         {
                 $lang = AfwSession::getSessionVar("current_lang");
+                
+
+                
                 if ($fields_updated["new_status_id"] and $this->getVal("new_status_id")) {
                         //$this->throwException("")
 
