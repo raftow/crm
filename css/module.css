@@ -2163,7 +2163,7 @@ div#div_data_request_code {
 
 .hzm_data.hzm_data_request_text.form-control.inputreadonly {
     border: 1px solid #1654a4 !important;
-    background-color: #227abb !important;
+    background-color: #ddf0ff !important;
     font-size: 110% !important;
     color: white;
 }
@@ -3665,7 +3665,7 @@ div.confidential>div.request-desc {
 
 .security.confidential,
 .hzm_data_request_html.confidential {
-    background-color: #a4d2da;
+    background-color: #5ab6f5;
     color: transparent;
     background-image: url(../pic/top-secret.png);
     background-position: center;

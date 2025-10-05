@@ -37,6 +37,13 @@ class ResponseType extends CrmObject
      // COMPLETE - استكمال البيانات
      public static $RESPONSE_TYPE_COMPLETE = 12;
 
+     // customer feedback - افادة العميل
+     public static $RESPONSE_TYPE_FEEDBACK = 13;
+
+     // returned - إعادة الطلب الى الموظف
+     public static $RESPONSE_TYPE_RETURNED_TO_EMPLOYEE = 14;
+     
+
      public static $RESPONSE_TYPES_ARE_TO_APPROVE = "1,2";
 
      public static $RESPONSE_TYPES_ARE_PURE_ACTIONS = "3,6";
@@ -68,6 +75,7 @@ class ResponseType extends CrmObject
           $this->showQeditErrors = true;
           $this->showRetrieveErrors = true;
           $this->public_display = true;
+          $this->ENABLE_DISPLAY_MODE_IN_QEDIT = true;
      }
 
      public static function loadById($id)

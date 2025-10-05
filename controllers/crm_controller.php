@@ -1312,7 +1312,7 @@ class CrmController extends AfwController
                                         0,
                                         0,
                                         $reqObj->getVal("status_id"),
-                                        Response::$RESPONSE_TYPE_COMPLETE,
+                                        ResponseType::$RESPONSE_TYPE_COMPLETE,
                                         $response_action_type . " " . $request["comment"],
                                         $response_link = "",
                                         $internal = "N",

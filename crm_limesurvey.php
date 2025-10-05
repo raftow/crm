@@ -215,11 +215,10 @@ class CrmLimesurvey
         {
             if(!$ticketObj->sureIs("survey_sent"))
             {
-                $ticketObj->set("survey_token", $token);
-                $ticketObj->set("survey_sent", "W");
-                $ticketObj->commit();
+                $tokenObj = $ticketObj->createTokenForMe($token);                
+                $return = $tokenObj->getUrl();
             }
-            
+            else $return = "survey token ".$ticketObj->getVal("survey_token")." already sent to customer";
         }
 
 

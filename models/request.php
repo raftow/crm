@@ -121,31 +121,6 @@ class Request extends CrmObject
     public static $REQUEST_STATUSES_ABORTED = "6,8,9"; // canceled or rejected or ignored
 
 
-
-
-    // APPROVE - رد معتمد  
-    public static $RESPONSE_TYPE_APPROVE = 5;
-
-    // COMMENT - تعليق  
-    public static $RESPONSE_TYPE_COMMENT = 2;
-
-    // DUPLICATED - إالغاء الطلب بسبب التكرار  
-    public static $RESPONSE_TYPE_DUPLICATED = 6;
-
-    // COMPLETE - استكمال البيانات
-    public static $RESPONSE_TYPE_COMPLETE = 12;
-
-    // EMPLOYEE_CHANGE - طلب تحويل إلى موظف آخر  
-    public static $RESPONSE_TYPE_EMPLOYEE_CHANGE = 4;
-
-    // RESPONSE - إجابة  
-    public static $RESPONSE_TYPE_RESPONSE = 1;
-
-    // STATUS_CHANGE - تغيير حالة التذكرة  
-    public static $RESPONSE_TYPE_STATUS_CHANGE = 3;
-
-
-
     public static $PUB_METHODS = array(
         "resetRequestNew" => array(
             'title' => "إرجاع إلى حالة مسودة",
@@ -1681,7 +1656,7 @@ class Request extends CrmObject
             0,
             0,
             $new_status_id,
-            self::$RESPONSE_TYPE_COMMENT,
+            ResponseType::$RESPONSE_TYPE_COMMENT,
             $comment,
             $response_link = "",
             $internal = "N",
@@ -1766,21 +1741,12 @@ class Request extends CrmObject
 
         if ($new_status_id != $this->getVal("status_id")) {
             if ($this->requestIsToComplete() and ($new_status_id == Request::$REQUEST_STATUS_ONGOING)) {
-                $response_type = self::$RESPONSE_TYPE_COMPLETE;
+                $response_type = ResponseType::$RESPONSE_TYPE_COMPLETE;
             } else {
-                $response_type = self::$RESPONSE_TYPE_STATUS_CHANGE;
+                $response_type = ResponseType::$RESPONSE_TYPE_STATUS_CHANGE;
             }
             $resoObj = null;
-            if ((!$silent) and (!$silent_force)) {
-                
-                /*
-                            $orgunit_id = $this->xxxx
-                            if(!$orgunit_id) 
-                            */
-                
-                
-                
-
+            if ((!$silent) and (!$silent_force) and (!$fromCustomer)) {
                 // AfwSession::pushInformation("rafik-debugg : creating new response"); 
                 $resoObj = Response::createNewResponse(
                     $this->getId(),
@@ -1817,7 +1783,7 @@ class Request extends CrmObject
             if($this->commit())
             {                
                 $technicals .= "<br> > request-status changed to $new_status_id/$new_status_decoded <br> > with comments $status_comment";
-                $technicals .= $this->statusChanged($old_status, $resoObj->id);
+                $technicals .= $this->statusChanged($old_status, $resoObj->id, $fromCustomer, $fromJob, $new_status_id);
             }
             else
             {
@@ -1882,10 +1848,51 @@ class Request extends CrmObject
 
     }
 
-    public function statusChanged($old_status, $responseId)
+
+    public function createTokenForMe($token, $forceUpdateData=false)
+    {
+        $ticket_orgunit = $this->showAttribute("orgunit_id");
+        // @todo bring language of customer
+        $language_value = "ar";
+        $final_decision = $this->getFinalDecisionOnRequest($language_value);
+
+        $objToken = SurveyToken::loadByToken($token, true);
+        if($objToken->is_new or $forceUpdateData)
+        {
+            $objToken->set("attribute_yn_1", 'N');
+            $objToken->set("attribute_enum_1", 0);
+            $objToken->set("attribute_enum_2", 0);
+            $objToken->set("attribute_enum_3", 0);
+            $objToken->set("attribute_enum_4", 0);
+            $objToken->set("attribute_string_1", $this->getVal("request_code"));
+            $objToken->set("attribute_string_2", $this->getVal("ticket_title"));
+            $objToken->set("attribute_string_3", $ticket_orgunit);
+    
+            $objToken->set("attribute_area_1", $this->getVal("ticket_body"));
+            $objToken->set("attribute_area_2", $final_decision);
+            $objToken->commit();
+        }
+        
+        $this->set("survey_token", $token);
+        $this->set("survey_sent", "W");
+        $this->commit();
+
+        return $objToken;
+    }
+
+    public function loadMyToken()
+    {
+        $token = $this->getVal("survey_token");
+        if($token) return SurveyToken::loadByToken($token);
+        return null;
+    }
+
+
+
+    public function statusChanged($old_status, $responseId, $fromCustomer=false, $fromJob=false, $new_status_id=null)
     {
         $technicals_log = "<br> > responseId=$responseId ";
-        $new_status_id = $this->getVal("status_id");
+        if(!$new_status_id) $new_status_id = $this->getVal("status_id");
         $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
         $objme = AfwSession::getUserConnected();
@@ -1903,15 +1910,20 @@ class Request extends CrmObject
         }
 
         if ($objme) $status_decoded = $this->decode("status_id");
-        else $status_decoded = $this->getCustomerStatus($lang);
+        else $status_decoded = "[".$this->getCustomerStatus($lang)."]"; // fromCustomer=$fromCustomer status-$new_status_id=
 
         $success_message = "";
         if ($new_status_id == Request::$REQUEST_STATUS_CANCELED) $success_message = $this->tm("ticket canceled", $lang);
         elseif (($new_status_id != Request::$REQUEST_STATUS_SENT)    and 
             ($new_status_id != Request::$REQUEST_STATUS_ONGOING) and 
             ($new_status_id != Request::$REQUEST_STATUS_ASSIGNED)) 
-        {
+        {            
             $success_message = $this->tm("status changed to", $lang) . " \"$status_decoded\"";
+            
+            if($fromCustomer and ($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES))
+            {
+                throw new AfwRuntimeException("from customer strange status change old_status=$old_status, responseId=$responseId : $success_message");
+            }
         } 
         else
         {
@@ -1928,7 +1940,8 @@ class Request extends CrmObject
 
         if($success_message) AfwSession::pushSuccess($success_message);
         
-        if (($new_status_id != $old_status) and
+        if ((!$fromCustomer) and
+            ($new_status_id != $old_status) and
             ($new_status_id == Request::$REQUEST_STATUS_CLOSED) and $my_survey_url
             ) 
         {
@@ -1954,7 +1967,7 @@ class Request extends CrmObject
             }
 
             
-        } elseif (
+        } elseif ((!$fromCustomer) and
             ($new_status_id != $old_status) and
             (($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES) or
                 ($new_status_id == Request::$REQUEST_STATUS_MISSED_INFO) or
@@ -4019,6 +4032,10 @@ class Request extends CrmObject
             $arr_list_of_status_action  ["en"][17] = "request archived";
             $arr_list_of_status_action  ["ar"][17] = "تمت أرشفة الطلب";
             $arr_list_of_status_action["code"][17] = "archiveRequest";
+
+            $arr_list_of_status_action  ["en"][18] = "customer responded";
+            $arr_list_of_status_action  ["ar"][18] = "تم الرد من قبل العميل";
+            $arr_list_of_status_action["code"][18] = "customerResponded";
 
             
 

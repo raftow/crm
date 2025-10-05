@@ -13,7 +13,7 @@ class CrmSurveyTokenAfwStructure
             // $obj->ENABLE_DISPLAY_MODE_IN_QEDIT = true;
             $obj->ORDER_BY_FIELDS = '';
 
-            // $obj->UNIQUE_KEY = array( 'XXX', 'YYY' );
+            $obj->UNIQUE_KEY = array( 'survey_token' );
 
             $obj->showQeditErrors = true;
             $obj->showRetrieveErrors = true;
@@ -107,107 +107,97 @@ class CrmSurveyTokenAfwStructure
 		), 
 
         'attribute_enum_1' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0, 
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
 
         'attribute_enum_2' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_enum_3' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
 
         'attribute_enum_4' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_enum_5' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_enum_6' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_enum_7' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_enum_8' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_enum_9' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_enum_10' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                        "DEFAULT" => 'Y', 
-                        'TYPE' => 'ENUM',
+                        'TYPE' => 'ENUM', 'DEFAULT' => 0,
                         'ANSWER' => 'FUNCTION',
                         'FUNCTION_COL_NAME' => '::additional', 
                         'STARS' => '::additional', 'FORMAT' => '::additional'),
 
 
         'attribute_yn_1' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_yn_2' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),
 
         'attribute_yn_3' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
         'attribute_yn_4' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
         'attribute_yn_5' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
         'attribute_yn_6' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
         'attribute_yn_7' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
         'attribute_yn_8' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
         'attribute_yn_9' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
         'attribute_yn_10' => array('STEP' => 1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'OBSOLETE' => '::additional', 'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
-                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'FORMAT' => '::additional'),                    
+                                "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
 
 
@@ -247,6 +237,8 @@ class CrmSurveyTokenAfwStructure
                 'TYPE' => 'TEXT',  'READONLY' => false,
                 'CSS' => 'width_pct_50', ),
 
+        'active'             => array( 'STEP' =>1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => true, 'EDIT' => true, 'QEDIT' => true, 'DEFAULT' => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields' ),
+
 
         'created_by'         => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'TECH_FIELDS-RETRIEVE' => true, 'RETRIEVE' => false,  'RETRIEVE' => false, 'QEDIT' => false, 'TYPE' => 'FK', 'ANSWER' => 'auser', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields' ),
         'created_at'         => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'TECH_FIELDS-RETRIEVE' => true, 'RETRIEVE' => false, 'QEDIT' => false, 'TYPE' => 'DATETIME', 'FGROUP' => 'tech_fields' ),
@@ -254,7 +246,7 @@ class CrmSurveyTokenAfwStructure
         'updated_at'         => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'TECH_FIELDS-RETRIEVE' => true, 'RETRIEVE' => false, 'QEDIT' => false, 'TYPE' => 'DATETIME', 'FGROUP' => 'tech_fields' ),
         'validated_by'       => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 'TYPE' => 'FK', 'ANSWER' => 'auser', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields' ),
         'validated_at'       => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 'TYPE' => 'DATETIME', 'FGROUP' => 'tech_fields' ),
-        'active'             => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 'QEDIT' => false, 'DEFAULT' => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields' ),
+        
         'version'            => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 'TYPE' => 'INT', 'FGROUP' => 'tech_fields' ),
         'draft'             => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 'QEDIT' => false, 'DEFAULT' => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields' ),
         'update_groups_mfk' => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 'ANSWER' => 'ugroup', 'ANSMODULE' => 'ums', 'TYPE' => 'MFK', 'FGROUP' => 'tech_fields' ),

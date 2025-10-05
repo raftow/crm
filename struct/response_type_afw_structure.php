@@ -166,10 +166,11 @@ class CrmResponseTypeAfwStructure
                 ),
 
                 'active' => array(
-                        'SHOW-ADMIN' => true,
-                        'RETRIEVE' => false,
+                        'SHOW' => true,
+                        'RETRIEVE' => true,
                         'EDIT' => true,
                         'QEDIT' => true,
+                        'READONLY' => false,
                         'DEFAUT' => 'Y',
                         'TYPE' => 'YN',
                         'SEARCH-BY-ONE' => '',

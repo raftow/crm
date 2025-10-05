@@ -4,33 +4,6 @@ class Response extends CrmObject
 
         public static $MY_ATABLE_ID = 3571;
 
-        // RESPONSE - إجابة  
-        public static $RESPONSE_TYPE_RESPONSE = 1;
-
-        // COMMENT - تعليق  
-        public static $RESPONSE_TYPE_COMMENT = 2;
-
-        // STATUS_CHANGE - طلب تغيير حالة التذكرة  
-        public static $RESPONSE_TYPE_STATUS_CHANGE = 3;
-
-        // EMPLOYEE_CHANGE - طلب تحويل إلى موظف آخر  
-        public static $RESPONSE_TYPE_EMPLOYEE_CHANGE = 4;
-
-        // QUESTION - طرح سؤال  
-        public static $RESPONSE_TYPE_QUESTION = 5;
-
-        // DUPLICATED - إلغاء الطلب بسبب التكرار  
-        public static $RESPONSE_TYPE_DUPLICATED = 6;
-
-        // INTERNAL_COMMENT - تحرير معلومات داخلية لغاية تدريب الزملاء
-        public static $RESPONSE_TYPE_INTERNAL_COMMENT = 7;
-
-        // complete - استكمال البيانات  
-        public static $RESPONSE_TYPE_COMPLETE = 12;
-
-        // returned - إعادة الطلب الى الموظف
-        public static $RESPONSE_TYPE_RETURNED_TO_EMPLOYEE = 14;
-
         public static $DATABASE                = "";
         public static $MODULE                    = "crm";
         public static $TABLE                        = "response";
@@ -78,55 +51,56 @@ class Response extends CrmObject
 
         public static function loadByText($request_id, $response_text, $employee_id, $new_status_id, $response_type_id, $response_date, $response_time, $create_obj_if_not_found = false)
         {
-                global $print_debugg, $print_sql;
-
-                $obj = new Response();
-                if (!$request_id) throw new AfwRuntimeException("loadByMainIndex : request_id is mandatory field");
-                if (!$response_text) throw new AfwRuntimeException("loadByMainIndex : response_text is mandatory field");
-
-                if (!$employee_id) $employee_id = 0; // machine
-                if (!$new_status_id) throw new AfwRuntimeException("loadByMainIndex : new_status_id is mandatory field");
-                if (!$response_type_id) throw new AfwRuntimeException("loadByMainIndex : response_type_id is mandatory field");
-                
-
-                $obj->select("request_id", $request_id);
-                $obj->select("response_text", $response_text);
-                $obj->select("employee_id", $employee_id);
-                $obj->select("new_status_id", $new_status_id);
-                $obj->select("response_type_id", $response_type_id);
-                
-                if ($obj->load()) {
-                        return $obj;
-                } 
-                else
+                // global $print_debugg, $print_sql;
+                try
                 {
-                        $obj2 = Response::loadByMainIndex($request_id, $response_date, $response_time, false);
+                        $obj = new Response();
+                        if (!$request_id) throw new AfwRuntimeException("loadByMainIndex : request_id is mandatory field");
+                        if (!$response_text) throw new AfwRuntimeException("loadByMainIndex : response_text is mandatory field");
+
+                        if (!$employee_id) $employee_id = 0; // machine
+                        if (!$new_status_id) throw new AfwRuntimeException("loadByMainIndex : new_status_id is mandatory field");
+                        if (!$response_type_id) throw new AfwRuntimeException("loadByMainIndex : response_type_id is mandatory field");
+                        if(!$response_date or !$response_time)
+                        {
+                                $response_date = AfwDateHelper::currentHijriDate();
+                                $response_time = date("H:i:s");
+                        }
+
+                        $obj2 = Response::loadByMainIndex($request_id, $response_date, $response_time);
                         if($obj2)
                         {
-                                return $obj2;
-                        }
-                        elseif ($create_obj_if_not_found) {
-                                if ($print_debugg and $print_sql) echo "\n <br> not found with [request_id=$request_id response_date=$response_date response_time=$response_time] \n <br>";
-                                $obj->set("request_id", $request_id);
-                                $obj->set("response_text", $response_text);
+                                if($response_text==$obj2->getVal("response_text")) return $obj2; // attempt to create same response twice may be we need to throw exception here @tosee
+                                else 
+                                {
+                                        $response_time = "00:00:01";
+                                        unset($obj2);
+                                }
+                                /*
+                                else 
+                                {
+                                        // not same response so shift $response_time 2 seconds
+                                        $newDT = AfwDateHelper::addDatetimeToGregDatetime(date("Y-m-d")." ".$response_time,0,0,0,0,0,2);
+                                        list($newD, $response_time) = explode(" ", $newDT);
+                                        
+                                }*/
+                        } 
+                        if ($create_obj_if_not_found) {
+
+                                // if ($print_debugg and $print_sql) echo "\n <br> not found with [request_id=$request_id response_date=$response_date response_time=$response_time] \n <br>";
+                                $obj = Response::loadByMainIndex($request_id, $response_date, $response_time, $response_text, true);
                                 $obj->set("employee_id", $employee_id);
                                 $obj->set("new_status_id", $new_status_id);
                                 $obj->set("response_type_id", $response_type_id);
-                                if(!$response_date)
-                                {
-                                        $response_date = AfwDateHelper::currentHijriDate();
-                                        $response_time = date("H:i:s");
-                                }
-                                $obj->set("response_date", $response_date);
-                                $obj->set("response_time", $response_time);
-        
-                                $obj->insert();
-                                $obj->is_new = true;
+                                $obj->commit();
         
                                 return $obj;
                         } else return null;
                 }
-                
+                catch(Exception $e)
+                {
+                        die("fatal error code raf-20251003 : ".$e->getMessage()." Trace ".$e->getTraceAsString());
+                }
                 
         }
 
@@ -199,7 +173,7 @@ class Response extends CrmObject
                        }
                        */
 
-                        if ($long and ($typeObj->id == self::$RESPONSE_TYPE_STATUS_CHANGE)) {
+                        if ($long and ($typeObj->id == ResponseType::$RESPONSE_TYPE_STATUS_CHANGE)) {
                                 list($data[2], $link[2]) = $this->displayAttribute("new_status_id", false, $lang);
                                 $data[2] = " إلى "    . $data[2];
                         }
@@ -241,7 +215,7 @@ class Response extends CrmObject
         {
                 $typeObj = $this->hetType();  
 
-                return $typeObj->sureIs("from_employee");
+                return ($typeObj and $typeObj->sureIs("from_employee"));
         }
 
         public function getShortDisplay($lang = "ar")
@@ -295,7 +269,7 @@ class Response extends CrmObject
                         }
                         */
                         /*
-                        if($typeObj->id == self::$RESPONSE_TYPE_STATUS_CHANGE)
+                        if($typeObj->id == ResponseType::$RESPONSE_TYPE_STATUS_CHANGE)
                         {
                                 list($data[2],$link[2]) = $this->displayAttribute("new_status_id",false, $lang);
                                 $data[2] = " إلى "    . $data[2];
@@ -409,24 +383,28 @@ class Response extends CrmObject
         
         public function calcNewStatusNeeded()
         {
-                $orgunit_id = $this->getVal("orgunit_id");                                
-                $employee_id = $this->getVal("employee_id");                        
-                $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
-                /*
-                if($employee_id==1748) // bilel
+                if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE))
                 {
-                        throw new AfwRuntimeException("see bilel data : crmEmplObj=".var_export($crmEmplObj, true));
+                        $orgunit_id = $this->getVal("orgunit_id");                                
+                        $employee_id = $this->getVal("employee_id");                        
+                        $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
+                        /*
+                        if($employee_id==1748) // bilel
+                        {
+                                throw new AfwRuntimeException("see bilel data : crmEmplObj=".var_export($crmEmplObj, true));
+                        }
+                        */        
+                        if($crmEmplObj and $crmEmplObj->sureIs("approved"))
+                        {
+                                $this->set("new_status_id", Request::$REQUEST_STATUS_DONE);                                  
+                        }
+                        else
+                        {
+                                $this->set("new_status_id", Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION);  
+                                $this->set("internal", "Y");
+                        }
                 }
-                */        
-                if($crmEmplObj->sureIs("approved"))
-                {
-                        $this->set("new_status_id", Request::$REQUEST_STATUS_DONE);                                  
-                }
-                else
-                {
-                        $this->set("new_status_id", Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION);  
-                        $this->set("internal", "Y");
-                }
+                
         }
 
 
@@ -451,7 +429,7 @@ class Response extends CrmObject
 
         public function afterInsert($id, $fields_updated)
         {
-                if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == self::$RESPONSE_TYPE_RESPONSE)) {
+                if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE)) {
                                 $objRequest = $this->het("request_id");
                                 $objRequest->set("last_response_id", $this->id);
                                 $objRequest->commit();
@@ -491,34 +469,43 @@ class Response extends CrmObject
                                         if ($objme) 
                                         {
                                                 $objEmployee = $objme->getEmployee();
+                                                if($objEmployee) 
+                                                {
+                                                        $employee_name = $objEmployee->getDisplay($lang);
+                                                        $action_enum = Request::status_action_by_code("responseCreatedStatusUpdated");
+                                                        $silent = true; // important keep silent true to avoid infinite loop
+                                                        $status_comment = "تم الرد على الطلب من قبل : " . $employee_name;
+                                                        $question_id = 0;
+                                                        $request->changeStatus($this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $objOrgunit, $objEmployee);
+
+                                                        // inform customer by SMS if prio <= 3 (prio 4 = low)
+                                                        if ($request->getVal("request_priority") <= 3) {
+                                                                $title = $request->getVal("request_title");
+                                                                $title = trim(AfwStringHelper::truncateArabicJomla($title, 20), " ");
+                                                                $success_message = $this->tm("the status of request", $lang) . " \"$title\" " . $this->tm("has been changed to", $lang) . " \"" . $this->decode("new_status_id") . "\"";
+                                                                $request->informCustomerBySMS($success_message, $lang);
+                                                        }
+                                                }
                                         }
-                                        if(!$objEmployee) 
+                                        else
                                         {
-                                                $objEmployee = Employee::getStandardJobEmployee();//$request->het("employee_id");
+                                                $custme = AfwSession::getCustomerConnected();
+                                                if ($custme) 
+                                                {
+                                                        $action_enum = Request::status_action_by_code("customerResponded");
+                                                        $silent = true; // important keep silent true to avoid infinite loop
+                                                        $status_comment = "تم الرد على الطلب من قبل العميل";                                                        
+                                                        $request->customerChangeStatus($this->getVal("new_status_id"), $status_comment, $action_enum);
+                                                }
+                                                
                                         }
                                                 /*
-                                                $custme = AfwSession::getCustomerConnected();
-                                                if ($custme) $employee_name = $custme->getDisplay($lang);
                                                 if (!$employee_name) 
                                                 {
                                                         $employee_name = "المهمة الآلية";
                                                         وش هالخرابيط هل المهمة الآلية لا ترد على الطلبات
                                                 }*/
-                                        if($objEmployee) $employee_name = $objEmployee->getDisplay($lang);
                                         
-                                        $action_enum = Request::status_action_by_code("responseCreatedStatusUpdated");
-                                        $silent = true; // important keep silent true to avoid infinite loop
-                                        $status_comment = "تم الرد على الطلب من قبل : " . $employee_name;
-                                        $question_id = 0;
-                                        $request->changeStatus($this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $objOrgunit, $objEmployee);
-
-                                        // inform customer by SMS if prio <= 3 (prio 4 = low)
-                                        if ($request->getVal("request_priority") <= 3) {
-                                                $title = $request->getVal("request_title");
-                                                $title = trim(AfwStringHelper::truncateArabicJomla($title, 20), " ");
-                                                $success_message = $this->tm("the status of request", $lang) . " \"$title\" " . $this->tm("has been changed to", $lang) . " \"" . $this->decode("new_status_id") . "\"";
-                                                $request->informCustomerBySMS($success_message, $lang);
-                                        }
                                 }
                         }
                 }

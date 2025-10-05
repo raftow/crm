@@ -1,6 +1,6 @@
 <?php
 
-class CrmObject extends AFWObject
+class CrmObject extends AfwMomkenObject
 {
 
         public static $CRM_CENTER_ID = 70;
