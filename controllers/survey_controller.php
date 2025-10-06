@@ -80,7 +80,13 @@ class SurveyController extends AfwController
         public function getSurveyToken($request)
         {
             $token = $request["tkn"];
-            return SurveyToken::loadByToken($token);
+            $obj = SurveyToken::loadByToken($token);
+            if($obj->noResponseIDoNotKnow())
+            {
+                $obj->set("survey_id", 1);
+                for($k=1;$k<=10;$k++) if(!$obj->sureIs("attribute_yn_$k")) $obj->set("attribute_yn_$k", 'N');
+            }
+            return $obj;
         }
 
 
@@ -177,6 +183,44 @@ class SurveyController extends AfwController
                         // call the view 1
                         $this->render("crm", "survey_request_form", $data);
                 }
+        }
+
+
+        /******************************** submit_survey action ********************************************** */
+
+        public function prepareSubmit_survey($request)
+        {
+                $custom_scripts = $this->prepareStandard($request);
+
+                return $custom_scripts;
+        }
+
+        public function initiateSubmit_survey($request)
+        {
+                AfwAutoLoader::addMainModule("crm");
+                $objSurveyToken = $this->getSurveyToken($request);
+                $data = $this->standardSubmit($request, $objSurveyToken);
+
+                return $data;
+        }
+
+        public function submit_survey($request)
+        {
+                $data = $request;
+
+                if (!$data["all_error"]) 
+                {
+                    $this->thankYou($data);
+                } 
+                else 
+                {
+                    $this->survey_request($data);
+                }
+        }
+
+        public function thankYou($data)
+        {
+            $this->render("crm", "thank_you", $data);
         }
 
         

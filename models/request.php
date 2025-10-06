@@ -1848,6 +1848,18 @@ class Request extends CrmObject
 
     }
 
+    public function resetSurveyForMe($lang="ar")
+    {
+        $token = $this->getVal("survey_token");
+        if(!$token)
+        {
+            $mpid_value = 100000 + $this->id;
+            $token = CrmLimesurvey::proposeToken($mpid_value, $length = 15);
+        }
+        $this->createTokenForMe($token, $forceUpdateData=true);
+
+        return ['', 'survey data has been reset : tkn = '.$token];
+    }
 
     public function createTokenForMe($token, $forceUpdateData=false)
     {
@@ -1859,6 +1871,8 @@ class Request extends CrmObject
         $objToken = SurveyToken::loadByToken($token, true);
         if($objToken->is_new or $forceUpdateData)
         {
+            $objToken->set("survey_id", 1);
+            $objToken->set("customer_id", $this->getVal("customer_id"));
             $objToken->set("attribute_yn_1", 'N');
             $objToken->set("attribute_enum_1", 0);
             $objToken->set("attribute_enum_2", 0);
@@ -2423,6 +2437,19 @@ class Request extends CrmObject
                         "BF-ID" => "",
                         "HZM-SIZE" => 12,
                     );
+
+                    $color = "orange";
+                    $title_ar = "تصفير الاستبانة";
+                    $pbms["xhab0A"] = array(
+                        "METHOD" => "resetSurveyForMe",
+                        "COLOR" => $color,
+                        "LABEL_AR" => $title_ar,
+                        "PUBLIC" => true,
+                        "BF-ID" => "",
+                        "HZM-SIZE" => 12,
+                    );
+
+                    
                 }
                 
             }

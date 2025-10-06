@@ -70,6 +70,11 @@ class SurveyToken extends CrmObject
         if ($col_struct == "stars") {
             return 5;
         }
+
+        if ($col_struct == "maxlength") {
+            return 128;
+        }
+
         if ($col_struct == "format") {
             if (
                 AfwStringHelper::stringStartsWith(
@@ -259,6 +264,13 @@ class SurveyToken extends CrmObject
     {
         return false;
     }
+
+    public function noResponseIDoNotKnow()
+    {
+        return true;
+    }
+
+    
 
     public function switcherConfig($col, $auser = null)
     {

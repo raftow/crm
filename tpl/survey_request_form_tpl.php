@@ -1,10 +1,21 @@
+<div class="survey-header">
+      <div class="survey logo_company">
+            <img src="../client-tvtc/pic/logo-company-tvtc.png" alt="" style="margin-top:1px;height:42px;width: 42px;"> 
+      </div>
+      <div class="survey title_company">  
+            <img src="../client-tvtc/pic/title-company-tvtc.png" alt="" style="margin-top: 0px;width: 206px !important;height: 43px;border-radius: 0;margin-right: auto;margin-left: auto;"> 
+      </div>
+</div>
 <div class="survey_bg survey">
 <div class="content_form_bg">
         <div class="content_big_title survey">استبانة تحسين جودة خدمة العملاء</div>
 <div id="container_div" class="table_div">
+        <?php
+                echo AfwInputHelper::inputErrorsInRequest("all", $data);
+        ?>
         <form id="crm_form" method="POST"  enctype="multipart/form-data" action="i.php">
-                <input type="hidden" name="token" id="cn" value="<?php echo $token ?>">
-                <input type="hidden" name="cn" id="cn" value="crm">
+                <input type="hidden" name="tkn" id="tkn" value="<?php echo $tkn ?>">
+                <input type="hidden" name="cn" id="cn" value="survey">
                 <input type="hidden" name="mt" id="mt" value="submit_survey">                
 
                 <div id="infos_left_div" class="table_cell_div content_form survey_form">
@@ -33,10 +44,11 @@
                                         $info = AfwEditMotor::prepareEditInfoForColumn($objSurveyToken, $question_attribute);
                                         echo $info["input"];        
 
-                                        echo "<!-- info[desc]=".var_export($info["desc"], true)." -->";        
+                                        // echo "<!-- info[desc]=".var_export($info["desc"], true)." -->";        
 
                                         }
                                 ?>
+                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("save responses", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
                         </div>
                         
                 </div> 
@@ -45,7 +57,7 @@
 </div>
 </div>
 <script>
-        function starlabel(i) // nb of elemets should be later dynamic @todo
+        function starlabel(inputname, i) // nb of elemets should be later dynamic @todo
         {
                 if(i==1) return 'غير راضي إطلاقًا'; // should be later dynamic
                 if(i==2) return 'غير راضي'; // should be later dynamic
