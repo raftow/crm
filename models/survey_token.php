@@ -267,6 +267,11 @@ class SurveyToken extends CrmObject
 
     public function noResponseIDoNotKnow()
     {
+        $reqObj = Request::loadByToken($this->getVal("survey_token"));
+        if($reqObj and (!$reqObj->getVal("customer_id") or !$reqObj->getVal("survey_id") or !$reqObj->getVal("attribute_string_2")))
+        {
+            $reqObj->resetSurveyForMe();
+        }
         return true;
     }
 

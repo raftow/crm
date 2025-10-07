@@ -1879,10 +1879,10 @@ class Request extends CrmObject
             $objToken->set("attribute_enum_3", 0);
             $objToken->set("attribute_enum_4", 0);
             $objToken->set("attribute_string_1", $this->getVal("request_code"));
-            $objToken->set("attribute_string_2", $this->getVal("ticket_title"));
+            $objToken->set("attribute_string_2", $this->getVal("request_title"));
             $objToken->set("attribute_string_3", $ticket_orgunit);
     
-            $objToken->set("attribute_area_1", $this->getVal("ticket_body"));
+            $objToken->set("attribute_area_1", $this->getVal("request_text"));
             $objToken->set("attribute_area_2", $final_decision);
             $objToken->commit();
         }

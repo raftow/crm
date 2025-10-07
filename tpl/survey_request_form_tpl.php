@@ -2,12 +2,12 @@
       <div class="survey logo_company">
             <img src="../client-tvtc/pic/logo-company-tvtc.png" alt="" style="margin-top:1px;height:42px;width: 42px;"> 
       </div>
-      <div class="survey title_company">  
+      <div class="survey titre_company">  
             <img src="../client-tvtc/pic/title-company-tvtc.png" alt="" style="margin-top: 0px;width: 206px !important;height: 43px;border-radius: 0;margin-right: auto;margin-left: auto;"> 
       </div>
 </div>
 <div class="survey_bg survey">
-<div class="content_form_bg">
+<div class="content_form_bg survey">
         <div class="content_big_title survey">استبانة تحسين جودة خدمة العملاء</div>
 <div id="container_div" class="table_div">
         <?php
@@ -26,6 +26,13 @@
 علماً بأنها لا تستغرق سوى دقيقة واحدة، ونؤكد لكم أنه لن تُكشف هوية أصحاب الإجابات التي سنحصل عليها،<br>
 وسيتم معالجة المعلومات بشكل كلي فقط دون الرجوع للبيانات الفردية.<br>
 إن مشاركتكم محل تقدير، فهي تسهم في الارتقاء بخدمات المؤسسة وتلبيتها لتطلعاتكم. <br>
+                                </div>                                
+                                <div id="surveyintro" class="attrib-warn form-group width_pct_100 survey-intro intro2">
+                                        تم الرد على طلبكم رقم <?php echo $objSurveyToken->getVal("attribute_string_1") ?>
+                                        بعنوان  <span class='ticket-title'><?php echo $objSurveyToken->getVal("attribute_string_2") ?></span>
+                                        وكان الرد كالتالي : 
+                                        <div class='ticket-final-response'><?php echo $objSurveyToken->getVal("attribute_area_2") ?></div>
+                                         لتقييم الخدمة نتطلع إلى أجوبتكم على الأسئلة التالية
                                 </div>                                
                                 <?php
                                         /**

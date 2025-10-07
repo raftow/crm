@@ -3694,3 +3694,17 @@ div.confidential>div.request-desc {
     background-image: url(../pic/hidden_eye.png);
 }
 
+.ticket-final-response {
+    padding: 10px;
+    margin: 8px;
+    background-color: #a4d9ff61;
+    border: 2px dashed #5fc7f5;
+}
+
+.ticket-title {
+    padding: 3px;
+    margin: 3px;
+    color: #226eb4;
+    border-bottom: 1px dashed #5fc7f5;
+    font-weight: bold;
+}
