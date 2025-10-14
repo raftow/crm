@@ -12,10 +12,14 @@
 
 <div class="success_hzm">
       <div class="register_success_message">تم تسجيل مشاركتكم بنجاح. <br><br>
-      نشكر لكم مساهمتكم في تحسين جودة خدماتنا
+      نشكر لكم مساهمتكم <br>في تحسين جودة خدماتنا
       </div>
       <div class="signature">
-            خدمة تواصل معنا المؤسسة العامة للتدريب التقني والمهني
+            <a class='crm suggestion survey' href='i.php?cn=survey&mt=survey_request&tkn=<?php echo $objSurveyToken->getVal("survey_token") ?>'>تعديل المشاركة</a><br><br>
+            <a class='crm suggestion survey' href='customer_login.php'>خدمة تواصل معنا</a><br>
+            <br>المؤسسة العامة للتدريب التقني والمهني<br>
+            
+            
       </div>
 
 </div>

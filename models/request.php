@@ -426,6 +426,7 @@ class Request extends CrmObject
     public static $STATS_CONFIG = array(
         "gs001" => array(
             "STATS_WHERE" => "active = 'Y' and request_date >= [date_start_perf]", // [date_end_perf]
+            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "REPEAT_TITLES_NB_ROWS" => 10,
@@ -497,6 +498,7 @@ class Request extends CrmObject
 
         "gs003" => array(
             "STATS_WHERE" => "active = 'Y' and request_date between [date_start_stats] and [date_end_stats]", // 
+            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -527,6 +529,7 @@ class Request extends CrmObject
 
         "gs004" => array(
             "STATS_WHERE" => "active = 'Y' and request_date between [date_start_stats] and [date_end_stats]", // 
+            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -557,6 +560,7 @@ class Request extends CrmObject
             //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
 
         ),
+        /*
         "gs005" => array(
             "STATS_WHERE" => "active = 'Y' and status_id = 7 and status_date between [date_start_satisfaction] and [date_end_satisfaction]", // 
             "DISABLE-VH" => true,
@@ -579,10 +583,11 @@ class Request extends CrmObject
             ),
 
 
-        ),
+        ),*/
         
         "gs006" => array(
             "STATS_WHERE" => "active = 'Y' and status_id in (101,102,2,201,3,301,4) and request_date between [date_start_stats] and [date_end_stats]", // 
+            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -609,6 +614,7 @@ class Request extends CrmObject
 
         "gs007" => array(
             "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date >= [date_start_perf] and status_id in (201,4)", // 
+            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -644,6 +650,7 @@ class Request extends CrmObject
 
         "gs008" => array(
             "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date >= [date_start_perf] and status_id in (2,3,301)", // 
+            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -694,14 +701,16 @@ class Request extends CrmObject
     }
 
 
-    public static function getRecentClosedTicketsWithSurveyNotReady($period=120, $nb_req_limit = 1000)
+    public static function getRecentClosedTicketsWithSurveyNotReady($period=99, $nb_req_limit = 1200) 
     {
-        $date_start = AfwDateHelper::shiftGregDate("", -$period);
+        // $nb_req_limit = 10; // just to test on mobile of rafik
+        $date_start = AfwDateHelper::shiftHijriDate("", -$period);
         $obj = new Request();
         $obj->select("status_id", self::$REQUEST_STATUS_CLOSED);
-        $obj->where("(survey_sent is null or survey_sent != 'Y') and (status_date >= '$date_start')");
+        // $obj->where("(survey_sent is null or survey_sent != 'Y') and (status_date >= '$date_start')");
+        $obj->where("(survey_sent is null or survey_sent != 'Y') and (request_date >= '$date_start')");
 
-        return $obj->loadMany($nb_req_limit, "request_date desc");
+        return $obj->loadMany($nb_req_limit, "request_date asc");
     }
 
     public static function getMyCurrentRequests($customer_id, $nb_req_limit = 10)
@@ -1680,7 +1689,7 @@ class Request extends CrmObject
             return $the_customer->smsRetrieveAction($lang, $actionParamsArr, $only_get_description = false, $token_arr);
         }
 
-        return [false, "No customer id=$customer_id found for this request", ""];
+        return [false, "No customer id=$customer_id found for this request", "", $template];
     }
 
     public function customerChangeStatus($new_status_id, $status_comment, $status_action_enum)
@@ -1834,15 +1843,25 @@ class Request extends CrmObject
     public function mySurveyUrl()
     {
         $token = $this->getVal("survey_token");
+        
         if($token) // means that survey record and url are ready
         {
-            $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
-            $lime_survey_domain = AfwSession::config('lime_survey_domain', '');
-            if($lime_survey_domain and $crm_survey_id)
+            $crm_survey_plateform = AfwSession::config('crm_survey_plateform', 'crm_survey');
+            if($crm_survey_plateform == "limesurvey")
             {
-                $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
-                return "$limesurvey_url/$crm_survey_id?token=$token";
+                $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
+                $lime_survey_domain = AfwSession::config('lime_survey_domain', '');
+                if($lime_survey_domain and $crm_survey_id)
+                {
+                    $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
+                    return "$limesurvey_url/$crm_survey_id?token=$token";
+                }
             }
+            else
+            {
+                return SurveyToken::getTokenUrl($token);
+            }
+            
         }
         return null;
 
@@ -1878,12 +1897,17 @@ class Request extends CrmObject
             $objToken->set("attribute_enum_2", 0);
             $objToken->set("attribute_enum_3", 0);
             $objToken->set("attribute_enum_4", 0);
+            $objToken->set("attribute_date_1", $this->getVal("request_date"));
+            // above field added and update like this :
+            // ALTER TABLE tvtc_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
+            // update tvtc_crm.survey_token s set s.attribute_date_1=(select request_date from tvtc_crm.request r where r.survey_token = s.survey_token);
             $objToken->set("attribute_string_1", $this->getVal("request_code"));
             $objToken->set("attribute_string_2", $this->getVal("request_title"));
             $objToken->set("attribute_string_3", $ticket_orgunit);
     
-            $objToken->set("attribute_area_1", $this->getVal("request_text"));
+            $objToken->set("attribute_area_1", "");
             $objToken->set("attribute_area_2", $final_decision);
+            $objToken->set("attribute_area_3", $this->getVal("request_text"));
             $objToken->commit();
         }
         
@@ -1892,6 +1916,24 @@ class Request extends CrmObject
         $this->commit();
 
         return $objToken;
+    }
+
+
+    public function intro2ToHide()
+    {
+        // @todo bring language of customer
+        /*
+        $language_value = "ar";
+        $final_decision = $this->getFinalDecisionOnRequest($language_value);
+        if(strlen($final_decision)>256) return true;
+        $request_date_limit = AfwDateHelper::shiftHijriDate("",-17);        
+        return ($this->getVal("request_date") >= $request_date_limit);*/
+
+
+        // now always hide because he can click to quick show
+
+        return true;
+
     }
 
     public function loadMyToken()
@@ -1903,24 +1945,42 @@ class Request extends CrmObject
 
 
 
+    public function surveyBySMS($lang="ar")
+    {
+            $template = "survey";
+            $my_survey_url = $this->mySurveyUrl();
+            if($my_survey_url)
+            {
+                    // send SMS to warn customer
+                    $token_arr = array(
+                        "[title]" => $this->getVal("request_title"),
+                        // "first_name_ar" => $customerObj->getVal("first_name_ar"),
+                        "[survey_url]" => $my_survey_url,
+                        "[type]" => $this->showAttribute("request_type_id", null, true, $lang),
+                        "[code]" => $this->getVal("request_code"),                        
+                    );
+                    return $this->sendSmsToCustomer($template, $lang, $token_arr);
+            }
+            else return [false, "no survey token generated", "", $template];
+    }
+
     public function statusChanged($old_status, $responseId, $fromCustomer=false, $fromJob=false, $new_status_id=null)
     {
         $technicals_log = "<br> > responseId=$responseId ";
         if(!$new_status_id) $new_status_id = $this->getVal("status_id");
-        $lang = AfwSession::getSessionVar("current_lang");
+        $lang = AfwLanguageHelper::getGlobalLanguage();
         if (!$lang) $lang = "ar";
         $objme = AfwSession::getUserConnected();
+        $my_survey_url = null;
         if ($new_status_id == self::$REQUEST_STATUS_CLOSED) {
             // AfwSession::pushInformation("rafik-debugg : creating survey token"); 
-            $survey_url = CrmLimesurvey::surveyClosedTicket($this);
-            $my_survey_url = $this->mySurveyUrl();
+            $survey_url = CrmLimesurvey::surveyClosedTicket($this, $lang, false);            
             $technicals_log .= "<br> > survey Closed Ticket done : $survey_url";
             if ((!$objme) or (!$objme->isSuperAdmin())) $survey_url = null;
 
             // AfwSession::pushInformation("rafik-debugg : survey token created"); 
         } else {
-            $survey_url = null;
-            $my_survey_url = null;
+            $survey_url = null;            
         }
 
         if ($objme) $status_decoded = $this->decode("status_id");
@@ -1956,17 +2016,13 @@ class Request extends CrmObject
         
         if ((!$fromCustomer) and
             ($new_status_id != $old_status) and
-            ($new_status_id == Request::$REQUEST_STATUS_CLOSED) and $my_survey_url
+            ($new_status_id == Request::$REQUEST_STATUS_CLOSED)
             ) 
         {
-            // $customerObj = $this->hetCustomer();
-            // send SMS to warn customer
-            $token_arr = array(
-                        "title" => $this->getVal("request_title"),
-                        // "first_name_ar" => $customerObj->getVal("first_name_ar"),
-                        "survey_url" => $my_survey_url,
-                    );
-            list($done, $reason, $sms_body) = $this->sendSmsToCustomer($template = "survey", $lang, $token_arr);
+
+            list($done, $reason, $sms_body, $template) = $this->surveyBySMS($lang);
+            
+            
             if($done)
             {
                 $this->set("survey_sent", "Y");
@@ -1992,9 +2048,9 @@ class Request extends CrmObject
             $customerObj = $this->hetCustomer();
             // send SMS to warn customer
             $token_arr = array(
-                        "title" => $this->getVal("request_title"),
-                        "first_name_ar" => $customerObj->getVal("first_name_ar"),
-                        "crm_site_url" => AfwSession::config("crm_site_url", "[crm-site]"),
+                        "[title]" => $this->getVal("request_title"),
+                        "[first_name_ar]" => $customerObj->getVal("first_name_ar"),
+                        "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
                     );
             list($done, $reason, $sms_body) = $this->sendSmsToCustomer($template = "news", $lang, $token_arr);
             if($done)
@@ -2992,27 +3048,7 @@ class Request extends CrmObject
         return AfwDateHelper::shiftGregDate("", -1);
     }
 
-    public function calcDate_start_satisfaction()
-    {
-        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_stats_days");
-        return AfwDateHelper::shiftHijriDate("", -$period);
-    }
-
-    public function calcDate_start_satisfaction_greg()
-    {
-        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_stats_days");
-        return AfwDateHelper::shiftGregDate("", -$period);
-    }
-
-    public function calcDate_end_satisfaction()
-    {
-        return AfwDateHelper::shiftHijriDate("", -1);
-    }
-
-    public function calcDate_end_satisfaction_greg()
-    {
-        return AfwDateHelper::shiftGregDate("", -1);
-    }
+    
 
     public function calcRequest_done()
     {

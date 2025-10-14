@@ -12,6 +12,8 @@ class SurveyTokenArTranslator{
 		$trad["survey_token"]["desc_ar"] = "وصف  بالعربية";
 		$trad["survey_token"]["name_en"] = "مسمى  بالانجليزية";
 		$trad["survey_token"]["desc_en"] = "وصف  بالانجليزية";
+
+		$trad["survey_token"]["stats.st001"] = "تقرير رضا العملاء لفترة من [date_start_satisfaction_greg] إلى [date_end_satisfaction_greg]";
         // steps
         return $trad;
     }

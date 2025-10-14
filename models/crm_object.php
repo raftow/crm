@@ -144,4 +144,27 @@ class CrmObject extends AfwMomkenObject
                 
                 return $arr_list_of_customer_type;
         }
+
+
+        public static function calcCrmDate_start_satisfaction()
+        {
+                $period = CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_stats_days");
+                return AfwDateHelper::shiftHijriDate("", -$period);
+        }
+
+        public static function calcCrmDate_start_satisfaction_greg()
+        {
+                $period = CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_stats_days");
+                return AfwDateHelper::shiftGregDate("", -$period);
+        }
+
+        public static function calcCrmDate_end_satisfaction()
+        {
+                return AfwDateHelper::shiftHijriDate("", -1);
+        }
+
+        public static function calcCrmDate_end_satisfaction_greg()
+        {
+                return AfwDateHelper::shiftGregDate("", -1);
+        }
 }

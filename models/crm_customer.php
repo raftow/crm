@@ -762,7 +762,11 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         include("$file_dir_name/../tpl/template_sms_$sms_template.php");
 
                         if ($sms_body_arr[$lang]) {
-                                $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
+                                $sms_body_before =$sms_body_arr[$lang];
+                                $sms_body = $this->decodeTpl($sms_body_before, array(), $lang, $token_arr);
+                                AfwBatch::print_info('before decode : '.$sms_body_before);
+                                AfwBatch::print_info('after decode : '.$sms_body);
+                                // ****
                         } else {
                                 $sms_body = "";
                         }
@@ -773,8 +777,10 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
 
                                 $simulate_sms_to_mobile = AfwSession::config("simulate_sms_to_mobile", null);
+                                $simulate_sms_to_mobile_for_this_template = AfwSession::config("simulate_sms_to_mobile_for_$sms_template", null);
 
                                 if ($simulate_sms_to_mobile) $sms_mobile = $simulate_sms_to_mobile;
+                                elseif ($simulate_sms_to_mobile_for_this_template) $sms_mobile = $simulate_sms_to_mobile_for_this_template;
                                 else $sms_mobile = $customer_mobile;
 
                                 // send SMS to customer       

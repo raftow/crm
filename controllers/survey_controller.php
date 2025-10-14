@@ -25,7 +25,7 @@ class SurveyController extends AfwController
         }
         public function footerTemplate($methodName, $default_footer_template)
         {
-                return "modern";
+                return "empty";
         }
 
 
@@ -81,7 +81,7 @@ class SurveyController extends AfwController
         {
             $token = $request["tkn"];
             $obj = SurveyToken::loadByToken($token);
-            if($obj->noResponseIDoNotKnow())
+            if($obj and $obj->noResponseIDoNotKnow())
             {
                 $obj->set("survey_id", 1);
                 for($k=1;$k<=10;$k++) if(!$obj->sureIs("attribute_yn_$k")) $obj->set("attribute_yn_$k", 'N');
@@ -89,6 +89,41 @@ class SurveyController extends AfwController
             return $obj;
         }
 
+/******************************** show_response action ********************************************** */
+
+        public function prepareShow_response($request)
+        {
+                $custom_scripts = $this->prepareStandard($request);
+
+                return $custom_scripts;
+        }
+
+        public function show_response($request)
+        {
+                foreach ($request as $key => $value) $$key = $value;
+                $data = $request;
+
+                if(!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
+
+                if(!$objSurveyToken) {
+                    $this->renderError("action aborted ! survey token not found, contact your admin");
+                    return;
+                }
+
+                // $objSurveyRequest = $objSurveyToken->getMyRequest();
+                $data["hide_intro2"] = "";
+
+                if ($objSurveyToken->isClosed()) {
+                    $this->renderError("This survey token is already closed, responses can't be edited");
+                    return;
+                }
+
+                if (true) {
+                        $data["objSurveyToken"] = $objSurveyToken;
+
+                        $this->render("crm", "quick_response_view", $data);
+                }
+        }
 
         /******************************** survey_request action ********************************************** */
 
@@ -104,6 +139,8 @@ class SurveyController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
 
+                if(!$survey_id) $survey_id = 1;
+
                 if(!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
 
                 if(!$objSurveyToken) {
@@ -111,55 +148,25 @@ class SurveyController extends AfwController
                     return;
                 }
 
+                $objSurveyRequest = $objSurveyToken->getMyRequest();
+                $data["hide_intro2"] = "";
+                $data["hide_intro1"] = "hide";
+                if($objSurveyRequest and $objSurveyRequest->intro2ToHide())
+                {
+                        $data["hide_intro2"] = "hide";
+                        $data["hide_intro1"] = "";
+                } 
+
                 if ($objSurveyToken->isClosed()) {
                     $this->renderError("This survey token is already closed, responses can't be edited");
                     return;
                 }
 
                 if (true) {
+                        $objSurveyToken->set("attribute_yn_1", "N");
                         $data["objSurveyToken"] = $objSurveyToken;
 
-                        $question_list = [];
-
-                        $question_list[1] = [
-                            'question_type'=>'yn',
-                            'question_type_order'=>1,
-                            'question_title'=>'أوافق على مشاركة بياناتي مع الجهات الحكومية',
-                        ];
-
-                        $question_list[2] = [
-                            'question_type'=>'enum',
-                            'question_type_order'=>1,
-                            'question_title'=>'ما مدى رضاك عن وضوح الإفادة لطلبك؟',
-                        ];
-
-                        $question_list[3] = [
-                            'question_type'=>'enum',
-                            'question_type_order'=>2,
-                            'question_title'=>'ما مدى رضاك عن وضوح الإجراءات والتعليمات المطلوبة لتقديم طلبك؟',
-                        ];
-
-
-                        $question_list[4] = [
-                            'question_type'=>'enum',
-                            'question_type_order'=>3,
-                            'question_title'=>'ما مدى رضاك عن سهولة استخدام المنصة؟',
-                        ];
-
-
-                        $question_list[5] = [
-                            'question_type'=>'enum',
-                            'question_type_order'=>4,
-                            'question_title'=>'ما مدى رضاك عن جودة الخدمة المقدمة بشكل عام؟',
-                        ];
-
-                        $question_list[6] = [
-                            'question_type'=>'area',
-                            'question_type_order'=>1,
-                            'question_title'=>'يرجى ذكر أي ملاحظات أو اقتراحات لتحسين الخدمة:',
-                        ];
-
-                        $data["question_list"] = $question_list;
+                        $data["question_list"] = Survey::getQuestionList($survey_id);
 
 
                         /*
@@ -207,6 +214,9 @@ class SurveyController extends AfwController
         public function submit_survey($request)
         {
                 $data = $request;
+
+                $objSurveyToken = $this->getSurveyToken($request);
+                $data["objSurveyToken"] = $objSurveyToken;
 
                 if (!$data["all_error"]) 
                 {

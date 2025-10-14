@@ -2,7 +2,7 @@
 
 class CrmLimesurvey
 {
-
+    /*
     public static function surveyCustomerSatisfactionAndBackToCrm2($send_limit = 100)
     {
         $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
@@ -61,7 +61,7 @@ class CrmLimesurvey
 
 
         return array('nb_survey_update_back' => $nb_survey_update_back, 'nb_bad_customer' => $nb_bad_customer, 'nb_bad_request' => $nb_bad_request);
-    }
+    }*/
 
     public static function proposeToken($start_num, $length = 15)
     {
@@ -83,12 +83,17 @@ class CrmLimesurvey
         
     }
 
+    /**
+     * @param Request $ticketObj
+     */
 
-    public static function surveyClosedTicket($ticketObj, $lang = "ar")
+    public static function surveyClosedTicket($ticketObj, $lang = "ar", $sendSMS=false)
     {
         $mpid_value = 100000 + $ticketObj->id;
         $token = self::proposeToken($mpid_value, $length = 15);
         $crm_survey_plateform = AfwSession::config('crm_survey_plateform', 'crm_survey');
+        $return_sucess = "";
+        $return_error = "";
         if($crm_survey_plateform == "limesurvey")
         {
             $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
@@ -215,14 +220,34 @@ class CrmLimesurvey
         {
             if(!$ticketObj->sureIs("survey_sent"))
             {
-                $tokenObj = $ticketObj->createTokenForMe($token);                
-                $return = $tokenObj->getUrl();
+                $tokenObj = $ticketObj->createTokenForMe($token);      
+                $return_sucess .= "\nsurvey token generated : ".$tokenObj->getVal("survey_token");                          
+
+                if($sendSMS)
+                {
+                    list($done, $reason, $sms_body, $template) = $ticketObj->surveyBySMS($lang);
+                
+                
+                    if($done)
+                    {
+                        $ticketObj->set("survey_sent", "Y");
+                        $ticketObj->commit();
+                        $return_sucess .= "\nتم اعلام العميل بهذا التغيير على التذكرة عبر الرسالة التالية : \n".$sms_body;
+                        $return_sucess .= "\n > sendSmsToCustomer done with template=$template, lang=$lang, infos=$reason";
+                    }
+                    else
+                    {
+                        $return_error .= "\nتم فشل اعلام العميل بهذا التغيير على التذكرة :\n reason=$reason";
+                        $return_error .= "\n > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
+                    }
+                }
             }
-            else $return = "survey token ".$ticketObj->getVal("survey_token")." already sent to customer";
+            else $return_error .= "\nsurvey token ".$ticketObj->getVal("survey_token")." already sent to customer";
+            
         }
 
 
-        return $return;
+        return [$return_error, $return_sucess];
     }
 
 
@@ -237,9 +262,11 @@ class CrmLimesurvey
         {
             try
             {
-                $return = self::surveyClosedTicket($closedTicketItem, $lang);
-                $nb_ok++;
-                AfwBatch::print_info(" surveyClosedTicket success : $return ");
+                list($error, $sucess) = self::surveyClosedTicket($closedTicketItem, $lang, true);
+                
+                if($sucess) { AfwBatch::print_info(" surveyClosedTicket success : $sucess "); $nb_ok++; }
+                if($error) { AfwBatch::print_error(" surveyClosedTicket failed : $error "); $nb_error++; }
+                
             }
             catch(Exception $ex)
             {
@@ -263,7 +290,7 @@ class CrmLimesurvey
         }
 
 
-        return array('nb_survey_update_back' => $nb_ok, 'nb_bad_customer' => $nb_exception, 'nb_bad_request' => $nb_error);
+        return array('nb_ok' => $nb_ok, 'nb_exception' => $nb_exception, 'nb_error' => $nb_error);
     }
 
     

@@ -201,6 +201,27 @@ class CrmSurveyTokenAfwStructure
                                 "DEFAULT" => 'Y', 'TYPE' => 'YN', 'CHECKBOX' => '::additional', 'SWITCHER' => '::additional', 'FORMAT' => '::additional'),                    
 
 
+        'attribute_date_1' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false, 'OBSOLETE' => '::additional', 
+                'EDIT' => true,  'QEDIT' => true,
+                'TYPE' => 'DATE',  'READONLY' => false,
+                'CSS' => 'width_pct_100', ),
+
+        'attribute_date_2' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false, 'OBSOLETE' => '::additional',
+                'EDIT' => true,  'QEDIT' => true,
+                'TYPE' => 'DATE',  'READONLY' => false,
+                'CSS' => 'width_pct_100', ),
+
+
+        'attribute_gdate_1' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false, 'OBSOLETE' => '::additional', 
+                'EDIT' => true,  'QEDIT' => true,
+                'TYPE' => 'GDATE',  'READONLY' => false,
+                'CSS' => 'width_pct_100', ),
+
+        'attribute_gdate_2' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false, 'OBSOLETE' => '::additional',
+                'EDIT' => true,  'QEDIT' => true,
+                'TYPE' => 'GDATE',  'READONLY' => false,
+                'CSS' => 'width_pct_100', ),
+
 
         'attribute_string_1' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,  'RETRIEVE' => false, 'OBSOLETE' => '::additional', 
                 'EDIT' => true,  'QEDIT' => true,
@@ -239,6 +260,46 @@ class CrmSurveyTokenAfwStructure
                 'CSS' => 'width_pct_100', ),
 
         'active'             => array( 'STEP' =>1, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => true, 'EDIT' => true, 'QEDIT' => true, 'DEFAULT' => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields' ),
+
+        'date_start_satisfaction' => array(
+			'TYPE' => 'DATE',
+			'CATEGORY' => 'FORMULA',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',  'STEP' => 99, 
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+        'date_end_satisfaction' => array(
+                'TYPE' => 'DATE',
+                'CATEGORY' => 'FORMULA',
+                'SEARCH-BY-ONE' => '',
+                'DISPLAY' => '',  'STEP' => 99, 
+                'DISPLAY-UGROUPS' => '',
+                'EDIT-UGROUPS' => '',
+        ),
+
+        //----------- greg
+
+
+        'date_start_satisfaction_greg' => array(
+                'TYPE' => 'GDATE',
+                'CATEGORY' => 'FORMULA',
+                'SEARCH-BY-ONE' => '',
+                'DISPLAY' => '',  'STEP' => 99, 
+                'DISPLAY-UGROUPS' => '',
+                'EDIT-UGROUPS' => '',
+        ),
+
+        'date_end_satisfaction_greg' => array(
+                'TYPE' => 'DATE',
+                'CATEGORY' => 'FORMULA',
+                'SEARCH-BY-ONE' => '',
+                'DISPLAY' => '',  'STEP' => 99, 
+                'DISPLAY-UGROUPS' => '',
+                'EDIT-UGROUPS' => '',
+        ),
+
 
 
         'created_by'         => array( 'STEP' =>99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'TECH_FIELDS-RETRIEVE' => true, 'RETRIEVE' => false,  'RETRIEVE' => false, 'QEDIT' => false, 'TYPE' => 'FK', 'ANSWER' => 'auser', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields' ),

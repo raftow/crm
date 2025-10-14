@@ -1,4 +1,4 @@
 <?php
     $sms_body_arr = array();
-    $sms_body_arr["ar"] = "تم الرد على طلبك '[title]' للاطلاع وتقييم الخدمة [survey_url]";
+    $sms_body_arr["ar"] = "نأمل تقييم الرد على [type] بعنوان '[title]' لتذكرة رقم [code] [survey_url] ";
 ?>

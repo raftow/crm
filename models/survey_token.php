@@ -15,10 +15,41 @@ class SurveyToken extends CrmObject
 
     public static $DB_STRUCTURE = null;
 
+    public static $STATS_CONFIG = array(
+        "st001" => array(
+            "PARAMS" => ["sid"],
+            "STATS_DATA_FROM" => ['class'=>'Survey', 'method'=>'statsData'], // 
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "FOOTER_TITLES" => true,
+            "SHOW_PIE" => "FOOTER",
+            "PIE_MODE" => "FILTER",
+            "FILTER" => "question=question_3",
+            
+
+            "FORMULA_COLS" => array(
+                //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
+            ),
+
+
+        ),
+    );
+
     public function __construct()
     {
         parent::__construct("survey_token", "id", "crm");
         CrmSurveyTokenAfwStructure::initInstance($this);
+    }
+
+    protected function beforeSetAttribute($attribute, $newvalue)
+    {
+        $oldvalue = $this->getVal($attribute);
+        /*
+          if($attribute=="attribute_enum_1" and $oldvalue and !$newvalue)
+          {
+           throw new AfwRuntimeException("before set attribute $attribute from '$oldvalue' to '$newvalue'");
+          }
+        */  
+        return true;
     }
 
     public static function loadByToken($survey_token,$create_obj_if_not_found=false)
@@ -46,8 +77,23 @@ class SurveyToken extends CrmObject
 
     public function getUrl()
     {
-        return "https://crm.tvtc.gov.sa/crm/i.php?cn=survey&mt=survey_request&tkn=".$this->getVal("survey_token");
+        return self::getTokenUrl($this->getVal("survey_token"));
     }
+
+    public function getMyRequest()
+    {
+        return Request::loadByToken($this->getVal("survey_token"));
+    }
+
+    
+
+    public static function getTokenUrl($token)
+    {
+        $crm_site_url = AfwSession::config("crm_site_url","");
+        return "$crm_site_url/s.php?t=".$token;
+    }
+
+    
     
     public function additional($field_name, $col_struct)
     {
@@ -268,8 +314,12 @@ class SurveyToken extends CrmObject
     public function noResponseIDoNotKnow()
     {
         $reqObj = Request::loadByToken($this->getVal("survey_token"));
-        if($reqObj and (!$reqObj->getVal("customer_id") or !$reqObj->getVal("survey_id") or !$reqObj->getVal("attribute_string_2")))
+        if($reqObj and ((!$this->getVal("customer_id")) or 
+                        (!$this->getVal("survey_id")) or 
+                        (!$this->getVal("attribute_string_2")))
+                        )
         {
+            // throw new AfwRuntimeException("reqObj need resetSurvey : ".var_export($reqObj, true));
             $reqObj->resetSurveyForMe();
         }
         return true;
@@ -284,6 +334,26 @@ class SurveyToken extends CrmObject
         $switcher_text = "";
 
         return [$switcher_authorized, $switcher_title, $switcher_text];
+    }
+    
+    public function calcDate_start_satisfaction()
+    {
+        return self::calcCrmDate_start_satisfaction();
+    }
+
+    public function calcDate_start_satisfaction_greg()
+    {
+        return self::calcCrmDate_start_satisfaction_greg();
+    }
+
+    public function calcDate_end_satisfaction()
+    {
+        return self::calcCrmDate_end_satisfaction();
+    }
+
+    public function calcDate_end_satisfaction_greg()
+    {
+        return self::calcCrmDate_end_satisfaction_greg();
     }
 }
 

@@ -46,14 +46,15 @@
 
 .signature {
     padding-top: 24px !important;
-    font-size: 20px;
+    font-size: 22px;
     padding-bottom: 24px !important;
     text-align: center;
-    font-weight: normal;
+    font-weight: bold;
     float: left;
     width: 100%;
     color: #414645;
     text-shadow: 1px 1px #ffffff;
+    background-color: #93d3ed8a;
 }
 
 .survey-header {
@@ -96,6 +97,41 @@ div#surveyintro {
 .content_form_bg.survey {
     min-height: auto;
 }
+
+label#label_save_form {
+    font-size: 15px;
+    font-weight: normal !important;
+    padding: 8px;
+    background-color: #ff6300;
+    color: white;
+    margin-top: 10px;
+}
+
+a.crm.suggestion.quick {
+    margin-top: 15px;
+    margin-left: 20% !important;
+    margin-right: 20% !important;
+    width: 60%;
+    max-width: 320px !important;
+    padding: 4px;
+    font-size: 14px;
+    background-color: #047e7a;
+}
+
+a.crm.suggestion.survey {
+    background-color: #404040;
+    color: white;
+    margin-left: 20% !important;
+    margin-right: 20% !important;
+    width: 60%;
+    max-width: 320px !important;
+    padding: 4px;
+    font-size: 14px;
+    font-weight: normal;
+    text-shadow: none !important;
+}
+
+
 
 @media screen and (max-width: 280px) {
     .titre_company {

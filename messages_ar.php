@@ -7,6 +7,7 @@ $messages = [
     "login" => "سجل الدخول",
     "click here" => "من هنا",
     "save responses" => "حفظ الاجابات",
+    "send participation" => "إرسال",
     "status changed to" => "تم تعديل حالة الطلب إلى",
     "ticket sent to customer care" => "تم ارسال الطلب إلى خدمة العملاء",
     "ticket canceled" => "تم الغاء الطلب بنجاح",

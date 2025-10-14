@@ -11,7 +11,7 @@
         <div class="content_big_title survey">استبانة تحسين جودة خدمة العملاء</div>
 <div id="container_div" class="table_div">
         <?php
-                echo AfwInputHelper::inputErrorsInRequest("all", $data);
+                echo AfwInputHelper::inputErrorsInRequest("all", $data);                
         ?>
         <form id="crm_form" method="POST"  enctype="multipart/form-data" action="i.php">
                 <input type="hidden" name="tkn" id="tkn" value="<?php echo $tkn ?>">
@@ -27,12 +27,17 @@
 وسيتم معالجة المعلومات بشكل كلي فقط دون الرجوع للبيانات الفردية.<br>
 إن مشاركتكم محل تقدير، فهي تسهم في الارتقاء بخدمات المؤسسة وتلبيتها لتطلعاتكم. <br>
                                 </div>                                
-                                <div id="surveyintro" class="attrib-warn form-group width_pct_100 survey-intro intro2">
-                                        تم الرد على طلبكم رقم <?php echo $objSurveyToken->getVal("attribute_string_1") ?>
+                                <div id="surveyintro1" class="attrib-warn form-group width_pct_100 survey-intro intro1 <?php echo $hide_intro1 ?>">
+                                        <div class='paragraph'> تقييم الرد على التذكرة رقم <?php echo $objSurveyToken->getVal("attribute_string_1") ?>
+                                        بعنوان  <span class='ticket-title'><?php echo $objSurveyToken->getVal("attribute_string_2") ?></span></div>
+                                        <a class='crm suggestion quick' href='i.php?cn=survey&mt=show_response&tkn=<?php echo $objSurveyToken->getVal("survey_token") ?>'>انقر هنا اذا لم يسبق أن اطلعت على الرد</a><br><br>
+                                </div>
+                                <div id="surveyintro2" class="attrib-warn form-group width_pct_100 survey-intro intro2 <?php echo $hide_intro2 ?>">
+                                        <div class='paragraph'>تم الرد على طلبكم رقم <?php echo $objSurveyToken->getVal("attribute_string_1") ?>
                                         بعنوان  <span class='ticket-title'><?php echo $objSurveyToken->getVal("attribute_string_2") ?></span>
-                                        وكان الرد كالتالي : 
+                                        وكان الرد كالتالي : </div>
                                         <div class='ticket-final-response'><?php echo $objSurveyToken->getVal("attribute_area_2") ?></div>
-                                         لتقييم الخدمة نتطلع إلى أجوبتكم على الأسئلة التالية
+                                        <div class='paragraph'> لتقييم الخدمة نتطلع إلى أجوبتكم على الأسئلة التالية</div>
                                 </div>                                
                                 <?php
                                         /**
@@ -55,7 +60,8 @@
 
                                         }
                                 ?>
-                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("save responses", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
+                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright hide" value="&nbsp; <?php echo AfwLanguageHelper::tt("send participation", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
+                                <label id="label_save_form" class="hzm_front_warning">لا يمكنك ارسال الأجوبة إلا إذا وافقت أعلاه على مشاركتها مع الجهات الحكومية مثل مركز اداء الذي يقوم بدراسة نتائج قياس رضا المستفيد</label>
                         </div>
                         
                 </div> 
@@ -77,6 +83,23 @@
 
         $(document).ready(function(){
                 prepareRatingWithStars(5); // should be later dynamic
+
+                // $("#attribute_yn_1").on('change', function() {
+                $("#img-attribute_yn_1").on('click',function() {
+                        if($("#attribute_yn_1").val()=='N') // and after the click will become Y
+                        {
+                                $("#label_save_form").addClass('hide');
+                                $("#save_form").removeClass('hide');
+                                console.log("now become sendable");
+                        }
+                        else
+                        {
+                                $("#save_form").addClass('hide');
+                                $("#label_save_form").removeClass('hide');
+                                console.log("now become non sendable");
+                        }    
+                
+                });
         });
 </script>
 <?php 
