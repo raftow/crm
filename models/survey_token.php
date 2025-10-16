@@ -23,8 +23,8 @@ class SurveyToken extends CrmObject
             "FOOTER_TITLES" => true,
             "SHOW_PIE" => "FOOTER",
             "PIE_MODE" => "FILTER",
-            "FILTER" => "question=question_3",
-            
+            "FILTER" => "question=all",
+            "CHART_URL" => "chart.php?m=crm&stc=st001&cl=SurveyToken&survey_id=1&case=1&f=question",
 
             "FORMULA_COLS" => array(
                 //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),

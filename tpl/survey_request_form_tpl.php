@@ -28,9 +28,11 @@
 إن مشاركتكم محل تقدير، فهي تسهم في الارتقاء بخدمات المؤسسة وتلبيتها لتطلعاتكم. <br>
                                 </div>                                
                                 <div id="surveyintro1" class="attrib-warn form-group width_pct_100 survey-intro intro1 <?php echo $hide_intro1 ?>">
-                                        <div class='paragraph'> تقييم الرد على التذكرة رقم <?php echo $objSurveyToken->getVal("attribute_string_1") ?>
-                                        بعنوان  <span class='ticket-title'><?php echo $objSurveyToken->getVal("attribute_string_2") ?></span></div>
-                                        <a class='crm suggestion quick' href='i.php?cn=survey&mt=show_response&tkn=<?php echo $objSurveyToken->getVal("survey_token") ?>'>انقر هنا اذا لم يسبق أن اطلعت على الرد</a><br><br>
+                                        <!--<div class='paragraph'> تقييم الرد على التذكرة رقم <?php echo $objSurveyToken->getVal("attribute_string_1") ?>
+                                        بعنوان  <span class='ticket-title'><?php echo $objSurveyToken->getVal("attribute_string_2") ?></span></div>-->
+                                        <a class='crm suggestion quick' href='i.php?cn=survey&mt=show_response&tkn=<?php echo $objSurveyToken->getVal("survey_token") ?>'>
+                                                اضغط هنا إن لم يسبق لك أن اطلعت على الرد
+                                        </a><br><br>
                                 </div>
                                 <div id="surveyintro2" class="attrib-warn form-group width_pct_100 survey-intro intro2 <?php echo $hide_intro2 ?>">
                                         <div class='paragraph'>تم الرد على طلبكم رقم <?php echo $objSurveyToken->getVal("attribute_string_1") ?>

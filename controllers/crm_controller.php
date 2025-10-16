@@ -457,7 +457,7 @@ class CrmController extends AfwController
                                 return null;
                         }
 
-                        $data["ticketObj"]->cancelRequest($lang);
+                        $data["ticketObj"]->cancelRequest($lang, "crm-controller-customer");
                         // die("تم إلغاء الطلب بنجاح");
                         // AfwSession::pushSuccess("تم إلغاء الطلب بنجاح");
                 } elseif ($request["pbmcancel-$pbMethodCode"]) {
@@ -494,7 +494,7 @@ class CrmController extends AfwController
 
         public function initiateSend_request($request)
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
 
                 $data = $request;
                 // echo("request = ".var_export($request,true)."<br><br>");
@@ -528,7 +528,7 @@ class CrmController extends AfwController
                         return;
                 }
 
-                $data["ticketObj"]->sendRequest($lang);
+                $data["ticketObj"]->sendRequest($lang,"CrmController::send_request(new request)");
 
                 return $data;
         }
@@ -1427,6 +1427,7 @@ class CrmController extends AfwController
 
         public function initiateSubmit_request($request)
         {
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
@@ -1489,7 +1490,7 @@ class CrmController extends AfwController
                                 $reqObj->commit();
                                 if ($oldReqObj) $oldReqObj->commit();
                                 // send the request 
-                                $reqObj->sendRequest();
+                                $reqObj->sendRequest($lang, "CrmController::submit_request(edited)");
                                 if (!$data["id"]) {
                                         $data["id"] = $reqObj->id;
                                         $data["is_new"] = true;

@@ -44,7 +44,7 @@ class Response extends CrmObject
                 $respObj->set("response_link", $response_link);
                 $respObj->set("internal", $internal);
                 //$respObj->set("module_id",$module_id);
-                $respObj->commit();
+                $respObj->commit(false,false,true);
 
                 return $respObj;
         }
@@ -92,7 +92,7 @@ class Response extends CrmObject
                                 $obj->set("employee_id", $employee_id);
                                 $obj->set("new_status_id", $new_status_id);
                                 $obj->set("response_type_id", $response_type_id);
-                                $obj->commit();
+                                $obj->commit(false,false,true);
         
                                 return $obj;
                         } else return null;
@@ -238,15 +238,20 @@ class Response extends CrmObject
                                         list($data[0], $link[0]) = $this->displayAttribute("employee_id", false, $lang);
                                 }
                         }
-                        else
+                        
+                        if(!$data[0])
                         {
                                 list($data[0], $link[0]) = $this->displayAttribute("created_by", false, $lang);
                         }
                         
                 }
                 elseif ($this->getVal("employee_id") > 100) {
-                        $data[0] = "موظف خدمة العملاء";
-                } elseif ($this->getVal("employee_id") > 0) {
+                        $data[0] = "المنسق";
+                } 
+                elseif ($this->getVal("employee_id") == 1) {
+                        $data[0] = "المشرف";
+                }
+                elseif ($this->getVal("employee_id") > 0) {
                         $data[0] = $this->showAttribute("employee_id", null, true, $lang);
                 }
 
@@ -352,35 +357,6 @@ class Response extends CrmObject
                 else return $this->getVal("response_date");
         }
 
-        /* 
-        rafik : 8/4/2021 : danger
-        it calls change Status so it is done twice and the notification also is sent/pushed twice
-        and can make infinite loop as change status create a Response object also
-        public function afterMaj($id, $fields_updated) 
-        {
-                if($fields_updated["new_status_id"])
-                {
-                       $this->throwException("")
-                       
-                        // @todo if auto-approve-response 
-                       
-                       $auto_approve_response = true;
-                       if($auto_approve_response)
-                       {
-                            $request = $this->getRequest();   
-                            if($request)
-                            {
-                                //die("request->change Status to ".$this->getVal("new_status_id")." with comment : ".$this->getVal("response_text"));
-                                // important keep silent true to avoid infinite loop
-                                $request->change Status($this->getVal("new_status_id"), $this->getVal("response_text"), $this->getVal("internal"), $silent=true);
-                            }
-                            
-                       }
-                }
-        }
-        */
-
-        
         public function calcNewStatusNeeded()
         {
                 if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE))
@@ -427,7 +403,7 @@ class Response extends CrmObject
         }
 
 
-        public function afterInsert($id, $fields_updated)
+        public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false)
         {
                 if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE)) {
                                 $objRequest = $this->het("request_id");
@@ -435,7 +411,11 @@ class Response extends CrmObject
                                 $objRequest->commit();
                 }
 
-                return self::afterMaj($id, $fields_updated);
+                if(!$disableAfterCommitDBEvent)
+                {
+                        return self::afterMaj($id, $fields_updated);
+                }
+                
         }
 
         public function afterMaj($id, $fields_updated)
@@ -476,7 +456,7 @@ class Response extends CrmObject
                                                         $silent = true; // important keep silent true to avoid infinite loop
                                                         $status_comment = "تم الرد على الطلب من قبل : " . $employee_name;
                                                         $question_id = 0;
-                                                        $request->changeStatus($this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $objOrgunit, $objEmployee);
+                                                        $request->changeStatus("new-response-changing-status", $this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $objOrgunit, $objEmployee);
 
                                                         // inform customer by SMS if prio <= 3 (prio 4 = low)
                                                         if ($request->getVal("request_priority") <= 3) {
@@ -509,7 +489,7 @@ class Response extends CrmObject
                                 }
                         }
                 }
-                //else die("afterMaj $id fields_updated = ".var_export($fields_updated,true));
+                //else die("after Maj $id fields_updated = ".var_export($fields_updated,true));
         }
 
 
@@ -722,7 +702,7 @@ class Response extends CrmObject
                 $pfObj->commit();
         }
 
-        public function approveIfNotApproved()
+        public function approveIfNotApproved($caller="crm-employee")
         {
                 $changed = false;
                 $status_changed_to_done = false;
@@ -738,11 +718,15 @@ class Response extends CrmObject
                 }
 
                 if ($changed) {
-                        $this->commit();
+                        $this->commit(false,false,true);
                         if ($status_changed_to_done) {
+                                /**
+                                 * @var Request $reqObj
+                                 */
                                 $reqObj = $this->hetRequest();
                                 if ($reqObj->getVal("status_id") != Request::$REQUEST_STATUS_DONE) {
-                                        $reqObj->changeStatus(Request::$REQUEST_STATUS_DONE, "تم اعتماد الاجابة", "N", $silent = true);
+                                        $action_enum = Request::status_action_by_code("responseApprovedBySupervisor");
+                                        $reqObj->changeStatus("approve-response-if-not-approved-by-$caller", Request::$REQUEST_STATUS_DONE, "تم اعتماد الاجابة", $action_enum, "N", $silent = true);
                                 }
                         }
                 }

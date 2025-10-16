@@ -259,7 +259,7 @@ class CrmEmpRequest extends CrmObject
                 return true;
         }
 
-        public function afterUpdate($id, $fields_updated) {}
+        public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false) {}
 
         public function  calcCrm_orgunit_id()
         {

@@ -224,7 +224,7 @@ class CrmEmployee extends CrmObject
         
 
 
-        public function afterInsert($id, $fields_updated) 
+        public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false) 
         {
                 if($this->sureIs("active") and ($this->getVal("employee_id")>0))
                 {
@@ -237,7 +237,7 @@ class CrmEmployee extends CrmObject
                 }
         }
 
-        public function afterUpdate($id, $fields_updated) 
+        public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false) 
         {
                 if(($this->getVal("employee_id")>0) and 
                    ($fields_updated["active"] or $fields_updated["admin"] or $fields_updated["super_admin"] or $fields_updated["requests_nb"]))
@@ -695,10 +695,13 @@ class CrmEmployee extends CrmObject
                 if($commit) $requestObj->commit();
         }
 
+        /**
+         * @param Request $requestObj
+         */
 
         public function assignMeAsRequestInvestigator($requestObj, $lang="ar")
         {
-                list($err, $info) = $requestObj->assignRequest($this->getVal("employee_id"), $lang);
+                list($err, $info) = $requestObj->assignRequest($this->getVal("employee_id"), $lang, "Y", "assignMeAsRequestInvestigator");
                 if($err) AfwSession::pushError($err);
                 if($info) AfwSession::pushInformation($info); 
         }
@@ -737,7 +740,7 @@ class CrmEmployee extends CrmObject
         {
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
                 $sql_inbox = "select orgunit_id, employee_id, count(*) as waiting from $server_db_prefix"."crm.request where status_id in (201,4) group by orgunit_id, employee_id order by count(*) desc";
-                $sql_inbox .= " limit 30";
+                // $sql_inbox .= " limit 30";
 
                 $inbox_data = AfwDatabase::db_recup_rows($sql_inbox);
 
@@ -805,7 +808,8 @@ class CrmEmployee extends CrmObject
                 // $receiver["mobile"] = "0598988330";
                 // $receiver["email"] = "rboubaker@tvtc.gov.sa";
 
-                $cc_to = "rboubaker@tvtc.gov.sa";
+                // $cc_to = "rboubaker@tvtc.gov.sa";
+                $cc_to = null;
 
                 $file_dir_name = dirname(__FILE__);
 

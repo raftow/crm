@@ -89,8 +89,12 @@ class CrmLimesurvey
 
     public static function surveyClosedTicket($ticketObj, $lang = "ar", $sendSMS=false)
     {
-        $mpid_value = 100000 + $ticketObj->id;
-        $token = self::proposeToken($mpid_value, $length = 15);
+        if(!$ticketObj->getVal("survey_token"))
+        {
+            $mpid_value = 100000 + $ticketObj->id;
+            $token = self::proposeToken($mpid_value, $length = 15);        
+        }
+        else $token = $ticketObj->getVal("survey_token");
         $crm_survey_plateform = AfwSession::config('crm_survey_plateform', 'crm_survey');
         $return_sucess = "";
         $return_error = "";

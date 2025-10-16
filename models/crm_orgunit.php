@@ -370,12 +370,15 @@ class CrmOrgunit extends CrmObject{
                 $obj->where("status_id in (".Request::$REQUEST_STATUSES_ONGOING_ALL.") and (employee_id is null or employee_id = 0)");
                 $nb_assigned = 0;
                 $requestWaitingList = $obj->loadMany();
+                /**
+                 * @var Request $requestWaitingObj
+                 */
                 foreach($requestWaitingList as $requestWaitingObj)
                 {
                         $investigator_to_assign = getPrioInvestigator($inbox_arr);  
                         if($investigator_to_assign>0) 
                         {
-                                $requestWaitingObj->assignRequest($investigator_to_assign,$lang);                      
+                                $requestWaitingObj->assignRequest($investigator_to_assign, $lang, "Y", "requestAssignement automatic task");                      
                                 $nb_assigned++;
                                 $inbox_arr[$investigator_to_assign]++;
                         }

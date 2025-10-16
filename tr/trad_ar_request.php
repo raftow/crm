@@ -16,7 +16,7 @@ class RequestArTranslator
 		$trad["request"]["request_text"] = "نص الطلب";
 		$trad["request"]["request_html"] = "الطلب";
 		$trad["request"]["body"] = "نص الطلب";
-		$trad["request"]["props"] = "خصائص الطلب";
+		$trad["request"]["props"] = "متعلقات الطلب";
 		$trad["request"]["request_code"] = "رمز الطلب";
 		$trad["request"]["request_date"] = "تاريخ الطلب";
 		$trad["request"]["request_time"] = "وقت الطلب";

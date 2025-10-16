@@ -13,7 +13,7 @@ class SurveyTokenArTranslator{
 		$trad["survey_token"]["name_en"] = "مسمى  بالانجليزية";
 		$trad["survey_token"]["desc_en"] = "وصف  بالانجليزية";
 
-		$trad["survey_token"]["stats.st001"] = "تقرير رضا العملاء لفترة من [date_start_satisfaction_greg] إلى [date_end_satisfaction_greg]";
+		$trad["survey_token"]["stats.st001"] = "تقرير رضا العملاء لفترة من <a target='_settings' href='[seturl]'>[date_start_satisfaction_greg]</a> إلى <a href='[seturl]'>[date_end_satisfaction_greg]</a>";
         // steps
         return $trad;
     }

@@ -149,13 +149,25 @@ class SurveyController extends AfwController
                 }
 
                 $objSurveyRequest = $objSurveyToken->getMyRequest();
-                $data["hide_intro2"] = "";
-                $data["hide_intro1"] = "hide";
-                if($objSurveyRequest and $objSurveyRequest->intro2ToHide())
+                $data["hide_intro2"] = "hide";
+                $data["hide_intro1"] = "";
+                
+                if($objSurveyRequest and (!$objSurveyRequest->intro2ToHide()))
                 {
-                        $data["hide_intro2"] = "hide";
-                        $data["hide_intro1"] = "";
-                } 
+                        $data["hide_intro2"] = "";
+                        $data["hide_intro1"] = "hide";                        
+                }
+                $oldRequest = $objSurveyRequest ? $objSurveyRequest->isOldRequest() : "no-request";
+                if($oldRequest)
+                {
+                        $data["hide_intro1"] = $oldRequest;                        
+                }
+                else
+                {
+                        $data["hide_intro1"] = "hide";   
+                }
+
+                
 
                 if ($objSurveyToken->isClosed()) {
                     $this->renderError("This survey token is already closed, responses can't be edited");
@@ -217,6 +229,9 @@ class SurveyController extends AfwController
 
                 $objSurveyToken = $this->getSurveyToken($request);
                 $data["objSurveyToken"] = $objSurveyToken;
+                $objSurvey = $objSurveyToken->het("survey_id");
+
+                $data["edit_survey_responses"] = ($objSurvey and $objSurvey->allowEditSurveyResponses()) ? "" : "hide";
 
                 if (!$data["all_error"]) 
                 {

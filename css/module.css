@@ -3350,7 +3350,7 @@ div.signin-form>h2.form-title {
 .in-group-assignment.cssgroup_pct_50,
 .in-group-status.cssgroup_pct_50
 {
-    min-height: 540px !important;
+    min-height: 140px !important;
 }
 
 .form_right.form_wizard_body.form_wizard_request {
@@ -3665,7 +3665,7 @@ table.dataTable.display.stats_table>tfoot>tr>th.xqe_hf_x.stats_veryunsatisfied {
 
 table.dataTable.display.stats_table>thead>tr>th.xqe_hf_z.stats_unsatisfied, 
 table.dataTable.display.stats_table>tfoot>tr>th.xqe_hf_z.stats_unsatisfied {
-    background-color: rgb(184, 123, 11) !important;
+    background-color: #eb740e !important;
     font-size: 13px !important;
 }
 

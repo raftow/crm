@@ -325,6 +325,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                 $return = trim(implode(" ", $data));  // $this->getId().":".
                 if (!$return) $return = "عميل جديد";
+                else $return .= " (".$this->showAttribute("customer_type_id",null,true,$lang).")";
 
                 return $return;
         }
@@ -675,7 +676,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 return AfwDateHelper::currentHijriDate();
         }
 
-        public function afterInsert($id, $fields_updated)
+        public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false)
         {
                 $this->set("last_request_date", AfwDateHelper::currentHijriDate());
                 $this->commit();

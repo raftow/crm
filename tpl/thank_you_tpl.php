@@ -15,7 +15,7 @@
       نشكر لكم مساهمتكم <br>في تحسين جودة خدماتنا
       </div>
       <div class="signature">
-            <a class='crm suggestion survey' href='i.php?cn=survey&mt=survey_request&tkn=<?php echo $objSurveyToken->getVal("survey_token") ?>'>تعديل المشاركة</a><br><br>
+            <a class='crm suggestion survey <?php echo $edit_survey_responses?>' href='i.php?cn=survey&mt=survey_request&tkn=<?php echo $objSurveyToken->getVal("survey_token") ?>'>تعديل المشاركة</a><br><br>
             <a class='crm suggestion survey' href='customer_login.php'>خدمة تواصل معنا</a><br>
             <br>المؤسسة العامة للتدريب التقني والمهني<br>
             

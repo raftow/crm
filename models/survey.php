@@ -72,13 +72,13 @@ class Survey extends CrmObject{
 
             foreach($question_list as $question_order => $question_row)
             {
-                $question_title_arr[$question_order] = $question_title = $question_row["question_title"];;
                 $question_type = $question_row["question_type"];
                 if($question_type=="enum")
                 {
+                    $question_title_arr[$question_order] = $question_title = $question_row["question_title"];;
                     
                     $question_type_order = $question_row["question_type_order"];
-                    $sql_arr[] = "select 'question_$question_order' as question,
+                    $sql_arr[] = "select $question_order as question,
                     '$question_title' as question_title,
         sum(IF(attribute_enum_$question_type_order=5,1,0)) as verysatisfied,
         sum(IF(attribute_enum_$question_type_order=4,1,0)) as satisfied,
@@ -228,6 +228,14 @@ class Survey extends CrmObject{
         {
         	return  "active";
         }
+
+        public function allowEditSurveyResponses()
+        {
+            // @todo should be dynamic (add attribute)
+        	return  false;
+        }
+
+        
         
         /*
         public function isTechField($attribute) {
