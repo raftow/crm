@@ -24,17 +24,7 @@ class CrmOrgunit extends CrmObject{
         
         public function __construct(){
 		parent::__construct("crm_orgunit","id","crm");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->DISPLAY_FIELD = "";
-                $this->ORDER_BY_FIELDS = "orgunit_id";
-                 
-                
-                $this->UNIQUE_KEY = array('orgunit_id');
-                $this->editByStep = true;
-                $this->editNbSteps = 5;
-                
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
+                CrmCrmOrgunitAfwStructure::initInstance($this); 
 	}
 
         public function select_visibilite_horizontale($dropdown=false)
