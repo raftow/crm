@@ -3282,22 +3282,23 @@ input.form-control.customer-login {
     border: solid 1px #358ece;
     border-bottom: none;
     color: #358ece;
+    font-family: title;
     padding: 5px;
     border-radius: 18px 18px 0 0;
     background-color: #dbf0ffab;
 }
 
 .simple_datetime {
-    font-size: 18px;
+    font-size: 14px;
     font-family: digi;
-    font-weight: normal;
-    color: white;
-    background-color: #496981 !important;
+    font-weight: bold !important;
+    color: #2a5674;
+    background-color: #c9d8e2 !important;
     min-width: 164px;
     float: left;
     border-radius: 14px;
     margin-left: 3px;
-    margin-top: 3px;
+    margin-top: -2px;
     padding: 4px;
 }
 
@@ -3339,6 +3340,7 @@ div.signin-form>h2.form-title {
 
 .steps_wizardv1 li a {
     padding-right: 3px !important;
+    font-size: 90% !important;
 }
 
 .steps_wizardv1 li.CurrentStep a {
@@ -3770,6 +3772,12 @@ div.confidential>div.request-desc {
     visibility: hidden;
 }
 
+
+.btn-hidden{
+    visibility: hidden;
+    display: none;
+}
+
 .security.confidential,
 .hzm_data_request_html.confidential {
     background-color: #5ab6f5;
@@ -3815,3 +3823,43 @@ div.confidential>div.request-desc {
     border-bottom: 1px dashed #5fc7f5;
     font-weight: bold;
 }
+
+.hzm_survey_token_container.hzm_minibox_container {
+    width: 100%;
+}
+
+.mb_survey_token .form-group {
+    width: 47%;
+    float: right;
+    padding: 15px;
+    border: solid 1px #095b95;
+    margin: 1%;
+    background-color: white;
+}
+
+.mb_survey_token .form-group .hzm_data.form-control {
+    min-height: 99px;
+    color: darkblue;
+    font-size: 15px !important;
+}
+
+
+.mb_survey_token .form-group .hzm_data.form-control.hzm_data_attribute_area_1 {
+    margin-top: 15px;
+    border: 2px dashed #ca5a20 !important;
+    background-color: #fffef09e !important;
+    color: #b74910;
+}
+
+.mb_survey_token .hzm_label {
+    font-size: 60%;
+}
+
+p.sms.notification {
+    font-size: 14px;
+    padding: 15px;
+    background-color: #ffffff;
+    color: black;
+    border: dashed 2px #7d8ba5;
+}
+

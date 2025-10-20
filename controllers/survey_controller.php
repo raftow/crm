@@ -83,7 +83,7 @@ class SurveyController extends AfwController
             $obj = SurveyToken::loadByToken($token);
             if($obj and $obj->noResponseIDoNotKnow())
             {
-                $obj->set("survey_id", 1);
+                // $obj->set("survey_id", 1);
                 for($k=1;$k<=10;$k++) if(!$obj->sureIs("attribute_yn_$k")) $obj->set("attribute_yn_$k", 'N');
             }
             return $obj;
@@ -175,7 +175,7 @@ class SurveyController extends AfwController
                 }
 
                 if (true) {
-                        $objSurveyToken->set("attribute_yn_1", "N");
+                        // $objSurveyToken->set("attribute_yn_1", "N");
                         $data["objSurveyToken"] = $objSurveyToken;
 
                         $data["question_list"] = Survey::getQuestionList($survey_id);
@@ -229,6 +229,9 @@ class SurveyController extends AfwController
 
                 $objSurveyToken = $this->getSurveyToken($request);
                 $data["objSurveyToken"] = $objSurveyToken;
+                /**
+                 * @var Survey $objSurvey
+                 */
                 $objSurvey = $objSurveyToken->het("survey_id");
 
                 $data["edit_survey_responses"] = ($objSurvey and $objSurvey->allowEditSurveyResponses()) ? "" : "hide";

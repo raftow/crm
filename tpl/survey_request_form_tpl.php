@@ -11,6 +11,7 @@
         <div class="content_big_title survey">استبانة تحسين جودة خدمة العملاء</div>
 <div id="container_div" class="table_div">
         <?php
+                list($save_form_hidden, $save_form_hidden_message) = $objSurveyToken->saveFormHidden();
                 echo AfwInputHelper::inputErrorsInRequest("all", $data);                
         ?>
         <form id="crm_form" method="POST"  enctype="multipart/form-data" action="i.php">
@@ -41,6 +42,10 @@
                                         <div class='ticket-final-response'><?php echo $objSurveyToken->getVal("attribute_area_2") ?></div>
                                         <div class='paragraph'> لتقييم الخدمة نتطلع إلى أجوبتكم على الأسئلة التالية</div>
                                 </div>                                
+                                <label id="label_save_form" class="hzm_front_warning">
+                                        <?php echo $save_form_hidden_message ?>           
+                                        <!-- لا يمكنك ارسال الأجوبة إلا إذا وافقت أعلاه على مشاركتها مع الجهات الحكومية مثل مركز اداء الذي يقوم بدراسة نتائج قياس رضا المستفيد -->
+                                </label>
                                 <?php
                                         /**
                                          * @var SurveyToken $objSurveyToken
@@ -62,8 +67,9 @@
 
                                         }
                                 ?>
-                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright hide" value="&nbsp; <?php echo AfwLanguageHelper::tt("send participation", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
-                                <label id="label_save_form" class="hzm_front_warning">لا يمكنك ارسال الأجوبة إلا إذا وافقت أعلاه على مشاركتها مع الجهات الحكومية مثل مركز اداء الذي يقوم بدراسة نتائج قياس رضا المستفيد</label>
+                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright hide <?php echo $save_form_hidden ?>" value="&nbsp; <?php echo AfwLanguageHelper::tt("send participation", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
+                                
+                                
                         </div>
                         
                 </div> 

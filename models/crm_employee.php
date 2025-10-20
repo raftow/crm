@@ -170,10 +170,11 @@ class CrmEmployee extends CrmObject
                return implode(" - ",$data);
         }
 
+        /*
         public function getShortDisplay($lang="ar")
         {
                return $this->showAttribute("employee_id");
-        }
+        }*/
 
 
         

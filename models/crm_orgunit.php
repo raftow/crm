@@ -474,6 +474,15 @@ class CrmOrgunit extends CrmObject{
                 return true;
         }
 
+        public function shouldBeCalculatedField($attribute){
+                if($attribute=="hrm_code") return true;
+                if($attribute=="crm_code") return true;
+                if($attribute=="new_requests_count") return true;
+                if($attribute=="requests_count") return true;
+                if($attribute=="archive_date") return true;
+                return false;
+        }
+
 
 }
 ?>

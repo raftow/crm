@@ -43,6 +43,17 @@ class SurveyToken extends CrmObject
     protected function beforeSetAttribute($attribute, $newvalue)
     {
         $oldvalue = $this->getVal($attribute);
+        if($attribute=="attribute_yn_1" and $newvalue=="Y")            
+        {
+            $reqObj = $this->getMyRequest();
+            if($reqObj)
+            {
+                $reqObj->set("survey_opened", $newvalue);
+                $reqObj->commit();
+            }
+            
+        }
+        
         /*
           if($attribute=="attribute_enum_1" and $oldvalue and !$newvalue)
           {
@@ -102,9 +113,13 @@ class SurveyToken extends CrmObject
         // $params = self::getAdditionalFieldParams($field_name);
         $params = [];
 
+        $field_part_arr = explode("_", $field_name);
+        $field_type = $field_part_arr[1];
+        $field_order = $field_part_arr[2];
+
         $col_struct = strtolower($col_struct);
         if ($col_struct == "obsolete") {
-            return false;
+            return (!Survey::isQuestionEnabled(1,$field_type,$field_order));
         }
         if ($col_struct == "required") {
             return !$params["optional"];
@@ -354,6 +369,46 @@ class SurveyToken extends CrmObject
     public function calcDate_end_satisfaction_greg()
     {
         return self::calcCrmDate_end_satisfaction_greg();
+    }
+
+    public function attributeIsApplicable($attribute)
+    {
+        // $objme = AfwSession::getUserConnected();
+        if (AfwStringHelper::stringStartsWith($attribute, "attribute_")) {
+            return (!$this->additional($attribute, "OBSOLETE"));
+        }
+
+        
+        return parent::attributeIsApplicable($attribute);
+    }
+
+    public function getAttributeLabel($attribute, $lang = 'ar', $short = false)
+    {
+            if (AfwStringHelper::stringStartsWith($attribute, "attribute_")) {
+                    return Survey::getQuestionLabel(1, $attribute, $lang);
+            }
+            // die("calling getAttributeLabel($attribute, $lang, short=$short)");
+            return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+    }
+
+
+    public function saveFormHidden($lang="ar")
+    {
+        $class_hidden = "";
+        $message_hidden = "";
+
+        if($this->sureIs("attribute_yn_1"))
+        {
+            $class_hidden = "btn-hidden";
+            $message_hidden = "لا يمكن المشاركة مرة ثانية حيث سبقت المشاركة";
+        }
+        else
+        {
+            $class_hidden = "";  // because done by JS switcher
+            $message_hidden = "يرجى تأكيد الموافقة على شرط مشاركة البيانات مع الجهات الحكومية";
+        }
+
+        return [$class_hidden, $message_hidden];
     }
 }
 

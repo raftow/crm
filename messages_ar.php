@@ -12,6 +12,7 @@ $messages = [
     "ticket sent to customer care" => "تم ارسال الطلب إلى خدمة العملاء",
     "ticket canceled" => "تم الغاء الطلب بنجاح",
     "Thanks, Your comment is saved." => "شكرا لك. تم حفظ تعليقك",
+    "survey participation notification" => "اشعار المشاركة في الاستبانة",
     "Request received approval notification" => "اشعار استلام الطلب",
     "new_request_sms_notification" => "تم استلام طلبك '[request_title]' رقم الطلب [request_code]",
     "New response received notification" => "اشعار وصول رد على الطلب",

@@ -35,6 +35,9 @@ class CrmOrgunitArTranslator{
 		$trad["crm_orgunit"]["satisfaction_stats_days"] = "عدد أيام تقرير رضا العملاء";
 		$trad["crm_orgunit"]["late_days"] = "عدد الأيام الأقصى للرد على العميل";
 		$trad["crm_orgunit"]["late_days.tooltip"] = "بعدها يحسب الطلب متأخرا في التقارير";
+
+		$trad["crm_orgunit"]["hrm_code"] = "الرمز عند شؤون الموظفين"; 
+		$trad["crm_orgunit"]["crm_code"] = "الرمز عند خدمة العملاء"; 
 	
 		return $trad;
     }

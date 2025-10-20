@@ -1319,6 +1319,11 @@ class Request extends CrmObject
             return ($val != "");
         }
 
+        if ($attribute == "survey_token") {
+            $val = trim($this->getVal($attribute));
+            return ($val != "");
+        }
+
         if ($attribute == "org_name") {
             $val = trim($this->getVal($attribute));
             return ($val != "");
@@ -1912,11 +1917,17 @@ class Request extends CrmObject
 
             $objToken->set("survey_id", 1);
             $objToken->set("customer_id", $this->getVal("customer_id"));
-            $objToken->set("attribute_yn_1", 'N');
-            $objToken->set("attribute_enum_1", 0);
-            $objToken->set("attribute_enum_2", 0);
-            $objToken->set("attribute_enum_3", 0);
-            $objToken->set("attribute_enum_4", 0);
+            
+            if(!$objToken->sureIs("attribute_yn_1")) // if already responsed do not reset responses
+            {
+                $objToken->set("attribute_yn_1", 'N');
+                $objToken->set("attribute_enum_1", 0);
+                $objToken->set("attribute_enum_2", 0);
+                $objToken->set("attribute_enum_3", 0);
+                $objToken->set("attribute_enum_4", 0);
+                $objToken->set("attribute_area_1", "");
+            }
+            
             $objToken->set("attribute_date_1", $this->getVal("request_date"));
             // above field added and update like this :
             // ALTER TABLE tvtc_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
@@ -1924,8 +1935,6 @@ class Request extends CrmObject
             $objToken->set("attribute_string_1", $this->getVal("request_code"));
             $objToken->set("attribute_string_2", $this->getVal("request_title"));
             $objToken->set("attribute_string_3", $ticket_orgunit);
-    
-            $objToken->set("attribute_area_1", "");
             $objToken->set("attribute_area_2", $final_decision);
             $objToken->set("attribute_area_3", $this->getVal("request_text"));
             $objToken->commit();
@@ -2875,8 +2884,8 @@ class Request extends CrmObject
             
             $request_time = $this->getVal("request_time");
             $title_new_request_sms = $this->tm("Request received approval notification", $lang);
-            $new_request_sms = AfwNotificationManager::prepareNotificationBody($this, "new_request", "sms", $lang);        
-            $html .= "<h1>$title_new_request_sms <div class='simple_datetime'>$request_date هـ $request_time </div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$request_date_h : $new_request_sms</p>";
+            list($new_request_sms, $new_request_sms_subject) = AfwNotificationManager::prepareNotificationBody($this, "new_request", "sms", $lang);        
+            $html .= "<h1>$title_new_request_sms <div class='simple_datetime'>$request_date هـ $request_time </div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$request_date_h : $new_request_sms_subject : $new_request_sms</p>";
             
         }
         else $html .= "reuqest not yet sent : status_reel_id = $status_reel_id";
@@ -2884,14 +2893,14 @@ class Request extends CrmObject
 
         if($this->isDone())
         {
-            // $custObj = $this->het("crm_customer_id");
             if(true)
-            {
+            {                
                 $token_arr = array(
                     "[title]" => $this->getVal("request_title"),
                     // "[first_name_ar]" => $custObj->getVal("first_name_ar"),
                     // "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
                 );
+                
                 $file_dir_name = dirname(__FILE__);
                 include("$file_dir_name/../tpl/template_sms_news.php");
                 if ($sms_body_arr[$lang]) 
@@ -2912,6 +2921,45 @@ class Request extends CrmObject
             
         }
         else $html .= "<!-- request not yet done : status_reel_id = $status_reel_id -->";
+
+
+        if($this->isClosed())
+        {
+            $my_survey_url = $this->mySurveyUrl();
+            if($my_survey_url)
+            {
+                $token_arr = array(
+                    "[title]" => $this->getVal("request_title"),
+                    "[survey_url]" => $my_survey_url,
+                    "[type]" => $this->showAttribute("request_type_id", null, true, $lang),
+                    "[code]" => $this->getVal("request_code"), 
+                );
+                $file_dir_name = dirname(__FILE__);
+                include("$file_dir_name/../tpl/template_sms_survey.php");
+                if ($sms_body_arr[$lang]) 
+                {
+                    // $respObj = $this->getLastResponse();
+                    // $response_id = $respObj->getVal("id");
+                    // $response_date_h = AfwDateHelper::formatHijriDate($respObj->getVal("response_date"));
+                        $status_date = AfwDateHelper::hijriToGreg($this->getVal("status_date"));
+                        $status_date_h = AfwDateHelper::formatHijriDate($this->getVal("status_date"));
+                        $status_time = $this->getVal("status_time");
+                        $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
+                        $title_notif = $this->tm("survey participation notification", $lang);
+                        $html .= "  <h1>$title_notif 
+                                           <div class='simple_datetime'>$status_date هـ $status_time</div>
+                                           <div class=\"sms-notif\">&nbsp;</div>
+                                    </h1>
+                                    <p class='sms notification'>$status_date_h : $sms_body</p>
+                                    <br>";
+                        
+                } else {
+                        
+                }
+            }
+            
+        }
+        else $html .= "<!-- request not yet closed : status_reel_id = $status_reel_id -->";
 
         return $html;
         
@@ -2941,6 +2989,28 @@ class Request extends CrmObject
     {
         if ($this->getVal("request_priority") <= 2) {
             return "<img lbl='no-ajax' src='../lib/images/urgent.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='هذا الطلب تم تصنيفه بأولوية عالية' data-original-title='هذا الطلب تم تصنيفه بأولوية عالية' class='red-tooltip'>";
+        } else {
+            return "";
+        }
+    }
+
+    public function calcSurvey_icon()
+    {
+        
+        if ($this->sureIs("survey_sent")) {
+            $url = $this->mySurveyUrl();
+            if ($this->sureIs("survey_opened")) 
+            {
+                $label = "تمت المشاركة في الاستبانة";
+                $icon = "survey";
+            }                
+            else 
+            {
+                $label = "تم فقط ارسال الاستبانة";
+                $icon = "survey-not-opened";
+            }
+            return "<a target='_crm_survey' href='$url'><img lbl='no-ajax' src='../lib/images/$icon.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='$label' data-original-title='$label' class='red-tooltip'></a>";
+                
         } else {
             return "";
         }

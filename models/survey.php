@@ -107,6 +107,40 @@ class Survey extends CrmObject{
         }
 
 
+        public static function getQuestionLabel($survey_id, $attribute, $lang='ar')
+        {
+            $question_list = self::getQuestionList($survey_id);
+
+            foreach($question_list as $question_id => $question_row)
+            {
+                    
+                foreach($question_row as $question_prop => $question_prop_value) $$question_prop = $question_prop_value;
+                $question_attribute = "attribute_$question_type"."_$question_type_order";
+
+                if($question_attribute==$attribute) return $question_title;
+            }
+
+
+            return "???";
+
+        }
+
+        public static function isQuestionEnabled($survey_id, $question_type, $question_type_order)
+        {
+            $enabled = [];
+
+            $enabled['yn'][1] = true;
+            $enabled['enum'][1] = true;
+            $enabled['enum'][2] = true;
+            $enabled['enum'][3] = true;
+            $enabled['enum'][4] = true;
+
+            $enabled['area'][1] = true;
+
+            return $enabled[$question_type][$question_type_order];
+
+        }
+
         public static function getQuestionList($survey_id, $question_num="all")
         {
             $question_list = [];

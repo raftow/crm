@@ -57,9 +57,15 @@ class RequestArTranslator
 		$trad["request"]["city_id"] = "المدينة";
 		$trad["request"]["other_city"] = "مدينة أخرى";
 		$trad["request"]["responseList"] = "إجابة أو تعليق";
-		$trad["request"]["survey"] = "الإستبيان";
-		$trad["request"]["survey_sent"] = "تم إرسال الإستبيان";
-		$trad["request"]["survey_opened"] = "تمت المشاركة في الإستبيان";
+		$trad["request"]["survey"] = "الإستبانة";
+		$trad["request"]["survey_sent"] = "تم إرسال الإستبانة";
+		$trad["request"]["survey_token"] = "توكن الإستبانة";
+		 
+		$trad["request"]["survey_opened"] = "تمت المشاركة في الإستبانة";
+		$trad["request"]["survey_opened.short"] = "إستبانة";
+		$trad["request"]["survey_icon"] = "المشاركة في الإستبانة";
+		$trad["request"]["survey_icon.short"] = "الإستبانة";
+		
 		$trad["request"]["easy_fast"] = "تواصل سهل وسريع";
 		$trad["request"]["easy_fast.YES"] = "سريع";
 		$trad["request"]["easy_fast.NO"]  = "بطيء";

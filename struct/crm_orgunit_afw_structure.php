@@ -53,6 +53,20 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 				),
 
+				'hrm_code' => array('STEP' => 1,  'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'orgunit_id.hrm_code',  
+					'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  
+					'SIZE' => 16,  'MIN-SIZE' => 3,  'CHAR_TEMPLATE' => 'ALPHABETIC,NUMERIC,UNDERSCORE',  'UTF8' => true,  
+					'TYPE' => 'TEXT',  'READONLY' => true, 'DISPLAY' => true,  
+					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+					),
+
+				'crm_code' => array('STEP' => 1,  'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'orgunit_id.crm_code',  
+					'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  
+					'SIZE' => 16,  'MIN-SIZE' => 3,  'CHAR_TEMPLATE' => 'ALPHABETIC,NUMERIC,UNDERSCORE',  'UTF8' => true,  
+					'TYPE' => 'TEXT',  'READONLY' => true, 'DISPLAY' => true,  
+					'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+					),
+
 					'new_requests_count' => array('SHOW' => true,  
 							'CSS' => 'width_pct_25',  
 							'CATEGORY' => 'FORMULA',  

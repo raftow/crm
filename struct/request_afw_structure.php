@@ -319,6 +319,8 @@ class CrmRequestAfwStructure
 			'CATEGORY' => 'FORMULA',
 		),
 
+		
+
 
 
 		'related_request_code' => array(
@@ -1056,10 +1058,25 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_100',
 		),
 
-		
+		'survey_token' => array(
+			'STEP' => 4,
+			'FGROUP' => 'survey',
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'SHOW' => true,
+			'DISPLAY' => true,
+			'QSIZE' => 15,
+			'CSS' => 'width_pct_50',
+			'SIZE' => 20,
+			'TYPE' => 'TEXT',
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'READONLY' => true,
+		),
 
 		'survey_sent' => array(
-			'FGROUP' => 'status',  'STEP' => 4,
+			'STEP' => 4,
+			'FGROUP' => 'survey',
 			'SHORTNAME' => 'sent',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -1076,11 +1093,13 @@ class CrmRequestAfwStructure
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-			'CSS' => 'width_pct_50',
+			'CSS' => 'width_pct_25',
 		),
 
-		'survey_opened' => array(
-			'FGROUP' => 'status',  'STEP' => 4,
+		
+
+		'survey_opened' => array( // update request set survey_opened='Y' where survey_token in (select survey_token from survey_token where attribute_yn_1='Y');
+			'FGROUP' => 'survey',  'STEP' => 4,
 			'SHORTNAME' => 'opened',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -1097,29 +1116,63 @@ class CrmRequestAfwStructure
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-			'CSS' => 'width_pct_50',
+			'CSS' => 'width_pct_25',
 		),
 
-		'survey_token' => array(
-			'STEP' => 4,
-			'FGROUP' => 'status',
+
+		'tokenList' => array('STEP' => 4,
+			'FGROUP' => 'survey',
+			'SHOW' => true,
+			'FORMAT' => 'minibox',
+			// 'MINIBOX-TPL' => true,
+			'TEMPLATE' => 'accordion',
+			'ICONS' => false,
+			// 'DELETE-ICON' => true,
+			// 'BUTTONS' => true,
+			// 'SEARCH' => true,
+			// 'QSEARCH' => false,
+			// 'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'SIZE' => 32,
+			'MANDATORY' => false,
+			'UTF8' => false,
+			'TYPE' => 'FK',
+			'NO-LABEL' => true,
+			'NO-CACHE' => true,
+			'CATEGORY' => 'ITEMS',
+			'ANSWER' => 'survey_token',
+			'ANSMODULE' => 'crm',
+			'ITEM' => '',
+			'WHERE' => "survey_token = §survey_token§ and customer_id = §customer_id§",
+			'XPOLE' => true,
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'OTHER-LINKS-TOP' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'survey_icon' => array(
+			'FGROUP' => 'survey',  'STEP' => 4,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
-			'DISPLAY' => true,
-			'QSIZE' => 15,
-			'CSS' => 'width_pct_33',
-			'SIZE' => 20,
+			'EDIT' => true,
+			'RETRIEVE' => true,
+			'IMPORTANT' => 'medium',
 			'TYPE' => 'TEXT',
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
 			'READONLY' => true,
+			'CATEGORY' => 'FORMULA',
 		),
+
+		
 
 
 
 		'easy_fast' => array(
-			'FGROUP' => 'status',  'STEP' => 4,
+			'FGROUP' => 'status',  'STEP' => 99,
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -1139,11 +1192,11 @@ class CrmRequestAfwStructure
 		),
 
 		'service_satisfied' => array(
-			'FGROUP' => 'status', 'STEP' => 4,
+			'FGROUP' => 'status', 'STEP' => 99,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
-			'RETRIEVE' => true,
+			'RETRIEVE' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'QSIZE' => 3,
@@ -1160,7 +1213,7 @@ class CrmRequestAfwStructure
 		),
 
 		'pb_resolved' => array(
-			'FGROUP' => 'status',  'STEP' => 4,
+			'FGROUP' => 'status',  'STEP' => 99,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -1181,7 +1234,7 @@ class CrmRequestAfwStructure
 		),
 
 		'general_satisfaction' => array(
-			'FGROUP' => 'status',  'STEP' => 4, 
+			'FGROUP' => 'status',  'STEP' => 99, 
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
