@@ -713,7 +713,7 @@ class CrmEmployee extends CrmObject
         }
 
 
-        protected function hideDisactiveRowsFor($auser)
+        protected function hideNonActiveRowsFor($auser)
         {
                 if(!$auser) return true;
                 if(CrmObject::userConnectedIsGeneralSupervisor($auser)) return false;
