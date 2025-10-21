@@ -39,8 +39,8 @@ class CrmOrgunit extends CrmObject{
                 {
                         $empl_id = $objme ? $objme->getEmployeeId() : 0;
                         
-                        if($empl_id) $iam_general_supervisor = CrmObject::userConnectedIsGeneralSupervisor();
-                        if($empl_id) $iam_supervisor = CrmObject::userConnectedIsSupervisor();
+                        if($empl_id) $iam_general_supervisor = CrmObject::userIsGeneralSupervisor();
+                        if($empl_id) $iam_supervisor = CrmObject::userIsSupervisor();
                         
                         if(!$iam_general_supervisor) $iam_general_supervisor = 0;
                         if(!$iam_supervisor) $iam_supervisor = 0;
@@ -182,7 +182,7 @@ class CrmOrgunit extends CrmObject{
         protected function getPublicMethods()
         {
                 $pbms = array();
-                $iam_general_supervisor = CrmObject::userConnectedIsGeneralSupervisor();
+                $iam_general_supervisor = CrmObject::userIsGeneralSupervisor();
                 if($iam_general_supervisor)
                 {
                         

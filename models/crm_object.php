@@ -33,33 +33,33 @@ class CrmObject extends AfwMomkenObject
         }
 
 
-        public static function userConnectedIsSupervisor($objme = null)
+        public static function userIsSupervisor($auser = null)
         {
-                if (!$objme) $objme = AfwSession::getUserConnected();
-                if (!$objme) return 0;
+                if (!$auser) $auser = AfwSession::getUserConnected();
+                if (!$auser) return 0;
 
-                $employee_id = $objme->getEmployeeId();
+                $employee_id = $auser->getEmployeeId();
                 if (!$employee_id) return 0;
 
                 return CrmEmployee::isAdmin($employee_id);
         }
 
-        public static function userConnectedIsGeneralSupervisor($objme = null)
+        public static function userIsGeneralSupervisor($auser = null)
         {
-                if (!$objme) $objme = AfwSession::getUserConnected();
-                if (!$objme) return 0;
+                if (!$auser) $auser = AfwSession::getUserConnected();
+                if (!$auser) return 0;
 
-                $employee_id = $objme->getEmployeeId();
+                $employee_id = $auser->getEmployeeId();
                 if (!$employee_id) return 0;
 
                 return CrmEmployee::isGeneralAdmin($employee_id);
         }
 
-        public static function userConnectedIsSuperAdmin($objme = null)
+        public static function userIsSuperAdmin($auser = null)
         {
-                if (!$objme) $objme = AfwSession::getUserConnected();
-                if (!$objme) return false;
-                return $objme->isSuperAdmin();
+                if (!$auser) $auser = AfwSession::getUserConnected();
+                if (!$auser) return false;
+                return $auser->isSuperAdmin();
         }
 
 
