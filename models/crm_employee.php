@@ -715,8 +715,11 @@ class CrmEmployee extends CrmObject
 
         protected function hideNonActiveRowsFor($auser)
         {
-                if($auser and CrmObject::userIsGeneralSupervisor($auser)) return false;
+                //@todo : why we need this below (logical deleted rows should not appear for investigators and also supervisors)
+                //if($auser and CrmObject::userIsGeneralSupervisor($auser)) return false;
+                
                 if($auser and $auser->isAdmin()) return false;  
+
                 return true;
         }
 
