@@ -3585,6 +3585,11 @@ class Request extends CrmObject
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
     }
 
+    public static function silentSetNewStatusForRespondedRequestsWithoutNewStatus($lang = "ar", $limit = "100")
+    {
+        return self::setNewStatusForRespondedRequestsWithoutNewStatus($silent = true, $lang, $limit);
+    }
+
     public static function setNewStatusForRespondedRequestsWithoutNewStatus($silent = false, $lang = "ar", $limit = "100")
     {
         $obj = new Request();

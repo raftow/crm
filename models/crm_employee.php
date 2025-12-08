@@ -749,18 +749,21 @@ class CrmEmployee extends CrmObject
 
                 $errors_arr = array();
                 $infos_arr = array();
-
+                $token_arr=[];
+                $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
+                $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tvtc.gov.sa");
                 foreach($inbox_data as $inbox_row)
                 {
-                        $token_arr=[];
-                        $token_arr["[waiting]"] = $inbox_row["waiting"];
-                        $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
-                        $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tvtc.gov.sa");
-
-                        $crmEmployeeObj = CrmEmployee::loadByMainIndex($inbox_row["orgunit_id"],$inbox_row["employee_id"]);
-                        list($err, $info) = $crmEmployeeObj->notifyMe($lang, $token_arr);
-                        if ($err) $errors_arr[] = $err;
-                        if ($info) $infos_arr[] = $info;
+                        if($inbox_row["orgunit_id"] and $inbox_row["employee_id"])
+                        {
+                                $token_arr["[waiting]"] = $inbox_row["waiting"];
+                                
+                                $crmEmployeeObj = CrmEmployee::loadByMainIndex($inbox_row["orgunit_id"],$inbox_row["employee_id"]);
+                                list($err, $info) = $crmEmployeeObj->notifyMe($lang, $token_arr);
+                                if ($err) $errors_arr[] = $err;
+                                if ($info) $infos_arr[] = $info;
+                        }
+                        
                 }
 
                 $nb_errs = count($errors_arr);

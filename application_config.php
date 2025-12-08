@@ -65,13 +65,13 @@ $config_arr = array(
         
                                 ),
 
-        'notify_supervisor' => array("new_request" => array("sms"=>true, "email" => false, "web" => true, "whatsup" => false),
+        'notify_supervisor' => array("new_request" => array("sms"=>true, "email" => true, "web" => false, "whatsup" => false),
         
                         ),
 
         'notify_employee' => array(
-                        "new_request" => array("sms"=>false, "email" => false, "web" => true, "whatsup" => false),
-                        "daily_waiting_requests" => array("sms"=>false, "email" => true, "web" => true, "whatsup" => false),
+                        "new_request" => array("sms"=>false, "email" => false, "web" => false, "whatsup" => false),
+                        "daily_waiting_requests" => array("sms"=>false, "email" => true, "web" => false, "whatsup" => false),
                 ),
 
 
