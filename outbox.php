@@ -27,7 +27,7 @@ if(CrmEmployee::isAdmin($myEmplId))
 else
 {
         $arr_sql_conds[] = "me.employee_id='$myEmplId'";
-        $arr_sql_conds[] = "me.status_id not in (1, 2, 201, 4, 5, 6, 7, 8, 9) "; // 4 = ongoing // طلب مرسل  للتحقيق SENT = 2; 
+        $arr_sql_conds[] = "me.status_id not in (201, 4) "; // 4 = ongoing // طلب مرسل  للتحقيق SENT = 2; 
         $orgunit_name = CrmEmployee::orgOfEmployee($myEmplId, false, false);
         $employee_title = "<b>".$objme->getShortDisplay($lang)."</b>";
         

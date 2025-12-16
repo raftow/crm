@@ -119,6 +119,7 @@ class CrmRequestAfwStructure
 			'SIZE' => 60,
 			'UTF8' => false,
 			'CSS' => 'width_pct_50',
+			'AUTOCOMPLETE-SEARCH' => true,
 			'AUTOCOMPLETE' => true,
 			'TYPE' => 'FK',
 			'ANSWER' => 'orgunit',
