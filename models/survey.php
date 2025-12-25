@@ -9,7 +9,7 @@ class Survey extends CrmObject{
 
         public static $MY_ATABLE_ID=13972; 
   
-        public static $DATABASE		= "tvtc_crm";
+        public static $DATABASE		= "ttc_crm";
         public static $MODULE		        = "crm";        
         public static $TABLE			= "survey";
 
@@ -87,7 +87,7 @@ class Survey extends CrmObject{
         sum(IF(attribute_enum_$question_type_order=1,1,0)) as veryunsatisfied,
         sum(IF(attribute_enum_$question_type_order=0,1,0)) as noresponse,
         count(*) as all_count
-    from tvtc_crm.survey_token
+    from ttc_crm.survey_token
     where survey_id=1 
     and active = 'Y' 
     and attribute_yn_1='Y' 
@@ -284,7 +284,7 @@ class Survey extends CrmObject{
         
         public function beforeDelete($id,$id_replace) 
         {
-            $server_db_prefix = AfwSession::config("db_prefix","tvtc_");
+            $server_db_prefix = AfwSession::config("db_prefix","ttc_");
             
             if(!$id)
             {

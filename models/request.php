@@ -1930,8 +1930,8 @@ class Request extends CrmObject
             
             $objToken->set("attribute_date_1", $this->getVal("request_date"));
             // above field added and update like this :
-            // ALTER TABLE tvtc_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
-            // update tvtc_crm.survey_token s set s.attribute_date_1=(select request_date from tvtc_crm.request r where r.survey_token = s.survey_token);
+            // ALTER TABLE ttc_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
+            // update ttc_crm.survey_token s set s.attribute_date_1=(select request_date from ttc_crm.request r where r.survey_token = s.survey_token);
             $objToken->set("attribute_string_1", $this->getVal("request_code"));
             $objToken->set("attribute_string_2", $this->getVal("request_title"));
             $objToken->set("attribute_string_3", $ticket_orgunit);

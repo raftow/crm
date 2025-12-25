@@ -751,7 +751,7 @@ class CrmEmployee extends CrmObject
                 $infos_arr = array();
                 $token_arr=[];
                 $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
-                $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tvtc.gov.sa");
+                $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@ttc.gov.sa");
                 foreach($inbox_data as $inbox_row)
                 {
                         if($inbox_row["orgunit_id"] and $inbox_row["employee_id"])
@@ -796,7 +796,7 @@ class CrmEmployee extends CrmObject
                         $inbox_row = AfwDatabase::db_recup_row($sql_inbox);
                         $token_arr["[waiting]"] = $inbox_row["waiting"];
                         $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
-                        $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tvtc.gov.sa");                                                
+                        $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@ttc.gov.sa");                                                
                 }
 
                 $token_arr["[the_orgunit]"] = $this->showAttribute("orgunit_id",null,true,$lang);
@@ -812,9 +812,9 @@ class CrmEmployee extends CrmObject
                 $receiver["mobile"] = $employeeObj->getVal("mobile");
                 $receiver["email"] = $employeeObj->getVal("email");
                 // $receiver["mobile"] = "0598988330";
-                // $receiver["email"] = "rboubaker@tvtc.gov.sa";
+                // $receiver["email"] = "rboubaker@ttc.gov.sa";
 
-                // $cc_to = "rboubaker@tvtc.gov.sa";
+                // $cc_to = "rboubaker@ttc.gov.sa";
                 $cc_to = null;
 
                 $file_dir_name = dirname(__FILE__);

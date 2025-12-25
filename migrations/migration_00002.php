@@ -85,7 +85,7 @@ try
     AfwDatabase::db_query("DELETE FROM ".$server_db_prefix."hrm.`employee` where id (2,3);");
     AfwDatabase::db_query("INSERT INTO ".$server_db_prefix."hrm.`employee` VALUES 
             (2,1,'2024-12-26 07:54:05',1,'2024-12-26 07:54:05',NULL,NULL,'Y',NULL,NULL,NULL,NULL,NULL,2,1,'المهمة',NULL,NULL,'الآلية','Scheduled',NULL,NULL,'Task',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-            (3,1,'2025-09-07 18:05:23',1,'2025-09-07 18:06:31',0,NULL,'Y',3,NULL,NULL,NULL,0,1654,1,'عميل','','','المؤسسة','Customer','','','TVTC','',183,'',1,1,9323,33,NULL,'customer@tvtc.com','102050','','','customer@tvtc.com','','',NULL,'','',NULL,'',NULL,NULL,NULL,NULL,'');    ");
+            (3,1,'2025-09-07 18:05:23',1,'2025-09-07 18:06:31',0,NULL,'Y',3,NULL,NULL,NULL,0,1654,1,'عميل','','','المؤسسة','Customer','','','ttc','',183,'',1,1,9323,33,NULL,'customer@ttc.com','102050','','','customer@ttc.com','','',NULL,'','',NULL,'',NULL,NULL,NULL,NULL,'');    ");
     */
     
 }
