@@ -8,7 +8,7 @@ class SurveyToken extends CrmObject
 {
     public static $MY_ATABLE_ID = 13973;
 
-    public static $DATABASE = "ttc_crm";
+    public static $DATABASE = "";
     public static $MODULE = "crm";
 
     public static $TABLE = "survey_token";
@@ -293,7 +293,7 @@ class SurveyToken extends CrmObject
 
     public function beforeDelete($id, $id_replace)
     {
-        $server_db_prefix = AfwSession::config("db_prefix", "ttc_");
+        $server_db_prefix = AfwSession::config("db_prefix", "xxxxx");
 
         if (!$id) {
             $id = $this->getId();

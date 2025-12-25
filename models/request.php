@@ -952,7 +952,7 @@ class Request extends CrmObject
                 if(!$canRespondOrComment and (!$this->isStarted())) {
                     unset($link);
                     $link = array();
-                    $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' في أسفل الصفحه للتمكن من التعليق أو الاجابة عليه";
+                    $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' في أسفل صفحة علامة التبويب 2. الخاصة بالردود للتمكن من التعليق أو الاجابة عليه";
                     $link["URL"] = "@help";
                     $link["CODE"] = "stop.and.debugg";
                     $link["TITLE"] = $title;
