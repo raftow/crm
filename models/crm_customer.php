@@ -496,14 +496,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         }
 
 
-        public function list_of_gender_id()
-        {
-                $list_of_items = array();
-                $list_of_items[1] = "ذكر";
-                $list_of_items[2] = "أنثى";
-
-                return  $list_of_items;
-        }
+        
 
         public function stepsAreOrdered()
         {
