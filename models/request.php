@@ -426,7 +426,7 @@ class Request extends CrmObject
     public static $STATS_CONFIG = array(
         "gs001" => array(
             "STATS_WHERE" => "active = 'Y' and request_date >= [date_start_perf]", // [date_end_perf]
-            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "REPEAT_TITLES_NB_ROWS" => 10,
@@ -498,7 +498,7 @@ class Request extends CrmObject
 
         "gs003" => array(
             "STATS_WHERE" => "active = 'Y' and request_date between [date_start_stats] and [date_end_stats]", // 
-            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -529,7 +529,7 @@ class Request extends CrmObject
 
         "gs004" => array(
             "STATS_WHERE" => "active = 'Y' and request_date between [date_start_stats] and [date_end_stats]", // 
-            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -587,7 +587,7 @@ class Request extends CrmObject
         
         "gs006" => array(
             "STATS_WHERE" => "active = 'Y' and status_id in (101,102,2,201,3,301,4) and request_date between [date_start_stats] and [date_end_stats]", // 
-            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -614,7 +614,7 @@ class Request extends CrmObject
 
         "gs007" => array(
             "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date >= [date_start_perf] and status_id in (201,4)", // 
-            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -650,7 +650,7 @@ class Request extends CrmObject
 
         "gs008" => array(
             "STATS_WHERE" => "orgunit_id = [getted_orgunit_id] and active = 'Y' and request_date >= [date_start_perf] and status_id in (2,3,301)", // 
-            "URL_SETTINGS" => "crm/main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -1930,8 +1930,8 @@ class Request extends CrmObject
             
             $objToken->set("attribute_date_1", $this->getVal("request_date"));
             // above field added and update like this :
-            // ALTER TABLE ttc_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
-            // update ttc_crm.survey_token s set s.attribute_date_1=(select request_date from ttc_crm.request r where r.survey_token = s.survey_token);
+            // ALTER TABLE xxx_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
+            // update xxx_crm.survey_token s set s.attribute_date_1=(select request_date from xxx_crm.request r where r.survey_token = s.survey_token);
             $objToken->set("attribute_string_1", $this->getVal("request_code"));
             $objToken->set("attribute_string_2", $this->getVal("request_title"));
             $objToken->set("attribute_string_3", $ticket_orgunit);
