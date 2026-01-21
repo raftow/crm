@@ -495,9 +495,6 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 return  $list_of_items;
         }
 
-
-        
-
         public function stepsAreOrdered()
         {
                 return false;

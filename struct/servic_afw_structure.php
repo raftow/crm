@@ -1,5 +1,5 @@
 <?php
-class CrmServiceAfwStructure
+class CrmServicAfwStructure
 {
 	public static $DB_STRUCTURE = array(
 

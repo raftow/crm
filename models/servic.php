@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table service : service - الخدمات 
+// ----             auto generated php class of table servic : servic - الخدمات 
 // ------------------------------------------------------------------------------------
 
 
@@ -8,7 +8,7 @@ $file_dir_name = dirname(__FILE__);
 
 // old include of afw.php
 
-class Service extends AFWObject
+class Servic extends AFWObject
 {
 
      public static $MY_ATABLE_ID = 3611;
@@ -19,13 +19,13 @@ class Service extends AFWObject
 
      public static $DATABASE          = "";
      public static $MODULE              = "crm";
-     public static $TABLE               = "service";
+     public static $TABLE               = "servic";
 
      public static $DB_STRUCTURE = null;
 
      public function __construct()
      {
-          parent::__construct("service", "id", "crm");
+          parent::__construct("servic", "id", "crm");
           $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
           $this->DISPLAY_FIELD = "name_ar";
           $this->ORDER_BY_FIELDS = "lookup_code";
@@ -40,7 +40,7 @@ class Service extends AFWObject
 
      public static function loadById($id)
      {
-          $obj = new Service();
+          $obj = new Servic();
           $obj->select_visibilite_horizontale();
           if ($obj->load($id)) {
                return $obj;
@@ -51,7 +51,7 @@ class Service extends AFWObject
 
      public static function loadByMainIndex($lookup_code, $create_obj_if_not_found = false)
      {
-          $obj = new Service();
+          $obj = new Servic();
           if (!$lookup_code) $obj->_error("loadByMainIndex : lookup_code is mandatory field");
 
 

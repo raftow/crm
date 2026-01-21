@@ -202,7 +202,7 @@ class CrmCrmEmployeeAfwStructure
 			'UTF8' => false,
 			'DEFAUT' => ',1,',
 			'TYPE' => 'MFK',
-			'ANSWER' => 'service',
+			'ANSWER' => 'servic',
 			'ANSMODULE' => 'crm',
 			'READONLY' => false,
 			'SEARCH-BY-ONE' => false,

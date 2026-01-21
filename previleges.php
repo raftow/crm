@@ -79,7 +79,7 @@
   ),
   3611 => 
   array (
-    'name' => 'service',
+    'name' => 'servic',
   ),
   3612 => 
   array (
@@ -923,7 +923,7 @@
       'id' => '103909',
     ),
   ),
-  'service' => 
+  'servic' => 
   array (
     'id' => '3611',
     'display' => 

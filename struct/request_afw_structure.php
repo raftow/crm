@@ -750,7 +750,7 @@ class CrmRequestAfwStructure
 
 		'service_id' => array(
 			'FGROUP' => 'props',  'STEP' => 1,
-			'SHORTNAME' => 'service',
+			'SHORTNAME' => 'servic',
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -761,7 +761,7 @@ class CrmRequestAfwStructure
 			'MANDATORY' => true,
 			'UTF8' => false,
 			'TYPE' => 'FK',
-			'ANSWER' => 'service',
+			'ANSWER' => 'servic',
 			'ANSMODULE' => 'crm',
 			'DEFAUT' => 1,
 			'RELATION' => 'ManyToOne',
