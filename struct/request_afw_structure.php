@@ -241,6 +241,7 @@ class CrmRequestAfwStructure
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'QSEARCH_OPER' => 'between',
+			'SFILTER' => true,
 			'QSIZE' => 6,
 			'SHOW' => true,
 			'RETRIEVE' => true,
@@ -1539,6 +1540,7 @@ class CrmRequestAfwStructure
 		),
 
 		'date_start_perf' => array(
+			'SFILTER' => true,
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
@@ -1548,6 +1550,7 @@ class CrmRequestAfwStructure
 		),
 
 		'date_end_perf' => array(
+			'SFILTER' => true,
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
@@ -1558,6 +1561,7 @@ class CrmRequestAfwStructure
 
 
 		'date_start_stats' => array(
+			'SFILTER' => true,
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
@@ -1567,6 +1571,7 @@ class CrmRequestAfwStructure
 		),
 
 		'date_end_stats' => array(
+			'SFILTER' => true,
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',

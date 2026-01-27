@@ -99,7 +99,7 @@
 			'service_mfk' => array('SHORTNAME' => 'services',  'SEARCH' => true,  'QSEARCH' => true,  
 				'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  
 				'MANDATORY' => true,  'UTF8' => false, 'DEFAULT' => ',1,',  
-				'TYPE' => 'MFK',  'ANSWER' => 'service',  'ANSMODULE' => 'crm',  'READONLY' => false,  
+				'TYPE' => 'MFK',  'ANSWER' => 'servic',  'ANSMODULE' => 'crm',  'READONLY' => false,  
 				'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 				),
@@ -165,7 +165,8 @@
 						'perf_stats_days' => array('SEARCH' => false,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  
 							'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32, 'CSS' => 'width_pct_25', 
 							'MANDATORY' => true,  'UTF8' => false,  
-							'TYPE' => 'INT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 5,  
+							'TYPE' => 'INT',  'READONLY' => true, 'DISABLE-READONLY-ADMIN' => true,
+							'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 5,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 							),	
 

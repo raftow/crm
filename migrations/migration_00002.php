@@ -16,7 +16,7 @@ try
     `validated_by` int(11) DEFAULT NULL,
     `validated_at` datetime DEFAULT NULL,
     `active` char(1) NOT NULL,
-    `draft` char(1) NOT NULL default  Y ,
+    `draft` char(1) NOT NULL default  'Y' ,
     `version` int(4) DEFAULT NULL,
     `update_groups_mfk` varchar(255) DEFAULT NULL,
     `delete_groups_mfk` varchar(255) DEFAULT NULL,

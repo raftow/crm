@@ -41,6 +41,10 @@ class RequestArTranslator
 		$trad['request']['employee_id_tooltip'] = 'موظف الإدارة المكلف بالتحقيق ثم بتحرير الإجابة';
 		$trad['request']['supervisor_id_tooltip'] = 'المشرف المكلف بتعيين الإدارة المكلفة بالرد وبمتابعة تنفيذ الطلب وغلقة بدون تأخير على العميل';
 
+		$trad['request']['date_start_stats'] = 'تاريخ البداية';
+		$trad['request']['date_end_stats'] = 'تاريخ النهاية';
+		
+		
 		$trad['request']['assign_date'] = 'تاريخ التكليف';
 		$trad['request']['assign_time'] = 'وقت التكليف';
 		$trad['request']['assignment'] = 'التكليف';
@@ -141,7 +145,7 @@ class RequestArTranslator
 
 		$trad['request']['stats.gs001'] = 'تقرير الأداء لفترة من [date_start_perf_greg] إلى اليوم';
 		$trad['request']['stats.gs002'] = 'احصائيات الطلبات الجارية';
-		$trad['request']['stats.gs003'] = 'احصائيات الطلبات لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]';
+		$trad['request']['stats.gs003'] = 'احصائيات الطلبات';
 		$trad['request']['stats.gs004'] = 'عدد التذاكر بحسب حالة الطلب لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]';
 		$trad['request']['stats.gs005'] = 'تقرير رضا العملاء لفترة من [date_start_satisfaction_greg] إلى [date_end_satisfaction_greg]';
 		$trad['request']['stats.gs006'] = 'تقرير حالة الطلبات لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]';

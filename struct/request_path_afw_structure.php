@@ -65,7 +65,6 @@ class CrmRequestPathAfwStructure
 		),
 
 		'service_id' => array(
-			'SHORTNAME' => 'service',
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -76,7 +75,7 @@ class CrmRequestPathAfwStructure
 			'MANDATORY' => true,
 			'UTF8' => false,
 			'TYPE' => 'FK',
-			'ANSWER' => 'service',
+			'ANSWER' => 'servic',
 			'ANSMODULE' => 'crm',
 			'WHERE' => "service_category_id = §service_category_id§",
 

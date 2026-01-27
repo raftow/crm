@@ -497,7 +497,8 @@ class Request extends CrmObject
         ),
 
         "gs003" => array(
-            "STATS_WHERE" => "active = 'Y' and request_date between [date_start_stats] and [date_end_stats]", // 
+            "STATS_WHERE" => "active = 'Y' and request_date between '14450101' and '14450630'", //  
+            'SFILTER' => ['request_date' => true],
             "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
@@ -513,6 +514,39 @@ class Request extends CrmObject
                 4 => array("COLUMN" => "is_suggestion", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_suggestion", "FOOTER_SUM" => true),
                 5 => array("COLUMN" => "is_support", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_support", "FOOTER_SUM" => true),
                 6 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_request", "FOOTER_SUM" => true),
+            ),
+
+            "FORMULA_COLS" => array(
+                //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
+            ),
+
+            /*"OPTIONS" => array(
+                                "perf"=> array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf'=>true),
+                                      ),*/
+            // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
+            //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
+
+        ),
+
+
+        "ws003" => array(
+            "STATS_WHERE" => "active = 'Y'", //  
+            'SFILTER' => ['request_date' => true],
+            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "DISABLE-VH" => true,
+            "FOOTER_TITLES" => true,
+            "ROW_SUM" => true,
+            "COL_SUM" => true,
+            "SQL_GROUP_BY" => true,
+            "GROUP_SEP" => ".",
+            "GROUP_COLS" => array(
+                0 => array("COLUMN" => "orgunit_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+                1 => array("COLUMN" => "request_type_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+            ),
+            "CROSS_STATS_COLS" => ["row"=>"orgunit_id", "col"=>"request_type_id", "val"=>'count_request'],
+            
+            "DISPLAY_COLS" => array(
+                "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
             ),
 
             "FORMULA_COLS" => array(
@@ -3135,13 +3169,15 @@ class Request extends CrmObject
     public function calcDate_start_stats()
     {
         $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
-        return AfwDateHelper::shiftHijriDate("", -$period);
+        if(is_integer($period) and $period>0) return AfwDateHelper::shiftHijriDate("", -$period);
+        else return AfwDateHelper::shiftHijriDate("", -90);
     }
 
     public function calcDate_start_stats_greg()
     {
         $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
-        return AfwDateHelper::shiftGregDate("", -$period);
+        if(is_integer($period) and $period>0) return AfwDateHelper::shiftGregDate("", -$period);
+        else return AfwDateHelper::shiftHijriDate("", -90);
     }
 
     public function calcDate_end_stats()
@@ -4095,7 +4131,7 @@ class Request extends CrmObject
         if ($attribute == "customer") return "customer_id";
         if ($attribute == "priority") return "request_priority";
         if ($attribute == "category") return "service_category_id";
-        if ($attribute == "service") return "service_id";
+        if ($attribute == "servic") return "service_id";
         if ($attribute == "files") return "requestFileList";
         if ($attribute == "supervisor") return "supervisor_id";
         if ($attribute == "orgunit") return "orgunit_id";

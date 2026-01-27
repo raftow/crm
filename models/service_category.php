@@ -184,8 +184,8 @@ class ServiceCategory extends AFWObject
                                 // FK not part of me - replaceable 
                                 // crm.request-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne
                                 $this->execQuery("update ${server_db_prefix}crm.request set service_category_id='$id_replace' where service_category_id='$id' ");
-                                // crm.service-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne
-                                $this->execQuery("update ${server_db_prefix}crm.service set service_category_id='$id_replace' where service_category_id='$id' ");
+                                // crm.servic-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne
+                                $this->execQuery("update ${server_db_prefix}crm.servic set service_category_id='$id_replace' where service_category_id='$id' ");
 
 
 
@@ -196,8 +196,8 @@ class ServiceCategory extends AFWObject
                                 $server_db_prefix = AfwSession::currentDBPrefix(); // FK on me 
                                 // crm.request-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne
                                 $this->execQuery("update ${server_db_prefix}crm.request set service_category_id='$id_replace' where service_category_id='$id' ");
-                                // crm.service-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne
-                                $this->execQuery("update ${server_db_prefix}crm.service set service_category_id='$id_replace' where service_category_id='$id' ");
+                                // crm.servic-صنف الخدمة	service_category_id  حقل يفلتر به-ManyToOne
+                                $this->execQuery("update ${server_db_prefix}crm.servic set service_category_id='$id_replace' where service_category_id='$id' ");
 
 
                                 // MFK

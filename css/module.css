@@ -2603,61 +2603,6 @@ div.body_nav_hzm>p {
     margin-top: 140px;
 }
 
-.bluetitle {
-    font-size: 168%;
-    font-weight: normal !important;
-    color: #0670bb;
-    text-shadow: 4px 4px 8px #83c9e3;
-    margin: 0px !important;
-    text-align: center;
-    padding-top: 19px;
-    padding-bottom: 30px;
-    background-color: #d9eff18f;
-}
-
-.bluetitle i {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background: #50bef1;
-    margin-left: 10px;
-    border-width: 3px;
-    border-style: solid;
-    border-color: #1387d9;
-    position: relative;
-    top: 0px;
-    border-radius: 50%;
-}
-
-
-.specialtitle {
-    font-size: 168%;
-    font-weight: normal !important;
-    color: #069b10;
-    text-shadow: 4px 4px 8px #96e383;
-    margin: 0px !important;
-    text-align: center;
-    padding-left: 10px;
-    padding-top: 19px;
-    padding-right: 10px;
-    padding-bottom: 55px;
-    background-color: #c0ffb88f;
-    float: left;
-}
-
-.specialtitle i {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background: #069b10;
-    margin-left: 10px;
-    border-width: 3px;
-    border-style: solid;
-    border-color: #065b10;
-    position: relative;
-    top: 0px;
-    border-radius: 50%;
-}
 
 .display>thead>tr>th {
     text-align: right;
