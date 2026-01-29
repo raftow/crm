@@ -2590,11 +2590,11 @@ div.body_nav_hzm>p {
 .hzm_panel_link_bar {
     float: right;
     padding: 8px 8px 8px 8px;
-    margin-left: 10%;
+    margin-left: 5%;
     margin-right: 5%;
     border: none;
     background-color: #f9f9f900;
-    width: 80%;
+    width: 90%;
     overflow: hidden;
     /* margin-top: 140px; */
 }

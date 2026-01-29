@@ -19,63 +19,19 @@ class RequestStatus extends CrmObject
      public static $MY_ATABLE_ID = 3570;
 
 
-     // lookup Value List codes 
-     // NEW - طلب جديد  
-     public static $REQUEST_STATUS_DRAFT = 1;
-
-     // MISSED_INFO -  عودة للعميل لاستكمال البيانات
-     public static $REQUEST_STATUS_MISSED_INFO = 101;
-
-     // MISSED_FILES -  عودة للعميل لاستكمال المرفقات
-     public static $REQUEST_STATUS_MISSED_FILES = 102;
-
-     // SENT - طلب مرسل  
-     public static $REQUEST_STATUS_SENT = 2;
-
-     // REDIRECT - طلب إعادة التحويل  
-     public static $REQUEST_STATUS_REDIRECT = 3;
-
-     // ONGOING - طلب تحت الإنجاز  
-     public static $REQUEST_STATUS_ONGOING = 4;
-
-     // DONE - تمت الإجابة  
-     public static $REQUEST_STATUS_DONE = 5;
-
-     // CANCELED - طلب ملغى  
-     public static $REQUEST_STATUS_CANCELED = 6;
-
-     // CLOSED - طلب مغلق  
-     public static $REQUEST_STATUS_CLOSED = 7;
-
-     // REJECTED - طلب مرفوض  
-     public static $REQUEST_STATUS_REJECTED = 8;
-
-     // IGNORED - طلب مهمل  
-     public static $REQUEST_STATUS_IGNORED = 9;
-
-
 
      public static $DATABASE          = "";
      public static $MODULE              = "crm";
      public static $TABLE               = "request_status";
      public static $DB_STRUCTURE = null;
 
-     
-     
+
+
 
      public function __construct()
      {
           parent::__construct("request_status", "id", "crm");
-          $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-          $this->DISPLAY_FIELD = "request_status_name_ar";
-          $this->ORDER_BY_FIELDS = "lookup_code";
-          $this->IS_LOOKUP = true;
-          $this->ignore_insert_doublon = true;
-          $this->UNIQUE_KEY = array('lookup_code');
-
-          $this->showQeditErrors = true;
-          $this->showRetrieveErrors = true;
-          $this->public_display = true;
+          CrmRequestStatusAfwStructure::initInstance($this);    
      }
 
      public static function loadById($id)
@@ -107,6 +63,60 @@ class RequestStatus extends CrmObject
                $obj->is_new = true;
                return $obj;
           } else return null;
+     }
+
+
+
+     public function calcWho($what = "value")
+     {
+          $who = "archive";
+          $lang = AfwLanguageHelper::getGlobalLanguage();
+          $status_id = $this->id;
+
+          // NEW -  مسودة طلب جديد  
+          if ($status_id == Request::$REQUEST_STATUS_DRAFT) $who = "customer";
+
+          // MISSED_INFO -  عودة للعميل لاستكمال البيانات
+          if ($status_id == Request::$REQUEST_STATUS_MISSED_INFO) $who = "customer";
+
+          // MISSED_FILES -  عودة للعميل لاستكمال المرفقات
+          if ($status_id == Request::$REQUEST_STATUS_MISSED_FILES) $who = "customer";
+
+          // SENT - طلب مرسل  للتحقيق
+          if ($status_id == Request::$REQUEST_STATUS_SENT) $who = "supervisor";
+
+
+          // ASSIGNED - تم اسناده للموظف المختص
+          if ($status_id == Request::$REQUEST_STATUS_ASSIGNED) $who = "employee";
+
+          // REDIRECT - طلب إعادة التحويل  
+          if ($status_id == Request::$REQUEST_STATUS_REDIRECT) $who = "supervisor";
+
+          // RESPONSE UNDER REVISION - تدقيق الاجابة
+          if ($status_id == Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) $who = "supervisor";
+
+          // ONGOING - طلب تحت الإنجاز - جاري العمل
+          if ($status_id == Request::$REQUEST_STATUS_ONGOING) $who = "employee";
+
+          // DONE - تمت الإجابة  
+          if ($status_id == Request::$REQUEST_STATUS_DONE) $who = "customer";
+
+          // CANCELED - طلب ملغى  
+          if ($status_id == Request::$REQUEST_STATUS_CANCELED) $who = "supervisor";
+
+          // CLOSED - طلب مغلق  
+          if ($status_id == Request::$REQUEST_STATUS_CLOSED) $who = "supervisor";
+
+          // REJECTED - طلب مستبعد  
+          if ($status_id == Request::$REQUEST_STATUS_REJECTED) $who = "supervisor";
+
+          // IGNORED - طلب تم تجاهله  
+          if ($status_id == Request::$REQUEST_STATUS_IGNORED) $who = "supervisor";
+
+
+
+          if ($what == "value") return $who;
+          else return $this->translate($who, $lang);
      }
 
 
@@ -198,5 +208,16 @@ class RequestStatus extends CrmObject
                }
                return true;
           }
+     }
+
+     public static function colorOfStatus($status_id)
+     {
+          if(!$status_id) return [null, 'white'];
+          $obj = self::loadById($status_id);
+          if(!$obj) return [null, 'white'];
+
+          $color = self::color_of_who($obj->getVal("who_enum"));
+
+          return $color;
      }
 }

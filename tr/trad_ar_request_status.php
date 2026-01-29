@@ -1,13 +1,32 @@
 <?php
-	$trad["request_status"]["requeststatus.single"] = "حالة طلب إلكتروني";
-	$trad["request_status"]["requeststatus.new"] = "جديد(ة)";
-	$trad["request_status"]["request_status"] = "حالات الطلبات الالكترونية";
-	$trad["request_status"]["response_type_mfk.short"] = "أنواع الردود";
-	$trad["request_status"]["response_type_mfk"] = "أنواع الردود التي تحيل على هذه الحالة";
-	
-	$trad["request_status"]["request_status_name_ar"] = "مسمى حالة الطلب";
-	$trad["request_status"]["request_status_name_en"] = "مسمى حالة الطلب بالانجليزي";
 
-	$trad["request_status"]["customer_status_name_ar"] = "مسمى حالة الطلب لدى العميل";
-	$trad["request_status"]["customer_status_name_en"] = "مسمى حالة الطلب لدى العميل بالانجليزي";
-?>
+class RequestStatusArTranslator{
+    public static function initData()
+    {
+        $trad = [];
+
+		$trad["request_status"]["requeststatus.single"] = "حالة طلب إلكتروني";
+		$trad["request_status"]["requeststatus.new"] = "جديد(ة)";
+		$trad["request_status"]["request_status"] = "حالات الطلبات الالكترونية";
+		$trad["request_status"]["request_status_name_ar"] = "مسمى حالة الطلب";
+		$trad["request_status"]["request_status_name_en"] = "مسمى حالة الطلب بالانجليزي";
+		$trad["request_status"]["lookup_code"] = "الرمز الفني";
+		$trad["request_status"]["customer_status_name_ar"] = "مسمى حالة الطلب لدى العميل";
+		$trad["request_status"]["customer_status_name_en"] = "مسمى حالة الطلب لدى العميل بالانجليزي";
+		$trad["request_status"]["response_type_mfk.short"] = "أنواع الردود";
+		$trad["request_status"]["response_type_mfk"] = "أنواع الردود التي تحيل على هذه الحالة";
+		$trad["request_status"]["user_type_menum_tooltip"] = $trad["request_status"]["user_type_menum"] = "أنواع المستخدمين الذين يسمح لهم بالانتقال لهذه الحالة";
+		$trad["request_status"]["who_enum"] = "عند من ؟";
+		$trad["request_status"]["user_type_menum.short"] = "أنواع المستخدمين";
+
+		
+        // steps
+        return $trad;
+    }
+
+    public static function getInstance()
+	{
+        if(false) return new RequestStatusEnTranslator();
+		return new RequestStatus();
+	}
+}

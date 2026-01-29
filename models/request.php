@@ -496,7 +496,7 @@ class Request extends CrmObject
 
         ),
 
-        "gs003" => array(
+        "os003" => array(
             "STATS_WHERE" => "active = 'Y' and request_date between '14450101' and '14450630'", //  
             'SFILTER' => ['request_date' => true],
             "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
@@ -529,7 +529,7 @@ class Request extends CrmObject
         ),
 
 
-        "ws003" => array(
+        "gs003" => array(
             "STATS_WHERE" => "active = 'Y'", //  
             'SFILTER' => ['request_date' => true],
             "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
@@ -620,23 +620,26 @@ class Request extends CrmObject
         ),*/
         
         "gs006" => array(
-            "STATS_WHERE" => "active = 'Y' and status_id in (101,102,2,201,3,301,4) and request_date between [date_start_stats] and [date_end_stats]", // 
-            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "STATS_WHERE" => "active = 'Y'", // and status_id in (101,102,2,201,3,301,4)   and request_date between [date_start_stats] and [date_end_stats]
+            'SFILTER' => ['request_date' => true],
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
             "SHOW_PIE" => "FOOTER",
+            "ROW_SUM" => true,
+            "COL_SUM" => true,
+            "SQL_GROUP_BY" => true,
             "GROUP_SEP" => ".",
             "GROUP_COLS" => array(
                 0 => array("COLUMN" => "orgunit_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
-                0 => array("COLUMN" => "status_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+                1 => array("COLUMN" => "status_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
             ),
+            "CROSS_STATS_COLS" => ["row"=>"orgunit_id", "col"=>"status_id", "val"=>'count_request', 'bigcol'=>'who_enum', 'bigcolisformula'=>true],
+            
             "DISPLAY_COLS" => array(
-                1 => array("COLUMN" => "chez_supervisor", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_supervisor", "FOOTER_SUM" => true),
-                2 => array("COLUMN" => "chez_investigator", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_investigator", "FOOTER_SUM" => true),
-                3 => array("COLUMN" => "chez_customer", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_customer", "FOOTER_SUM" => true),
-                4 => array("COLUMN" => "chez_archive", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_archive", "FOOTER_SUM" => true),
+                "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
             ),
+
 
             "FORMULA_COLS" => array(
                 //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
@@ -2846,11 +2849,12 @@ class Request extends CrmObject
     }
 
 
+
+
     public function calcMan($what="value", $showOnlyCode=false)
     {
         $return = "man";
-        $lang = AfwSession::getSessionVar("current_lang");
-        if(!$lang) $lang = "ar";
+        $lang = AfwLanguageHelper::getGlobalLanguage();
         $status_id = $this->getVal("status_id");
         $return_arr = [];
         $req_employee_id = $this->getVal("employee_id");
@@ -4338,6 +4342,33 @@ class Request extends CrmObject
     public function rowCategoryAttribute()
     {
         return "request_late:FORMULA";
+    }
+
+
+    public function colorOf($attribute, $attribute_value) {
+                if($attribute=="who_enum") {
+                        if($attribute_value==1) return "black";
+                        if($attribute_value==2) return "green";
+                        if($attribute_value==3) return "silver";
+                        if($attribute_value==4) return "gold";
+
+                }
+
+        return "black";        
+    }
+
+    public function statsColCategory($col, $stats_code)
+    {
+            if($stats_code=='gs006')
+            {
+                    if (AfwStringHelper::stringStartsWith($col, "cross_col_")) {
+                            $status_id = substr($col,10);
+                            $color = RequestStatus::colorOfStatus($status_id);
+                            return "stats_cross_col stats_$color";
+                    }
+                    else return 'stats_cross_row';
+            }
+            return parent::statsColCategory($col, $stats_code);
     }
 
 

@@ -535,40 +535,42 @@ class Response extends CrmObject
 
 
                 if ($objme) {
-                        if ($objme->hasRole("crm", CrmObject::$AROLE_OF_SUPERVISOR)) {
-                                return "superv_";
+                        if ($objme->isAdmin() or $objme->hasRole("crm", CrmObject::$AROLE_OF_SUPERVISOR)) {
+                                return 3;
                         }
-
-                        if ($objme->hasRole("crm", CrmObject::$AROLE_OF_INVESTIGATOR)) {
-
+                        else
+                        {
+                                /**
+                                 * @var Employee $employeeObj
+                                 */
                                 $employeeObj = $this->het("employee_id");
                                 $employee_id = $employeeObj ? $employeeObj->id : 0;
-                                if ($employeeObj) {
-                                        $orgunit_id = $employeeObj->getVal("id_sh_dep");
-                                }
+                                $auserObj = $employeeObj ? $employeeObj->getMyAuser() : null;
+                                
+                                if ($objme and $auserObj and ($auserObj->id == $objme->id)) {
+                                        
+                                        /*
+                                        if ($employeeObj) {
+                                                $orgunit_id = $employeeObj->getVal("id_sh_dep");
+                                        }
 
-                                $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
-                                if ($crmEmplObj) {
-                                        if ($crmEmplObj->sureIs("approved")) return "qinv_";
-                                }
+                                        $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
+                                        if ($crmEmplObj and $crmEmplObj->sureIs("approved")) return 2;*/
 
-                                // حالة منسق بالنيابة : في غير ادارته ?
-                                $reqObj = $this->hetRequest();
-                                if ($reqObj) {
-                                        $orgunit_id_request = $reqObj->getVal("orgunit_id");
-                                }
-                                if ($orgunit_id_request != $orgunit_id) {
+                                        $reqObj = $this->hetRequest();
+                                        if ($reqObj) {
+                                                $orgunit_id_request = $reqObj->getVal("orgunit_id");
+                                        }
                                         $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id_request);
+                                        if ($crmEmplObj and $crmEmplObj->sureIs("approved")) return 2;
+
+                                        return 1;
                                 }
-
-                                if ($crmEmplObj and $crmEmplObj->sureIs("approved")) return "qinv_";
-
-                                return "invest_";
                         }
                 }
 
 
-                return "unknown";
+                return 0;
         }
 
         public function calcResponse_aut($what="value", $lang="ar")

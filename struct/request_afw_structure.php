@@ -63,7 +63,6 @@ class CrmRequestAfwStructure
 
 		'man' => array(
 			'FGROUP' => 'assignment', 'STEP' => 1,
-			'SHORTNAME' => 'employee',
 			'SHOW' => true,
 			'EDIT' => true,
 			'RETRIEVE' => true,

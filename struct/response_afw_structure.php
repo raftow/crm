@@ -249,7 +249,7 @@ class CrmResponseAfwStructure
 			'TYPE' => 'FK',
 			'ANSWER' => 'request_status',
 			'ANSMODULE' => 'crm',
-			'WHERE' => "lookup_code like '%§user_type§%' and (response_type_mfk='' or response_type_mfk is null or response_type_mfk like '%,§response_type_id§,%')",
+			'WHERE' => "user_type_menum like '%,§user_type§,%' and (response_type_mfk='' or response_type_mfk is null or response_type_mfk like '%,§response_type_id§,%')",
 			'FGROUP' => 'the_response',
 
 			'RELATION' => 'ManyToOne',
@@ -368,7 +368,14 @@ class CrmResponseAfwStructure
 
 		'response_aut'	=> array('TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA'),
 		'response_cls'	=> array('TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA'),
-		'user_type'	=> array('TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA', 'NO-COTE' => true),
+		'user_type'	=> array(
+			'CATEGORY' => 'FORMULA', 'NO-COTE' => true, 
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'READONLY' => true,),
+
+                
+
 
 
 		'active' => array(

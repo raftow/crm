@@ -5,6 +5,10 @@ $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 try
 {   
 
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request_status add who_enum smallint;"); 
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request_status add user_type_menum varchar(255);"); 
+
+
     AfwDatabase::db_query("DROP TABLE IF EXISTS ".$server_db_prefix."crm.survey_token;");
 
     AfwDatabase::db_query("CREATE TABLE IF NOT EXISTS ".$server_db_prefix."crm.`survey_token` (
@@ -93,5 +97,6 @@ catch(Exception $e)
 {
     $migration_info .= " " . $e->getMessage();
 }
+
 
 
