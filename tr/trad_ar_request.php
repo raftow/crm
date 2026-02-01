@@ -143,7 +143,7 @@ class RequestArTranslator
 		$trad['request']['pct_without'] = 'نسبة التذاكر الغير معقب عليها';
 		$trad['request']['nb_taqibs'] = 'عدد التعقيبات';
 
-		$trad['request']['stats.gs001'] = 'تقرير الأداء لفترة من [date_start_perf_greg] إلى اليوم';
+		$trad['request']['stats.gs001'] = 'تقرير الأداء'; //  لفترة من [date_start_perf_greg] إلى اليوم
 		$trad['request']['stats.gs002'] = 'احصائيات الطلبات الجارية';
 		$trad['request']['stats.gs003'] = 'احصائيات الطلبات';
 		$trad['request']['stats.gs004'] = 'عدد التذاكر بحسب حالة الطلب لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]';

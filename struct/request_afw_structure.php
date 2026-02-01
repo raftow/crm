@@ -242,6 +242,7 @@ class CrmRequestAfwStructure
 			'QSEARCH_OPER' => 'between',
 			'SFILTER' => true,
 			'QSIZE' => 6,
+			'FSIZE' => 12,
 			'SHOW' => true,
 			'RETRIEVE' => true,
 			'EXCEL' => true,

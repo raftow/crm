@@ -45,7 +45,7 @@ $tit_qedit_ppp_fixm = "عرض التذكرة";
 $actions_tpl_arr = array();
 
 $actions_tpl_arr["edit"] = array("framework_action");
-                          
+// die("please try later ... IT Team is debugging ... ".var_export($arr_sql_conds, true));                          
 if($datatable_on) {
 	include "$file_dir_name/../lib/afw/modes/afw_handle_default_search.php";
         $collapse_in = "";

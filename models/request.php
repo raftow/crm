@@ -425,7 +425,13 @@ class Request extends CrmObject
 
     public static $STATS_CONFIG = array(
         "gs001" => array(
-            "STATS_WHERE" => "active = 'Y' and request_date >= [date_start_perf]", // [date_end_perf]
+            "STATS_WHERE" => "active = 'Y' and request_date >= [date_start_perf]", // we should keep this condition (means max period and can be smaller by sfilter) otherwise OutOfMmory
+            /*
+            'SFILTER' => ['request_date' => ['operator'=>'between', 
+                                  'val1' => '::request_date_min', 
+                                  'val2' => '::request_date_max',
+                                  'run'  => true]
+                        ],*/
             "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
@@ -4030,6 +4036,7 @@ class Request extends CrmObject
     {
         if ($role == "supervisor")   return $prefix."supervisor_id='$employee_id' and ".$prefix."status_id in (".self::$REQUEST_STATUSES_ONGOING_SUPERVISOR.")";
         if ($role == "investigator") return $prefix."employee_id='$employee_id' and ".$prefix."status_id in (".self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR.") ";
+        throw new AfwRuntimeException("inboxSqlCond : case not implemented : role=$role, employee$employee_id");
     }
 
     public function maxRecordsUmsCheck()
