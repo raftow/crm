@@ -1539,8 +1539,16 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+		'date_limit_late' => array(
+			'TYPE' => 'DATE',
+			'CATEGORY' => 'FORMULA',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',  'STEP' => 99, 
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
 		'date_start_perf' => array(
-			'SFILTER' => true,
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
@@ -1550,7 +1558,6 @@ class CrmRequestAfwStructure
 		),
 
 		'date_end_perf' => array(
-			'SFILTER' => true,
 			'TYPE' => 'DATE',
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',

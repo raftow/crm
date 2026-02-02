@@ -146,8 +146,8 @@ class RequestArTranslator
 		$trad['request']['stats.gs001'] = 'تقرير الأداء'; //  لفترة من [date_start_perf_greg] إلى اليوم
 		$trad['request']['stats.gs002'] = 'احصائيات الطلبات الجارية';
 		$trad['request']['stats.gs003'] = 'احصائيات الطلبات';
-		$trad['request']['stats.gs004'] = 'عدد التذاكر بحسب حالة الطلب لفترة من [date_start_stats_greg] إلى [date_end_stats_greg]';
-		$trad['request']['stats.gs005'] = 'تقرير رضا العملاء لفترة من [date_start_satisfaction_greg] إلى [date_end_satisfaction_greg]';
+		$trad['request']['stats.gs004'] = 'تقرير التذاكر المتأخرة بحسب الجهة المكلفة والحالة';
+		$trad['request']['stats.gs005'] = 'تقرير التذاكر المتأخرة بحسب الموظف والحالة';
 		$trad['request']['stats.gs006'] = 'تقرير عدد التذاكر بحسب حالة الطلب والجهة المكلفة';
 		$trad['request']['stats.gs007'] = 'تقرير الأداء لجهة معينة لفترة من [date_start_perf_greg]';
 		$trad['request']['stats.gs008'] = 'تقرير الأداء لمكتب العلاقات مع العملاء لفترة من [date_start_perf_greg]';

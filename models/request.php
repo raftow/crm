@@ -538,7 +538,6 @@ class Request extends CrmObject
         "gs003" => array(
             "STATS_WHERE" => "active = 'Y'", //  
             'SFILTER' => ['request_date' => true],
-            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "ROW_SUM" => true,
@@ -568,40 +567,66 @@ class Request extends CrmObject
         ),
 
         "gs004" => array(
-            "STATS_WHERE" => "active = 'Y' and request_date between [date_start_stats] and [date_end_stats]", // 
-            "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "STATS_WHERE" => "active = 'Y' and status_id not in (5,6,7,8,9,1,101,102,2,3,301) and request_date >= [date_limit_late]", //  
+            // 'SFILTER' => ['request_date' => true],
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
+            "SHOW_PIE" => "FOOTER",
+            "ROW_SUM" => true,
+            "COL_SUM" => true,
+            "SQL_GROUP_BY" => true,
             "GROUP_SEP" => ".",
             "GROUP_COLS" => array(
                 0 => array("COLUMN" => "orgunit_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+                1 => array("COLUMN" => "status_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
             ),
+            "CROSS_STATS_COLS" => ["row"=>"orgunit_id", "col"=>"status_id", "filtercol"=>"id not in (5,6,7,8,9,1,101,102,2,3,301)", "val"=>'count_request', 'bigcol'=>'who_enum', 'bigcolisformula'=>true],
+            
             "DISPLAY_COLS" => array(
-                1 => array("COLUMN" => "chez_supervisor", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_supervisor", "FOOTER_SUM" => true),
-                2 => array("COLUMN" => "chez_investigator", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_investigator", "FOOTER_SUM" => true),
-                3 => array("COLUMN" => "chez_customer", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_customer", "FOOTER_SUM" => true),
-                4 => array("COLUMN" => "chez_archive", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "chez_archive", "FOOTER_SUM" => true),
+                "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
             ),
+
 
             "FORMULA_COLS" => array(
                 //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
             ),
 
 
+        ),
 
 
+        "gs005" => array(
+            "STATS_WHERE" => "active = 'Y' and employee_id> 0 and status_id not in (5,6,7,8,9,1,101,102,2,3,301) and request_date >= [date_limit_late]", //  
+            // 'SFILTER' => ['request_date' => true],
+            "DISABLE-VH" => true,
+            "FOOTER_TITLES" => true,
+            "FOOTER_SUM" => true,
+            "SHOW_PIE" => "FOOTER",
+            "ROW_SUM" => true,
+            "COL_SUM" => true,
+            "SQL_GROUP_BY" => true,
+            "GROUP_SEP" => ".",
+            "GROUP_COLS" => array(
+                0 => array("COLUMN" => "employee_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+                1 => array("COLUMN" => "status_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+            ),
+            "CROSS_STATS_COLS" => ["row"=>"employee_id", "col"=>"status_id", "filtercol"=>"id not in (5,6,7,8,9,1,101,102,2,3,301)", "val"=>'count_request', 'bigcol'=>'who_enum', 'bigcolisformula'=>true],
+            
+            "DISPLAY_COLS" => array(
+                "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
+            ),
 
-            /*
-                             "OPTIONS" => array(
-                               "perf"=> array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf'=>true),
-                                     ),*/
-            // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
-            //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
+
+            "FORMULA_COLS" => array(
+                //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
+            ),
+
 
         ),
+
         /*
-        "gs005" => array(
+        "os005" => array(
             "STATS_WHERE" => "active = 'Y' and status_id = 7 and status_date between [date_start_satisfaction] and [date_end_satisfaction]", // 
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
@@ -3153,6 +3178,12 @@ class Request extends CrmObject
         }
 */
 
+    public function calcDate_limit_late()
+    {
+        $late_days = CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
+        return AfwDateHelper::shiftHijriDate("", -$late_days);
+    }
+
     public function calcDate_start_perf()
     {
         $start_period = CrmOrgunit::getGlobalCRMCenter()->getVal("perf_stats_days");
@@ -4366,7 +4397,7 @@ class Request extends CrmObject
 
     public function statsColCategory($col, $stats_code)
     {
-            if($stats_code=='gs006')
+            if(($stats_code=='gs006') or ($stats_code=='gs005'))
             {
                     if (AfwStringHelper::stringStartsWith($col, "cross_col_")) {
                             $status_id = substr($col,10);
