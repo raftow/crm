@@ -110,6 +110,8 @@ class Request extends CrmObject
 
     public static $REQUEST_STATUSES_ONGOING_ALL = "101,102,2,201,3,301,4";
 
+    public static $REQUEST_STATUSES_ONGOING_TVTC = "2,201,3,301,4";
+
     public static $REQUEST_STATUSES_ASSIGNED_ONLY = "2,201";
 
     public static $REQUEST_STATUSES_FINISHED = "5,6,7,8,9";

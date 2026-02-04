@@ -918,7 +918,7 @@ class CrmRequestAfwStructure
 			'QSEARCH' => true,
 			'SHOW' => true,
 			'AUDIT' => false,
-			'RETRIEVE' => true,
+			'RETRIEVE' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'SIZE' => 32,

@@ -315,11 +315,11 @@ class CrmOrgunit extends CrmObject{
                         // because not good to reassign ticket of investigator who has started to work on it
                         // except if this investigator has been dis-missioned
                         $obj->where("status_id in (".Request::$REQUEST_STATUSES_ASSIGNED_ONLY.") or 
-                                     (status_id in (".Request::$REQUEST_STATUSES_ONGOING_ALL.") and (employee_id is null or employee_id not in ($arrInvTxt)))");
+                                     (status_id in (".Request::$REQUEST_STATUSES_ONGOING_TVTC.") and (employee_id is null or employee_id not in ($arrInvTxt)))");
                 }
                 else
                 {
-                        $obj->where("(status_id in (".Request::$REQUEST_STATUSES_ONGOING_ALL.") and (employee_id is null or employee_id not in ($arrInvTxt)))");
+                        $obj->where("(status_id in (".Request::$REQUEST_STATUSES_ONGOING_TVTC.") and (employee_id is null or employee_id not in ($arrInvTxt)))");
                 }
                 
                 
@@ -357,7 +357,7 @@ class CrmOrgunit extends CrmObject{
                 unset($obj);
                 $obj = new Request();
                 $obj->select("orgunit_id", $this->getVal("orgunit_id"));
-                $obj->where("status_id in (".Request::$REQUEST_STATUSES_ONGOING_ALL.") and (employee_id is null or employee_id = 0)");
+                $obj->where("status_id in (".Request::$REQUEST_STATUSES_ONGOING_TVTC.") and (employee_id is null or employee_id = 0)");
                 $nb_assigned = 0;
                 $requestWaitingList = $obj->loadMany();
                 /**

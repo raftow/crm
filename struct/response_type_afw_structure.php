@@ -1,6 +1,35 @@
 <?php
 class CrmResponseTypeAfwStructure
 {
+        // token separator = §
+        public static function initInstance(&$obj)
+        {
+                if ($obj instanceof ResponseType) {
+                        $obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+                        $obj->DISPLAY_FIELD_BY_LANG = ['ar' => "name_ar", 'en' => "name_en"];
+
+                        $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
+                        $obj->ORDER_BY_FIELDS = "lookup_code";
+                        $obj->IS_LOOKUP = true;
+                        $obj->public_display = true;
+                        $obj->ENABLE_DISPLAY_MODE_IN_QEDIT = true;
+                        
+                        $obj->AUDIT_DATA = true;
+                        $obj->ignore_insert_doublon = true;
+                        $obj->UNIQUE_KEY = array('lookup_code');
+                        $obj->editByStep = false;
+                        $obj->editNbSteps = 0;
+                        $obj->showQeditErrors = true;
+                        $obj->showRetrieveErrors = true;
+                        $obj->general_check_errors = true;
+                        // $obj->after_save_edit = array("class"=>'ResponseType',"attribute"=>'xxxx_id', "currmod"=>'crm',"currstep"=>2);
+                        $obj->after_save_edit = array("mode" => "qsearch", "currmod" => 'crm', "class" => 'ResponseType', "submit" => true);
+
+                } else {
+                        ResponseTypeArTranslator::initData();
+                        ResponseTypeEnTranslator::initData();
+                }
+        }
         public static $DB_STRUCTURE = array(
 
 
@@ -164,6 +193,33 @@ class CrmResponseTypeAfwStructure
                         'ERROR-CHECK' => true,
                         'FGROUP' => 'response',
                 ),
+
+                'default_new_status_id' => array(
+			'SHORTNAME' => 'status',
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'SHOW' => true,
+			'RETRIEVE' => true,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'CSS' => 'width_pct_33',
+			'UTF8' => false,
+			'SIZE' => 32,
+			'MANDATORY' => false,   // when we just assign request no new status it is same
+			'TYPE' => 'FK',
+			'ANSWER' => 'request_status',
+			'ANSMODULE' => 'crm',
+			'WHERE' => "response_type_mfk='' or response_type_mfk is null or response_type_mfk like '%,§id§,%'",
+			
+			'RELATION' => 'ManyToOne',
+			'READONLY' => false,
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
 
                 'active' => array(
                         'SHOW' => true,

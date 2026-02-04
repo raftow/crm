@@ -10,6 +10,12 @@ class ResponseType extends CrmObject
 
      public static $MY_ATABLE_ID = 3572;
 
+     public function __construct()
+     {
+          parent::__construct("response_type", "id", "crm");
+          CrmResponseTypeAfwStructure::initInstance($this);    
+          
+     }
 
      // lookup Value List codes 
 
@@ -62,21 +68,6 @@ class ResponseType extends CrmObject
 
 
 
-     public function __construct()
-     {
-          parent::__construct("response_type", "id", "crm");
-          $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-          $this->DISPLAY_FIELD = "name_ar";
-          $this->ORDER_BY_FIELDS = "lookup_code";
-          $this->IS_LOOKUP = true;
-          $this->ignore_insert_doublon = true;
-          $this->UNIQUE_KEY = array('lookup_code');
-
-          $this->showQeditErrors = true;
-          $this->showRetrieveErrors = true;
-          $this->public_display = true;
-          $this->ENABLE_DISPLAY_MODE_IN_QEDIT = true;
-     }
 
      public static function loadById($id)
      {
