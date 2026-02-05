@@ -1,9 +1,4 @@
 <?php
-// ------------------------------------------------------------------------------------
-// ----             auto generated php class of �table� response_template : response_template - نماذج الأجوبة 
-// ------------------------------------------------------------------------------------
-
-
 class ResponseTemplate extends AFWObject{
 
         public static $MY_ATABLE_ID=13827; 
@@ -23,7 +18,6 @@ class ResponseTemplate extends AFWObject{
                     $this->ORDER_BY_FIELDS = "title_en";
                     $this->IS_LOOKUP = true;
 			        $this->IS_SMALL_LOOKUP = true;
-                    $this->AUDIT_DATA = true;
                     
                     $this->UNIQUE_KEY = array('title_en');
                     
@@ -60,9 +54,12 @@ class ResponseTemplate extends AFWObject{
     
                 if($response_type) 
                 {
-                   if($user_type) $cond_user_type = "lookup_code like '%$user_type%' and ";
-                   else $cond_user_type = "";
-                   $obj->where("(new_status in (select id from ".$server_db_prefix."crm.request_status where $cond_user_type response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
+                   if($user_type) $cond_user_type = "user_type_menum like '%,$user_type,%'";
+                   else $cond_user_type = "1";
+                   $obj->where("(new_status in (select id from ".$server_db_prefix."crm.request_status where $cond_user_type and response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
+
+                   $obj->where("response_type_mfk like '%,$response_type,%'");
+
                 }
                
     

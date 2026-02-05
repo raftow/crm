@@ -13,8 +13,7 @@ class Response extends CrmObject
         public function __construct()
         {
                 parent::__construct("response", "id", "crm");
-                CrmResponseAfwStructure::initInstance($this);    
-
+                CrmResponseAfwStructure::initInstance($this);
         }
 
         public static function loadById($id)
@@ -40,11 +39,11 @@ class Response extends CrmObject
                 $module_id = 0
         ) {
                 $respObj = self::loadByText($request_id, $response_text, $employee_id, $new_status_id, $response_type_id, $response_date, $response_time, $create_obj_if_not_found = true);
-                $respObj->set("orgunit_id", $orgunit_id);                
+                $respObj->set("orgunit_id", $orgunit_id);
                 $respObj->set("response_link", $response_link);
                 $respObj->set("internal", $internal);
                 //$respObj->set("module_id",$module_id);
-                $respObj->commit(false,false,true);
+                $respObj->commit(false, false, true);
 
                 return $respObj;
         }
@@ -52,8 +51,7 @@ class Response extends CrmObject
         public static function loadByText($request_id, $response_text, $employee_id, $new_status_id, $response_type_id, $response_date, $response_time, $create_obj_if_not_found = false)
         {
                 // global $print_debugg, $print_sql;
-                try
-                {
+                try {
                         $obj = new Response();
                         if (!$request_id) throw new AfwRuntimeException("loadByMainIndex : request_id is mandatory field");
                         if (!$response_text) throw new AfwRuntimeException("loadByMainIndex : response_text is mandatory field");
@@ -61,18 +59,15 @@ class Response extends CrmObject
                         if (!$employee_id) $employee_id = 0; // machine
                         if (!$new_status_id) throw new AfwRuntimeException("loadByMainIndex : new_status_id is mandatory field");
                         if (!$response_type_id) throw new AfwRuntimeException("loadByMainIndex : response_type_id is mandatory field");
-                        if(!$response_date or !$response_time)
-                        {
+                        if (!$response_date or !$response_time) {
                                 $response_date = AfwDateHelper::currentHijriDate();
                                 $response_time = date("H:i:s");
                         }
 
                         $obj2 = Response::loadByMainIndex($request_id, $response_date, $response_time);
-                        if($obj2)
-                        {
-                                if($response_text==$obj2->getVal("response_text")) return $obj2; // attempt to create same response twice may be we need to throw exception here @tosee
-                                else 
-                                {
+                        if ($obj2) {
+                                if ($response_text == $obj2->getVal("response_text")) return $obj2; // attempt to create same response twice may be we need to throw exception here @tosee
+                                else {
                                         $response_time = "00:00:01";
                                         unset($obj2);
                                 }
@@ -84,7 +79,7 @@ class Response extends CrmObject
                                         list($newD, $response_time) = explode(" ", $newDT);
                                         
                                 }*/
-                        } 
+                        }
                         if ($create_obj_if_not_found) {
 
                                 // if ($print_debugg and $print_sql) echo "\n <br> not found with [request_id=$request_id response_date=$response_date response_time=$response_time] \n <br>";
@@ -92,19 +87,16 @@ class Response extends CrmObject
                                 $obj->set("employee_id", $employee_id);
                                 $obj->set("new_status_id", $new_status_id);
                                 $obj->set("response_type_id", $response_type_id);
-                                $obj->commit(false,false,true);
-        
+                                $obj->commit(false, false, true);
+
                                 return $obj;
                         } else return null;
+                } catch (Exception $e) {
+                        die("fatal error code raf-20251003 : " . $e->getMessage() . " Trace " . $e->getTraceAsString());
                 }
-                catch(Exception $e)
-                {
-                        die("fatal error code raf-20251003 : ".$e->getMessage()." Trace ".$e->getTraceAsString());
-                }
-                
         }
 
-        public static function loadByMainIndex($request_id, $response_date, $response_time, $response_text="", $create_obj_if_not_found = false)
+        public static function loadByMainIndex($request_id, $response_date, $response_time, $response_text = "", $create_obj_if_not_found = false)
         {
                 global $print_debugg, $print_sql;
 
@@ -112,7 +104,7 @@ class Response extends CrmObject
                 if (!$request_id) throw new AfwRuntimeException("loadByMainIndex : request_id is mandatory field");
                 if (!$response_date) throw new AfwRuntimeException("loadByMainIndex : response_date is mandatory field");
                 if (!$response_time) throw new AfwRuntimeException("loadByMainIndex : response_time is mandatory field");
-                
+
                 if ($create_obj_if_not_found and (!$response_text)) throw new AfwRuntimeException("loadByMainIndex : response_text is mandatory field when create_obj_if_not_found=true");
 
                 $obj->select("request_id", $request_id);
@@ -178,7 +170,7 @@ class Response extends CrmObject
                                 $data[2] = " إلى "    . $data[2];
                         }
                 }
-                
+
                 $return = implode(" ", $data);
                 $return = AfwReplacement::trans_replace($return, "crm", $lang);
                 return $return;
@@ -213,7 +205,7 @@ class Response extends CrmObject
 
         public function responseFromEmployee()
         {
-                $typeObj = $this->hetType();  
+                $typeObj = $this->hetType();
 
                 return ($typeObj and $typeObj->sureIs("from_employee"));
         }
@@ -225,33 +217,23 @@ class Response extends CrmObject
                 $link = array();
 
                 $objme = AfwSession::getUserConnected();
-                if ($objme)
-                {
-                        if($this->responseFromEmployee())
-                        {
-                                if($this->getVal("employee_id")<100)
-                                {
+                if ($objme) {
+                        if ($this->responseFromEmployee()) {
+                                if ($this->getVal("employee_id") < 100) {
                                         list($data[0], $link[0]) = $this->displayAttribute("orgunit_id", false, $lang);
-                                }
-                                else
-                                {
+                                } else {
                                         list($data[0], $link[0]) = $this->displayAttribute("employee_id", false, $lang);
                                 }
                         }
-                        
-                        if(!$data[0])
-                        {
+
+                        if (!$data[0]) {
                                 list($data[0], $link[0]) = $this->displayAttribute("created_by", false, $lang);
                         }
-                        
-                }
-                elseif ($this->getVal("employee_id") > 100) {
+                } elseif ($this->getVal("employee_id") > 100) {
                         $data[0] = "المنسق";
-                } 
-                elseif ($this->getVal("employee_id") == 1) {
+                } elseif ($this->getVal("employee_id") == 1) {
                         $data[0] = "المشرف";
-                }
-                elseif ($this->getVal("employee_id") > 0) {
+                } elseif ($this->getVal("employee_id") > 0) {
                         $data[0] = $this->showAttribute("employee_id", null, true, $lang);
                 }
 
@@ -282,8 +264,7 @@ class Response extends CrmObject
                 }
                 $return = implode(" ", $data);
 
-                if(!$this->id) 
-                {
+                if (!$this->id) {
                         $return = AfwReplacement::trans_replace($return, "crm", $lang);
                 }
 
@@ -345,42 +326,39 @@ class Response extends CrmObject
                 return true;
         }
 
-        
-        public function calcDyn_response_date($what="value")
+
+        public function calcDyn_response_date($what = "value")
         {
                 $system_date_format = AfwSession::currentSystemDateFormat();
-                if($system_date_format=="greg")
-                {
-                        if(!$this->getVal("response_date")) return date("Y-m-d");
+                if ($system_date_format == "greg") {
+                        if (!$this->getVal("response_date")) return date("Y-m-d");
                         else return AfwDateHelper::hijriToGreg($this->getVal("response_date"));
-                }
-                else return $this->getVal("response_date");
+                } else return $this->getVal("response_date");
+        }
+
+        public function isReturnToInvestigator() {
+                return ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RETURNED_TO_EMPLOYEE));
         }
 
         public function calcNewStatusNeeded()
         {
-                if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE))
-                {
-                        $orgunit_id = $this->getVal("orgunit_id");                                
-                        $employee_id = $this->getVal("employee_id");                        
+                if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE)) {
+                        $orgunit_id = $this->getVal("orgunit_id");
+                        $employee_id = $this->getVal("employee_id");
                         $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id, $orgunit_id);
                         /*
                         if($employee_id==1748) // bilel
                         {
                                 throw new AfwRuntimeException("see bilel data : crmEmplObj=".var_export($crmEmplObj, true));
                         }
-                        */        
-                        if($crmEmplObj and $crmEmplObj->sureIs("approved"))
-                        {
-                                $this->set("new_status_id", Request::$REQUEST_STATUS_DONE);                                  
-                        }
-                        else
-                        {
-                                $this->set("new_status_id", Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION);  
+                        */
+                        if ($crmEmplObj and $crmEmplObj->sureIs("approved")) {
+                                $this->set("new_status_id", Request::$REQUEST_STATUS_DONE);
+                        } else {
+                                $this->set("new_status_id", Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION);
                                 $this->set("internal", "Y");
                         }
                 }
-                
         }
 
 
@@ -393,9 +371,7 @@ class Response extends CrmObject
 
                 if (!intval($this->getVal("new_status_id"))) {
                         $this->calcNewStatusNeeded();
-                }
-                else
-                {
+                } else {
                         // throw new AfwRuntimeException("see = this->getVal(new_status_id)=".$this->getVal("new_status_id"));
                 }
 
@@ -403,27 +379,25 @@ class Response extends CrmObject
         }
 
 
-        public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false)
+        public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent = false)
         {
                 if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE)) {
-                                $objRequest = $this->het("request_id");
-                                $objRequest->set("last_response_id", $this->id);
-                                $objRequest->commit();
+                        $objRequest = $this->het("request_id");
+                        $objRequest->set("last_response_id", $this->id);
+                        $objRequest->commit();
                 }
 
-                if(!$disableAfterCommitDBEvent)
-                {
+                if (!$disableAfterCommitDBEvent) {
                         return self::afterMaj($id, $fields_updated);
                 }
-                
         }
 
         public function afterMaj($id, $fields_updated)
         {
                 $lang = AfwSession::getSessionVar("current_lang");
-                
 
-                
+
+
                 if ($fields_updated["new_status_id"] and $this->getVal("new_status_id")) {
                         //$this->throwException("")
 
@@ -435,10 +409,11 @@ class Response extends CrmObject
                                  * @var Request $request
                                  */
                                 $request = $this->hetRequest();
-                                if ($request and // cond 1
-                                    ($this->getVal("new_status_id") > 0) and // cond 2
-                                    ($this->getVal("new_status_id") != $request->getVal("status_id")) // cond 3
-                                    )
+                                if (
+                                        $request and // cond 1
+                                        ($this->getVal("new_status_id") > 0) and // cond 2
+                                        ($this->getVal("new_status_id") != $request->getVal("status_id")) // cond 3
+                                )
                                 // we do this cond-3 above to be sure that this response inserted is manually inserted not automatic
                                 // to avoid twice or infinite loop because change status create new response                   
                                 {
@@ -446,11 +421,9 @@ class Response extends CrmObject
                                         $objEmployee = null;
                                         $employee_name = "unknown";
                                         $objme = AfwSession::getUserConnected();
-                                        if ($objme) 
-                                        {
+                                        if ($objme) {
                                                 $objEmployee = $objme->getEmployee();
-                                                if($objEmployee) 
-                                                {
+                                                if ($objEmployee) {
                                                         $employee_name = $objEmployee->getDisplay($lang);
                                                         $action_enum = Request::status_action_by_code("responseCreatedStatusUpdated");
                                                         $silent = true; // important keep silent true to avoid infinite loop
@@ -466,26 +439,21 @@ class Response extends CrmObject
                                                                 $request->informCustomerBySMS($success_message, $lang);
                                                         }
                                                 }
-                                        }
-                                        else
-                                        {
+                                        } else {
                                                 $custme = AfwSession::getCustomerConnected();
-                                                if ($custme) 
-                                                {
+                                                if ($custme) {
                                                         $action_enum = Request::status_action_by_code("customerResponded");
                                                         $silent = true; // important keep silent true to avoid infinite loop
-                                                        $status_comment = "تم الرد على الطلب من قبل العميل";                                                        
+                                                        $status_comment = "تم الرد على الطلب من قبل العميل";
                                                         $request->customerChangeStatus($this->getVal("new_status_id"), $status_comment, $action_enum);
                                                 }
-                                                
                                         }
-                                                /*
+                                        /*
                                                 if (!$employee_name) 
                                                 {
                                                         $employee_name = "المهمة الآلية";
                                                         وش هالخرابيط هل المهمة الآلية لا ترد على الطلبات
                                                 }*/
-                                        
                                 }
                         }
                 }
@@ -528,6 +496,7 @@ class Response extends CrmObject
                 }
         }
 
+
         public function calcUser_type()
         {
 
@@ -537,18 +506,16 @@ class Response extends CrmObject
                 if ($objme) {
                         if ($objme->isAdmin() or $objme->hasRole("crm", CrmObject::$AROLE_OF_SUPERVISOR)) {
                                 return 3;
-                        }
-                        else
-                        {
+                        } else {
                                 /**
                                  * @var Employee $employeeObj
                                  */
                                 $employeeObj = $this->het("employee_id");
                                 $employee_id = $employeeObj ? $employeeObj->id : 0;
                                 $auserObj = $employeeObj ? $employeeObj->getMyAuser() : null;
-                                
+
                                 if ($objme and $auserObj and ($auserObj->id == $objme->id)) {
-                                        
+
                                         /*
                                         if ($employeeObj) {
                                                 $orgunit_id = $employeeObj->getVal("id_sh_dep");
@@ -573,17 +540,15 @@ class Response extends CrmObject
                 return 0;
         }
 
-        public function calcResponse_aut($what="value", $lang="ar")
-        {                
+        public function calcResponse_aut($what = "value", $lang = "ar")
+        {
                 if ($this->getVal("employee_id") > 0) {
-                        if($lang=="ar") return "خ";
+                        if ($lang == "ar") return "خ";
                         else return "S";
-                } 
-                else
-                {
-                        if($lang=="ar") return "ع";   
+                } else {
+                        if ($lang == "ar") return "ع";
                         else return "C";
-                } 
+                }
         }
 
         public function calcResponse_cls()
@@ -613,21 +578,22 @@ class Response extends CrmObject
                                 'text' => $itemRespTpl->getBody($lang, true)
                         );
                 }
-                if(count($templates)==0)
-                {
+
+                /*
+                if (count($templates) == 0) {
                         $templates["مقدمة"] = array('internal' => 'N', 'new_status' => 0, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم");
                         $templates["طلب مكرر"] = array('internal' => 'N', 'new_status' => 8, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم هذا الطلب مكرر وسبق الرد عليه");
                         $templates["عدم اختصاص"] = array('internal' => 'Y', 'new_status' => 3, 'text' =>  "أرجوا تحويل الطلب إلى الجهة المختصة");
                 }
-                
-                
+                */
+
 
                 $html = "<div class='jsbtns'>";
                 $i = 0;
                 foreach ($templates as $template_title => $template_item) {
                         $template_text = $template_item["text"];
-                        $template_text = str_replace("\n","|", $template_text);
-                        $template_text = str_replace("\r","|", $template_text);
+                        $template_text = str_replace("\n", "|", $template_text);
+                        $template_text = str_replace("\r", "|", $template_text);
                         $template_internal = $template_item["internal"];
                         $template_new_status = $template_item["new_status"];
 
@@ -652,7 +618,10 @@ class Response extends CrmObject
         {
                 if ($attribute == "response_type_id") {
                         $rtObj = $this->het("response_type_id");
-                        if ($rtObj) $this->set("internal", $rtObj->getVal("internal"));
+                        if ($rtObj) {
+                                $this->set("internal", $rtObj->getVal("internal"));
+                                if($rtObj->getVal("default_new_status_id")) $this->set("new_status_id", $rtObj->getVal("default_new_status_id"));
+                        } 
                 }
 
                 if ($attribute == "new_status_id") {
@@ -704,7 +673,7 @@ class Response extends CrmObject
                 $pfObj->commit();
         }
 
-        public function approveIfNotApproved($caller="crm-employee")
+        public function approveIfNotApproved($caller = "crm-employee")
         {
                 $changed = false;
                 $status_changed_to_done = false;
@@ -720,7 +689,7 @@ class Response extends CrmObject
                 }
 
                 if ($changed) {
-                        $this->commit(false,false,true);
+                        $this->commit(false, false, true);
                         if ($status_changed_to_done) {
                                 /**
                                  * @var Request $reqObj
@@ -761,13 +730,14 @@ class Response extends CrmObject
                 if ($attribute == "employee") return "employee_id";
                 if ($attribute == "orgunit") return "orgunit_id";
                 if ($attribute == "status") return "new_status_id";
-		 
+
                 return $attribute;
         }
 
 
-        public function shouldBeCalculatedField($attribute){
-                if($attribute=="request_text") return true;
+        public function shouldBeCalculatedField($attribute)
+        {
+                if ($attribute == "request_text") return true;
                 return false;
         }
 }

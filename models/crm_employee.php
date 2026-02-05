@@ -215,6 +215,25 @@ class CrmEmployee extends CrmObject
 
                 
                         );
+
+
+            $color = "blue";
+            $title_ar = "إسناد جميع الطلبات لغير هذا المنسق/المشرف"; 
+            $methodName = "removeMeAllAssigned"; 
+            $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+                                "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
+                                "ADMIN-ONLY"=>true, "BF-ID"=>"", 'STEP' => 1,
+                                
+                                /*'CONFIRMATION_NEEDED'=>true,
+                                'CONFIRMATION_QUESTION' =>  array('ar' => "سيتم انشاء حساب حقيقي لهذا العميل على أنه مكتب رحلات هل أنت متأكد", 
+                                                                'en' => "You will create travel company. Sure ?"),
+                                'CONFIRMATION_WARNING' => array('ar' => "من المفروض أن تكون تواصلت مع العميل وتأكدت من جديته بارسال البيانات الضروروية", 
+                                                                'en' => "please check data is correct bedore and this company exists"),*/
+
+                
+                        );
+
+                        
             
             
             
@@ -288,7 +307,7 @@ class CrmEmployee extends CrmObject
         }
 
 
-        private function removeMeAllAssigned()
+        public function removeMeAllAssigned($lang='ar')
         {
             $obj = new Request();
 
@@ -297,19 +316,22 @@ class CrmEmployee extends CrmObject
 
 
             $obj->where("supervisor_id = $me_id");
-            $obj->where("status_id not in (6,7,8,9)");
+            $obj->where("status_id in (" . Request::$REQUEST_STATUSES_ONGOING_ALL . ")");
+            $status_comment = "remove from me  as supervisor (me_id=.$me_id) all assigned tickets";
+            $obj->setForce("status_comment", $status_comment);
             $obj->setForce("supervisor_id",0);
-            $obj->update(false);
+            $nb1 = $obj->update(false);
 
 
             
             $obj->where("(employee_id = $me_id and orgunit_id = $me_org_id)");
-            $obj->where("status_id in (2,4)");
+            $obj->where("status_id in (" . Request::$REQUEST_STATUSES_ONGOING_ALL . ")");
             $obj->setForce("employee_id",0);
-            $obj->setForce("orgunit_id",0);
-            $status_comment = "removeMeAllAssigned me_id=".$me_id;
+            $status_comment = "remove from me  as investigator (me_id=.$me_id) all assigned tickets";
             $obj->setForce("status_comment", $status_comment);
-            $obj->update(false);
+            $nb2 = $obj->update(false);
+
+            return ["$nb1 supervision(s) removed $nb2 investigation(s) removed ", ""];
         }
         
         public function beforeDelete($id,$id_replace) 

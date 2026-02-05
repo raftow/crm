@@ -3808,3 +3808,7 @@ p.sms.notification {
     border: dashed 2px #7d8ba5;
 }
 
+p.request-status.returned.opened.waiting {
+    background-color: #ff5b00 !important;
+    padding: 10px;
+}

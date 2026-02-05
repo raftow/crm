@@ -42,7 +42,7 @@ $messages = [
     "Welcome to the General Supervisor of the Customer Relations Office"=>"مرحبا بالمشرف العام لمتابعة عمل مكتب العلاقات مع العملاء",
     "Welcome to the General Supervisor of the Customer Happiness and Comfort Platform"=>"مرحباً بالمشرف العام لمنصة خدمة سعادة وراحة العميل",    
 
-
+    "The supervisor has returnted the request to you with this comment" => "أعاد المشرف إليك الطلب مع هذا التعليق",
     "The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text."=>"ظهور رمز [سري للغاية] يعني أن العميل لا يرغب بمشاركة معلومات طلبه مع أي شخص غير ذي صلة نظرًا لحساسية الأمر. بناءً على مدى أمان الوضع، وما إذا كان هناك أشخاص حولك لا ينبغي أن يطلعوا على هذه المعلومات، انقر على رمز العين لإظهار نص الطلب أو إخفائه.",
 
 ];

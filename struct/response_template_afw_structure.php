@@ -108,6 +108,8 @@ class CrmResponseTemplateAfwStructure
                         'CSS' => 'width_pct_50',
                 ),
 
+                
+
                 'new_status' => array(
                         'SHORTNAME' => 'status',
                         'SEARCH' => true,
@@ -128,6 +130,31 @@ class CrmResponseTemplateAfwStructure
                         'RELATION' => 'ManyToOne',
                         'READONLY' => false,
                         'CSS' => 'width_pct_50',
+                ),
+
+                'response_type_mfk' => array(
+                        'SHORTNAME' => 'response_types',
+                        'SEARCH' => true,
+                        'QSEARCH' => false,
+                        'SHOW' => true,
+                        'RETRIEVE' => false,
+                        'EDIT' => true,
+                        'QEDIT' => false,
+                        'SIZE' => 32,
+                        'MANDATORY' => false,
+                        'UTF8' => false,
+                        'DEFAUT' => ',1,',
+                        'TYPE' => 'MFK',
+                        'ANSWER' => 'response_type',
+                        'ANSMODULE' => 'crm',
+                        'READONLY' => false,
+                        'SEARCH-BY-ONE' => false,
+                        'DISPLAY' => true,
+                        'STEP' => 1,
+                        'DISPLAY-UGROUPS' => '',
+                        'EDIT-UGROUPS' => '',
+                        'ERROR-CHECK' => true,
+                        'CSS' => 'width_pct_100',
                 ),
 
 

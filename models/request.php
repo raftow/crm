@@ -6,11 +6,12 @@ class Request extends CrmObject
 {
     public $itemsMethodExec = [];
 
-    public function __construct(){
-		parent::__construct("request","id","crm");
-            CrmRequestAfwStructure::initInstance($this);    
-	}
-    
+    public function __construct()
+    {
+        parent::__construct("request", "id", "crm");
+        CrmRequestAfwStructure::initInstance($this);
+    }
+
 
     public static $REQUEST_CODE_LENGTH = 7;
 
@@ -34,7 +35,7 @@ class Request extends CrmObject
     public static $JOB_ROLE_CRM_SUPERVISOR = 107;
     public static $JOB_ROLE_CRM_INVESTIGATOR = 117;
 
-    
+
 
 
     // COMPLAINT - شكوى  
@@ -78,7 +79,7 @@ class Request extends CrmObject
 
     // REDIRECT - طلب إعادة التحويل  
     public static $REQUEST_STATUS_REDIRECT = 3;
-    
+
     // RESPONSE UNDER REVISION - تدقيق الاجابة
     public static $REQUEST_STATUS_RESPONSE_UNDER_REVISION = 301;
 
@@ -451,10 +452,22 @@ class Request extends CrmObject
                 5 => array("COLUMN" => "is_support", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_support", "FOOTER_SUM" => true),
                 6 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_request", "FOOTER_SUM" => true),
                 7 => array("COLUMN" => "request_done", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_done", "FOOTER_SUM" => true),
-                8 => array("COLUMN" => "request_late", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_late", "FOOTER_SUM" => true, 
-                            "URL"=>"main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"),
-                9 => array("COLUMN" => "request_ongoing", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_ongoing", "FOOTER_SUM" => true, 
-                            "URL"=>"main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"),
+                8 => array(
+                    "COLUMN" => "request_late",
+                    "COLUMN_IS_FORMULA" => true,
+                    "GROUP-FUNCTION" => "sum",
+                    "SHOW-NAME" => "request_late",
+                    "FOOTER_SUM" => true,
+                    "URL" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"
+                ),
+                9 => array(
+                    "COLUMN" => "request_ongoing",
+                    "COLUMN_IS_FORMULA" => true,
+                    "GROUP-FUNCTION" => "sum",
+                    "SHOW-NAME" => "request_ongoing",
+                    "FOOTER_SUM" => true,
+                    "URL" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"
+                ),
             ),
 
             "FORMULA_COLS" => array(
@@ -550,8 +563,8 @@ class Request extends CrmObject
                 0 => array("COLUMN" => "orgunit_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
                 1 => array("COLUMN" => "request_type_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
             ),
-            "CROSS_STATS_COLS" => ["row"=>"orgunit_id", "col"=>"request_type_id", "val"=>'count_request'],
-            
+            "CROSS_STATS_COLS" => ["row" => "orgunit_id", "col" => "request_type_id", "val" => 'count_request'],
+
             "DISPLAY_COLS" => array(
                 "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
             ),
@@ -583,8 +596,8 @@ class Request extends CrmObject
                 0 => array("COLUMN" => "orgunit_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
                 1 => array("COLUMN" => "status_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
             ),
-            "CROSS_STATS_COLS" => ["row"=>"orgunit_id", "col"=>"status_id", "filtercol"=>"id not in (5,6,7,8,9,1,101,102,2,3,301)", "val"=>'count_request', 'bigcol'=>'who_enum', 'bigcolisformula'=>true],
-            
+            "CROSS_STATS_COLS" => ["row" => "orgunit_id", "col" => "status_id", "filtercol" => "id not in (5,6,7,8,9,1,101,102,2,3,301)", "val" => 'count_request', 'bigcol' => 'who_enum', 'bigcolisformula' => true],
+
             "DISPLAY_COLS" => array(
                 "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
             ),
@@ -613,8 +626,8 @@ class Request extends CrmObject
                 0 => array("COLUMN" => "employee_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
                 1 => array("COLUMN" => "status_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
             ),
-            "CROSS_STATS_COLS" => ["row"=>"employee_id", "col"=>"status_id", "filtercol"=>"id not in (5,6,7,8,9,1,101,102,2,3,301)", "val"=>'count_request', 'bigcol'=>'who_enum', 'bigcolisformula'=>true],
-            
+            "CROSS_STATS_COLS" => ["row" => "employee_id", "col" => "status_id", "filtercol" => "id not in (5,6,7,8,9,1,101,102,2,3,301)", "val" => 'count_request', 'bigcol' => 'who_enum', 'bigcolisformula' => true],
+
             "DISPLAY_COLS" => array(
                 "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
             ),
@@ -651,7 +664,7 @@ class Request extends CrmObject
 
 
         ),*/
-        
+
         "gs006" => array(
             "STATS_WHERE" => "active = 'Y'", // and status_id in (101,102,2,201,3,301,4)   and request_date between [date_start_stats] and [date_end_stats]
             'SFILTER' => ['request_date' => true],
@@ -667,8 +680,8 @@ class Request extends CrmObject
                 0 => array("COLUMN" => "orgunit_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
                 1 => array("COLUMN" => "status_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
             ),
-            "CROSS_STATS_COLS" => ["row"=>"orgunit_id", "col"=>"status_id", "val"=>'count_request', 'bigcol'=>'who_enum', 'bigcolisformula'=>true],
-            
+            "CROSS_STATS_COLS" => ["row" => "orgunit_id", "col" => "status_id", "val" => 'count_request', 'bigcol' => 'who_enum', 'bigcolisformula' => true],
+
             "DISPLAY_COLS" => array(
                 "count_request" => array("COLUMN" => "count_request", "SQL_FORMULA" => "count(id)", "SHOW-NAME" => "count_request", "ROW_SUM" => true, "COL_SUM" => true),
             ),
@@ -759,7 +772,7 @@ class Request extends CrmObject
 
     );
 
-    
+
 
     public static function loadById($id)
     {
@@ -771,7 +784,7 @@ class Request extends CrmObject
     }
 
 
-    public static function getRecentClosedTicketsWithSurveyNotReady($period=99, $nb_req_limit = 1200) 
+    public static function getRecentClosedTicketsWithSurveyNotReady($period = 99, $nb_req_limit = 1200)
     {
         // $nb_req_limit = 10; // just to test on mobile of rafik
         $date_start = AfwDateHelper::shiftHijriDate("", -$period);
@@ -789,7 +802,7 @@ class Request extends CrmObject
         if ((!$customer_id) or ($customer_id < 0)) throw new AfwRuntimeException("getMyCurrentRequests : customer_id [$customer_id] is mandatory field");
         $obj->select("customer_id", $customer_id);
         $old_status_date = AfwDateHelper::shiftHijriDate("", -20);
-        $obj->where("status_id not in (".self::$REQUEST_STATUSES_FINISHED.") or status_date >= '$old_status_date'");
+        $obj->where("status_id not in (" . self::$REQUEST_STATUSES_FINISHED . ") or status_date >= '$old_status_date'");
 
         return $obj->loadMany($nb_req_limit, "request_date desc");
     }
@@ -800,7 +813,7 @@ class Request extends CrmObject
         if ((!$customer_id) or ($customer_id < 0)) throw new AfwRuntimeException("getMyCurrentRequests : customer_id [$customer_id] is mandatory field");
         $obj->select("customer_id", $customer_id);
         $old_status_date = AfwDateHelper::shiftHijriDate("", -20);
-        $obj->where("status_id in (".self::$REQUEST_STATUSES_FINISHED.") or status_date >= '$old_status_date'");
+        $obj->where("status_id in (" . self::$REQUEST_STATUSES_FINISHED . ") or status_date >= '$old_status_date'");
 
         return $obj->loadMany($nb_req_limit, "request_date desc");
     }
@@ -883,10 +896,10 @@ class Request extends CrmObject
         return self::loadByMainIndex($r_request_code, $customer_id, $create_obj_if_not_found = false);
     }
 
-    public function calcRelated_request_id($what="value")
+    public function calcRelated_request_id($what = "value")
     {
         $rrObj = $this->getRelatedTicket();
-        return ($what=="value") ? $rrObj->id : $rrObj;
+        return ($what == "value") ? $rrObj->id : $rrObj;
     }
 
 
@@ -976,7 +989,7 @@ class Request extends CrmObject
         if ($mode == "mode_responseList") {
             // throw new AfwRuntimeException("`$mode` == mode_responseList why here");
             if (!$this->isClosedWithCustomer()) {
-                
+
 
                 $canRespondOrComment = false;
                 // throw new AfwRuntimeException("not isClosedWithCustomer why here");
@@ -1019,7 +1032,7 @@ class Request extends CrmObject
                     $canRespondOrComment = true;
                 }
 
-                if(!$canRespondOrComment and (!$this->isStarted())) {
+                if (!$canRespondOrComment and (!$this->isStarted())) {
                     unset($link);
                     $link = array();
                     $title = "لم يبدأ العمل على هذا الطلب رجاء الضغط على زر 'بدأ العمل على الطلب' في أسفل صفحة علامة التبويب 2. الخاصة بالردود للتمكن من التعليق أو الاجابة عليه";
@@ -1250,7 +1263,7 @@ class Request extends CrmObject
 
         if ($fgroup == "responseList") return array("name" => $fgroup, "css" => "pct_100");
         if ($fgroup == "request_text") return array("name" => $fgroup, "css" => "pct_100");
-        
+
 
         return array("name" => $fgroup, "css" => "none");
     }
@@ -1318,9 +1331,9 @@ class Request extends CrmObject
 
     public function timingStatsExists()
     {
-        return (($this->getVal("hours_investigator_work") > 0) and 
-                 ($this->calc("days_investigator") > 0) and 
-                 ($this->calc("days_delay") > 0)); 
+        return (($this->getVal("hours_investigator_work") > 0) and
+            ($this->calc("days_investigator") > 0) and
+            ($this->calc("days_delay") > 0));
     }
 
 
@@ -1338,7 +1351,7 @@ class Request extends CrmObject
 
         if (($attribute == "hours_investigator_work") or
             ($attribute == "days_investigator") or
-            ($attribute == "days_delay")            
+            ($attribute == "days_delay")
         ) {
             return ($this->timingStatsExists());
         }
@@ -1371,7 +1384,7 @@ class Request extends CrmObject
             $val = trim($this->getVal($attribute));
             return ($val and ($val != "crm-"));
         }
-        
+
         if ($attribute == "request_link") {
             $val = trim($this->getVal($attribute));
             return ($val != "");
@@ -1399,9 +1412,9 @@ class Request extends CrmObject
             return ($val != "");
         }
 
-        
 
-        
+
+
 
         if (($attribute == "easy_fast") or ($attribute == "service_satisfied") or ($attribute == "pb_resolved") or ($attribute == "general_satisfaction")) {
             return $this->estOpened();
@@ -1486,7 +1499,7 @@ class Request extends CrmObject
         return ($status_reel_id == self::$REQUEST_STATUS_CLOSED);
     }
 
-    
+
 
 
     public function isExecuted()
@@ -1495,12 +1508,9 @@ class Request extends CrmObject
         $status_id = $this->getVal("status_id");
 
         $status_ongoing_arr = [];
-        if($orgunit_id == self::$CRM_CENTER_ID)
-        {
+        if ($orgunit_id == self::$CRM_CENTER_ID) {
             $status_ongoing_arr = explode(",", self::$REQUEST_STATUSES_ONGOING_SUPERVISOR);
-        }
-        else
-        {
+        } else {
             $status_ongoing_arr = explode(",", self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR);
         }
 
@@ -1593,9 +1603,9 @@ class Request extends CrmObject
 
         if (!$respObj) return false;
 
-        $objme_employee_id = $objme->getEmployeeId();
+        // $objme_employee_id = $objme->getEmployeeId();
 
-        return ($respObj->getVal("employee_id") == $objme_employee_id);
+        return ($respObj->getVal("created_by") == $objme->id);
     }
 
     public function getLastResponse()
@@ -1771,10 +1781,10 @@ class Request extends CrmObject
 
     public function sendSmsToCustomer($template, $lang, $token_arr)
     {
-       
+
         $customer_id = $this->getVal("customer_id");
         $the_customer = $this->hetCustomer();
-         /**
+        /**
          * @var CrmCustomer $the_customer
          */
         if ($the_customer) {
@@ -1792,7 +1802,7 @@ class Request extends CrmObject
     }
 
 
-    public function changeStatus($caller, $new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false, $question_id=0, $objOrgunit=null, $objEmployee=null, $fromCustomer=false, $fromJob=false)
+    public function changeStatus($caller, $new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false, $question_id = 0, $objOrgunit = null, $objEmployee = null, $fromCustomer = false, $fromJob = false)
     {
         $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
@@ -1804,28 +1814,27 @@ class Request extends CrmObject
         /**
          * @var Employee $objEmployee
          */
-        $objEmployee= null;
+        $objEmployee = null;
+        $objOrgunit = null;
 
-        if($fromCustomer)
-        {
+        if ($fromCustomer) {
             $objEmployee = Employee::getCustomerEmployee();
-            $objOrgunit = null;
-        }
-        elseif($fromJob)
-        {
+        } elseif ($fromJob) {
             $objEmployeeUser = AfwSession::getUserConnected();
-            if($objEmployeeUser) $objEmployee = $objEmployeeUser->getEmployee();
-            if(!$objEmployee) $objEmployee = Employee::getStandardJobEmployee();
-            $objOrgunit = null;
+            if ($objEmployeeUser) $objEmployee = $objEmployeeUser->getEmployee();
+            if (!$objEmployee) $objEmployee = Employee::getStandardJobEmployee();
+        } else {
+            $objEmployeeUser = AfwSession::getUserConnected();
+            if ($objEmployeeUser) {
+                $objEmployee = $objEmployeeUser->getEmployee();
+            }
+
+            if ($objEmployee) {
+                $objOrgunit = $objEmployee->het("id_sh_dep");
+            }
         }
-        else
-        {
-            if(!$objEmployee) $objEmployee = $this->het("employee_id");
-            if(!$objOrgunit) $objOrgunit = $this->het("orgunit_id");
-            if((!$objOrgunit) and $objEmployee) $objOrgunit = $objEmployee->het("id_sh_dep");
-        }
-        
-        
+
+
         /*if($objEmployee) $objEmployeeUser = $objEmployee->het("auser_id");
         
         if(!$objEmployeeUser) 
@@ -1833,12 +1842,12 @@ class Request extends CrmObject
             $objEmployeeUser = AfwSession::getUserConnected();
             $orgunit_id = ($objEmployeeUser) ? $objEmployeeUser->getMyDepartmentId() : 0;
         }*/
-        
-        
+
+
         $employee_id = ($objEmployee) ? $objEmployee->id : 0;
         $orgunit_id = ($objOrgunit) ? $objOrgunit->id : 0;
-        
-        
+
+
         $old_status = $this->getVal("status_id");
         if (($new_status_id == Request::$REQUEST_STATUS_DRAFT) and (!$this->getVal("status_id"))) $silent_force = true;
 
@@ -1869,13 +1878,13 @@ class Request extends CrmObject
 
 
 
-                
 
-                
+
+
             }
             // AfwSession::pushInformation("rafik-debugg : updating status of request to $new_status_id"); 
 
-            
+
 
             $this->set("status_id", $new_status_id);
             $this->set("status_action_enum", $status_action_enum);
@@ -1883,16 +1892,13 @@ class Request extends CrmObject
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", $status_comment);
             $new_status_decoded = $this->decode("status_id");
-            if($this->commit())
-            {                
+            if ($this->commit()) {
                 $technicals .= "<br> > request-status changed to $new_status_id/$new_status_decoded <br> > with comments $status_comment";
                 $technicals .= $this->statusChanged($old_status, $resoObj->id, $fromCustomer, $fromJob, $new_status_id);
-            }
-            else
-            {
+            } else {
                 $errors = "فشلت عملية تحديث حالة الطلب يرجى المحاولة لاحقا";
                 AfwSession::pushError($errors);
-                
+
                 $technicals .= "<br> > failed changing request-status to $new_status_id/$new_status_decoded / $status_comment";
             }
             /*
@@ -1913,7 +1919,7 @@ class Request extends CrmObject
 
         $customer_id = $this->getVal("customer_id");
 
-        if($customer_id == 11772 and (($employee_id==1) or (!$employee_id))) // testing rafik customer
+        if ($customer_id == 11772 and (($employee_id == 1) or (!$employee_id))) // testing rafik customer
         {
             AfwSession::pushWarning($technicals);
         }
@@ -1937,49 +1943,41 @@ class Request extends CrmObject
     public function mySurveyUrl()
     {
         $token = $this->getVal("survey_token");
-        
-        if($token) // means that survey record and url are ready
+
+        if ($token) // means that survey record and url are ready
         {
             $crm_survey_plateform = AfwSession::config('crm_survey_plateform', 'crm_survey');
-            if($crm_survey_plateform == "limesurvey")
-            {
+            if ($crm_survey_plateform == "limesurvey") {
                 $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
                 $lime_survey_domain = AfwSession::config('lime_survey_domain', '');
-                if($lime_survey_domain and $crm_survey_id)
-                {
+                if ($lime_survey_domain and $crm_survey_id) {
                     $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
                     return "$limesurvey_url/$crm_survey_id?token=$token";
                 }
-            }
-            else
-            {
+            } else {
                 return SurveyToken::getTokenUrl($token);
             }
-            
         }
         return null;
-
     }
 
-    public function resetSurveyForMe($lang="ar")
+    public function resetSurveyForMe($lang = "ar")
     {
         $token = $this->getVal("survey_token");
-        if(!$token)
-        {
+        if (!$token) {
             $mpid_value = 100000 + $this->id;
             $token = CrmLimesurvey::proposeToken($mpid_value, $length = 15);
         }
-        $this->createTokenForMe($token, $forceUpdateData=true);
+        $this->createTokenForMe($token, $forceUpdateData = true);
 
-        return ['', 'survey data has been reset : tkn = '.$token];
+        return ['', 'survey data has been reset : tkn = ' . $token];
     }
 
-    public function createTokenForMe($token, $forceUpdateData=false)
+    public function createTokenForMe($token, $forceUpdateData = false)
     {
-        
+
         $objToken = SurveyToken::loadByToken($token, true);
-        if($objToken->is_new or $forceUpdateData)
-        {
+        if ($objToken->is_new or $forceUpdateData) {
             $ticket_orgunit = $this->showAttribute("orgunit_id");
             // @todo bring language of customer
             $language_value = "ar";
@@ -1987,8 +1985,8 @@ class Request extends CrmObject
 
             $objToken->set("survey_id", 1);
             $objToken->set("customer_id", $this->getVal("customer_id"));
-            
-            if(!$objToken->sureIs("attribute_yn_1")) // if already responsed do not reset responses
+
+            if (!$objToken->sureIs("attribute_yn_1")) // if already responsed do not reset responses
             {
                 $objToken->set("attribute_yn_1", 'N');
                 $objToken->set("attribute_enum_1", 0);
@@ -1997,7 +1995,7 @@ class Request extends CrmObject
                 $objToken->set("attribute_enum_4", 0);
                 $objToken->set("attribute_area_1", "");
             }
-            
+
             $objToken->set("attribute_date_1", $this->getVal("request_date"));
             // above field added and update like this :
             // ALTER TABLE xxx_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
@@ -2009,7 +2007,7 @@ class Request extends CrmObject
             $objToken->set("attribute_area_3", $this->getVal("request_text"));
             $objToken->commit();
         }
-        
+
         $this->set("survey_token", $token);
         $this->set("survey_sent", "W");
         $this->commit();
@@ -2019,8 +2017,8 @@ class Request extends CrmObject
 
     public function isOldRequest()
     {
-        $request_date_limit = AfwDateHelper::shiftHijriDate("",-17);        
-        return ($this->getVal("request_date") < $request_date_limit) ? "RD".$this->getVal("request_date")."-less-than-".$request_date_limit : "";
+        $request_date_limit = AfwDateHelper::shiftHijriDate("", -17);
+        return ($this->getVal("request_date") < $request_date_limit) ? "RD" . $this->getVal("request_date") . "-less-than-" . $request_date_limit : "";
     }
 
     public function intro2ToHide()
@@ -2036,76 +2034,70 @@ class Request extends CrmObject
         // now always hide because he can click to quick show
 
         return true;
-
     }
 
     public function loadMyToken()
     {
         $token = $this->getVal("survey_token");
-        if($token) return SurveyToken::loadByToken($token);
+        if ($token) return SurveyToken::loadByToken($token);
         return null;
     }
 
 
 
-    public function surveyBySMS($lang="ar")
+    public function surveyBySMS($lang = "ar")
     {
-            $template = "survey";
-            $my_survey_url = $this->mySurveyUrl();
-            if($my_survey_url)
-            {
-                    // send SMS to warn customer
-                    $token_arr = array(
-                        "[title]" => $this->getVal("request_title"),
-                        // "first_name_ar" => $customerObj->getVal("first_name_ar"),
-                        "[survey_url]" => $my_survey_url,
-                        "[type]" => $this->showAttribute("request_type_id", null, true, $lang),
-                        "[code]" => $this->getVal("request_code"),                        
-                    );
-                    return $this->sendSmsToCustomer($template, $lang, $token_arr);
-            }
-            else return [false, "no survey token generated", "", $template];
+        $template = "survey";
+        $my_survey_url = $this->mySurveyUrl();
+        if ($my_survey_url) {
+            // send SMS to warn customer
+            $token_arr = array(
+                "[title]" => $this->getVal("request_title"),
+                // "first_name_ar" => $customerObj->getVal("first_name_ar"),
+                "[survey_url]" => $my_survey_url,
+                "[type]" => $this->showAttribute("request_type_id", null, true, $lang),
+                "[code]" => $this->getVal("request_code"),
+            );
+            return $this->sendSmsToCustomer($template, $lang, $token_arr);
+        } else return [false, "no survey token generated", "", $template];
     }
 
-    public function statusChanged($old_status, $responseId, $fromCustomer=false, $fromJob=false, $new_status_id=null)
+    public function statusChanged($old_status, $responseId, $fromCustomer = false, $fromJob = false, $new_status_id = null)
     {
         global $statusChanged;
-        
+
         $technicals_log = "<br> > responseId=$responseId ";
-        if(!$new_status_id) $new_status_id = $this->getVal("status_id");
+        if (!$new_status_id) $new_status_id = $this->getVal("status_id");
         $lang = AfwLanguageHelper::getGlobalLanguage();
         if (!$lang) $lang = "ar";
         $objme = AfwSession::getUserConnected();
         $my_survey_url = null;
         if ($new_status_id == self::$REQUEST_STATUS_CLOSED) {
             // AfwSession::pushInformation("rafik-debugg : creating survey token"); 
-            $survey_url = CrmLimesurvey::surveyClosedTicket($this, $lang, false);            
+            $survey_url = CrmLimesurvey::surveyClosedTicket($this, $lang, false);
             $technicals_log .= "<br> > survey Closed Ticket done : $survey_url";
             if ((!$objme) or (!$objme->isSuperAdmin())) $survey_url = null;
 
             // AfwSession::pushInformation("rafik-debugg : survey token created"); 
         } else {
-            $survey_url = null;            
+            $survey_url = null;
         }
 
         if ($objme) $status_decoded = $this->decode("status_id");
-        else $status_decoded = "[".$this->getCustomerStatus($lang)."]"; // fromCustomer=$fromCustomer status-$new_status_id=
+        else $status_decoded = "[" . $this->getCustomerStatus($lang) . "]"; // fromCustomer=$fromCustomer status-$new_status_id=
 
         $success_message = "";
         if ($new_status_id == Request::$REQUEST_STATUS_CANCELED) $success_message = $this->tm("ticket canceled", $lang);
-        elseif (($new_status_id != Request::$REQUEST_STATUS_SENT)    and 
-            ($new_status_id != Request::$REQUEST_STATUS_ONGOING) and 
-            ($new_status_id != Request::$REQUEST_STATUS_ASSIGNED)) 
-        {            
+        elseif (($new_status_id != Request::$REQUEST_STATUS_SENT)    and
+            ($new_status_id != Request::$REQUEST_STATUS_ONGOING) and
+            ($new_status_id != Request::$REQUEST_STATUS_ASSIGNED)
+        ) {
             $success_message = $this->tm("status changed to", $lang) . " \"$status_decoded\"";
-            
-            if($fromCustomer and ($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES))
-            {
+
+            if ($fromCustomer and ($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES)) {
                 throw new AfwRuntimeException("from customer strange status change old_status=$old_status, responseId=$responseId : $success_message");
             }
-        } 
-        else
-        {
+        } else {
             $success_message = $this->tm("request sent for investigation", $lang);
         }
 
@@ -2117,40 +2109,31 @@ class Request extends CrmObject
             $success_message .= "<br>مسلسل الرد : " . $responseId;
         }
 
-        if($success_message) AfwSession::pushSuccess($success_message);
-        
+        if ($success_message) AfwSession::pushSuccess($success_message);
+
         if ((!$fromCustomer) and
             ($new_status_id != $old_status) and
             ($new_status_id == Request::$REQUEST_STATUS_CLOSED)
-            ) 
-        {
+        ) {
             // @todo here check why we enter twice :
-            if(!$statusChanged) 
-            {
+            if (!$statusChanged) {
                 $statusChanged = 1;
                 // debug_print_backtrace();
-            }
-            else 
-            {
+            } else {
                 throw new AfwRuntimeException("NOTICE : SMS Will be sent twice");
             }
             list($done, $reason, $sms_body, $template) = $this->surveyBySMS($lang);
-            
-            
-            if($done)
-            {
+
+
+            if ($done) {
                 $this->set("survey_sent", "Y");
                 $this->commit();
-                AfwSession::pushSuccess("تمت دعوة العميل للمشاركة في الاستبيان عبر الرسالة التالية : ".$sms_body);
+                AfwSession::pushSuccess("تمت دعوة العميل للمشاركة في الاستبيان عبر الرسالة التالية : " . $sms_body);
                 $technicals_log .= "<br> > sendSmsToCustomer done with template=$template, lang=$lang, infos=$reason";
-            }
-            else
-            {
+            } else {
                 AfwSession::pushWarning("فشلت دعوة العميل للمشاركة في الاستبيان <!-- reason=$reason -->");
                 $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
             }
-
-            
         } elseif ((!$fromCustomer) and
             ($new_status_id != $old_status) and
             (($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES) or
@@ -2162,23 +2145,18 @@ class Request extends CrmObject
             $customerObj = $this->hetCustomer();
             // send SMS to warn customer
             $token_arr = array(
-                        "[title]" => $this->getVal("request_title"),
-                        "[first_name_ar]" => $customerObj->getVal("first_name_ar"),
-                        "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
-                    );
+                "[title]" => $this->getVal("request_title"),
+                "[first_name_ar]" => $customerObj->getVal("first_name_ar"),
+                "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
+            );
             list($done, $reason, $sms_body) = $this->sendSmsToCustomer($template = "news", $lang, $token_arr);
-            if($done)
-            {
-                AfwSession::pushSuccess("تم اعلام العميل بهذا التغيير على التذكرة عبر الرسالة التالية : ".$sms_body);
+            if ($done) {
+                AfwSession::pushSuccess("تم اعلام العميل بهذا التغيير على التذكرة عبر الرسالة التالية : " . $sms_body);
                 $technicals_log .= "<br> > sendSmsToCustomer done with template=$template, lang=$lang, infos=$reason";
-            }
-            else
-            {
+            } else {
                 AfwSession::pushWarning("فشل اعلام العميل بهذا التغيير على التذكرة <!-- reason=$reason -->");
                 $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
             }
-
-            
         }
 
         return $technicals_log;
@@ -2198,18 +2176,18 @@ class Request extends CrmObject
     }
 
 
-    public function sendRequest($lang = "ar", $caller="???", $internal = "N", $objOrgunit = null, $objEmployee = null)
+    public function sendRequest($lang = "ar", $caller = "???", $internal = "N", $objOrgunit = null, $objEmployee = null)
     {
         $old_status = $this->getVal("status_id");
         $old_supervisor_id = $this->getVal("supervisor_id");
         // send the request 
         $status_comment = "تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة";
-        $this->changeStatus("sendRequest-".$caller, self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("sendRequest"), $internal, $silent = false, $question_id = 0, $objOrgunit, $objEmployee); 
+        $this->changeStatus("sendRequest-" . $caller, self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("sendRequest"), $internal, $silent = false, $question_id = 0, $objOrgunit, $objEmployee);
 
 
         $development_mode = AfwSession::devMode();
 
-        
+
 
         // select notification type depending on settings 
         $notify_customer_arr = AfwSession::config("notify_customer", null);
@@ -2272,7 +2250,7 @@ class Request extends CrmObject
             else*/
         $status_comment = "يمكن للعميل اجراء التعديلات على طلبه الآن";
 
-        $this->changeStatus("resetRequestNew-by-customer",self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"), "N", false, 0, null, $employeeObj);
+        $this->changeStatus("resetRequestNew-by-customer", self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"), "N", false, 0, null, $employeeObj);
         return array("", $status_comment);
     }
 
@@ -2282,7 +2260,7 @@ class Request extends CrmObject
     }
 
 
-    public function assignRequest($employeeId, $lang = "ar", $internal = "Y", $caller="???")
+    public function assignRequest($employeeId, $lang = "ar", $internal = "Y", $caller = "???")
     {
         /*
         if ($this->getVal("employee_id") == $employeeId) {
@@ -2302,11 +2280,11 @@ class Request extends CrmObject
         if ($employeeId > 0) {
             $status_comment = date("H:i:s") . ": تم اسناد الطلب [" . $this->id . "] للموظف(ة) $employeeId " . $this->showAttribute("employee_id");
             // if($employeeId == 1790) AfwRunHelper::unSafeDie("case of employeeId = $employeeId");
-            $this->changeStatus("assignRequest-".$caller, self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("assignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
+            $this->changeStatus("assignRequest-" . $caller, self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("assignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         } else {
             // should never happen as above we test  if (!$employeeId) return ....
             $status_comment = "الطلب في انتظار الاسناد ";
-            $this->changeStatus("un-assignRequest-".$caller, self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("unAssignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
+            $this->changeStatus("un-assignRequest-" . $caller, self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("unAssignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         }
         // AfwRunHelper::safeDie($status_comment, "employee_id = ". $employeeId);
         return array("", $status_comment);
@@ -2330,27 +2308,27 @@ class Request extends CrmObject
 
 
 
-    public function startRequest($lang = "ar", $caller="crm-employee")
+    public function startRequest($lang = "ar", $caller = "crm-employee")
     {
         $status_comment = "لقد بدأ العمل على الطلب";
 
         // if level of investigator = starting => internal = W (all responses should be validated by supervisor before show to customer)
-        $this->changeStatus("startRequest-".$caller, self::$REQUEST_STATUS_ONGOING, $status_comment, self::status_action_by_code("startRequest"));
+        $this->changeStatus("startRequest-" . $caller, self::$REQUEST_STATUS_ONGOING, $status_comment, self::status_action_by_code("startRequest"));
         return array("", $status_comment);
     }
 
-    public function doneRequest($lang = "ar", $caller="crm-employee")
+    public function doneRequest($lang = "ar", $caller = "crm-employee")
     {
         $status_comment = "تم عمل المطلوب والرد على العميل";
 
         // if level of investigator = starting => internal = W (all responses should be validated by supervisor before show to customer)
-        $this->changeStatus("doneRequest-".$caller, self::$REQUEST_STATUS_DONE, $status_comment, self::status_action_by_code("doneRequest"));
+        $this->changeStatus("doneRequest-" . $caller, self::$REQUEST_STATUS_DONE, $status_comment, self::status_action_by_code("doneRequest"));
         return array("", $status_comment);
     }
 
-    public function cancelRequest($lang = "ar", $caller="crm-employee")
+    public function cancelRequest($lang = "ar", $caller = "crm-employee")
     {
-        if($caller=="crm-controller-customer") $status_comment = "تم إلغاء التذكرة بناء على طلب العميل";
+        if ($caller == "crm-controller-customer") $status_comment = "تم إلغاء التذكرة بناء على طلب العميل";
         else $status_comment = "تم إلغاء التذكرة من قبل موظف خدمة العملاء";
         $this->changeStatus("cancelRequest-$caller", self::$REQUEST_STATUS_CANCELED, $status_comment, self::status_action_by_code("cancelRequest"));
         return array("", $status_comment);
@@ -2359,7 +2337,7 @@ class Request extends CrmObject
 
 
 
-    public function unCloseRequest($lang = "ar", $caller="crm-employee")
+    public function unCloseRequest($lang = "ar", $caller = "crm-employee")
     {
         $status_comment = "تم الغاء غلق الطلب";
         $resoObj = $this->changeStatus("unCloseRequest-$caller", self::$REQUEST_STATUS_DONE, $status_comment, self::status_action_by_code("unCloseRequest"));
@@ -2380,7 +2358,7 @@ class Request extends CrmObject
     }
 
 
-    public function approveResponse($lang = "ar", $caller="crm-employee")
+    public function approveResponse($lang = "ar", $caller = "crm-employee")
     {
         // عند غلق أي طلب اذا كانت آخر اجابة هي تحت التدقيق يتم تحويلها الى اجابة معتمدة
         $respObj = $this->getLastResponseCanBeApproved();
@@ -2392,7 +2370,7 @@ class Request extends CrmObject
         else return array("لا يوجد اجابة في انتظار الاعتماد", "");
     }
 
-    public function closeRequest($lang = "ar", $caller="crm-employee")
+    public function closeRequest($lang = "ar", $caller = "crm-employee")
     {
         // عند غلق أي طلب اذا كانت آخر اجابة هي تحت التدقيق يتم تحويلها الى اجابة معتمدة
         $respObj = $this->getLastResponseCanBeApproved();
@@ -2405,14 +2383,14 @@ class Request extends CrmObject
         $objOrgunit = null;
         $objme = AfwSession::getUserConnected();
         $objEmployee = ($objme) ? $objme->getEmployee() : null;
-        
-        $resp2Obj = $this->changeStatus("closeRequest-by-$caller",self::$REQUEST_STATUS_CLOSED, $status_comment, self::status_action_by_code("closeRequest"),$internal, $silent, $question_id, $objOrgunit, $objEmployee);
+
+        $resp2Obj = $this->changeStatus("closeRequest-by-$caller", self::$REQUEST_STATUS_CLOSED, $status_comment, self::status_action_by_code("closeRequest"), $internal, $silent, $question_id, $objOrgunit, $objEmployee);
 
 
         return array("", $status_comment);
     }
 
-    public function archiveRequest($lang = "ar", $caller="crm-employee")
+    public function archiveRequest($lang = "ar", $caller = "crm-employee")
     {
         $status_comment = "تم أرشفة الطلب";
         $internal = "Y";
@@ -2421,8 +2399,8 @@ class Request extends CrmObject
         $objOrgunit = null;
         $objme = AfwSession::getUserConnected();
         $objEmployee = ($objme) ? $objme->getEmployee() : null;
-        
-        $resoObj = $this->changeStatus("archiveRequest-by-$caller",self::$REQUEST_STATUS_IGNORED, $status_comment, self::status_action_by_code("archiveRequest"), $internal, $silent, $question_id, $objOrgunit, $objEmployee);
+
+        $resoObj = $this->changeStatus("archiveRequest-by-$caller", self::$REQUEST_STATUS_IGNORED, $status_comment, self::status_action_by_code("archiveRequest"), $internal, $silent, $question_id, $objOrgunit, $objEmployee);
 
 
         return array("", $status_comment);
@@ -2438,7 +2416,7 @@ class Request extends CrmObject
         $objme = AfwSession::getUserConnected();
         $objEmployee = ($objme) ? $objme->getEmployee() : null;
 
-        $this->changeStatus("rejectRequest-byTheEmployee",self::$REQUEST_STATUS_REJECTED, $status_comment, self::status_action_by_code("rejectRequest"),$internal, $silent, $question_id, $objOrgunit, $objEmployee);
+        $this->changeStatus("rejectRequest-byTheEmployee", self::$REQUEST_STATUS_REJECTED, $status_comment, self::status_action_by_code("rejectRequest"), $internal, $silent, $question_id, $objOrgunit, $objEmployee);
         return array("", $status_comment);
     }
 
@@ -2483,9 +2461,9 @@ class Request extends CrmObject
     public static function nbDaysReactionByTicketAverage()
     {
         // average work of customer to complete ticket data
-        $avg_customer_work = round((5 + sin(date("m")))*10)/10;
+        $avg_customer_work = round((5 + sin(date("m"))) * 10) / 10;
         $return = self::nbDaysWorkByTicketAverage() - $avg_customer_work;
-        if($return<0.4) $return = 0.3;
+        if ($return < 0.4) $return = 0.3;
 
         return $return;
     }
@@ -2494,13 +2472,13 @@ class Request extends CrmObject
     public static function nbClosedTicketsWithoutTaqib()
     {
         $server_db_prefix = AfwSession::currentDBPrefix();
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix"."crm.request where status_id in (7) and nb_taqibs = 0");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (7) and nb_taqibs = 0");
     }
 
     public static function nbClosedTicketsWithTaqib()
     {
         $server_db_prefix = AfwSession::currentDBPrefix();
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix"."crm.request where status_id in (7) and nb_taqibs > 0");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (7) and nb_taqibs > 0");
     }
 
     public static function pctClosedTicketsWithoutTaqib()
@@ -2514,19 +2492,19 @@ class Request extends CrmObject
 
     public static function nbDaysWorkByTicketAverage()
     {
-        $date_start = AfwDateHelper::shiftHijriDate('', -354*3); // 3 hijri years
+        $date_start = AfwDateHelper::shiftHijriDate('', -354 * 3); // 3 hijri years
         $server_db_prefix = AfwSession::currentDBPrefix();
-        $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg from $server_db_prefix"."crm.request where request_date > '$date_start'");
+        $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg from $server_db_prefix" . "crm.request where request_date > '$date_start'");
 
         return round($return);
-    }    
+    }
     public static function satisfactionPct()
     {
         $satisfied = Request::aggreg("count(*)", "service_satisfied = 'Y'");
         $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N'");
         $neutral = Request::aggreg("count(*)", "service_satisfied = 'W'");
         $total = $satisfied + $not_satisfied; //  + $neutral
-        $pct = round($satisfied * 1000 / $total)/10;
+        $pct = round($satisfied * 1000 / $total) / 10;
 
         return $pct;
     }
@@ -2553,26 +2531,21 @@ class Request extends CrmObject
     public function executeItemsMethod($itemsMethod)
     {
         if ($itemsMethod) {
-            if(!isset($this->itemsMethodExec[$itemsMethod])) 
-            {
+            if (!isset($this->itemsMethodExec[$itemsMethod])) {
                 $itemsList = $this->$itemsMethod();
                 if (!$itemsList) {
                     $itemsList = array();
                 }
-                $this->itemsMethodExec[$itemsMethod] = $itemsList;                
-            }            
-                    
-        } 
-        else 
-        {
+                $this->itemsMethodExec[$itemsMethod] = $itemsList;
+            }
+        } else {
             $itemsList = array();
             $itemsList["none"] = array('ar' => "none", 'en' => "none");
             $this->itemsMethodExec[$itemsMethod] = $itemsList;
         }
-        
-        
-        return $this->itemsMethodExec[$itemsMethod];
 
+
+        return $this->itemsMethodExec[$itemsMethod];
     }
 
     protected function getPublicMethods()
@@ -2596,8 +2569,7 @@ class Request extends CrmObject
                     "BF-ID" => "",
                     "HZM-SIZE" => 12,
                 );*/
-                if($this->isClosed())
-                {
+                if ($this->isClosed()) {
                     $color = "red";
                     $title_ar = "الربط مع منصة استبيان";
                     $pbms["xcc13A"] = array(
@@ -2619,10 +2591,7 @@ class Request extends CrmObject
                         "BF-ID" => "",
                         "HZM-SIZE" => 12,
                     );
-
-                    
                 }
-                
             }
 
 
@@ -2659,26 +2628,21 @@ class Request extends CrmObject
             $method_not_allowed_reason = array();
             $method_not_allowed_reason[] = "current_status : $curr_status_label($curr_status) => p$curr_status_parent ";
 
-            list($method_allowed, $method_na_reason) = AfwDynamicPublicMethodHelper::checkMethodAllowed($methodProps, $methodName0, $this);                
-            if(!$method_allowed) $method_not_allowed_reason[] = "$methodName0 is not allowed ".$method_na_reason;
+            list($method_allowed, $method_na_reason) = AfwDynamicPublicMethodHelper::checkMethodAllowed($methodProps, $methodName0, $this);
+            if (!$method_allowed) $method_not_allowed_reason[] = "$methodName0 is not allowed " . $method_na_reason;
             else $method_not_allowed_reason[] = "$methodName0 is allowed";
 
             $log = implode(" -> ", $method_not_allowed_reason);
-            if ($method_allowed) 
-            {                
+            if ($method_allowed) {
                 $pbms = AfwDynamicPublicMethodHelper::splitMethodToMethodItems($pbms, self::$PUB_METHODS[$methodName0], $methodName0, $this, $log);
-            }
-            else
-            {
-                
+            } else {
             }
 
             $log_arr[] = $log;
-            
         }
-        
+
         // die("We are upgrading the system for you ..., please wait.<br>\nSTATUS_MAP LOG".var_export($log_arr,true)." pbms=".var_export($pbms,true));
-        
+
         return $pbms;
     }
 
@@ -2747,21 +2711,16 @@ class Request extends CrmObject
         return in_array($attribute, $custAttr);
     }
 
-    public function linkWithSurveyPlateform($lang="ar")
+    public function linkWithSurveyPlateform($lang = "ar")
     {
         $error = "";
         $return = "";
-        try
-        {
+        try {
             $return = CrmLimesurvey::surveyClosedTicket($this, $lang);
-        }
-        catch(Exception $e)
-        {
-            $error = "Exception : ".$e->getFile()."::".$e->getLine()." : message : ".$e->getMessage()." Trace : ".$e->getTraceAsString();
-        }
-        catch(Error $e)
-        {
-            $error = "Error     : ".$e->getFile()."::".$e->getLine()." : message : ".$e->getMessage()." Trace : ".$e->getTraceAsString();
+        } catch (Exception $e) {
+            $error = "Exception : " . $e->getFile() . "::" . $e->getLine() . " : message : " . $e->getMessage() . " Trace : " . $e->getTraceAsString();
+        } catch (Error $e) {
+            $error = "Error     : " . $e->getFile() . "::" . $e->getLine() . " : message : " . $e->getMessage() . " Trace : " . $e->getTraceAsString();
         }
 
         return [$error, $return, ""];
@@ -2864,18 +2823,18 @@ class Request extends CrmObject
         $this->select_visibilite_horizontale_default($dropdown, $selects);
     }
 
-    
 
-    public function calcTip_of_day($what="value")
+
+    public function calcTip_of_day($what = "value")
     {
         $tip_of_day_arr = [];
-        $tip_of_day_arr[] = ["ar"=>"في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en"=>"In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
+        $tip_of_day_arr[] = ["ar" => "في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en" => "In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
         $lang = AfwSession::getSessionVar("current_lang");
-        if(!$lang) $lang = "ar";
+        if (!$lang) $lang = "ar";
         $countTOD = count($tip_of_day_arr);
-        $k = rand(0, $countTOD-1);
+        $k = rand(0, $countTOD - 1);
         $tip_of_day = $tip_of_day_arr[$k][$lang];
-        if(!$tip_of_day) $tip_of_day = " tip_of_day_arr[$k][$lang] from tip_of_day_arr = ".var_export($tip_of_day_arr, true);
+        if (!$tip_of_day) $tip_of_day = " tip_of_day_arr[$k][$lang] from tip_of_day_arr = " . var_export($tip_of_day_arr, true);
         $html = "<div class='tip_of_day'>$tip_of_day</div>";
 
         return $html;
@@ -2884,17 +2843,17 @@ class Request extends CrmObject
 
 
 
-    public function calcMan($what="value", $showOnlyCode=false)
+    public function calcMan($what = "value", $showOnlyCode = false)
     {
         $return = "man";
         $lang = AfwLanguageHelper::getGlobalLanguage();
         $status_id = $this->getVal("status_id");
         $return_arr = [];
         $req_employee_id = $this->getVal("employee_id");
-        $return_arr["man"] = $this->translateOperator("archive",$lang);
+        $return_arr["man"] = $this->translateOperator("archive", $lang);
         $return_arr["empl"] = $this->showAttribute("employee_id");
         $return_arr["sss"] = $this->showAttribute("supervisor_id");
-        $return_arr["cust"] = $this->translate("customer_id",$lang);
+        $return_arr["cust"] = $this->translate("customer_id", $lang);
 
         // NEW -  مسودة طلب جديد  
         if ($status_id == self::$REQUEST_STATUS_DRAFT) $return = "cust";
@@ -2936,107 +2895,89 @@ class Request extends CrmObject
         // IGNORED - طلب تم تجاهله  
         if ($status_id == self::$REQUEST_STATUS_IGNORED) $return = "sss";
 
-        
 
-        if($showOnlyCode) return $return;
+
+        if ($showOnlyCode) return $return;
         else return $return_arr[$return];
     }
 
 
-    public function calcNotifications($what="value")
+    public function calcNotifications($what = "value")
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         $html = "";
         $status_reel_id = self::statusFather(intval($this->getVal("status_id")));
-        if($this->isSent())
-        {
+        if ($this->isSent()) {
             $request_date_h = AfwDateHelper::formatHijriDate($this->getVal("request_date"));
             $request_date = AfwDateHelper::hijriToGreg($this->getVal("request_date"));
-            
+
             $request_time = $this->getVal("request_time");
             $title_new_request_sms = $this->tm("Request received approval notification", $lang);
-            list($new_request_sms, $new_request_sms_subject) = AfwNotificationManager::prepareNotificationBody($this, "new_request", "sms", $lang);        
+            list($new_request_sms, $new_request_sms_subject) = AfwNotificationManager::prepareNotificationBody($this, "new_request", "sms", $lang);
             $html .= "<h1>$title_new_request_sms <div class='simple_datetime'>$request_date هـ $request_time </div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$request_date_h : $new_request_sms_subject : $new_request_sms</p>";
-            
-        }
-        else $html .= "reuqest not yet sent : status_reel_id = $status_reel_id";
+        } else $html .= "reuqest not yet sent : status_reel_id = $status_reel_id";
 
 
-        if($this->isDone())
-        {
-            if(true)
-            {                
+        if ($this->isDone()) {
+            if (true) {
                 $token_arr = array(
                     "[title]" => $this->getVal("request_title"),
                     // "[first_name_ar]" => $custObj->getVal("first_name_ar"),
                     // "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
                 );
-                
+
                 $file_dir_name = dirname(__FILE__);
                 include("$file_dir_name/../tpl/template_sms_news.php");
-                if ($sms_body_arr[$lang]) 
-                {
+                if ($sms_body_arr[$lang]) {
                     $respObj = $this->getLastResponse();
                     $response_id = $respObj->getVal("id");
                     $response_date_h = AfwDateHelper::formatHijriDate($respObj->getVal("response_date"));
                     $response_date = AfwDateHelper::hijriToGreg($respObj->getVal("response_date"));
                     $response_time = $respObj->getVal("response_time");
-                        $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
-                        $title_new_response_sms = $this->tm("New response received notification", $lang);
-                        $html .= "<h1>$title_new_response_sms <div class='simple_datetime'>$response_date هـ $response_time</div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$response_date_h : $sms_body</p><br>";
-                        
+                    $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
+                    $title_new_response_sms = $this->tm("New response received notification", $lang);
+                    $html .= "<h1>$title_new_response_sms <div class='simple_datetime'>$response_date هـ $response_time</div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$response_date_h : $sms_body</p><br>";
                 } else {
-                        
                 }
             }
-            
-        }
-        else $html .= "<!-- request not yet done : status_reel_id = $status_reel_id -->";
+        } else $html .= "<!-- request not yet done : status_reel_id = $status_reel_id -->";
 
 
-        if($this->isClosed())
-        {
+        if ($this->isClosed()) {
             $my_survey_url = $this->mySurveyUrl();
-            if($my_survey_url)
-            {
+            if ($my_survey_url) {
                 $token_arr = array(
                     "[title]" => $this->getVal("request_title"),
                     "[survey_url]" => $my_survey_url,
                     "[type]" => $this->showAttribute("request_type_id", null, true, $lang),
-                    "[code]" => $this->getVal("request_code"), 
+                    "[code]" => $this->getVal("request_code"),
                 );
                 $file_dir_name = dirname(__FILE__);
                 include("$file_dir_name/../tpl/template_sms_survey.php");
-                if ($sms_body_arr[$lang]) 
-                {
+                if ($sms_body_arr[$lang]) {
                     // $respObj = $this->getLastResponse();
                     // $response_id = $respObj->getVal("id");
                     // $response_date_h = AfwDateHelper::formatHijriDate($respObj->getVal("response_date"));
-                        $status_date = AfwDateHelper::hijriToGreg($this->getVal("status_date"));
-                        $status_date_h = AfwDateHelper::formatHijriDate($this->getVal("status_date"));
-                        $status_time = $this->getVal("status_time");
-                        $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
-                        $title_notif = $this->tm("survey participation notification", $lang);
-                        $html .= "  <h1>$title_notif 
+                    $status_date = AfwDateHelper::hijriToGreg($this->getVal("status_date"));
+                    $status_date_h = AfwDateHelper::formatHijriDate($this->getVal("status_date"));
+                    $status_time = $this->getVal("status_time");
+                    $sms_body = $this->decodeTpl($sms_body_arr[$lang], array(), $lang, $token_arr);
+                    $title_notif = $this->tm("survey participation notification", $lang);
+                    $html .= "  <h1>$title_notif 
                                            <div class='simple_datetime'>$status_date هـ $status_time</div>
                                            <div class=\"sms-notif\">&nbsp;</div>
                                     </h1>
                                     <p class='sms notification'>$status_date_h : $sms_body</p>
                                     <br>";
-                        
                 } else {
-                        
                 }
             }
-            
-        }
-        else $html .= "<!-- request not yet closed : status_reel_id = $status_reel_id -->";
+        } else $html .= "<!-- request not yet closed : status_reel_id = $status_reel_id -->";
 
         return $html;
-        
     }
 
-    public function calcResponse_all($what="value")
+    public function calcResponse_all($what = "value")
     {
         $responseList = $this->get("responseList");
         //if(count($responseList)>0) die(var_export($responseList,true));
@@ -3067,21 +3008,17 @@ class Request extends CrmObject
 
     public function calcSurvey_icon()
     {
-        
+
         if ($this->sureIs("survey_sent")) {
             $url = $this->mySurveyUrl();
-            if ($this->sureIs("survey_opened")) 
-            {
+            if ($this->sureIs("survey_opened")) {
                 $label = "تمت المشاركة في الاستبانة";
                 $icon = "survey";
-            }                
-            else 
-            {
+            } else {
                 $label = "تم فقط ارسال الاستبانة";
                 $icon = "survey-not-opened";
             }
             return "<a target='_crm_survey' href='$url'><img lbl='no-ajax' src='../lib/images/$icon.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='$label' data-original-title='$label' class='red-tooltip'></a>";
-                
         } else {
             return "";
         }
@@ -3207,19 +3144,19 @@ class Request extends CrmObject
     {
         return date("Y-m-d");
     }
-    
+
 
     public function calcDate_start_stats()
     {
         $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
-        if(is_integer($period) and $period>0) return AfwDateHelper::shiftHijriDate("", -$period);
+        if (is_integer($period) and $period > 0) return AfwDateHelper::shiftHijriDate("", -$period);
         else return AfwDateHelper::shiftHijriDate("", -90);
     }
 
     public function calcDate_start_stats_greg()
     {
         $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
-        if(is_integer($period) and $period>0) return AfwDateHelper::shiftGregDate("", -$period);
+        if (is_integer($period) and $period > 0) return AfwDateHelper::shiftGregDate("", -$period);
         else return AfwDateHelper::shiftHijriDate("", -90);
     }
 
@@ -3233,7 +3170,7 @@ class Request extends CrmObject
         return AfwDateHelper::shiftGregDate("", -1);
     }
 
-    
+
 
     public function calcRequest_done()
     {
@@ -3254,14 +3191,12 @@ class Request extends CrmObject
             $return = AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $assign_hdate, $assign_time, $round);
             // return "$return = h-now() - (assign = $assign_hdate $assign_time)";
             return $return;
-            
         } else {
             $request_hdate = $this->getVal("request_date");
             $request_time = $this->getVal("request_time");
             $return = AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $request_hdate, $request_time, $round);
             // return "$return = h-now() - (requestdatetime = $request_hdate $request_time)";
             return $return;
-            
         }
     }
 
@@ -3272,19 +3207,19 @@ class Request extends CrmObject
         return CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
     }
 
-    public function calcRequest_late($what="value")
+    public function calcRequest_late($what = "value")
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         if ($this->isExecuted()) $return = 0;
         else $return = ($this->executionDelay() > self::getLatePeriod()) ? 1 : 0;
 
-        return ($what=="value") ? $return : self::name_of_boolean($return, $lang);
+        return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
     }
 
     public function calcDays_delay()
     {
         $return = $this->executionDelay();
-        if($return <= self::getLatePeriod()) return 0;
+        if ($return <= self::getLatePeriod()) return 0;
         else return $return;
     }
 
@@ -3423,7 +3358,7 @@ class Request extends CrmObject
     }
 
 
-    public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false)
+    public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent = false)
     {
         $customerObjme = $this->hetCustomer();
         if ($customerObjme) {
@@ -3566,7 +3501,7 @@ class Request extends CrmObject
 
     public static function silentAssignSupervisorForNonAssigned($lang = "ar", $limit = "200")
     {
-        return self::assignSupervisorForNonAssigned($reset = true, $silent = true, $lang, $limit, $jobContext="silentAssignSupervisorForNonAssigned");
+        return self::assignSupervisorForNonAssigned($reset = true, $silent = true, $lang, $limit, $jobContext = "silentAssignSupervisorForNonAssigned");
     }
 
     public static function silentCloseOldDoneRequests($lang = "ar", $limit = "200")
@@ -3576,7 +3511,7 @@ class Request extends CrmObject
 
     public static function silentArchiveOldRequests($lang = "ar", $limit = "200")
     {
-        return self::archiveOldRequests($silent = true, $lang, $limit, $jobContext="silentArchiveOldRequests");
+        return self::archiveOldRequests($silent = true, $lang, $limit, $jobContext = "silentArchiveOldRequests");
     }
 
     public static function silentRestoreLostRequests($lang = "ar", $limit = "100")
@@ -3607,7 +3542,7 @@ class Request extends CrmObject
          */
 
         foreach ($reqList as $reqItem) {
-            list($err, $info) = $reqItem->sendRequest($lang,"restoreLostRequests");
+            list($err, $info) = $reqItem->sendRequest($lang, "restoreLostRequests");
 
             if ($err) $errors_arr[] = $err;
             if ($info) $infos_arr[] = $info;
@@ -3680,21 +3615,18 @@ class Request extends CrmObject
         $errors_arr = array();
         $infos_arr = array();
 
-        foreach ($reqList as $reqItem) 
-        {
+        foreach ($reqList as $reqItem) {
             $lastResponseId = $reqItem->getVal("last_response_id");
             /**
              * @var Response $lastResponse
              */
             $lastResponse = $reqItem->het("last_response_id");
-            if($lastResponse) 
-            {
+            if ($lastResponse) {
                 $lastResponse->calcNewStatusNeeded();
                 $lastResponse->commit();
-                $newstatus = $lastResponse->showAttribute("new_status_id",null,true,$lang);
-                $infos_arr[] = "الرد المسلسل ب $lastResponseId تم تعديل حالته الجديدة إلى $newstatus";            
-            }
-            else $errors_arr[] = "الرد المسلسل ب $lastResponseId غير موجود";            
+                $newstatus = $lastResponse->showAttribute("new_status_id", null, true, $lang);
+                $infos_arr[] = "الرد المسلسل ب $lastResponseId تم تعديل حالته الجديدة إلى $newstatus";
+            } else $errors_arr[] = "الرد المسلسل ب $lastResponseId غير موجود";
         }
 
         $nb_errs = count($errors_arr);
@@ -3714,7 +3646,7 @@ class Request extends CrmObject
 
 
 
-    public static function archiveOldRequests($silent = false, $lang = "ar", $limit = "200", $jobContext=null)
+    public static function archiveOldRequests($silent = false, $lang = "ar", $limit = "200", $jobContext = null)
     {
         $obj = new Request();
 
@@ -3723,13 +3655,11 @@ class Request extends CrmObject
         $perf_stats_days = self::getGlobalCRMCenter()->getVal("perf_stats_days");
         $old_request_date = AfwDateHelper::shiftHijriDate("", -$perf_stats_days);
         $finished_or_ongoing = explode(",", self::$REQUEST_STATUSES_FINISHED);
-        if(false)
-        {
+        if (false) {
             $finished_or_ongoing[] = self::$REQUEST_STATUS_ONGOING;
             $finished_or_ongoing[] = self::$REQUEST_STATUS_ASSIGNED;
             $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_INFO;
             $finished_or_ongoing[] = self::$REQUEST_STATUS_MISSED_FILES;
-    
         }
         $obj->selectNotIn("status_id", $finished_or_ongoing);
         $obj->where("request_date <= '$old_request_date'");
@@ -3744,7 +3674,7 @@ class Request extends CrmObject
 
         foreach ($reqList as $reqId => $reqItem) {
             $doing++;
-            if($jobContext) AfwBatch::print_comment("----------------------- JOB archiveOldRequests Context : ".$jobContext." For Request ID = $reqId ($doing / $total) -----------------------");
+            if ($jobContext) AfwBatch::print_comment("----------------------- JOB archiveOldRequests Context : " . $jobContext . " For Request ID = $reqId ($doing / $total) -----------------------");
             list($err, $info) = $reqItem->archiveRequest($lang, "archiveOldRequests");
 
             if ($err) $errors_arr[] = $err;
@@ -3783,7 +3713,7 @@ class Request extends CrmObject
         $infos_arr = array();
 
         foreach ($reqList as $reqItem) {
-            list($err, $info) = $reqItem->closeRequest($lang, $caller="closeOldDoneRequests");
+            list($err, $info) = $reqItem->closeRequest($lang, $caller = "closeOldDoneRequests");
 
             if ($err) $errors_arr[] = $err;
             if ($info) $infos_arr[] = $info;
@@ -3816,7 +3746,7 @@ class Request extends CrmObject
 
         $obj->setForce("employee_id", 0);
         $obj->setForce("status_comment", "assignInvestigatorForNonAssigned-doing-reset");
-        $obj->where("me.orgunit_id > 0 and ((me.employee_id > 0 and me.employee_id not in (select employee_id from " . $server_db_prefix . "crm.crm_employee ce where ce.orgunit_id = me.orgunit_id and ce.active='Y')) or me.employee_id is null) and status_id not in (".self::$REQUEST_STATUSES_FINISHED.")");
+        $obj->where("me.orgunit_id > 0 and ((me.employee_id > 0 and me.employee_id not in (select employee_id from " . $server_db_prefix . "crm.crm_employee ce where ce.orgunit_id = me.orgunit_id and ce.active='Y')) or me.employee_id is null) and status_id not in (" . self::$REQUEST_STATUSES_FINISHED . ")");
         $obj->update(false);
 
 
@@ -3850,7 +3780,7 @@ class Request extends CrmObject
     }
 
 
-    public static function assignSupervisorForNonAssigned($reset = false, $silent = false, $lang = "ar", $limit = "200", $jobContext=null)
+    public static function assignSupervisorForNonAssigned($reset = false, $silent = false, $lang = "ar", $limit = "200", $jobContext = null)
     {
         $errors_arr = array();
         $infos_arr = array();
@@ -3860,36 +3790,34 @@ class Request extends CrmObject
         $nb_done = 0;
 
         $obj = new Request();
-        if($jobContext) AfwBatch::print_comment("----------------------- JOB Context : ".$jobContext." -----------------------");
+        if ($jobContext) AfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " -----------------------");
         if ($reset) {
             $obj->setForce("supervisor_id", 0);
             $obj->setForce("employee_id", 0);
             $obj->setForce("status_comment", "assignSupervisorForNonAssigned-with-reset");
-            $obj->where("employee_id = 0 and status_id not in (".self::$REQUEST_STATUSES_NO_NEED_ASSIGN.")"); //  or (supervisor_id = 1917 and employee_id = 1791) //  or (orgunit_id = " . self::$CRM_CENTER_ID . ")
+            $obj->where("employee_id = 0 and status_id not in (" . self::$REQUEST_STATUSES_NO_NEED_ASSIGN . ")"); //  or (supervisor_id = 1917 and employee_id = 1791) //  or (orgunit_id = " . self::$CRM_CENTER_ID . ")
             $nb_rows_rest = $obj->update(false);
             $warn_arr[] = "$nb_rows_rest request(s) assignment has been reset";
-        }
-        elseif($jobContext) AfwBatch::print_error("$jobContext >> assignSupervisorForNonAssigned->reset should be true for the moment");
+        } elseif ($jobContext) AfwBatch::print_error("$jobContext >> assignSupervisorForNonAssigned->reset should be true for the moment");
 
         $silent = false;
 
         $obj->select("supervisor_id", 0);
-        $obj->where("status_id not in (".self::$REQUEST_STATUSES_NO_NEED_ASSIGN.")");
+        $obj->where("status_id not in (" . self::$REQUEST_STATUSES_NO_NEED_ASSIGN . ")");
 
         $reqList = $obj->loadMany($limit);
         $total = count($reqList);
         $doing = 0;
-        foreach ($reqList as $reqId => $reqItem) 
-        {
+        foreach ($reqList as $reqId => $reqItem) {
             $doing++;
-            if($jobContext) AfwBatch::print_comment("----------------------- JOB Context : ".$jobContext." assignBestAvailableSupervisor For Request ID = $reqId ($doing / $total) -----------------------");
+            if ($jobContext) AfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " assignBestAvailableSupervisor For Request ID = $reqId ($doing / $total) -----------------------");
             list($err, $info) = $reqItem->assignBestAvailableSupervisor($lang, $pbm = true, $commit = true, $re_distribution = false);
 
-            if ($err) { 
-                $tech_arr[] = "Error : ".$err; $nb_errs++; 
-                if($jobContext) AfwBatch::print_error(">> $jobContext >> Error : .$err");
-            }
-            else $nb_done++; 
+            if ($err) {
+                $tech_arr[] = "Error : " . $err;
+                $nb_errs++;
+                if ($jobContext) AfwBatch::print_error(">> $jobContext >> Error : .$err");
+            } else $nb_done++;
             if ($info) $tech_arr[] = $info;
         }
 
@@ -4038,7 +3966,7 @@ class Request extends CrmObject
     public function calcUl_cl_files()
     {
         $pfiles_arr = $this->getFiles();
-        if(count($pfiles_arr)==0) return "";
+        if (count($pfiles_arr) == 0) return "";
         $html = "<ul class=\"smooth-dots\">";
         foreach ($pfiles_arr as $pfileObj) {
             if ($pfileObj) {
@@ -4067,8 +3995,8 @@ class Request extends CrmObject
 
     public static function inboxSqlCond($role, $employee_id, $prefix = "me.")
     {
-        if ($role == "supervisor")   return $prefix."supervisor_id='$employee_id' and ".$prefix."status_id in (".self::$REQUEST_STATUSES_ONGOING_SUPERVISOR.")";
-        if ($role == "investigator") return $prefix."employee_id='$employee_id' and ".$prefix."status_id in (".self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR.") ";
+        if ($role == "supervisor")   return $prefix . "supervisor_id='$employee_id' and " . $prefix . "status_id in (" . self::$REQUEST_STATUSES_ONGOING_SUPERVISOR . ")";
+        if ($role == "investigator") return $prefix . "employee_id='$employee_id' and " . $prefix . "status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ") ";
         throw new AfwRuntimeException("inboxSqlCond : case not implemented : role=$role, employee$employee_id");
     }
 
@@ -4203,149 +4131,148 @@ class Request extends CrmObject
     public static function status_action_by_code($code)
     {
         $codesArr = self::status_action()["code"];
-        foreach($codesArr as $id => $codeItem)
-        {
-            if($codeItem==$code) return $id;
+        foreach ($codesArr as $id => $codeItem) {
+            if ($codeItem == $code) return $id;
         }
 
         return 0;
     }
-    
+
     public static function status_action()
     {
-            $arr_list_of_status_action = array();
-            
+        $arr_list_of_status_action = array();
 
-             
-            
-            
 
-                    
-            $arr_list_of_status_action["en"][1] = "remove last response";
-            $arr_list_of_status_action["ar"][1] = "حذف آخر رد";
-            $arr_list_of_status_action["code"][1] = "removeLastResponse";
 
-            $arr_list_of_status_action["en"][2] = "Request send";
-            $arr_list_of_status_action["ar"][2] = "إرسال الطلب";
-            $arr_list_of_status_action["code"][2] = "sendRequest";
 
-            $arr_list_of_status_action  ["en"][3] = "Request reset";
-            $arr_list_of_status_action  ["ar"][3] = "تصفير الطلب";
-            $arr_list_of_status_action["code"][3] = "resetRequestNew";
 
-            $arr_list_of_status_action  ["en"][4] = "assign Request";
-            $arr_list_of_status_action  ["ar"][4] = "اسناد الطلب";
-            $arr_list_of_status_action["code"][4] = "assignRequest";
 
-            $arr_list_of_status_action  ["en"][5] = "unAssign Request";
-            $arr_list_of_status_action  ["ar"][5] = "الغاء اسناد الطلب";
-            $arr_list_of_status_action["code"][5] = "unAssignRequest";
 
-            $arr_list_of_status_action  ["en"][6] = "redirect Request";
-            $arr_list_of_status_action  ["ar"][6] = "إعادة تحويل الطلب";
-            $arr_list_of_status_action["code"][6] = "redirectRequest";
+        $arr_list_of_status_action["en"][1] = "remove last response";
+        $arr_list_of_status_action["ar"][1] = "حذف آخر رد";
+        $arr_list_of_status_action["code"][1] = "removeLastResponse";
 
-            $arr_list_of_status_action  ["en"][7] = "return Request To Investigator";
-            $arr_list_of_status_action  ["ar"][7] = "إعادة الطلب للمنسق";
-            $arr_list_of_status_action["code"][7] = "returnRequestToInvestigator";
+        $arr_list_of_status_action["en"][2] = "Request send";
+        $arr_list_of_status_action["ar"][2] = "إرسال الطلب";
+        $arr_list_of_status_action["code"][2] = "sendRequest";
 
-            $arr_list_of_status_action  ["en"][8] = "start Request";
-            $arr_list_of_status_action  ["ar"][8] = "بدأ العمل على الطلب";
-            $arr_list_of_status_action["code"][8] = "startRequest";
+        $arr_list_of_status_action["en"][3] = "Request reset";
+        $arr_list_of_status_action["ar"][3] = "تصفير الطلب";
+        $arr_list_of_status_action["code"][3] = "resetRequestNew";
 
-            $arr_list_of_status_action  ["en"][9] = "done Request";
-            $arr_list_of_status_action  ["ar"][9] = "تم الرد على العميل";
-            $arr_list_of_status_action["code"][9] = "doneRequest";
+        $arr_list_of_status_action["en"][4] = "assign Request";
+        $arr_list_of_status_action["ar"][4] = "اسناد الطلب";
+        $arr_list_of_status_action["code"][4] = "assignRequest";
 
-            $arr_list_of_status_action  ["en"][10] = "cancel Request";
-            $arr_list_of_status_action  ["ar"][10] = "العميل ألغى الطلب";
-            $arr_list_of_status_action["code"][10] = "cancelRequest";
+        $arr_list_of_status_action["en"][5] = "unAssign Request";
+        $arr_list_of_status_action["ar"][5] = "الغاء اسناد الطلب";
+        $arr_list_of_status_action["code"][5] = "unAssignRequest";
 
-            $arr_list_of_status_action  ["en"][11] = "unClose Request";
-            $arr_list_of_status_action  ["ar"][11] = "الغاء غلق الطلب";
-            $arr_list_of_status_action["code"][11] = "unCloseRequest";
+        $arr_list_of_status_action["en"][6] = "redirect Request";
+        $arr_list_of_status_action["ar"][6] = "إعادة تحويل الطلب";
+        $arr_list_of_status_action["code"][6] = "redirectRequest";
 
-            $arr_list_of_status_action  ["en"][12] = "close Request";
-            $arr_list_of_status_action  ["ar"][12] = "تم غلق الطلب";
-            $arr_list_of_status_action["code"][12] = "closeRequest";
+        $arr_list_of_status_action["en"][7] = "return Request To Investigator";
+        $arr_list_of_status_action["ar"][7] = "إعادة الطلب للمنسق";
+        $arr_list_of_status_action["code"][7] = "returnRequestToInvestigator";
 
-            $arr_list_of_status_action  ["en"][13] = "reject Request";
-            $arr_list_of_status_action  ["ar"][13] = "تم رفض الطلب";
-            $arr_list_of_status_action["code"][13] = "rejectRequest";
+        $arr_list_of_status_action["en"][8] = "start Request";
+        $arr_list_of_status_action["ar"][8] = "بدأ العمل على الطلب";
+        $arr_list_of_status_action["code"][8] = "startRequest";
 
-            $arr_list_of_status_action  ["en"][14] = "files Uploaded";
-            $arr_list_of_status_action  ["ar"][14] = "تم رفع المرفقات";
-            $arr_list_of_status_action["code"][14] = "filesUploaded";
+        $arr_list_of_status_action["en"][9] = "done Request";
+        $arr_list_of_status_action["ar"][9] = "تم الرد على العميل";
+        $arr_list_of_status_action["code"][9] = "doneRequest";
 
-            $arr_list_of_status_action  ["en"][15] = "data Completed";
-            $arr_list_of_status_action  ["ar"][15] = "تم استكمال البيانات";
-            $arr_list_of_status_action["code"][15] = "dataCompleted";
+        $arr_list_of_status_action["en"][10] = "cancel Request";
+        $arr_list_of_status_action["ar"][10] = "العميل ألغى الطلب";
+        $arr_list_of_status_action["code"][10] = "cancelRequest";
 
-            $arr_list_of_status_action  ["en"][16] = "response Created Status Updated";
-            $arr_list_of_status_action  ["ar"][16] = "تمت كتابة رد مع تغيير الحالة";
-            $arr_list_of_status_action["code"][16] = "responseCreatedStatusUpdated";
+        $arr_list_of_status_action["en"][11] = "unClose Request";
+        $arr_list_of_status_action["ar"][11] = "الغاء غلق الطلب";
+        $arr_list_of_status_action["code"][11] = "unCloseRequest";
 
-            $arr_list_of_status_action  ["en"][17] = "request archived";
-            $arr_list_of_status_action  ["ar"][17] = "تمت أرشفة الطلب";
-            $arr_list_of_status_action["code"][17] = "archiveRequest";
+        $arr_list_of_status_action["en"][12] = "close Request";
+        $arr_list_of_status_action["ar"][12] = "تم غلق الطلب";
+        $arr_list_of_status_action["code"][12] = "closeRequest";
 
-            $arr_list_of_status_action  ["en"][18] = "customer responded";
-            $arr_list_of_status_action  ["ar"][18] = "تم الرد من قبل العميل";
-            $arr_list_of_status_action["code"][18] = "customerResponded";
+        $arr_list_of_status_action["en"][13] = "reject Request";
+        $arr_list_of_status_action["ar"][13] = "تم رفض الطلب";
+        $arr_list_of_status_action["code"][13] = "rejectRequest";
 
-            $arr_list_of_status_action  ["en"][19] = "response approved by supervisor";
-            $arr_list_of_status_action  ["ar"][19] = "تمت اعتماد الرد من قبل المشرف";
-            $arr_list_of_status_action["code"][19] = "responseApprovedBySupervisor";
+        $arr_list_of_status_action["en"][14] = "files Uploaded";
+        $arr_list_of_status_action["ar"][14] = "تم رفع المرفقات";
+        $arr_list_of_status_action["code"][14] = "filesUploaded";
 
-            
+        $arr_list_of_status_action["en"][15] = "data Completed";
+        $arr_list_of_status_action["ar"][15] = "تم استكمال البيانات";
+        $arr_list_of_status_action["code"][15] = "dataCompleted";
 
-            
-            return $arr_list_of_status_action;
-    } 
+        $arr_list_of_status_action["en"][16] = "response Created Status Updated";
+        $arr_list_of_status_action["ar"][16] = "تمت كتابة رد مع تغيير الحالة";
+        $arr_list_of_status_action["code"][16] = "responseCreatedStatusUpdated";
+
+        $arr_list_of_status_action["en"][17] = "request archived";
+        $arr_list_of_status_action["ar"][17] = "تمت أرشفة الطلب";
+        $arr_list_of_status_action["code"][17] = "archiveRequest";
+
+        $arr_list_of_status_action["en"][18] = "customer responded";
+        $arr_list_of_status_action["ar"][18] = "تم الرد من قبل العميل";
+        $arr_list_of_status_action["code"][18] = "customerResponded";
+
+        $arr_list_of_status_action["en"][19] = "response approved by supervisor";
+        $arr_list_of_status_action["ar"][19] = "تمت اعتماد الرد من قبل المشرف";
+        $arr_list_of_status_action["code"][19] = "responseApprovedBySupervisor";
+
+
+
+
+        return $arr_list_of_status_action;
+    }
 
     public function getAttributeLabel($attribute, $lang = "ar", $short = false)
     {
-            if ($attribute == "ref_num") {
-                    // $customerTypeObj = $this->hetType();
-                    if (!$lang) $lang = "ar";
-                    $custTypeLogic = AfwSession::config("cust_type_logic", []);                
-                    // $customerTypeId = $customerTypeObj->id;            
-                    $customerTypeId = $this->getVal("customer_type_id");
-                    $return = $custTypeLogic[$customerTypeId]["ref_num"]["title_$lang"];
-                    // $customerType is no more object
-                    // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("ref_$lang");
-                    if (!$return) $return = "<!-- unnkown ref_num label for customer type $customerTypeId for lang $lang -->";
+        if ($attribute == "ref_num") {
+            // $customerTypeObj = $this->hetType();
+            if (!$lang) $lang = "ar";
+            $custTypeLogic = AfwSession::config("cust_type_logic", []);
+            // $customerTypeId = $customerTypeObj->id;            
+            $customerTypeId = $this->getVal("customer_type_id");
+            $return = $custTypeLogic[$customerTypeId]["ref_num"]["title_$lang"];
+            // $customerType is no more object
+            // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("ref_$lang");
+            if (!$return) $return = "<!-- unnkown ref_num label for customer type $customerTypeId for lang $lang -->";
 
-                    return $return;
-            }
+            return $return;
+        }
 
 
-            if ($attribute == "org_name") {
-                    // $customerTypeObj = $this->hetType();
-                    if (!$lang) $lang = "ar";
-                    $custTypeLogic = AfwSession::config("cust_type_logic", []);                
-                    // $customerTypeId = $customerTypeObj->id;
-                    $customerTypeId = $this->getVal("customer_type_id");
-                    $return = $custTypeLogic[$customerTypeId]["org_name"]["title_$lang"];
-                    // $customerType is no more object
-                    // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("org_name_$lang");
-                    if (!$return) $return = "<!-- unknown org_name label for customer type $customerTypeId for lang $lang -->";
+        if ($attribute == "org_name") {
+            // $customerTypeObj = $this->hetType();
+            if (!$lang) $lang = "ar";
+            $custTypeLogic = AfwSession::config("cust_type_logic", []);
+            // $customerTypeId = $customerTypeObj->id;
+            $customerTypeId = $this->getVal("customer_type_id");
+            $return = $custTypeLogic[$customerTypeId]["org_name"]["title_$lang"];
+            // $customerType is no more object
+            // if (!$return and $customerTypeObj) $return = $customerTypeObj->getVal("org_name_$lang");
+            if (!$return) $return = "<!-- unknown org_name label for customer type $customerTypeId for lang $lang -->";
 
-                    return $return;
-            }
+            return $return;
+        }
 
-            return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+        return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
     }
 
     public function calcRequest_html($what = "value")
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         $request_late = $this->calc("request_late");
-        if($request_late>=2) $request_late_color = "red";
-        elseif($request_late>=1) $request_late_color = "orange";
+        if ($request_late >= 2) $request_late_color = "red";
+        elseif ($request_late >= 1) $request_late_color = "orange";
         else $request_late_color = "good";
         $request_typeObj = $this->het("request_type_id");
-        if($request_typeObj) $request_type_code = $request_typeObj->getVal("lookup_code");
+        if ($request_typeObj) $request_type_code = $request_typeObj->getVal("lookup_code");
         else $request_type_code = "unknown";
         $status_id = $this->getVal("status_id");
         $request_title = $this->getVal("request_title");
@@ -4363,13 +4290,24 @@ class Request extends CrmObject
 
         $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
         $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class'>&nbsp;</p><p class='help p-helper'>$help</p>" : "";
-        
+
         $html = "<div class='security $confidential_class'>";
         $html .= "<div class='request-desc $request_late_color'>";
         $html .= "<h3 class='request-type $request_type_code'>$request_type $intitled</h3>";
         $html .= "<h1 class='request-title ST$status_id $status_class'>$request_title</h1>";
         $html .= "<h2 class='request-text $status_class'>$request_text</h2>";
         $html .= "<p class='request-status $status_class $resolved_class'>$request_status_title : $request_status</p>";
+        $html_rti = "";
+        $respObj = $this->getLastResponse();
+        if ($respObj and $respObj->isReturnToInvestigator()) {
+            $response_returned = $respObj->getVal("response_text");
+            $intro = $respObj->tm("The supervisor has returnted the request to you with this comment");
+            $html_rti .= "<div class='request-desc red'>";
+            $html_rti .= "<p class='request-status returned opened waiting'>$intro : $response_returned</p>";
+            $html_rti .= "</div>";
+        }
+
+        $html .= $html_rti;
         $html .= "</div>";
         $html .= "</div>";
         $html .= $confidential_button;
@@ -4385,31 +4323,27 @@ class Request extends CrmObject
     }
 
 
-    public function colorOf($attribute, $attribute_value) {
-                if($attribute=="who_enum") {
-                        if($attribute_value==1) return "black";
-                        if($attribute_value==2) return "green";
-                        if($attribute_value==3) return "silver";
-                        if($attribute_value==4) return "gold";
+    public function colorOf($attribute, $attribute_value)
+    {
+        if ($attribute == "who_enum") {
+            if ($attribute_value == 1) return "black";
+            if ($attribute_value == 2) return "green";
+            if ($attribute_value == 3) return "silver";
+            if ($attribute_value == 4) return "gold";
+        }
 
-                }
-
-        return "black";        
+        return "black";
     }
 
     public function statsColCategory($col, $stats_code)
     {
-            if(($stats_code=='gs006') or ($stats_code=='gs005'))
-            {
-                    if (AfwStringHelper::stringStartsWith($col, "cross_col_")) {
-                            $status_id = substr($col,10);
-                            $color = RequestStatus::colorOfStatus($status_id);
-                            return "stats_cross_col stats_$color";
-                    }
-                    else return 'stats_cross_row';
-            }
-            return parent::statsColCategory($col, $stats_code);
+        if (($stats_code == 'gs006') or ($stats_code == 'gs005')) {
+            if (AfwStringHelper::stringStartsWith($col, "cross_col_")) {
+                $status_id = substr($col, 10);
+                $color = RequestStatus::colorOfStatus($status_id);
+                return "stats_cross_col stats_$color";
+            } else return 'stats_cross_row';
+        }
+        return parent::statsColCategory($col, $stats_code);
     }
-
-
 }

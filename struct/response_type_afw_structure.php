@@ -14,7 +14,6 @@ class CrmResponseTypeAfwStructure
                         $obj->public_display = true;
                         $obj->ENABLE_DISPLAY_MODE_IN_QEDIT = true;
                         
-                        $obj->AUDIT_DATA = true;
                         $obj->ignore_insert_doublon = true;
                         $obj->UNIQUE_KEY = array('lookup_code');
                         $obj->editByStep = false;

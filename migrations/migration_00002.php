@@ -5,6 +5,8 @@ $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 try
 {   
 
+
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response_template add response_type_mfk varchar(255);"); 
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response_type add default_new_status_id int;"); 
 
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request_status add who_enum smallint;"); 

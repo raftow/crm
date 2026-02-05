@@ -8,4 +8,6 @@
 	$trad["response_template"]["body_ar"] = "نص نموذج الإجابة";
 	$trad["response_template"]["internal"] = "رد محجوب على العميل ؟";
 	$trad["response_template"]["new_status"] = "حالة التذكرة الجديدة";
+	$trad["response_template"]["response_type_mfk.short"] = "أنواع الردود";
+	$trad["response_template"]["response_type_mfk"] = "أنواع الردود المناسبة";
 ?>
