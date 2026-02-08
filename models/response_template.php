@@ -56,7 +56,7 @@ class ResponseTemplate extends AFWObject{
                 {
                    if($user_type) $cond_user_type = "user_type_menum like '%,$user_type,%'";
                    else $cond_user_type = "1";
-                   $obj->where("(new_status in (select id from ".$server_db_prefix."crm.request_status where $cond_user_type and response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
+                   $obj->where("(new_status in (select id from ".$server_db_prefix."crm.request_status where active='Y' and $cond_user_type and response_type_mfk like '%,$response_type,%')) or ((new_status is null or new_status = 0) and ($response_type != 7))");
 
                    $obj->where("response_type_mfk like '%,$response_type,%'");
 

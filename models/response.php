@@ -740,4 +740,15 @@ class Response extends CrmObject
                 if ($attribute == "request_text") return true;
                 return false;
         }
+
+        public function afterEditSaveCase()
+        {
+                /**
+                 * @var Request $requestObj
+                 */
+                $requestObj = $this->het("request_id");
+                if ($requestObj and $requestObj->isMine()) return 1;
+
+                return 2;
+        }
 }

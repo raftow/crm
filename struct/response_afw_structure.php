@@ -16,7 +16,12 @@ class CrmResponseAfwStructure
                 $obj->public_display = true;
                 $obj->public_edit = true;
 
-                $obj->after_save_edit = array("class" => 'Request', "attribute" => 'request_id', "currmod" => 'crm', "currstep" => 4);
+				$obj->after_save_edit_cases = array(
+					'case-1' => array("class" => 'Request', "attribute" => 'request_id', "currmod" => 'crm', "currstep" => 2),
+					'case-2' => array("file" => '../crm/workbox.php'),
+                );
+
+
 		} else {
 			ResponseArTranslator::initData();
 			ResponseEnTranslator::initData();
@@ -249,7 +254,7 @@ class CrmResponseAfwStructure
 			'TYPE' => 'FK',
 			'ANSWER' => 'request_status',
 			'ANSMODULE' => 'crm',
-			'WHERE' => "user_type_menum like '%,§user_type§,%' and (response_type_mfk='' or response_type_mfk is null or response_type_mfk like '%,§response_type_id§,%')",
+			'WHERE' => "active='Y' and user_type_menum like '%,§user_type§,%' and (response_type_mfk='' or response_type_mfk is null or response_type_mfk like '%,§response_type_id§,%')",
 			'FGROUP' => 'the_response',
 
 			'RELATION' => 'ManyToOne',

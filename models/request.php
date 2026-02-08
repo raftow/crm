@@ -2808,15 +2808,20 @@ class Request extends CrmObject
             // 3. he is the current investigator of this request   
 
             $employee_allowed_to_see_request_cond =
-                "($iam_general_supervisor>0 or $iam_supervisor>0 or employee_id=$empl_id)";
+                "($iam_general_supervisor>0 -- i am general supervisor
+                   or $iam_supervisor>0 -- i am supervisor
+                   or employee_id=$empl_id -- i am the investigator
+                   )";
 
             // if the user authenticated is a customer
             // he is allowed to see request if owner of this request (requester)    
             $customer_allowed_to_see_request_cond = "customer_id = $cust_id";
-            $this->where("($empl_id>0 and $employee_allowed_to_see_request_cond) or ($cust_id > 0 and $customer_allowed_to_see_request_cond)");
+            $this->where("(($empl_id>0 and $employee_allowed_to_see_request_cond) -- employee allowed to see request 
+                                or ($cust_id > 0 and $customer_allowed_to_see_request_cond) -- i am the customer requester
+                                ) -- VH");
 
             // rafik : users other than super admin 
-            $this->where("request_date >= '$request_date_limit'");
+            $this->where("request_date >= '$request_date_limit'  -- VH");
         }
 
         $selects = array();
@@ -4345,5 +4350,18 @@ class Request extends CrmObject
             } else return 'stats_cross_row';
         }
         return parent::statsColCategory($col, $stats_code);
+    }
+
+
+    public function isMine()
+    {
+            $objme = AfwSession::getUserConnected();
+
+            if ($objme and $objme->isAdmin()) {
+                    return true;
+            } else {
+                    $employee_id = $objme ? $objme->getEmployeeId() : 0;
+                    return ($employee_id and (($employee_id == $this->getVal("employee_id")) or ($employee_id == $this->getVal("supervisor_id"))));
+            }
     }
 }
