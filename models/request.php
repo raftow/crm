@@ -4,6 +4,7 @@
 
 class Request extends CrmObject
 {
+    private $theLastResponse = null;
     public $itemsMethodExec = [];
 
     public function __construct()
@@ -1608,19 +1609,28 @@ class Request extends CrmObject
         return ($respObj->getVal("created_by") == $objme->id);
     }
 
-    public function getLastResponse()
-    {
+
+    private function retrieveLastResponse(){
         $resp = new Response();
         $resp->select("request_id", $this->id);
         $resp->select("active", "Y");
         $respActList = $resp->loadMany(1, "response_date desc, response_time desc");
 
-        $lact = array();
-
         foreach ($respActList as $respActItem) {
             return $respActItem;
         }
+
         return null;
+    }
+
+    public function getLastResponse()
+    {
+        if(!$this->theLastResponse)
+        {
+            $this->theLastResponse = $this->retrieveLastResponse();
+        }
+        
+        return $this->theLastResponse;
     }
 
 
@@ -1762,7 +1772,7 @@ class Request extends CrmObject
         // keep same status
         $new_status_id = $this->getVal("status_id");
 
-        $resoObj = Response::createNewResponse(
+        $this->theLastResponse = Response::createNewResponse(
             $this->getId(),
             AfwDateHelper::currentHijriDate(),
             date("H:i:s"),
@@ -1775,6 +1785,9 @@ class Request extends CrmObject
             $internal = "N",
             $module_id = 0
         );
+
+
+        
 
         AfwSession::pushSuccess($this->tm("Thanks, Your comment is saved.", $lang));
     }
@@ -1884,7 +1897,7 @@ class Request extends CrmObject
             }
             // AfwSession::pushInformation("rafik-debugg : updating status of request to $new_status_id"); 
 
-
+            if($resoObj) $this->theLastResponse = $resoObj;
 
             $this->set("status_id", $new_status_id);
             $this->set("status_action_enum", $status_action_enum);
@@ -2818,10 +2831,10 @@ class Request extends CrmObject
             $customer_allowed_to_see_request_cond = "customer_id = $cust_id";
             $this->where("(($empl_id>0 and $employee_allowed_to_see_request_cond) -- employee allowed to see request 
                                 or ($cust_id > 0 and $customer_allowed_to_see_request_cond) -- i am the customer requester
-                                ) -- VH");
+                                )");
 
             // rafik : users other than super admin 
-            $this->where("request_date >= '$request_date_limit'  -- VH");
+            $this->where("request_date >= '$request_date_limit'");
         }
 
         $selects = array();

@@ -12,6 +12,7 @@ $file_dir_name = dirname(__FILE__);
 class CrmEmployee extends CrmObject
 {
         public static $orgListOfEmployee = [];
+        public static $employeeAdmin = [];
 
         // public static $MY_ATABLE_ID= ??; 
         // 117 CRM_INVESTIGATOR	محقق خدمة العملاء			
@@ -478,25 +479,30 @@ class CrmEmployee extends CrmObject
                 return $supervList;
         }
 
+        public static function getAdminEmployee($employee_id) {
+                if(!self::$employeeAdmin[$employee_id]) {
+                        self::$employeeAdmin[$employee_id] = CrmEmployee::loadByMainIndex(self::$CRM_CENTER_ID, $employee_id);
+                        if(!self::$employeeAdmin[$employee_id]) self::$employeeAdmin[$employee_id] = "not-found";
+                }
+
+                if(self::$employeeAdmin[$employee_id] === "not-found") return null;
+
+                return self::$employeeAdmin[$employee_id];
+        }
+
         public static function isAdmin($employee_id)
         {
-                $obj = new CrmEmployee();
-                $obj->select("admin","Y");
-                $obj->select("employee_id",$employee_id);
-                $obj->load();
-                return $obj->id;
-
+                $obj = self::getAdminEmployee($employee_id);
+                if(!$obj) return false;
+                return $obj->sureIs("admin");
         }
 
 
         public static function isGeneralAdmin($employee_id)
         {
-                $obj = new CrmEmployee();
-                $obj->select("super_admin","Y");
-                $obj->select("employee_id",$employee_id);
-                $obj->load();
-                return $obj->id;
-
+                $obj = self::getAdminEmployee($employee_id);
+                if(!$obj) return false;
+                return $obj->sureIs("super_admin");
         }
 
         public static function getInvestigatorListOfIds($orgunit_id)

@@ -1,5 +1,5 @@
 <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
-        <div class='hzm_label response object_status_[ERROR_STATUS] greentitle'>
+        <div class='hzm_label response object_status_ok greentitle'>
                 <div class="hzm_sub_label response [response_cls]">
                         <div class='response-resume'><i>[response_aut]</i>[OBJECT_NODE_DISPLAY]</div>
                         <div class='crm_label crm_author'>[OBJECT_SHORT_DISPLAY] - <span class='crm_ticket_num response'>[id]</span></div>
@@ -9,10 +9,6 @@
 </div>
 <div class='hzm_minibox_container'>                        
         <div id='response[id]_minibox' class='hzm_wd4 hzm_minibox_body hzm_minibox_response'>           
-                [OBJECT_ERRORS_START]
-                <div class='hzm_error_container'> [OBJECT_ERRORS]            
-                </div>
-                [OBJECT_ERRORS_END]
                 <div id="fg-response_text" class="attrib-response_text form-group width_pct_100">
                         <label for="response_text" class="hzm_label hzm_data_response_text "><b>[response_text_label]</b> 
                         </label>

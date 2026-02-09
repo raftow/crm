@@ -46,6 +46,7 @@ class CrmRequestAfwStructure
 				'request_html' => array(
 					'FGROUP' => 'request_text',  'STEP' => 'all',
 					'SHOW' => true,
+					'NEVER-TOKEN' => true,
 					'READONLY' => true,
 					'EDIT' => true,
 					'NO-LABEL' => true,

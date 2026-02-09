@@ -139,7 +139,7 @@ class CrmResponseTemplateAfwStructure
                         'SHOW' => true,
                         'RETRIEVE' => false,
                         'EDIT' => true,
-                        'QEDIT' => false,
+                        'QEDIT' => true,
                         'SIZE' => 32,
                         'MANDATORY' => false,
                         'UTF8' => false,
