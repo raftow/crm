@@ -4,6 +4,9 @@ if(!class_exists("AfwSession")) die("Denied access");
 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 try
 {   
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add company_id int NULL after orgunit_id;");
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add department_id int NULL after orgunit_id;");
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add division_id int NULL after orgunit_id;");
 
 
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response_template add response_type_mfk varchar(255);"); 

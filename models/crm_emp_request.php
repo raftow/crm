@@ -184,7 +184,7 @@ class CrmEmpRequest extends CrmObject
                                 "COLOR" => $color,
                                 "LABEL_AR" => $title_ar,
                                 "PUBLIC" => true,
-                                "BF-ID" => "",
+                                "STEP" => 2,
                                 'confirmation_needed' => true,
                                 'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
                                 'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
@@ -197,69 +197,74 @@ class CrmEmpRequest extends CrmObject
         }
 
 
-        public function beforeMaj($id, $fields_updated)
+        public function checkEmployee($lang='ar', $pbm=true, $commit=true)
         {
-                global $lang;
-
-                $orgunit_id = $this->getVal("orgunit_id");
+                // $orgunit_id = $this->getVal("orgunit_id");
                 $employee_id = $this->getVal("employee_id");
                 $email = $this->getVal("email");
-                $approved = $this->sureIs("approved");
 
+                $main_orgunit_id = AfwSession::config("main_orgunit_id", 1);
+                $emplObj = Employee::loadByEmail($main_orgunit_id, $email, true);
+                list($err, $info) = $emplObj->updateMyInfosFromExternalSources($lang);
+                if ($err) {
+                        $this->set("approved", "N");
+                        $this->set("reject_reason_ar", $err);
+                        $this->set("reject_reason_en", $err);
+                } else {
+                        // $emplObj_name_ar = $emplObj->getDisplay("ar");
+                        // $emplObj_name_en = $emplObj->getDisplay("en");
+                        $company_id = $emplObj->getVal("id_sh_org");
+                        $department_id = $emplObj->getVal("id_sh_dep");
+                        $division_id = $emplObj->getVal("id_sh_div");
+                        $employee_id = $emplObj->id;
+                        // $sh_name_ar = $emplObj->showAttribute("id_sh_org", null, true, "ar") . " >> " . $emplObj->showAttribute("id_sh_dep", null, true, "ar") . "-" . $emplObj->showAttribute("id_sh_div", null, true, "ar");
+                        // $sh_name_en = $emplObj->showAttribute("id_sh_org", null, true, "en") . " >> " . $emplObj->showAttribute("id_sh_dep", null, true, "en") . "-" . $emplObj->showAttribute("id_sh_div", null, true, "en");
+                        $this->set("approved", "Y");
+                        $this->set("employee_id", $employee_id);
+                        $this->set("division_id", $division_id);
+                        $this->set("department_id", $department_id);
+                        $this->set("company_id", $company_id);
+                        $this->set("reject_reason_ar", $info);
+                        $this->set("reject_reason_en", "--");
+                }
+
+                if($commit) $this->commit();
+
+                return $this->sureIs("approved");
+        }
+
+
+        public function beforeMaj($id, $fields_updated)
+        {
+                $lang = AfwLanguageHelper::getGlobalLanguage();
+                $email = $this->getVal("email");
+
+                if ($fields_updated["email"] and $email) {
+                        $this->checkEmployee($lang, $pbm=true, $commit=false);
+                }
+                /*
                 if ($this->sureIs("active") and ($orgunit_id > 0) and ($email)) {
                         if ($employee_id) {
                                 $this->set("email", "");
                         } else {
-                                $main_orgunit_id = AfwSession::config("main_orgunit_id", 1);
-                                $emplObj = Employee::loadByEmail($main_orgunit_id, $email, true);
-                                list($err, $info) = $emplObj->updateMyInfosFromExternalSources($lang);
-                                if ($err) {
-                                        $this->set("approved", "W");
-                                        $this->set("reject_reason_ar", $err);
-                                        $this->set("reject_reason_en", $err);
-                                } else {
-                                        $emplObj_name_ar = $emplObj->getDisplay("ar");
-                                        $emplObj_name_en = $emplObj->getDisplay("en");
-                                        $id_sh_org = $emplObj->getVal("id_sh_org");
-                                        $id_sh_dep = $emplObj->getVal("id_sh_dep");
-                                        $id_sh_div = $emplObj->getVal("id_sh_div");
-                                        if (($id_sh_org == $orgunit_id) or ($id_sh_dep == $orgunit_id) or ($id_sh_div == $orgunit_id)) {
-                                                $this->set("approved", "Y");
-                                                $this->set("reject_reason_ar", "لا ينطبق");
-                                                $this->set("reject_reason_en", "N/A");
-                                                $employee_id = $emplObj->id;
-                                                $this->set("employee_id", $employee_id);
-                                        } else {
-                                                $org_name_ar = $this->showAttribute("orgunit_id", null, true, "ar");
-                                                $org_name_en = $this->showAttribute("orgunit_id", null, true, "en");
-                                                $sh_name_ar = $emplObj->showAttribute("id_sh_org", null, true, "ar") . "-" . $emplObj->showAttribute("id_sh_dep", null, true, "ar") . "-" . $emplObj->showAttribute("id_sh_div", null, true, "ar");
-                                                $sh_name_en = $emplObj->showAttribute("id_sh_org", null, true, "en") . "-" . $emplObj->showAttribute("id_sh_dep", null, true, "en") . "-" . $emplObj->showAttribute("id_sh_div", null, true, "en");
-
-                                                $reject_reason_ar = $emplObj_name_ar . " : " . $this->tm("This employee is not from", "ar") . " $org_name_ar " . $this->tm("but from", "ar") . " $sh_name_ar";
-                                                $reject_reason_en = $emplObj_name_en . " : " . $this->tm("This employee is not from", "en") . " $org_name_en " . $this->tm("but from", "en") . " $sh_name_en";
-                                                $this->set("approved", "N");
-                                                $this->set("reject_reason_ar", $reject_reason_ar);
-                                                $this->set("reject_reason_en", $reject_reason_en);
-                                        }
-                                }
                         }
-                        /*
-                        $empl = $this->het("employee_id");
-                        if($empl)
-                        {
-                                $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
-                                $empl->updateMyUserInformation();
-                        }*/
+                        
+                        // $empl = $this->het("employee_id");
+                        // if($empl)
+                        // {
+                        //         $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
+                        //         $empl->updateMyUserInformation();
+                        // }
                 }
 
                 if ($this->sureIs("active") and $approved and ($orgunit_id > 0) and ($employee_id > 0)) {
                         CrmEmployee::loadByMainIndex($orgunit_id, $employee_id, true);
-                }
+                }*/
 
                 return true;
         }
 
-        public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false) {}
+        public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent = false) {}
 
         public function  calcCrm_orgunit_id()
         {

@@ -14,14 +14,13 @@ class CrmCrmEmpRequestAfwStructure
 			$obj->ORDER_BY_FIELDS = "orgunit_id, employee_id, email";
 
 
-			$obj->UNIQUE_KEY = array('orgunit_id', 'employee_id', 'email');
+			$obj->UNIQUE_KEY = array('email');
 
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 			$obj->public_display = true;
-			$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmOrgunit");
 			$obj->editByStep = true;
-			$obj->editNbSteps = 3;
+			$obj->editNbSteps = 2;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 			$obj->general_check_errors = true;
@@ -48,15 +47,37 @@ class CrmCrmEmpRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'orgunit_id' => array(
+		'email' => array(
+			'SHOW' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'QSEARCH' => true,
+			'SIZE' => 64,
+			'CSS' => 'width_pct_50',
+			'MB_CSS' => 'width_pct_50',
+			'FORMAT' => 'EMAIL',
+			'UTF8' => false,
+			'TYPE' => 'TEXT',
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+			'READONLY' => true,
+			'EDIT_IF_EMPTY' => true,
+		),
+
+
+		'company_id' => array(
+			'STEP' => 2,
 			'SHORTNAME' => 'orgunit',
 			'SEARCH' => true,
-			'QSEARCH' => true,
-			'INTERNAL_QSEARCH' => true,
+			'QSEARCH' => false,
+			'INTERNAL_QSEARCH' => false,
 			'SHOW' => true,
 			'RETRIEVE' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
+			'READONLY' => true,
 			'EDIT_IF_EMPTY' => true,
 			'SIZE' => 40,
 			'MANDATORY' => true,
@@ -69,10 +90,106 @@ class CrmCrmEmpRequestAfwStructure
 			'WHERE' => "1", // "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
 
 			'RELATION' => 'ManyToOne',
-			'READONLY' => true,
+			
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
-			'STEP' => 1,
+			
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
+
+		'department_id' => array(
+			'STEP' => 2,
+			'SHORTNAME' => 'orgunit',
+			'SEARCH' => true,
+			'QSEARCH' => false,
+			'INTERNAL_QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'READONLY' => true,
+			'EDIT_IF_EMPTY' => true,
+			'SIZE' => 40,
+			'MANDATORY' => true,
+			'UTF8' => false,
+			'CSS' => 'width_pct_25',
+			'TYPE' => 'FK',
+			'ANSWER' => 'orgunit',
+			'ANSMODULE' => 'hrm',
+			'DEPENDENT_OFME' => ['employee_id'],
+			'WHERE' => "1", // "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
+
+			'RELATION' => 'ManyToOne',
+			
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
+
+		'division_id' => array(
+			'STEP' => 2,
+			'SHORTNAME' => 'orgunit',
+			'SEARCH' => true,
+			'QSEARCH' => false,
+			'INTERNAL_QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'READONLY' => true,
+			'EDIT_IF_EMPTY' => true,
+			'SIZE' => 40,
+			'MANDATORY' => true,
+			'UTF8' => false,
+			'CSS' => 'width_pct_25',
+			'TYPE' => 'FK',
+			'ANSWER' => 'orgunit',
+			'ANSMODULE' => 'hrm',
+			'DEPENDENT_OFME' => ['employee_id'],
+			'WHERE' => "1", // "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
+
+			'RELATION' => 'ManyToOne',
+			
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
+
+		'orgunit_id' => array(
+			'STEP' => 2,
+			'SHORTNAME' => 'orgunit',
+			'SEARCH' => true,
+			'QSEARCH' => false,
+			'INTERNAL_QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'READONLY' => true,
+			'EDIT_IF_EMPTY' => true,
+			'SIZE' => 40,
+			'MANDATORY' => true,
+			'UTF8' => false,
+			'CSS' => 'width_pct_25',
+			'TYPE' => 'FK',
+			'ANSWER' => 'orgunit',
+			'ANSMODULE' => 'hrm',
+			'DEPENDENT_OFME' => ['employee_id'],
+			'WHERE' => "1", // "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
+
+			'RELATION' => 'ManyToOne',
+			
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
@@ -81,6 +198,7 @@ class CrmCrmEmpRequestAfwStructure
 
 
 		'crm_orgunit_id' => array(
+			'STEP' => 2,
 			'SHORTNAME' => 'corgunit',
 			'SIZE' => 40,
 			'CSS' => 'width_pct_25',
@@ -95,14 +213,16 @@ class CrmCrmEmpRequestAfwStructure
 		),
 
 		'employee_id' => array(
+			'STEP' => 2,
 			'SHORTNAME' => 'employee',
 			'SEARCH' => true,
 			'QSEARCH' => false,
-			'INTERNAL_QSEARCH' => true,
+			'INTERNAL_QSEARCH' => false,
 			'SHOW' => true,
 			'RETRIEVE' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
+			'READONLY' => true,
 			'EDIT_IF_EMPTY' => true,
 			'CSS' => 'width_pct_25',
 			'SIZE' => 40,
@@ -116,33 +236,36 @@ class CrmCrmEmpRequestAfwStructure
 			'RELATION' => 'ManyToOne',			
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => true,
-			'STEP' => 1,
+			
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 		),
 
-		'email' => array(
+		'active' => array(
 			'SHOW' => true,
+			'RETRIEVE' => true,
+			'SEARCH' => true,
+			'QSEARCH' => false,
 			'EDIT' => true,
-			'QEDIT' => false,
-			'SIZE' => 64,
-			'CSS' => 'width_pct_50',
-			'MB_CSS' => 'width_pct_50',
-			'FORMAT' => 'EMAIL',
-			'UTF8' => false,
-			'TYPE' => 'TEXT',
-			'STEP' => 1,
+			'QEDIT' => true,
+			'DEFAUT' => 'Y',
+			'TYPE' => 'YN',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => true,
+			'STEP' => 99,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
 		),
 
+
+		
+	
 		'approved' => array(
 			'SHOW' => true,
 			'RETRIEVE' => true,
 			'SEARCH' => true,
-			'QSEARCH' => true,
+			'QSEARCH' => false,
 			'EDIT' => true,
 			'QEDIT' => true,
 			'DEFAUT' => 'W',
@@ -155,28 +278,14 @@ class CrmCrmEmpRequestAfwStructure
 			'READONLY' => true,
 		),
 
-		'active' => array(
-			'SHOW' => true,
-			'RETRIEVE' => true,
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'DEFAUT' => 'Y',
-			'TYPE' => 'YN',
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => true,
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
+		
 
 		'reject_reason_ar' => array(
 			'SHOW' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'UTF8' => true,
+			'QSEARCH' => true,
 			'SIZE' => 'AEREA',
 			'CSS' => 'width_pct_100',
 			'MB_CSS' => 'width_pct_100',

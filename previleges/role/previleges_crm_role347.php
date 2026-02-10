@@ -1,0 +1,558 @@
+<?php
+
+	$role_info[347] = array (
+  'code' => 'goal-CRM-LOOKUP',
+  'name' => 
+  array (
+    'ar' => 'البيانات المرجعية',
+    'en' => 'lookup data',
+  ),
+  'menu' => 
+  array (
+    'need_admin' => false,
+    'id' => '347',
+    'menu_name_ar' => 'البيانات المرجعية',
+    'menu_name_en' => 'lookup data',
+    'page' => 'main.php?Main_Page=fm.php&a=1073&r=347',
+    'css' => 'info',
+    'icon' => ' icon-347',
+    'showme' => true,
+    'items' => 
+    array (
+      103898 => 
+      array (
+        'id' => '103898',
+        'code' => 'f1-a-tb3570/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة حالات الطلبات الالكترونية',
+        'menu_name_en' => 'Request statuss administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=RequestStatus&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103898 bfc-',
+      ),
+      103908 => 
+      array (
+        'id' => '103908',
+        'code' => 'f1-a-tb3572/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أنواع الأجوبة',
+        'menu_name_en' => 'Media response types administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=ResponseType&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103908 bfc-',
+      ),
+      103923 => 
+      array (
+        'id' => '103923',
+        'code' => 'f1-a-tb3611/qsearch',
+        'level' => '999',
+        'menu_name_ar' => 'الاستعلام عن خدمة',
+        'menu_name_en' => 'Service quick search',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=Service&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103923 bfc-',
+      ),
+      103929 => 
+      array (
+        'id' => '103929',
+        'code' => 'f1-a-tb3612/qsearch',
+        'level' => '999',
+        'menu_name_ar' => 'الاستعلام عن صنف خدمة',
+        'menu_name_en' => 'Service category quick search',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=ServiceCategory&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103929 bfc-',
+      ),
+      104211 => 
+      array (
+        'id' => '104211',
+        'code' => 'f1-a-tb3615/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أنواع العملاء',
+        'menu_name_en' => 'Customer types administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CustomerType&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-104211 bfc-',
+      ),
+      104197 => 
+      array (
+        'id' => '104197',
+        'code' => 'f1-a-tb3621/qsearch',
+        'level' => '999',
+        'menu_name_ar' => 'الاستعلام عن مدينة',
+        'menu_name_en' => 'Acity quick search',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=Acity&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104197 bfc-',
+      ),
+      104205 => 
+      array (
+        'id' => '104205',
+        'code' => 'f1-a-tb3622/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة المناطق',
+        'menu_name_en' => 'Aregions administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=Aregion&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-104205 bfc-',
+      ),
+      103219 => 
+      array (
+        'id' => '103219',
+        'code' => 'f1-a-tb13455/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أنواع الطلبات الالكترونية',
+        'menu_name_en' => 'Crm erequest types administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=RequestType&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103219 bfc-',
+      ),
+      104498 => 
+      array (
+        'id' => '104498',
+        'code' => 'f1-a-tb13828/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة قنوات التواصل',
+        'menu_name_en' => 'Crm channels administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CrmChannel&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-104498 bfc-',
+      ),
+    ),
+    'otherbfs' => 
+    array (
+      103219 => 
+      array (
+        'id' => '103219',
+        'code' => 'f1-a-tb13455/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أنواع الطلبات الالكترونية',
+        'menu_name_en' => 'Crm erequest types administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=RequestType&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103219 bfc-',
+      ),
+      103220 => 
+      array (
+        'id' => '103220',
+        'code' => 'f1-a-tb13455/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح نوع طلب الكتروني',
+        'menu_name_en' => 'delete Crm erequest type',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=RequestType&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103220 bfc-',
+      ),
+      103221 => 
+      array (
+        'id' => '103221',
+        'code' => 'f1-a-tb13455/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل نوع طلب الكتروني',
+        'menu_name_en' => 'display details of Crm erequest type',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=RequestType&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103221 bfc-',
+      ),
+      103246 => 
+      array (
+        'id' => '103246',
+        'code' => 'f1-a-tb13460/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أولويات الطلبات',
+        'menu_name_en' => 'Crm emrelations administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=RequestPrio&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103246 bfc-',
+      ),
+      103247 => 
+      array (
+        'id' => '103247',
+        'code' => 'f1-a-tb13460/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح أولوية طلب',
+        'menu_name_en' => 'delete Crm emrelation',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=RequestPrio&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103247 bfc-',
+      ),
+      103248 => 
+      array (
+        'id' => '103248',
+        'code' => 'f1-a-tb13460/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل أولوية طلب',
+        'menu_name_en' => 'display details of Crm emrelation',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=RequestPrio&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103248 bfc-',
+      ),
+      103898 => 
+      array (
+        'id' => '103898',
+        'code' => 'f1-a-tb3570/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة حالات الطلبات الالكترونية',
+        'menu_name_en' => 'Request statuss administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=RequestStatus&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103898 bfc-',
+      ),
+      103899 => 
+      array (
+        'id' => '103899',
+        'code' => 'f1-a-tb3570/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح حالة طلب إلكتروني',
+        'menu_name_en' => 'delete Request status',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=RequestStatus&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103899 bfc-',
+      ),
+      103900 => 
+      array (
+        'id' => '103900',
+        'code' => 'f1-a-tb3570/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل حالة طلب إلكتروني',
+        'menu_name_en' => 'display details of Request status',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=RequestStatus&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103900 bfc-',
+      ),
+      103908 => 
+      array (
+        'id' => '103908',
+        'code' => 'f1-a-tb3572/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أنواع الأجوبة',
+        'menu_name_en' => 'Media response types administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=ResponseType&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103908 bfc-',
+      ),
+      103909 => 
+      array (
+        'id' => '103909',
+        'code' => 'f1-a-tb3572/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح نوع إجابة',
+        'menu_name_en' => 'delete Media response type',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=ResponseType&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103909 bfc-',
+      ),
+      103910 => 
+      array (
+        'id' => '103910',
+        'code' => 'f1-a-tb3572/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل نوع إجابة',
+        'menu_name_en' => 'display details of Media response type',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=ResponseType&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103910 bfc-',
+      ),
+      103918 => 
+      array (
+        'id' => '103918',
+        'code' => 'f1-a-tb3611/edit',
+        'level' => '999',
+        'menu_name_ar' => 'إنشاء خدمة',
+        'menu_name_en' => 'create Service',
+        'page' => 'main.php?Main_Page=afw_mode_edit.php&cl=Service&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103918 bfc-',
+      ),
+      103919 => 
+      array (
+        'id' => '103919',
+        'code' => 'f1-a-tb3611/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة الخدمات',
+        'menu_name_en' => 'Services administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=Service&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103919 bfc-',
+      ),
+      103920 => 
+      array (
+        'id' => '103920',
+        'code' => 'f1-a-tb3611/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح خدمة',
+        'menu_name_en' => 'delete Service',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=Service&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103920 bfc-',
+      ),
+      103921 => 
+      array (
+        'id' => '103921',
+        'code' => 'f1-a-tb3611/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل خدمة',
+        'menu_name_en' => 'display details of Service',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=Service&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103921 bfc-',
+      ),
+      103922 => 
+      array (
+        'id' => '103922',
+        'code' => 'f1-a-tb3611/search',
+        'level' => '999',
+        'menu_name_ar' => 'البحث في الخدمات',
+        'menu_name_en' => 'Services search',
+        'page' => 'main.php?Main_Page=afw_mode_search.php&cl=Service&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103922 bfc-',
+      ),
+      103923 => 
+      array (
+        'id' => '103923',
+        'code' => 'f1-a-tb3611/qsearch',
+        'level' => '999',
+        'menu_name_ar' => 'الاستعلام عن خدمة',
+        'menu_name_en' => 'Service quick search',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=Service&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103923 bfc-',
+      ),
+      103924 => 
+      array (
+        'id' => '103924',
+        'code' => 'f1-a-tb3612/edit',
+        'level' => '999',
+        'menu_name_ar' => 'إنشاء صنف خدمة',
+        'menu_name_en' => 'create Service category',
+        'page' => 'main.php?Main_Page=afw_mode_edit.php&cl=ServiceCategory&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103924 bfc-',
+      ),
+      103925 => 
+      array (
+        'id' => '103925',
+        'code' => 'f1-a-tb3612/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أصناف الخدمات',
+        'menu_name_en' => 'Service categorys administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=ServiceCategory&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-103925 bfc-',
+      ),
+      103926 => 
+      array (
+        'id' => '103926',
+        'code' => 'f1-a-tb3612/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح صنف خدمة',
+        'menu_name_en' => 'delete Service category',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=ServiceCategory&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103926 bfc-',
+      ),
+      103927 => 
+      array (
+        'id' => '103927',
+        'code' => 'f1-a-tb3612/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل صنف خدمة',
+        'menu_name_en' => 'display details of Service category',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=ServiceCategory&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103927 bfc-',
+      ),
+      103928 => 
+      array (
+        'id' => '103928',
+        'code' => 'f1-a-tb3612/search',
+        'level' => '999',
+        'menu_name_ar' => 'البحث في أصناف الخدمات',
+        'menu_name_en' => 'Service categorys search',
+        'page' => 'main.php?Main_Page=afw_mode_search.php&cl=ServiceCategory&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103928 bfc-',
+      ),
+      103929 => 
+      array (
+        'id' => '103929',
+        'code' => 'f1-a-tb3612/qsearch',
+        'level' => '999',
+        'menu_name_ar' => 'الاستعلام عن صنف خدمة',
+        'menu_name_en' => 'Service category quick search',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=ServiceCategory&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-103929 bfc-',
+      ),
+      104192 => 
+      array (
+        'id' => '104192',
+        'code' => 'f1-a-tb3621/edit',
+        'level' => '999',
+        'menu_name_ar' => 'إنشاء مدينة',
+        'menu_name_en' => 'create Acity',
+        'page' => 'main.php?Main_Page=afw_mode_edit.php&cl=Acity&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104192 bfc-',
+      ),
+      104193 => 
+      array (
+        'id' => '104193',
+        'code' => 'f1-a-tb3621/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة المدن',
+        'menu_name_en' => 'Acitys administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=Acity&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-104193 bfc-',
+      ),
+      104194 => 
+      array (
+        'id' => '104194',
+        'code' => 'f1-a-tb3621/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح مدينة',
+        'menu_name_en' => 'delete Acity',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=Acity&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104194 bfc-',
+      ),
+      104195 => 
+      array (
+        'id' => '104195',
+        'code' => 'f1-a-tb3621/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل مدينة',
+        'menu_name_en' => 'display details of Acity',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=Acity&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104195 bfc-',
+      ),
+      104196 => 
+      array (
+        'id' => '104196',
+        'code' => 'f1-a-tb3621/search',
+        'level' => '999',
+        'menu_name_ar' => 'البحث في المدن',
+        'menu_name_en' => 'Acitys search',
+        'page' => 'main.php?Main_Page=afw_mode_search.php&cl=Acity&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104196 bfc-',
+      ),
+      104197 => 
+      array (
+        'id' => '104197',
+        'code' => 'f1-a-tb3621/qsearch',
+        'level' => '999',
+        'menu_name_ar' => 'الاستعلام عن مدينة',
+        'menu_name_en' => 'Acity quick search',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=Acity&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104197 bfc-',
+      ),
+      104205 => 
+      array (
+        'id' => '104205',
+        'code' => 'f1-a-tb3622/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة المناطق',
+        'menu_name_en' => 'Aregions administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=Aregion&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-104205 bfc-',
+      ),
+      104206 => 
+      array (
+        'id' => '104206',
+        'code' => 'f1-a-tb3622/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح منطقة',
+        'menu_name_en' => 'delete Aregion',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=Aregion&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104206 bfc-',
+      ),
+      104207 => 
+      array (
+        'id' => '104207',
+        'code' => 'f1-a-tb3622/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل منطقة',
+        'menu_name_en' => 'display details of Aregion',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=Aregion&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104207 bfc-',
+      ),
+      104211 => 
+      array (
+        'id' => '104211',
+        'code' => 'f1-a-tb3615/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة أنواع العملاء',
+        'menu_name_en' => 'Customer types administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CustomerType&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-104211 bfc-',
+      ),
+      104212 => 
+      array (
+        'id' => '104212',
+        'code' => 'f1-a-tb3615/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح نوع العميل',
+        'menu_name_en' => 'delete Customer type',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=CustomerType&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104212 bfc-',
+      ),
+      104213 => 
+      array (
+        'id' => '104213',
+        'code' => 'f1-a-tb3615/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل نوع العميل',
+        'menu_name_en' => 'display details of Customer type',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=CustomerType&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104213 bfc-',
+      ),
+      104498 => 
+      array (
+        'id' => '104498',
+        'code' => 'f1-a-tb13828/qedit',
+        'level' => '999',
+        'menu_name_ar' => 'إدارة قنوات التواصل',
+        'menu_name_en' => 'Crm channels administration',
+        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CrmChannel&currmod=crm&ids=all&newo=3',
+        'css' => 'bf',
+        'icon' => 'bficon-104498 bfc-',
+      ),
+      104499 => 
+      array (
+        'id' => '104499',
+        'code' => 'f1-a-tb13828/delete',
+        'level' => '999',
+        'menu_name_ar' => 'مسح قناة تواصل',
+        'menu_name_en' => 'delete Crm channel',
+        'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=CrmChannel&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104499 bfc-',
+      ),
+      104500 => 
+      array (
+        'id' => '104500',
+        'code' => 'f1-a-tb13828/display',
+        'level' => '999',
+        'menu_name_ar' => 'عرض تفاصيل قناة تواصل',
+        'menu_name_en' => 'display details of Crm channel',
+        'page' => 'main.php?Main_Page=afw_mode_display.php&cl=CrmChannel&currmod=crm',
+        'css' => 'bf',
+        'icon' => 'bficon-104500 bfc-',
+      ),
+    ),
+    'sub-folders' => 
+    array (
+    ),
+  ),
+);
