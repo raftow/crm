@@ -166,14 +166,49 @@ class CrmEmpRequest extends CrmObject
         {
 
                 $pbms = array();
+                $employee_id = $this->getVal("employee_id");
+                if ($employee_id) {
+                        $methodConfirmationWarningEn = "You formally agree that this employee belongs to this organization";
+                        $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");                        
+
+                        $methodConfirmationQuestionEn = "Are you sure you want to do this approve ?";
+                        $methodConfirmationQuestion = $this->tm($methodConfirmationQuestionEn, "ar");
+                        $color = "blue";
+                        $title_ar = "تعيين هذا الموظف منسقا على هذه الجهة وعكس صلاحياته";
+                        // else $title_ar = "عكس التحديثات على الصلاحيات  والبيانات";
+                        $pbms["Ac122B"] = array(
+                                "METHOD" => "approveAndUpdateDataAndRoles",
+                                "COLOR" => $color,
+                                "LABEL_AR" => $title_ar,
+                                "PUBLIC" => true,
+                                "BF-ID" => "",
+                                'CONFIRMATION_NEEDED' => true,
+                                'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
+                                'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
+                        );
+                
+                        $methodConfirmationWarningEn = "This action can not be canceled !";
+                        $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");
+
+                        $methodConfirmationQuestionEn = "Are you sure you want to reset the password ?";
+                        $methodConfirmationQuestion = $this->tm($methodConfirmationQuestionEn, "ar");
+                        $color = "green";
+                        $title_ar = "إعادة انشاء كلمة مرور مؤقتة";
+                        $pbms["xc123B"] = array(
+                                "METHOD" => "temporaryPassword",
+                                "COLOR" => $color,
+                                "LABEL_AR" => $title_ar,
+                                "PUBLIC" => true,
+                                "BF-ID" => "",
+                                'CONFIRMATION_NEEDED' => true,
+                                'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
+                                'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
+                        );
+                }
 
                 if (!$this->estApproved()) {
-                        $methodConfirmationWarningEn = $this->getVal("reject_reason_en");
-                        if (!$methodConfirmationWarningEn) {
-                                $methodConfirmationWarningEn = "We can not automatically approve that this employee is from this organization";
-                                $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");
-                        } else $methodConfirmationWarning = $this->getVal("reject_reason_ar");
-                        if (!$methodConfirmationWarning) $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");
+                        $methodConfirmationWarningEn = "We can not automatically approve that this employee is from this organization";
+                        $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");
 
                         $methodConfirmationQuestionEn = "Are you sure you want to approve this employee on this organization inspite of the aobove explanation ?";
                         $methodConfirmationQuestion = $this->tm($methodConfirmationQuestionEn, "ar");
@@ -197,7 +232,8 @@ class CrmEmpRequest extends CrmObject
         }
 
 
-        public function checkEmployee($lang='ar', $pbm=true, $commit=true)
+
+        public function approveAndUpdateDataAndRoles($lang = 'ar', $pbm = true, $commit = true)
         {
                 // $orgunit_id = $this->getVal("orgunit_id");
                 $employee_id = $this->getVal("employee_id");
@@ -208,8 +244,8 @@ class CrmEmpRequest extends CrmObject
                 list($err, $info) = $emplObj->updateMyInfosFromExternalSources($lang);
                 if ($err) {
                         $this->set("approved", "N");
-                        $this->set("reject_reason_ar", $err);
-                        $this->set("reject_reason_en", $err);
+                        $this->set("log_text", $info);
+                        $this->set("error_text", $err);
                 } else {
                         // $emplObj_name_ar = $emplObj->getDisplay("ar");
                         // $emplObj_name_en = $emplObj->getDisplay("en");
@@ -224,11 +260,11 @@ class CrmEmpRequest extends CrmObject
                         $this->set("division_id", $division_id);
                         $this->set("department_id", $department_id);
                         $this->set("company_id", $company_id);
-                        $this->set("reject_reason_ar", $info);
-                        $this->set("reject_reason_en", "--");
+                        $this->set("log_text", $info);
+                        $this->set("error_text", "--");
                 }
 
-                if($commit) $this->commit();
+                if ($commit) $this->commit();
 
                 return $this->sureIs("approved");
         }
@@ -238,38 +274,85 @@ class CrmEmpRequest extends CrmObject
         {
                 $lang = AfwLanguageHelper::getGlobalLanguage();
                 $email = $this->getVal("email");
+                $orgunit_id = $this->getVal("orgunit_id");
+                $employee_id = $this->getVal("employee_id");
+                $approved = $this->sureIs("approved");
 
                 if ($fields_updated["email"] and $email) {
-                        $this->checkEmployee($lang, $pbm=true, $commit=false);
+                        $this->approveAndUpdateDataAndRoles($lang, $pbm = true, $commit = false);
                 }
-                /*
-                if ($this->sureIs("active") and ($orgunit_id > 0) and ($email)) {
-                        if ($employee_id) {
-                                $this->set("email", "");
-                        } else {
-                        }
-                        
-                        // $empl = $this->het("employee_id");
-                        // if($empl)
-                        // {
-                        //         $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
-                        //         $empl->updateMyUserInformation();
-                        // }
+                
+                if ($this->sureIs("active") and $approved  and ($orgunit_id > 0) and ($employee_id > 0)) {
+                        $this->calcCrm_orgunit_id('object', $create_obj_if_not_found = true);
+                        $this->calcCrm_employee_id('object', $create_obj_if_not_found = true);
                 }
 
-                if ($this->sureIs("active") and $approved and ($orgunit_id > 0) and ($employee_id > 0)) {
-                        CrmEmployee::loadByMainIndex($orgunit_id, $employee_id, true);
-                }*/
 
                 return true;
         }
 
         public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent = false) {}
 
-        public function  calcCrm_orgunit_id()
+        public function  calcCrm_orgunit_id($what='value', $create_obj_if_not_found = false)
         {
-                if (!$this->getVal("orgunit_id")) return null;
-                $obj = CrmOrgunit::loadByMainIndex($this->getVal("orgunit_id"));
-                return $obj;
+                if (!$this->getVal("orgunit_id")) $obj = null;
+                else $obj = CrmOrgunit::loadByMainIndex($this->getVal("orgunit_id"), $create_obj_if_not_found);
+                return AfwLoadHelper::giveWhat($obj, $what);
         }
+
+        public function  calcCrm_employee_id($what='value', $create_obj_if_not_found = false)
+        {
+                $employee_id = $this->getVal("employee_id");
+                $orgunit_id = $this->getVal("orgunit_id");
+                if (!$employee_id) $obj = null;
+                elseif (!$orgunit_id) $obj = null;
+                else $obj = CrmEmployee::loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found);
+                
+                return AfwLoadHelper::giveWhat($obj, $what);
+        }
+
+
+        public function beforeDelete($id,$id_replace) 
+        {
+            $server_db_prefix = AfwSession::config("db_prefix","tvtc_");
+            
+            if(!$id)
+            {
+                $id = $this->getId();
+                $simul = true;
+            }
+            else
+            {
+                $simul = false;
+            }
+            
+            if($id)
+            {   
+               if($id_replace==0)
+               {
+                   // FK part of me - not deletable 
+
+                        
+                   // FK part of me - deletable 
+
+                   
+                   // FK not part of me - replaceable 
+
+                        
+                   
+                   // MFK
+
+               }
+               else
+               {
+                        // FK on me 
+
+                        
+                        // MFK
+
+                   
+               } 
+               return true;
+            }    
+	}
 }

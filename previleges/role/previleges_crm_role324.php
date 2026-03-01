@@ -122,7 +122,7 @@
       array (
         'id' => '104604',
         'code' => 'f2-a-crm_emp_request/qsearch',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'طلبات إستيراد المنسقين من نظام الموارد البشرية',
         'menu_name_en' => 'Crm emp request',
         'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CrmEmpRequest&currmod=crm',
@@ -587,7 +587,7 @@
       array (
         'id' => '104596',
         'code' => 'f2-a-crm_channel/edit',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'إنشاء قناة تواصل',
         'menu_name_en' => 'create Crm channel',
         'page' => 'main.php?Main_Page=afw_mode_edit.php&cl=CrmChannel&currmod=crm',
@@ -598,7 +598,7 @@
       array (
         'id' => '104597',
         'code' => 'f2-a-crm_channel/search',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'البحث في قنوات التواصل',
         'menu_name_en' => 'Crm channels search',
         'page' => 'main.php?Main_Page=afw_mode_search.php&cl=CrmChannel&currmod=crm',
@@ -609,7 +609,7 @@
       array (
         'id' => '104598',
         'code' => 'f2-a-crm_channel/qsearch',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'قنوات التواصل',
         'menu_name_en' => 'Crm channels',
         'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CrmChannel&currmod=crm',
@@ -620,7 +620,7 @@
       array (
         'id' => '104599',
         'code' => 'f2-a-crm_emp_request/edit',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'إنشاء طلب إستيراد منسق',
         'menu_name_en' => 'create Crm emp request',
         'page' => 'main.php?Main_Page=afw_mode_edit.php&cl=CrmEmpRequest&currmod=crm',
@@ -631,7 +631,7 @@
       array (
         'id' => '104600',
         'code' => 'f2-a-crm_emp_request/qedit',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'إدارة طلبات إستيراد المنسقين من نظام الموارد البشرية',
         'menu_name_en' => 'Crm emp request administration',
         'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CrmEmpRequest&currmod=crm&ids=all&newo=3',
@@ -642,7 +642,7 @@
       array (
         'id' => '104601',
         'code' => 'f2-a-crm_emp_request/delete',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'مسح طلب إستيراد منسق',
         'menu_name_en' => 'delete Crm emp request',
         'page' => 'main.php?Main_Page=afw_mode_delete.php&cl=CrmEmpRequest&currmod=crm',
@@ -653,7 +653,7 @@
       array (
         'id' => '104602',
         'code' => 'f2-a-crm_emp_request/display',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'عرض تفاصيل طلب إستيراد منسق',
         'menu_name_en' => 'display details of Crm emp request',
         'page' => 'main.php?Main_Page=afw_mode_display.php&cl=CrmEmpRequest&currmod=crm',
@@ -664,7 +664,7 @@
       array (
         'id' => '104603',
         'code' => 'f2-a-crm_emp_request/search',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'البحث في طلبات إستيراد المنسقين من نظام الموارد البشرية',
         'menu_name_en' => 'Crm emp request search',
         'page' => 'main.php?Main_Page=afw_mode_search.php&cl=CrmEmpRequest&currmod=crm',
@@ -675,7 +675,7 @@
       array (
         'id' => '104604',
         'code' => 'f2-a-crm_emp_request/qsearch',
-        'level' => '1',
+        'level' => '999',
         'menu_name_ar' => 'طلبات إستيراد المنسقين من نظام الموارد البشرية',
         'menu_name_en' => 'Crm emp request',
         'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CrmEmpRequest&currmod=crm',

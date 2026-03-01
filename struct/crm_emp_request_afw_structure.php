@@ -20,7 +20,7 @@ class CrmCrmEmpRequestAfwStructure
 			$obj->showRetrieveErrors = true;
 			$obj->public_display = true;
 			$obj->editByStep = true;
-			$obj->editNbSteps = 2;
+			$obj->editNbSteps = 3;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 			$obj->general_check_errors = true;
@@ -80,7 +80,7 @@ class CrmCrmEmpRequestAfwStructure
 			'READONLY' => true,
 			'EDIT_IF_EMPTY' => true,
 			'SIZE' => 40,
-			'MANDATORY' => true,
+			'MANDATORY' => false,
 			'UTF8' => false,
 			'CSS' => 'width_pct_25',
 			'TYPE' => 'FK',
@@ -112,7 +112,7 @@ class CrmCrmEmpRequestAfwStructure
 			'READONLY' => true,
 			'EDIT_IF_EMPTY' => true,
 			'SIZE' => 40,
-			'MANDATORY' => true,
+			'MANDATORY' => false,
 			'UTF8' => false,
 			'CSS' => 'width_pct_25',
 			'TYPE' => 'FK',
@@ -144,7 +144,7 @@ class CrmCrmEmpRequestAfwStructure
 			'READONLY' => true,
 			'EDIT_IF_EMPTY' => true,
 			'SIZE' => 40,
-			'MANDATORY' => true,
+			'MANDATORY' => false,
 			'UTF8' => false,
 			'CSS' => 'width_pct_25',
 			'TYPE' => 'FK',
@@ -173,7 +173,6 @@ class CrmCrmEmpRequestAfwStructure
 			'RETRIEVE' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
-			'READONLY' => true,
 			'EDIT_IF_EMPTY' => true,
 			'SIZE' => 40,
 			'MANDATORY' => true,
@@ -183,7 +182,7 @@ class CrmCrmEmpRequestAfwStructure
 			'ANSWER' => 'orgunit',
 			'ANSMODULE' => 'hrm',
 			'DEPENDENT_OFME' => ['employee_id'],
-			'WHERE' => "1", // "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
+			'WHERE' => "id in (§company_id§, §department_id§, §division_id§)",
 
 			'RELATION' => 'ManyToOne',
 			
@@ -197,21 +196,7 @@ class CrmCrmEmpRequestAfwStructure
 
 
 
-		'crm_orgunit_id' => array(
-			'STEP' => 2,
-			'SHORTNAME' => 'corgunit',
-			'SIZE' => 40,
-			'CSS' => 'width_pct_25',
-			'TYPE' => 'FK',
-			'ANSWER' => 'crm_orgunit',
-			'ANSMODULE' => 'crm',
-			'CATEGORY' => 'FORMULA',
-			'RELATION' => 'OneToMany',
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-		),
-
+		
 		'employee_id' => array(
 			'STEP' => 2,
 			'SHORTNAME' => 'employee',
@@ -253,13 +238,50 @@ class CrmCrmEmpRequestAfwStructure
 			'TYPE' => 'YN',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => true,
-			'STEP' => 99,
+			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
 
 
-		
+		'crm_orgunit_id' => array(
+			'SHOW' => true,			
+			'EDIT' => true,
+			'DISPLAY' => true,
+			'STEP' => 3,
+			'SHORTNAME' => 'corgunit',
+			'SIZE' => 40,
+			'CSS' => 'width_pct_25',
+			'TYPE' => 'FK',
+			'ANSWER' => 'crm_orgunit',
+			'ANSMODULE' => 'crm',
+			'CATEGORY' => 'FORMULA',
+			'RELATION' => 'OneToMany',
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+			'READONLY' => true,
+		),
+
+		'crm_employee_id' => array(
+			'SHOW' => true,			
+			'EDIT' => true,
+			'DISPLAY' => true,
+			'STEP' => 3,
+			'SHORTNAME' => 'cempl',
+			'SIZE' => 40,
+			'CSS' => 'width_pct_25',
+			'TYPE' => 'FK',
+			'ANSWER' => 'crm_employee',
+			'ANSMODULE' => 'crm',
+			'CATEGORY' => 'FORMULA',
+			'RELATION' => 'OneToMany',
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+			'READONLY' => true,
+		),
+
 	
 		'approved' => array(
 			'SHOW' => true,
@@ -272,7 +294,7 @@ class CrmCrmEmpRequestAfwStructure
 			'TYPE' => 'YN',
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
-			'STEP' => 1,
+			'STEP' => 3,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'READONLY' => true,
@@ -280,7 +302,7 @@ class CrmCrmEmpRequestAfwStructure
 
 		
 
-		'reject_reason_ar' => array(
+		'log_text' => array(
 			'SHOW' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
@@ -289,17 +311,16 @@ class CrmCrmEmpRequestAfwStructure
 			'SIZE' => 'AEREA',
 			'CSS' => 'width_pct_100',
 			'MB_CSS' => 'width_pct_100',
-			'FORMAT' => 'EMAIL',
 			'ROWS' => 7,
 			'TYPE' => 'TEXT',
-			'STEP' => 1,
+			'STEP' => 99,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			//'ERROR-CHECK' => true,
 			'READONLY' => true,
 		),
 
-		'reject_reason_en' => array(
+		'error_text' => array(
 			'SHOW' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
@@ -307,10 +328,9 @@ class CrmCrmEmpRequestAfwStructure
 			'SIZE' => 'AEREA',
 			'CSS' => 'width_pct_100',
 			'MB_CSS' => 'width_pct_100',
-			'FORMAT' => 'EMAIL',
 			'ROWS' => 7,
 			'TYPE' => 'TEXT',
-			'STEP' => 1,
+			'STEP' => 3,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			//'ERROR-CHECK' => true,

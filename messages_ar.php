@@ -45,5 +45,10 @@ $messages = [
     "The supervisor has returnted the request to you with this comment" => "أعاد المشرف إليك الطلب مع هذا التعليق",
     "The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text."=>"ظهور رمز [سري للغاية] يعني أن العميل لا يرغب بمشاركة معلومات طلبه مع أي شخص غير ذي صلة نظرًا لحساسية الأمر. بناءً على مدى أمان الوضع، وما إذا كان هناك أشخاص حولك لا ينبغي أن يطلعوا على هذه المعلومات، انقر على رمز العين لإظهار نص الطلب أو إخفائه.",
 
+    "You will update status of request depending on last response" => "ستقوم بتحديث حالة الطلب بناءً على آخر رد",
+    "Are you sure ?" => "هل أنت متأكد؟",
+
+    "You formally agree that this employee belongs to this organization" => "أنت توافق رسمياً على أن هذا الموظف ينتمي إلى هذه الجهة",
+    "Are you sure you want to do this approve ?" => "هل أنت متأكد من رغبتك في الموافقة على هذا؟",
 ];
      

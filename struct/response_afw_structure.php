@@ -250,11 +250,11 @@ class CrmResponseAfwStructure
 			'CSS' => 'width_pct_33',
 			'UTF8' => false,
 			'SIZE' => 32,
-			'MANDATORY' => false,   // when we just assign request no new status it is same
+			'MANDATORY' => true,   // when we just assign request we should select new status = assigned = 201
 			'TYPE' => 'FK',
 			'ANSWER' => 'request_status',
 			'ANSMODULE' => 'crm',
-			'WHERE' => "active='Y' and user_type_menum like '%,§user_type§,%' and (response_type_mfk='' or response_type_mfk is null or response_type_mfk like '%,§response_type_id§,%')",
+			'WHERE' => "id=4 or (active='Y' and user_type_menum like '%,§user_type§,%' and (response_type_mfk='' or response_type_mfk is null or response_type_mfk like '%,§response_type_id§,%'))",
 			'FGROUP' => 'the_response',
 
 			'RELATION' => 'ManyToOne',

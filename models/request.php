@@ -242,7 +242,7 @@ class Request extends CrmObject
         "removeLastResponse" =>  array(
             'title' => "حذف آخر ردودي",
             'confirmation_needed' => true,
-            'confirmation_warning' => "",
+            'confirmation_warning' => "انتبه : يستخدم فقط للضرورة ويخضع لعمليات تتبع الأثر",
             'confirmation_question' => "سيتم حذف آخر رد . هل أنت متأكد ؟",
             'tooltip' => 'انتبه : يستخدم فقط للضرورة ويخضع لعمليات تتبع الأثر',
             'color' => "red"
@@ -273,6 +273,7 @@ class Request extends CrmObject
             "rejectRequest" => "iamTheSupervisor",
             "ignoreRequest" => "neverDoThisNow",
             "refreshRequest" => "goOn",
+            "removeLastResponse" => "goOn",
         ),
 
 
@@ -1645,18 +1646,43 @@ class Request extends CrmObject
 
         if ($respObj) {
             $respObj->hide();
-            $respObj2 = $this->getLastResponse();
-
-            $this->set("status_id", $respObj2->getVal("new_status_id"));
+            $this->updateRequestAsPerLastResponse($lang, false);
             $this->set("status_action_enum", self::status_action_by_code("removeLastResponse"));
-            $this->set("status_date", AfwDateHelper::currentHijriDate());
-            $this->set("status_time", date("H:i:s"));
-            $this->set("status_comment", "###");
             $this->commit();
+
             return array("", "تم حذف بيانات الرد الأخير من قبلكم");
         } else {
             array("لم يعد يوجد ردود على هذا الطلب", "");
         }
+    }
+
+    public function updateRequestAsPerLastResponse($lang = "ar", $commit=true) {
+        $respObj = $this->getLastResponse();
+        $info = "";
+        $error = "";
+        if ($respObj) {
+            $status_id = $respObj->getVal("new_status_id");
+            $status_comment = "-- FROM LASTRESPONSE --";
+             $info = "تم";
+        } else {
+            $status_id = 0;
+            $status_comment = "-- NO-LAST-RESPONSE-SO-TAKE-DEFAULT --";
+            $error = "لا يوجد ردود على هذا الطلب";
+        }
+
+        if(!$status_id) {
+            $status_id = self::$REQUEST_STATUS_SENT;
+            if($status_comment == "-- FROM LASTRESPONSE --") $status_comment = "-- NO-LAST-RESPONSE-NEW-STATUS-SO-TAKE-DEFAULT --";
+        }
+        
+
+        $this->set("status_id", $status_id);
+        $this->set("status_date", AfwDateHelper::currentHijriDate());
+        $this->set("status_time", date("H:i:s"));
+        $this->set("status_comment", $status_comment);
+        if($commit) $this->commit();
+
+        return [$error, $info];
     }
 
 
@@ -2541,25 +2567,7 @@ class Request extends CrmObject
     }
 
 
-    public function executeItemsMethod($itemsMethod)
-    {
-        if ($itemsMethod) {
-            if (!isset($this->itemsMethodExec[$itemsMethod])) {
-                $itemsList = $this->$itemsMethod();
-                if (!$itemsList) {
-                    $itemsList = array();
-                }
-                $this->itemsMethodExec[$itemsMethod] = $itemsList;
-            }
-        } else {
-            $itemsList = array();
-            $itemsList["none"] = array('ar' => "none", 'en' => "none");
-            $this->itemsMethodExec[$itemsMethod] = $itemsList;
-        }
-
-
-        return $this->itemsMethodExec[$itemsMethod];
-    }
+   
 
     protected function getPublicMethods()
     {
@@ -2582,6 +2590,28 @@ class Request extends CrmObject
                     "BF-ID" => "",
                     "HZM-SIZE" => 12,
                 );*/
+
+
+                $methodConfirmationWarningEn = "You will update status of request depending on last response";
+                $methodConfirmationWarning = AfwLanguageHelper::tt($methodConfirmationWarningEn, 'ar', 'crm');
+                $methodConfirmationQuestionEn = "Are you sure ?";
+                $methodConfirmationQuestion = AfwLanguageHelper::tt($methodConfirmationQuestionEn, 'ar', 'crm');
+
+                $color = "red";
+                $title_ar = "تحديث الحالة بحسب آخر الردود";
+                $pbms["xart0B"] = array(
+                    "METHOD" => "updateRequestAsPerLastResponse",
+                    "COLOR" => $color,
+                    "LABEL_AR" => $title_ar,
+                    "PUBLIC" => true,
+                    "BF-ID" => "",
+                    "HZM-SIZE" => 12,
+                    'CONFIRMATION_NEEDED' => true,
+                    'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
+                    'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
+                );
+                
+
                 if ($this->isClosed()) {
                     $color = "red";
                     $title_ar = "الربط مع منصة استبيان";
@@ -2653,8 +2683,9 @@ class Request extends CrmObject
 
             $log_arr[] = $log;
         }
-
-        // die("We are upgrading the system for you ..., please wait.<br>\nSTATUS_MAP LOG".var_export($log_arr,true)." pbms=".var_export($pbms,true));
+        
+        // if($objme->id==1) 
+        //    die("We are upgrading the system for you ..., please wait.<br>\nSTATUS_MAP LOG".var_export($log_arr,true)." pbms=".var_export($pbms,true));
 
         return $pbms;
     }
