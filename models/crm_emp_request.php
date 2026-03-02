@@ -241,7 +241,8 @@ class CrmEmpRequest extends CrmObject
 
                 $main_orgunit_id = AfwSession::config("main_orgunit_id", 1);
                 $emplObj = Employee::loadByEmail($main_orgunit_id, $email, true);
-                list($err, $info) = $emplObj->updateMyInfosFromExternalSources($lang);
+                $war = "";
+                list($err, $info, $war) = $emplObj->updateMyInfosFromExternalSources($lang);
                 if ($err) {
                         $this->set("approved", "N");
                         $this->set("log_text", $info);
@@ -266,7 +267,8 @@ class CrmEmpRequest extends CrmObject
 
                 if ($commit) $this->commit();
 
-                return $this->sureIs("approved");
+                if($pbm) return [$err, $info, $war];
+                else return $this->sureIs("approved");
         }
 
 

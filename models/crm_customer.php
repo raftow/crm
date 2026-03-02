@@ -546,6 +546,10 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
               return ($this->getVal("customer_type_id") == 3);
         }*/
 
+        public function hetType()  {
+                if(!$this->getVal("customer_type_id")) return null;
+                return CustomerType::loadById($this->getVal("customer_type_id"));
+        }    
 
         public function getAttributeLabel($attribute, $lang = "ar", $short = false)
         {

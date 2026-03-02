@@ -50,5 +50,11 @@ $messages = [
 
     "You formally agree that this employee belongs to this organization" => "أنت توافق رسمياً على أن هذا الموظف ينتمي إلى هذه الجهة",
     "Are you sure you want to do this approve ?" => "هل أنت متأكد من رغبتك في الموافقة على هذا؟",
+    "This employee is not from the main company" => "هذا الموظف ليس من الشركة الأم",
+    "This employee has no user name neither employee number, can't execute the retrieve of information from HR" => 
+        "لا يملك هذا الموظف اسم مستخدم ولا رقم موظف، وبالتالي لا يمكنه استرجاع المعلومات من قسم الموارد البشرية.",
+
+    "Seems that survey token has been removed or the survey was an old version" => "يبدو أن رمز الاستبيان قد أُزيل أو أن الاستبيان كان إصدارًا قديمًا",   
+
 ];
      

@@ -1361,7 +1361,7 @@ class Request extends CrmObject
 
         if (($attribute == "service_category_id") or
             ($attribute == "service_id") or
-            ($attribute == "request_priority") or
+            // ($attribute == "request_priority") or (we can change prio before assign where is the pb ??)
             // ($attribute=="orgunit_id") or 
             // ($attribute=="employee_id") or 
             ($attribute == "assign_date") or

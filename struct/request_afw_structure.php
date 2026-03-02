@@ -640,6 +640,33 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_50',
 		),
 
+		'request_priority' => array(
+			'FGROUP' => 'props',  'STEP' => 1,
+			'SHORTNAME' => 'priority',
+			'SEARCH' => true,
+			'QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'CSS' => 'width_pct_33',
+			'SIZE' => 32,
+			'MANDATORY' => true,
+			'UTF8' => false,
+			'DEFAUT' => 3,
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'READONLY' => false,
+			'AUDIT' => false,
+			'ANSMODULE' => 'crm',
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+			'DEFAUT' => 3,
+		),
+
 		
 
 		'lang_id' => array(
@@ -765,32 +792,7 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'request_priority' => array(
-			'FGROUP' => 'props',  'STEP' => 1,
-			'SHORTNAME' => 'priority',
-			'SEARCH' => true,
-			'QSEARCH' => false,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'CSS' => 'width_pct_33',
-			'SIZE' => 32,
-			'MANDATORY' => true,
-			'UTF8' => false,
-			'DEFAUT' => 3,
-			'TYPE' => 'ENUM',
-			'ANSWER' => 'FUNCTION',
-			'READONLY' => false,
-			'AUDIT' => false,
-			'ANSMODULE' => 'crm',
-			'SEARCH-BY-ONE' => false,
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-			'DEFAUT' => 3,
-		),
+		
 
 
 		'service_category_id' => array(
@@ -1146,6 +1148,7 @@ class CrmRequestAfwStructure
 			'NO-LABEL' => true,
 			'NO-CACHE' => true,
 			'CATEGORY' => 'ITEMS',
+			'EMPTY-ITEMS-MESSAGE' => 'Seems that survey token has been removed or the survey was an old version',
 			'ANSWER' => 'survey_token',
 			'ANSMODULE' => 'crm',
 			'ITEM' => '',
