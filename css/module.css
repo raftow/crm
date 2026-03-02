@@ -2832,6 +2832,7 @@ div.hzm_data_ul_cl_files>ul.smooth-dots {
 .download-png {
     background-image: url(../../lib/images/camera.png);
     background-position-x: center;
+    background-size: auto;
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {

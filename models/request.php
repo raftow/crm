@@ -642,9 +642,9 @@ class Request extends CrmObject
 
         ),
 
-        /*
+        
         "os005" => array(
-            "STATS_WHERE" => "active = 'Y' and status_id = 7 and status_date between [date_start_satisfaction] and [date_end_satisfaction]", // 
+            "STATS_WHERE" => "active = 'Y' and status_id = 7 and request_date >= '14470101'", // 
             "DISABLE-VH" => true,
             "FOOTER_TITLES" => true,
             "FOOTER_SUM" => true,
@@ -665,7 +665,7 @@ class Request extends CrmObject
             ),
 
 
-        ),*/
+        ),
 
         "gs006" => array(
             "STATS_WHERE" => "active = 'Y'", // and status_id in (101,102,2,201,3,301,4)   and request_date between [date_start_stats] and [date_end_stats]
@@ -1011,7 +1011,7 @@ class Request extends CrmObject
                 if ($this->investigatorCanAsk() or $this->iamTheSupervisor()) {
                     unset($link);
                     $link = array();
-                    $title = "طرح سؤال";
+                    $title = "طلب معلومات من العميل";
                     $title_detailed = $title . "بخصوص : " . $displ;
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=5";
                     $link["TITLE"] = $title;
@@ -1048,7 +1048,7 @@ class Request extends CrmObject
                 if ($this->investigatorCanShareInfo() or $this->iamTheSupervisor()) {
                     unset($link);
                     $link = array();
-                    $title = "تحرير معلومات داخلية (تهم الزملاء لغاية تدريبهم أو مساعدنهم أو غير ذلك)";
+                    $title = "تحرير معلومات داخلية (تهم الزملاء لغاية تدريبهم أو مساعدتهم أو غير ذلك)";
                     $title_detailed = $title . "بخصوص : " . $displ;
                     $link["URL"] = "main.php?Main_Page=afw_mode_edit.php&cl=Response&currmod=crm&sel_request_id=$my_id&sel_response_type_id=7";
                     $link["TITLE"] = $title;
