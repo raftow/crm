@@ -1109,7 +1109,7 @@ class CrmRequestAfwStructure
 			'FGROUP' => 'survey',  'STEP' => 4,
 			'SHORTNAME' => 'opened',
 			'SEARCH' => true,
-			'QSEARCH' => false,
+			'QSEARCH' => true,
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'EDIT' => true,

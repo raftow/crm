@@ -2829,7 +2829,7 @@ div.hzm_data_ul_cl_files>ul.smooth-dots {
     min-height: 150px !important;
 }
 
-.download-png {
+.download-png, .download-jpg {
     background-image: url(../../lib/images/camera.png);
     background-position-x: center;
     background-size: auto;

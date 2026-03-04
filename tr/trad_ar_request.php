@@ -62,6 +62,10 @@ class RequestArTranslator
 		$trad['request']['responseList'] = 'إجابة أو تعليق';
 		$trad['request']['survey'] = 'الإستبانة';
 		$trad['request']['survey_sent'] = 'تم إرسال الإستبانة';
+		$trad['request']['survey_sent.YES'] = 'نعم';
+		$trad['request']['survey_sent.NO'] = 'لم يتم إعداد النموذج بعد';
+		$trad['request']['survey_sent.EUH'] = 'تم إعداد النموذج ولم يتم الإرسال بعد';
+
 		$trad['request']['survey_token'] = 'توكن الإستبانة';
 
 		$trad['request']['survey_opened'] = 'تمت المشاركة في الإستبانة';

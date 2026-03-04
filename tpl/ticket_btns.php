@@ -38,15 +38,7 @@ else
                 <a href='i.php?cn=crm&mt=complete_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print missed'>استكمال البيانات / المرفقات</div></a>
         </div>
         <?php 
-        }
-        elseif($ticketObj->customerCanComment())
-        {
-        ?>                                        
-        <div class='hzm_data_prop'>
-                <a href='i.php?cn=crm&mt=comment_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print'>تعليق</div></a>
-        </div>
-        <?php 
-        }
+        }        
         elseif($ticketObj->isDraft())
         {
         ?>                                        
@@ -59,6 +51,34 @@ else
         </div>
         <?php 
         }
+        else {
+                if($ticketObj->customerCanComment())
+                {
+                ?>                                        
+                <div class='hzm_data_prop'>
+                        <a href='i.php?cn=crm&mt=comment_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print'>تعليق</div></a>
+                </div>
+                <?php 
+                }
+                if($ticketObj->customerCanClose())
+                {
+                ?>                                        
+                <div class='hzm_data_prop'>
+                        <a href='i.php?cn=crm&mt=close_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print'>غلق الطلب لأجل التقييم</div></a>
+                </div>
+                <?php 
+                }
+                if($ticketObj->customerCanSurvey())
+                {
+                        $my_survey_url = $ticketObj->mySurveyUrl();
+                ?>                                        
+                <div class='hzm_data_prop'>
+                        <a href='<?php echo $my_survey_url ?>'><div class='hzm_blue hzm_print'>تقييم الخدمة</div></a>
+                </div>
+                <?php 
+                } 
+        }
+        
 
         if(!$ticketObj->isStarted() and (!$ticketObj->isCanceled()) and ($ticketObj->isSent()))
         {

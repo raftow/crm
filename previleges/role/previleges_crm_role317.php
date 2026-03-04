@@ -44,11 +44,11 @@
       104504 => 
       array (
         'id' => '104504',
-        'code' => 'f1-a-tb3569-xxxxx/stats',
+        'code' => 'f1-a-tbsurvey/stats',
         'level' => '999',
         'menu_name_ar' => 'إحصائيات رضى العملاء',
         'menu_name_en' => 'customers satisfaction statistics',
-        'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=Request&currmod=crm&stc=gs00xxx',
+        'page' => 'main.php?Main_Page=afw_mode_stats.php&cl=SurveyToken&currmod=crm&stc=st001',
         'css' => 'bf',
         'icon' => 'bficon-104504 bfc-',
       ),

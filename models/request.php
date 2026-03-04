@@ -1276,6 +1276,38 @@ class Request extends CrmObject
     }
 
 
+    public function surveyHasBeenSent() {
+        if($this->sureIs("survey_sent") or $this->sureIs("survey_opened")) return $this->loadMyToken();
+        return false;
+    }
+
+    public function customerHasSurveyed() {
+        /**
+         * @var SurveyToken $surveySent
+         */
+        $surveySent = $this->surveyHasBeenSent();
+        if(!$surveySent) return false;
+        return $this->sureIs("survey_opened") and $surveySent->sureIs("attribute_yn_1");
+    }
+
+    public function customerCanSurvey()
+    {
+        $status_reel_id = self::statusFather(intval($this->getVal("status_id")));
+        if (($status_reel_id == self::$REQUEST_STATUS_CLOSED) and 
+            ($this->surveyHasBeenSent()) and 
+            (!$this->customerHasSurveyed())) return true;
+
+        return false;
+    }
+
+    public function customerCanClose()
+    {
+        $status_reel_id = self::statusFather(intval($this->getVal("status_id")));
+        if ($status_reel_id == self::$REQUEST_STATUS_DONE) return true;
+
+        return false;
+    }
+
     public function customerCanComment()
     {
         $status_reel_id = self::statusFather(intval($this->getVal("status_id")));
@@ -1421,6 +1453,12 @@ class Request extends CrmObject
         if (($attribute == "easy_fast") or ($attribute == "service_satisfied") or ($attribute == "pb_resolved") or ($attribute == "general_satisfaction")) {
             return $this->estOpened();
         }
+
+        if (($attribute == "tokenList")) {            
+            return ($this->customerHasSurveyed());    // count($this->get($attribute))>0
+        }
+
+        
 
         return parent::attributeIsApplicable($attribute);
     }
@@ -1971,7 +2009,7 @@ class Request extends CrmObject
                 {
                     if($new_status_id == self::$REQUEST_STATUS_CLOSED)
                     {
-                        $resoObj->other_infos["survey_url"] = CrmLimesurvey::survey ClosedTicket($this);                        
+                        $resoObj->other_infos["survey_url"] = CrmCustomerSurvey::survey ClosedTicket($this);                        
                     }
                 }
                 */
@@ -2005,7 +2043,7 @@ class Request extends CrmObject
         $token = $this->getVal("survey_token");
         if (!$token) {
             $mpid_value = 100000 + $this->id;
-            $token = CrmLimesurvey::proposeToken($mpid_value, $length = 15);
+            $token = CrmCustomerSurvey::proposeToken($mpid_value, $length = 15);
         }
         $this->createTokenForMe($token, $forceUpdateData = true);
 
@@ -2113,10 +2151,7 @@ class Request extends CrmObject
         $my_survey_url = null;
         if ($new_status_id == self::$REQUEST_STATUS_CLOSED) {
             // AfwSession::pushInformation("rafik-debugg : creating survey token"); 
-            $survey_url = CrmLimesurvey::surveyClosedTicket($this, $lang, false);
-            $technicals_log .= "<br> > survey Closed Ticket done : $survey_url";
-            if ((!$objme) or (!$objme->isSuperAdmin())) $survey_url = null;
-
+            list($error, $sucess) = CrmCustomerSurvey::surveyClosedTicket($this, $lang, false);
             // AfwSession::pushInformation("rafik-debugg : survey token created"); 
         } else {
             $survey_url = null;
@@ -2133,9 +2168,9 @@ class Request extends CrmObject
         ) {
             $success_message = $this->tm("status changed to", $lang) . " \"$status_decoded\"";
 
-            if ($fromCustomer and ($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES)) {
+            /*if ($fromCustomer and ($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES)) {
                 throw new AfwRuntimeException("from customer strange status change old_status=$old_status, responseId=$responseId : $success_message");
-            }
+            }*/
         } else {
             $success_message = $this->tm("request sent for investigation", $lang);
         }
@@ -2758,16 +2793,16 @@ class Request extends CrmObject
     public function linkWithSurveyPlateform($lang = "ar")
     {
         $error = "";
-        $return = "";
+        $sucess = "";
         try {
-            $return = CrmLimesurvey::surveyClosedTicket($this, $lang);
+            list($error, $sucess) = CrmCustomerSurvey::surveyClosedTicket($this, $lang, true);
         } catch (Exception $e) {
             $error = "Exception : " . $e->getFile() . "::" . $e->getLine() . " : message : " . $e->getMessage() . " Trace : " . $e->getTraceAsString();
         } catch (Error $e) {
             $error = "Error     : " . $e->getFile() . "::" . $e->getLine() . " : message : " . $e->getMessage() . " Trace : " . $e->getTraceAsString();
         }
 
-        return [$error, $return, ""];
+        return [$error, $sucess, ""];
     }
 
 
@@ -3057,8 +3092,8 @@ class Request extends CrmObject
 
     public function calcSurvey_icon()
     {
-
-        if ($this->sureIs("survey_sent")) {
+        $url = "";
+        if ($this->sureIs("survey_sent") or $this->sureIs("survey_opened")) {
             $url = $this->mySurveyUrl();
             if ($this->sureIs("survey_opened")) {
                 $label = "تمت المشاركة في الاستبانة";
@@ -3066,11 +3101,13 @@ class Request extends CrmObject
             } else {
                 $label = "تم فقط ارسال الاستبانة";
                 $icon = "survey-not-opened";
-            }
-            return "<a target='_crm_survey' href='$url'><img lbl='no-ajax' src='../lib/images/$icon.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='$label' data-original-title='$label' class='red-tooltip'></a>";
+            }            
         } else {
-            return "";
+            $label = "لم يتم بعد ارسال الاستبانة";
+                $icon = "survey-not-sent";
         }
+
+        return "<a target='_crm_survey' href='$url'><img lbl='no-ajax' src='../lib/images/$icon.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='$label' data-original-title='$label' class='red-tooltip'></a>";
     }
 
     public function beforeMaj($id, $fields_updated)

@@ -984,6 +984,56 @@ class CrmController extends AfwController
         }
 
 
+        /******************************** close_request action ********************************************** */
+
+        public function prepareClose_request($request)
+        {
+                $custom_scripts = $this->prepareStandard($request);
+
+                return $custom_scripts;
+        }
+
+        public function close_request($request)
+        {
+                foreach ($request as $key => $value) $$key = $value;
+                $data = array();
+
+                if ($rid) {
+
+                        $theCustomer = AfwSession::getCustomerConnected();
+                        if (!$theCustomer) {
+                                $login_module = AfwSession::config("login_module", "crm");
+                                $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
+                                return;
+                        }
+
+                        $data["id"] = $rid;
+                        $data["obj"] = Request::loadById($data["id"]);
+                        if (!$data["obj"]) {
+                                $this->renderError("action aborted ! no request object to complete");
+                                return;
+                        }
+
+                        if ($data["obj"]->getVal("customer_id") != $theCustomer->id) {
+                                $this->renderError("action aborted ! This ticket is not yours");
+                                return;
+                        }
+
+                        if (!$data["obj"]->isDone()) {
+                                $this->renderError("action aborted ! This ticket is not yet ready to be closed");
+                                return;
+                        }
+
+
+                        $data["obj"]->closeRequest($lang, "customer");
+                        CrmCustomerSurvey::surveyClosedTicket($data["obj"], $lang, true);
+
+                        
+                        // call the view 1
+                        $this->view_request($request);
+                }
+        }
+
 
         /******************************** comment_request action ********************************************** */
 

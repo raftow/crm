@@ -18,7 +18,7 @@ class SurveyToken extends CrmObject
     public static $STATS_CONFIG = array(
         "st001" => array(
             "PARAMS" => ["sid"],
-            "STATS_DATA_FROM" => ['class'=>'Survey', 'method'=>'statsData'], // 
+            "STATS_DATA_FROM" => ['class' => 'Survey', 'method' => 'statsData'], // 
             "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
             "FOOTER_TITLES" => true,
             "SHOW_PIE" => "FOOTER",
@@ -43,47 +43,39 @@ class SurveyToken extends CrmObject
     protected function beforeSetAttribute($attribute, $newvalue)
     {
         $oldvalue = $this->getVal($attribute);
-        if($attribute=="attribute_yn_1" and $newvalue=="Y")            
-        {
+        if ($attribute == "attribute_yn_1" and $newvalue == "Y") {
             $reqObj = $this->getMyRequest();
-            if($reqObj)
-            {
+            if ($reqObj) {
                 $reqObj->set("survey_opened", $newvalue);
                 $reqObj->commit();
             }
-            
         }
-        
+
         /*
           if($attribute=="attribute_enum_1" and $oldvalue and !$newvalue)
           {
            throw new AfwRuntimeException("before set attribute $attribute from '$oldvalue' to '$newvalue'");
           }
-        */  
+        */
         return true;
     }
 
-    public static function loadByToken($survey_token,$create_obj_if_not_found=false)
+    public static function loadByToken($survey_token, $create_obj_if_not_found = false)
     {
-       $obj = new SurveyToken();
-       $obj->select("survey_token",$survey_token);
+        $obj = new SurveyToken();
+        $obj->select("survey_token", $survey_token);
 
-       if($obj->load())
-       {
-            if($create_obj_if_not_found) $obj->activate();
+        if ($obj->load()) {
+            if ($create_obj_if_not_found) $obj->activate();
             return $obj;
-       }
-       elseif($create_obj_if_not_found)
-       {
-            $obj->set("survey_token",$survey_token);
+        } elseif ($create_obj_if_not_found) {
+            $obj->set("survey_token", $survey_token);
 
             $obj->insertNew();
-            if(!$obj->id) return null; // means beforeInsert rejected insert operation
+            if (!$obj->id) return null; // means beforeInsert rejected insert operation
             $obj->is_new = true;
             return $obj;
-       }
-       else return null;
-       
+        } else return null;
     }
 
     public function getUrl()
@@ -96,16 +88,16 @@ class SurveyToken extends CrmObject
         return Request::loadByToken($this->getVal("survey_token"));
     }
 
-    
+
 
     public static function getTokenUrl($token)
     {
-        $crm_site_url = AfwSession::config("crm_site_url","");
-        return "$crm_site_url/s.php?t=".$token;
+        $crm_site_url = AfwSession::config("crm_site_url", "");
+        return "$crm_site_url/s.php?t=" . $token;
     }
 
-    
-    
+
+
     public function additional($field_name, $col_struct)
     {
         // if (($field_name == "dragDropDiv") and ($col_struct == "step")) return 11;
@@ -119,7 +111,7 @@ class SurveyToken extends CrmObject
 
         $col_struct = strtolower($col_struct);
         if ($col_struct == "obsolete") {
-            return (!Survey::isQuestionEnabled(1,$field_type,$field_order));
+            return (!Survey::isQuestionEnabled(1, $field_type, $field_order));
         }
         if ($col_struct == "required") {
             return !$params["optional"];
@@ -199,9 +191,7 @@ class SurveyToken extends CrmObject
         return 0;
     }
 
-    public function getDisplay($lang = "ar")
-    {
-    }
+    public function getDisplay($lang = "ar") {}
 
     protected function getOtherLinksArray(
         $mode,
@@ -329,18 +319,18 @@ class SurveyToken extends CrmObject
     public function noResponseIDoNotKnow()
     {
         $reqObj = Request::loadByToken($this->getVal("survey_token"));
-        if($reqObj and ((!$this->getVal("customer_id")) or 
-                        (!$this->getVal("survey_id")) or 
-                        (!$this->getVal("attribute_string_2")))
-                        )
-        {
+        if (
+            $reqObj and ((!$this->getVal("customer_id")) or
+                (!$this->getVal("survey_id")) or
+                (!$this->getVal("attribute_string_2")))
+        ) {
             // throw new AfwRuntimeException("reqObj need resetSurvey : ".var_export($reqObj, true));
             $reqObj->resetSurveyForMe();
         }
         return true;
     }
 
-    
+
 
     public function switcherConfig($col, $auser = null)
     {
@@ -350,7 +340,7 @@ class SurveyToken extends CrmObject
 
         return [$switcher_authorized, $switcher_title, $switcher_text];
     }
-    
+
     public function calcDate_start_satisfaction()
     {
         return self::calcCrmDate_start_satisfaction();
@@ -378,32 +368,53 @@ class SurveyToken extends CrmObject
             return (!$this->additional($attribute, "OBSOLETE"));
         }
 
-        
+
         return parent::attributeIsApplicable($attribute);
     }
 
     public function getAttributeLabel($attribute, $lang = 'ar', $short = false)
     {
-            if (AfwStringHelper::stringStartsWith($attribute, "attribute_")) {
-                    return Survey::getQuestionLabel(1, $attribute, $lang);
-            }
-            // die("calling getAttributeLabel($attribute, $lang, short=$short)");
-            return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+        if (AfwStringHelper::stringStartsWith($attribute, "attribute_")) {
+            return Survey::getQuestionLabel(1, $attribute, $lang);
+        }
+        // die("calling getAttributeLabel($attribute, $lang, short=$short)");
+        return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+    }
+
+    public function isFilled() {
+        $val_1 = $this->getVal("attribute_enum_1");
+        $val_2 = $this->getVal("attribute_enum_2");
+        $val_3 = $this->getVal("attribute_enum_3");
+        $val_4 = $this->getVal("attribute_enum_4");
+
+        $sum = 0;
+
+        if($val_1>0) $sum++;
+        if($val_2>0) $sum++;
+        if($val_3>0) $sum++;
+        if($val_4>0) $sum++;
+
+        return ($sum>=2);
     }
 
 
-    public function saveFormHidden($lang="ar")
+    public function saveFormHidden($lang = "ar")
     {
         $class_hidden = "";
         $message_hidden = "";
 
-        if($this->sureIs("attribute_yn_1"))
-        {
-            $class_hidden = "btn-hidden";
-            $message_hidden = "لا يمكن المشاركة مرة ثانية حيث سبقت المشاركة";
+        if ($this->sureIs("attribute_yn_1")) {
+            if ($this->isFilled()) {
+                $class_hidden = "btn-hidden";
+                $message_hidden = "لا يمكن المشاركة مرة ثانية حيث سبقت المشاركة";
+            } else {
+                $this->set("attribute_yn_1", "N");
+                $this->commit();
+            }
+            
         }
-        else
-        {
+        
+        if ($this->isNot("attribute_yn_1")) {            
             $class_hidden = "";  // because done by JS switcher
             $message_hidden = "يرجى تأكيد الموافقة على شرط مشاركة البيانات مع الجهات الحكومية";
         }

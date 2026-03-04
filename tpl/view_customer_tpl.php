@@ -69,64 +69,7 @@
                                                 <?php echo $theCustomer->getVal("idn"); ?> 
                                                 </div>
                                         </div>
-                                        <?php
-                                        if($theCustomer->is("survey_sent") and $theCustomer->getVal("survey_token"))
-                                        {
-                                                $survey_btn_title = "استبيان تقييم الخدمة";
-                                                if($theCustomer->is("survey_opened"))
-                                                {
-                                        ?> 
-                                        
-                                        <div class="row crm_data title_crm">
-                                                <label>استبيان رضا العميل</label>                                                
-                                        </div>
-                                        <div class="row crm_data survey">
-                                                <label>سرعة التواصل</label>                                                
-                                                <div class='hzm_data_prop survey easy_fast<?php echo $theCustomer->getVal("easy_fast"); ?>'>
-                                                        <?php echo $theCustomer->showAttribute("easy_fast"); ?> 
-                                                </div>
-                                        </div>
-                                        <div class="row crm_data survey">
-                                                <label>رضا العميل</label>                                                
-                                                <div class='hzm_data_prop survey service_satisfied<?php echo $theCustomer->getVal("service_satisfied"); ?> '>
-                                                        <?php echo $theCustomer->showAttribute("service_satisfied"); ?> 
-                                                </div>
-                                        </div>
-                                        <div class="row crm_data survey">
-                                                <label>تم حل المشكل</label>                                                
-                                                <div class='hzm_data_prop survey pb_resolved<?php echo $theCustomer->getVal("pb_resolved"); ?>'>
-                                                        <?php echo $theCustomer->showAttribute("pb_resolved"); ?> 
-                                                </div>
-                                        </div>
-                                        <?php 
-                                                        if(($theCustomer->isNot("service_satisfied")) or ($theCustomer->isNot("pb_resolved")))
-                                                        {
-                                                                $survey_btn_title = "إعادة تقييم الخدمة";
-                                        ?>
-                                                <div class="btn_container taqib">
-                                                        <div class='content_body contact'>   
-                                                                        <a class='crm question thin-btn' href='/crm/i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=<?php echo $theCustomer->getVal("request_type_id"); ?>&pt=<?php echo $theCustomer->id; ?>'>تقديم طلب تعقيب</a>                                                                
-                                                        </div>
-                                                </div>
-                                        <?php 
-                                                        }                                                        
-                                                }
 
-                                                if(true)
-                                                {
-                                                        $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
-                                                        $lime_survey_domain = AfwSession::config('lime_survey_domain', 'survey.company');
-                                                        $limesurvey_url = AfwSession::config('limesurvey_url', "http://$lime_survey_domain/surv/i.php");
-                                        ?>
-                                        <div class="btn_container survey">
-                                                <div class='content_body contact'>   
-                                                   <a class='crm response thin-btn' target='_lmsurv' href='<?php echo $limesurvey_url?>/<?php echo $crm_survey_id?>?token=<?php echo $theCustomer->getVal("survey_token"); ?>&lang=ar'><?php echo $survey_btn_title ?> </a>
-                                                </div>
-                                        </div>
-                                        <?php
-                                                } 
-                                        }
-                                        ?>
 
 
                                 

@@ -1,6 +1,6 @@
 <?php
 
-class CrmLimesurvey
+class CrmCustomerSurvey
 {
     /*
     public static function surveyCustomerSatisfactionAndBackToCrm2($send_limit = 100)
