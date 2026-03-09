@@ -87,7 +87,7 @@ class CrmCustomerSurvey
      * @param Request $ticketObj
      */
 
-    public static function surveyClosedTicket($ticketObj, $lang = "ar", $sendSMS=false)
+    public static function surveyClosedTicket($ticketObj, $lang = "ar", $sendSMS=false, $force=false)
     {
         if(!$ticketObj->getVal("survey_token"))
         {
@@ -222,10 +222,11 @@ class CrmCustomerSurvey
         }
         else
         {
-            if(!$ticketObj->sureIs("survey_sent"))
+            if($force or (!$ticketObj->sureIs("survey_sent")))
             {
                 $tokenObj = $ticketObj->createTokenForMe($token);      
-                $return_sucess .= "\nsurvey token generated : ".$tokenObj->getVal("survey_token");                          
+                if($tokenObj->is_new) $return_sucess .= "\nsurvey token generated : ".$tokenObj->getVal("survey_token");                          
+                $return_sucess .= "\nsurvey token already exists : ".$tokenObj->getVal("survey_token");                          
 
                 if($sendSMS)
                 {

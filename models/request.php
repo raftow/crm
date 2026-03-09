@@ -2602,6 +2602,14 @@ class Request extends CrmObject
     }
 
 
+    public static function getQsearchDefaultOptions() {
+        $options = [];
+        $options["records-in-page"] = 500;
+        $all = AfwLanguageHelper::translateKeyword("ALL");
+        $options["lengthMenu"] = '[[50, 100, 200, 300, 400, 500, -1], [50, 100, 200, 300, 400, 500, "'.$all.'"]]';
+    
+        return $options;
+    }
    
 
     protected function getPublicMethods()
@@ -2647,12 +2655,13 @@ class Request extends CrmObject
                 );
                 
 
-                if ($this->isClosed()) {
+                if ((!$this->id) or ($this->isClosed())) {
                     $color = "red";
-                    $title_ar = "الربط مع منصة استبيان";
+                    $title_ar = "تجهيز وارسال الاستبيان";
                     $pbms["xcc13A"] = array(
                         "METHOD" => "linkWithSurveyPlateform",
                         "COLOR" => $color,
+                        "EXECUTE-IN-RETRIEVE-MODE" => true,
                         "LABEL_AR" => $title_ar,
                         "PUBLIC" => true,
                         "BF-ID" => "",
@@ -2795,7 +2804,7 @@ class Request extends CrmObject
         $error = "";
         $sucess = "";
         try {
-            list($error, $sucess) = CrmCustomerSurvey::surveyClosedTicket($this, $lang, true);
+            list($error, $sucess) = CrmCustomerSurvey::surveyClosedTicket($this, $lang, true, true);
         } catch (Exception $e) {
             $error = "Exception : " . $e->getFile() . "::" . $e->getLine() . " : message : " . $e->getMessage() . " Trace : " . $e->getTraceAsString();
         } catch (Error $e) {
