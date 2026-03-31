@@ -81,6 +81,13 @@
 							'RETRIEVE' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  'STEP' => 1,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
+					'unit_token' => array('SHOW' => true,  
+							'CSS' => 'width_pct_25',  
+							'CATEGORY' => 'FORMULA',  
+							'TYPE' => 'TEXT', 'SIZE' => 16, 'EDIT' => true,  'READONLY' => true,  'HIDE_IF_NEW' => true,  
+							'RETRIEVE' => true,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  'STEP' => 1,  
+							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
+
 			'requests_nb' => array('SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => true,  
 				'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32, 'CSS' => 'width_pct_25', 
 				'MANDATORY' => true,  'UTF8' => false,  
@@ -115,7 +122,9 @@
 							),
 
 
-							'archive_date' => array('CATEGORY' => 'FORMULA', 'TYPE' => "DATE", ), 			
+							'archive_date' => array('CATEGORY' => 'FORMULA', 'TYPE' => "DATE", ), 
+							
+							
 
 
 					'currentRequests' => array('STEP' => 3,  

@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table crm_activity : crm_activity - نشاطات الجهات 
+// ----             auto generated php class of table crm_activity : crm_activity - نشاطات الوحدات 
 // ------------------------------------------------------------------------------------
 
                 

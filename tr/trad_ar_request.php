@@ -9,6 +9,9 @@ class RequestArTranslator
 		$trad['request']['request.single'] = 'طلب الكتروني';
 		$trad['request']['request.new'] = 'جديد';
 		$trad['request']['request'] = 'الطلبات الالكترونية';
+		
+
+		$trad['request']['request_subject'] = "أصناف الطلبات";
 		$trad['request']['request_title'] = 'موضوع الطلب';
 		$trad['request']['lang_id'] = 'لغة الطلب';
 		$trad['request']['request_for'] = 'متعلق الطلب';
@@ -91,7 +94,7 @@ class RequestArTranslator
 		$trad['request']['general_satisfaction'] = 'الرضا عموما عن خدمات المؤسسة';
 		$trad['request']['customer_id'] = 'العميل صاحب الطلب';
 
-		$trad['request']['request_subject'] = 'مواضيع الطلبات';
+		// $trad['request']['request_subject'] = 'مواضيع الطلبات';
 		$trad['request']['satisfaction'] = 'نسبة رضا العملاء';
 		$trad['request']['tasks'] = 'مهام بالانتظار';
 
@@ -138,9 +141,12 @@ class RequestArTranslator
 		$trad['request']['days_delay.short'] = 'أيام التأخير';
 		$trad['request']['status_action_enum'] = 'آخر اجراء على الطلب';
 
+		
 		$trad['request']['days_avg'] = 'متوسط مدة الرد (بالأيام)';
 		$trad['request']['response_avg'] = 'متوسط مدة بدأ العمل على الطلب (بالأيام)';
 
+		
+		$trad['request']['nb_responded'] = 'عدد التذاكر التي تم الرد عليها';
 		$trad['request']['nb_closed'] = 'عدد التذاكر المغلقة';
 		$trad['request']['nb_with'] = 'عدد التذاكر المعقب عليها';
 		$trad['request']['nb_without'] = 'عدد التذاكر الغير معقب عليها';
@@ -160,6 +166,23 @@ class RequestArTranslator
 		$trad['request']['customer'] = "عند العميل";
 		$trad['request']['supervisor'] = "عند المشرف";
 		$trad['request']['employee'] = "عند الموظف";
+
+
+		$trad['request']['general_stats'] = "إحصائيات عامة";
+		$trad['request']['monitoring'] = "المراقبة";
+		
+
+		
+		$trad['request']['tickets-late'] = 'عدد التذاكر المتأخرة';
+		$trad['request']['tickets-total'] = 'عدد التذاكر الإجمالي';
+		$trad['request']['tickets'] = 'عدد التذاكر للفترة المحددة';
+
+		$trad['request']['survey-sent'] = 'استبانات مرسلة';
+		$trad['request']['survey-opened'] = 'مشاركة في الاستبانات';
+
+		$trad['request']['period'] = 'فترة';
+		$trad['request']['day(s)'] = 'يوم';
+
 		return $trad;
 	}
 

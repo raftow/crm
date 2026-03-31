@@ -28,7 +28,7 @@ class CrmEmployeeEnTranslator{
         // steps
 		$trad["crm_employee"]["step1"] = "البيانات العامة";
 		$trad["crm_employee"]["step2"] = "الطلبات المسندة";
-		$trad["crm_employee"]["step3"] = "جهات المتابعة";
+		$trad["crm_employee"]["step3"] = "وحدات المتابعة";
         return $trad;
     }
 

@@ -26,12 +26,14 @@ class CrmEmpRequestArTranslator{
 
         $trad["crm_emp_request"]["log_text"] = "تفاصيل تقنية";
         $trad["crm_emp_request"]["error_text"] = "نص الخطأ";
-        $trad["crm_emp_request"]["crm_orgunit_id"] = "جهة خدمة العملاء";
+        $trad["crm_emp_request"]["crm_orgunit_id"] = "وحدة خدمة العملاء";
         $trad["crm_emp_request"]["crm_employee_id"] = "حساب موظف خدمة العملاء";
 
         $trad["crm_emp_request"]["step1"] = "البيانات العامة";
         $trad["crm_emp_request"]["step2"] = "تعيين الموظف";
         $trad["crm_emp_request"]["step3"] = "نتيجة الاستيراد";
+
+        $trad["crm_emp_request"]["unit_token"] = "الرمز السري للوحدة الخاصة"; 
         
     
         return $trad;

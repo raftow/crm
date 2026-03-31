@@ -414,15 +414,18 @@ class CrmOrgunit extends CrmObject{
             }    
 	}
         
+        public function calcUnit_token($what="value")
+        {
+                return substr(md5($this->id),1,6);
+        }
 
-
-        public function calcNew_requests_count()
+        public function calcNew_requests_count($what="value")
         {
                 // all requests count
                 return self::calcRequests_countFor($only_done=false, $ongoing_only=false, $new_only=true, $aborted_only=false);
         }
 
-        public function calcRequests_count()
+        public function calcRequests_count($what="value")
         {
                 // all requests count
                 return self::calcRequests_countFor($only_done=false, $ongoing_only=true, $new_only=false, $aborted_only=false);

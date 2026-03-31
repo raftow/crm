@@ -9,8 +9,8 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["crmemployee.new"] = "جديد";
         $trad["crm_employee"]["crm_employee"] = "المنسقين لدى خدمة العملاء";
         $trad["crm_employee"]["crm_employee.short"] = "المنسقين";
-        $trad["crm_employee"]["orgunit_id"] = "الجهة المتابعة";
-        $trad["crm_employee"]["crm_orgunit_id"] = "الجهة التابع لها";
+        $trad["crm_employee"]["orgunit_id"] = "الوحدة المتابعة";
+        $trad["crm_employee"]["crm_orgunit_id"] = "الوحدة التابع لها";
         
         $trad["crm_employee"]["service_category_mfk"] = "المسؤوليات المناطة به";
         $trad["crm_employee"]["service_category_mfk_tooltip"] = "أصناف الخدمات  التي يقدمها";
@@ -33,7 +33,7 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["assignedRequests"] = "الطلبات المسندة";
         $trad["crm_employee"]["currentRequests"] = "الطلبات الحالية";
         $trad["crm_employee"]["finishedRequests"] = "الطلبات المنتهية";
-        $trad["crm_employee"]["allOrgunitList"] = "الجهات التي يعمل معها";
+        $trad["crm_employee"]["allOrgunitList"] = "الوحدات التي يعمل معها";
 
 
         $trad["crm_employee"]["active"] = "نشط";
@@ -42,7 +42,7 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["approved"] = "منسق معتمد"; 
         $trad["crm_employee"]["step1"] = "البيانات العامة";
         $trad["crm_employee"]["step2"] = "الطلبات المسندة";
-        $trad["crm_employee"]["step3"] = "جهات المتابعة";
+        $trad["crm_employee"]["step3"] = "وحدات المتابعة";
     
         return $trad;
     }

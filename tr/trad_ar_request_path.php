@@ -2,7 +2,7 @@
 	$trad["request_path"]["requestpath.single"] = "مسار طلب الكتروني";
 	$trad["request_path"]["requestpath.new"] = "جديد(ة)";
 	$trad["request_path"]["request_path"] = "مسارات الطلبات الالكترونية";
-	$trad["request_path"]["orgunit_id"] = "الجهة المعنية بالمسار";
+	$trad["request_path"]["orgunit_id"] = "الوحدة المعنية بالمسار";
 	// $trad["request_path"]["program_id"] = "برنامج خدمة العملاء";
 	$trad["request_path"]["request_type_mfk"] = "أنواع الطلبات الالكترونية";
 	$trad["request_path"]["prio_min"] = "أولوية الطلب أكبر أو يساوي";

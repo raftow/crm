@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table crm_orgunit : crm_orgunit - جهات المتابعة و إعداداتها 
+// ----             auto generated php class of table crm_orgunit : crm_orgunit - وحدات المتابعة و إعداداتها 
 // ------------------------------------------------------------------------------------
 // alter table ".$server_db_prefix."crm.crm_employee add   admin char(1) DEFAULT NULL  after service_mfk;
 // update ".$server_db_prefix."crm.crm_employee set admin = 'N';
@@ -591,7 +591,7 @@ class CrmEmployee extends CrmObject
                         {
                                 $lang = AfwSession::getSessionVar("lang");
                                 if(!$lang) $lang = "ar";
-                                return "<div class='crm-warning'>".AfwLanguageHelper::tt("معين في أكثر من جهة متابعة",$lang)."</div>";
+                                return "<div class='crm-warning'>".AfwLanguageHelper::tt("معين في أكثر من وحدة متابعة",$lang)."</div>";
                         }
                 }
                 else
@@ -602,7 +602,7 @@ class CrmEmployee extends CrmObject
                         {
                                 $lang = AfwSession::getSessionVar("lang");
                                 if(!$lang) $lang = "ar";
-                                return "<div class='crm-warning'>".AfwLanguageHelper::tt("غير معين في جهة متابعة",$lang)."</div>";
+                                return "<div class='crm-warning'>".AfwLanguageHelper::tt("غير معين في وحدة متابعة",$lang)."</div>";
                         }
                 }
         }

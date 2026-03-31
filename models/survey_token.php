@@ -40,6 +40,41 @@ class SurveyToken extends CrmObject
         CrmSurveyTokenAfwStructure::initInstance($this);
     }
 
+
+    public function beforeMaj($id, $fields_updated)
+    {
+        if($this->getVal("survey_id")==1)
+        {
+            
+        }
+            if ($fields_updated["attribute_enum_4"]) {
+                    $service_satisfied = null;
+                    if($this->getVal("attribute_enum_4")>=4) {
+                        $service_satisfied = "Y";
+                    }
+                    elseif($this->getVal("attribute_enum_4")<=2) {
+                        $service_satisfied = "N";
+                    }
+
+                    if($service_satisfied) {
+                        $token = $this->getVal("survey_token");
+                        $reqObj = Request::loadByToken($token);
+                        if($reqObj) {
+                            $reqObj->set("service_satisfied", $service_satisfied);
+                            $reqObj->commit();
+                        }
+                    }
+            }
+
+            if (!intval($this->getVal("new_status_id"))) {
+                    $this->calcNewStatusNeeded();
+            } else {
+                    // throw new AfwRuntimeException("see = this->getVal(new_status_id)=".$this->getVal("new_status_id"));
+            }
+
+            return true;
+    }
+
     protected function beforeSetAttribute($attribute, $newvalue)
     {
         $oldvalue = $this->getVal($attribute);

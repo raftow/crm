@@ -1,6 +1,6 @@
 <?php
 // ------------------------------------------------------------------------------------
-// ----             auto generated php class of table crm_orgunit : crm_orgunit - جهات المتابعة و إعداداتها 
+// ----             auto generated php class of table crm_orgunit : crm_orgunit - وحدات المتابعة و إعداداتها 
 // ------------------------------------------------------------------------------------
 // alter table ".$server_db_prefix."crm.crm_emp_request add   admin char(1) DEFAULT NULL  after service_mfk;
 // update ".$server_db_prefix."crm.crm_emp_request set admin = 'N';
@@ -164,46 +164,54 @@ class CrmEmpRequest extends CrmObject
 
         protected function getPublicMethods()
         {
-
+                $objme = AfwSession::getUserConnected();
+                
                 $pbms = array();
                 $employee_id = $this->getVal("employee_id");
-                if ($employee_id) {
-                        $methodConfirmationWarningEn = "You formally agree that this employee belongs to this organization";
-                        $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");                        
+                if ($employee_id and $objme) {
+                        if(!$this->alreadyApproved()) {
+                                $methodConfirmationWarningEn = "You formally agree that this employee belongs to this organization";
+                                $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");                        
 
-                        $methodConfirmationQuestionEn = "Are you sure you want to do this approve ?";
-                        $methodConfirmationQuestion = $this->tm($methodConfirmationQuestionEn, "ar");
-                        $color = "blue";
-                        $title_ar = "تعيين هذا الموظف منسقا على هذه الجهة وعكس صلاحياته";
-                        // else $title_ar = "عكس التحديثات على الصلاحيات  والبيانات";
-                        $pbms["Ac122B"] = array(
-                                "METHOD" => "approveAndUpdateDataAndRoles",
-                                "COLOR" => $color,
-                                "LABEL_AR" => $title_ar,
-                                "PUBLIC" => true,
-                                "BF-ID" => "",
-                                'CONFIRMATION_NEEDED' => true,
-                                'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
-                                'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
-                        );
+                                $methodConfirmationQuestionEn = "Are you sure you want to do this approve ?";
+                                $methodConfirmationQuestion = $this->tm($methodConfirmationQuestionEn, "ar");
+                                $color = "blue";
+                                $title_ar = "تعيين هذا الموظف منسقا على هذه الجهة وتحديث صلاحياته";
+                                // else $title_ar = "عكس التحديثات على الصلاحيات  والبيانات";
+                                $pbms["Ac122B"] = array(
+                                        "METHOD" => "approveAndUpdateDataAndRoles",
+                                        "COLOR" => $color,
+                                        "LABEL_AR" => $title_ar,
+                                        "PUBLIC" => true,
+                                        "BF-ID" => "",
+                                        'CONFIRMATION_NEEDED' => true,
+                                        'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
+                                        'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
+                                );
+                        }
+                        
                 
-                        $methodConfirmationWarningEn = "This action can not be canceled !";
-                        $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");
 
-                        $methodConfirmationQuestionEn = "Are you sure you want to reset the password ?";
-                        $methodConfirmationQuestion = $this->tm($methodConfirmationQuestionEn, "ar");
-                        $color = "green";
-                        $title_ar = "إعادة انشاء كلمة مرور مؤقتة";
-                        $pbms["xc123B"] = array(
-                                "METHOD" => "temporaryPassword",
-                                "COLOR" => $color,
-                                "LABEL_AR" => $title_ar,
-                                "PUBLIC" => true,
-                                "BF-ID" => "",
-                                'CONFIRMATION_NEEDED' => true,
-                                'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
-                                'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
-                        );
+                        if($objme->isAdmin()) {
+                                $methodConfirmationWarningEn = "This action can not be canceled !";
+                                $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");
+
+                                $methodConfirmationQuestionEn = "Are you sure you want to reset the password ?";
+                                $methodConfirmationQuestion = $this->tm($methodConfirmationQuestionEn, "ar");
+                                $color = "green";
+                                $title_ar = "إعادة انشاء كلمة مرور مؤقتة";
+                                $pbms["xc123B"] = array(
+                                        "METHOD" => "temporaryPassword",
+                                        "COLOR" => $color,
+                                        "LABEL_AR" => $title_ar,
+                                        "PUBLIC" => true,
+                                        "BF-ID" => "",
+                                        'CONFIRMATION_NEEDED' => true,
+                                        'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
+                                        'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
+                                );
+                        }
+                        
                 }
 
                 if (!$this->estApproved()) {
@@ -278,10 +286,16 @@ class CrmEmpRequest extends CrmObject
                 $email = $this->getVal("email");
                 $orgunit_id = $this->getVal("orgunit_id");
                 $employee_id = $this->getVal("employee_id");
+                $division_id = $this->getVal("division_id", );
+                $department_id = $this->getVal("department_id");
+                $company_id = $this->getVal("company_id");
                 $approved = $this->sureIs("approved");
 
-                if ($fields_updated["email"] and $email) {
+                $auto_approve = (($orgunit_id==$company_id) or ($orgunit_id==$department_id) or ($orgunit_id==$division_id));
+
+                if ($fields_updated["email"] and $email and $auto_approve) {
                         $this->approveAndUpdateDataAndRoles($lang, $pbm = true, $commit = false);
+                        $approved = $this->sureIs("approved");
                 }
                 
                 if ($this->sureIs("active") and $approved  and ($orgunit_id > 0) and ($employee_id > 0)) {
@@ -357,4 +371,18 @@ class CrmEmpRequest extends CrmObject
                return true;
             }    
 	}
+
+        public function alreadyApproved($returnObjects=false) {
+                $orgObj = $this->calcCrm_orgunit_id('object');
+                $emplObj = $this->calcCrm_employee_id('object');
+
+                if($returnObjects) return [$orgObj, $emplObj];
+                return ($orgObj and $emplObj);
+        }
+        
+
+        public function approved($field_name, $col_struct)
+        {                
+                return $this->estApproved();
+        }
 }

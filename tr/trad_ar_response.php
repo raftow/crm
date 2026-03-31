@@ -18,7 +18,7 @@ class ResponseArTranslator{
 		$trad["response"]["response_type_id"] = "نوع الرد";
 		$trad["response"]["new_status_id"] = "الحالة الجديدة للطلب";
 		$trad["response"]["new_status_id_tooltip"] = "الحالة الجديدة للطلب هي الحالة التي سيتحول إليها الطلب مباشرة بعد حفظ الرد الجديد";
-		$trad["response"]["orgunit_id"] = "جهة صاحب الرد";
+		$trad["response"]["orgunit_id"] = "وحدة صاحب الرد";
 		$trad["response"]["employee_id"] = "صاحب الرد";
 		$trad["response"]["response_text"] = "اكتب هنا نص الإجابة / المعلومات";
 		$trad["response"]["response_text.short"] = "نص الإجابة";
@@ -36,9 +36,11 @@ class ResponseArTranslator{
 		$trad["response"]["response_time.short"] = "الوقت";
 		$trad["response"]["response_type_id.short"] = "نوع الرد";
 		$trad["response"]["new_status_id.short"] = "الحالة الجديدة";
-		$trad["response"]["orgunit_id.short"] = "الجهة";
+		$trad["response"]["orgunit_id.short"] = "الوحدة";
 		$trad["response"]["employee_id.short"] = "الموظف";
 		$trad["response"]["response_text.short"] = "نص الرد";
+
+		$trad["response"]["recent-responses"] = 'عدد الردود للفترة المحددة';
 
 		$trad["response"]["request_text"] = "تذكير بنص الطلب";
 		$trad["response"]["response_templates"] = "نماذج ردود جاهزة";

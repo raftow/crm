@@ -44,7 +44,7 @@ $config_arr = array(
 
                 2 => [
                         'ref_num' => ['title_ar'=>'الرقم الوظيفي',],
-                        'org_name' => ['title_ar'=>'جهة العمل',]
+                        'org_name' => ['title_ar'=>'وحدة العمل',]
                      ], 
                      
                 4 => [

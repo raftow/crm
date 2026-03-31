@@ -3103,6 +3103,12 @@ span.cms-title {
     /* margin-right: 20%; */
     text-align: center;
     margin-bottom: 8px;
+    margin-top: 34px;
+}
+
+span.cms-title.global {
+    font-size: 30px;
+    margin-bottom: 15px;
 }
 
 .hzm_blue.hzm_print.missed:hover {

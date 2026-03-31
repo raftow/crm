@@ -7,7 +7,7 @@
 <div class="success_hzm">
       <div class="register_success_message">تم تسجيل/تفعيل الموظف بنجاح. <br><br>
       الاسم الكامل : <?php echo $employee_name ?><br>
-      الجهة : <?php echo $employee_dep ?>
+      الوحدة : <?php echo $employee_dep ?>
       </div>
 
 </div>

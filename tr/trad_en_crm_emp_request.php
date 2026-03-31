@@ -28,7 +28,7 @@ class CrmEmpRequestEnTranslator{
         // steps
 		$trad["crm_emp_request"]["step1"] = "البيانات العامة";
 		$trad["crm_emp_request"]["step2"] = "الطلبات المسندة";
-		$trad["crm_emp_request"]["step3"] = "جهات المتابعة";
+		$trad["crm_emp_request"]["step3"] = "وحدات المتابعة";
         return $trad;
     }
 

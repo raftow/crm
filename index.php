@@ -5,7 +5,23 @@ $objme = AfwSession::getUserConnected();
 $customerMe = AfwSession::getCustomerConnected();
 if($objme)
 {
-        
+        if($objme->isSuperAdmin() and ($_GET["uao"]==1)) {
+                $company = AfwSession::currentCompany();
+                $file_dir_name = dirname(__FILE__);
+                if (file_exists("$file_dir_name/../client-$company/organization_business.php")) {
+                        require_once("$file_dir_name/../client-$company/organization_business.php");
+                        if (class_exists('OrganizationBusiness')) {
+                                $res = OrganizationBusiness::update_all_organizations();                        
+
+                                $error = implode("<br>\n", $res['errors']);
+                                $info = implode("<br>\n", $res['log']);
+
+                                if($info) AfwSession::pushInformation($info);
+                                if($error) AfwSession::pushError($error);
+                        }
+                }
+        }
+
         // اذا عند احدى هذه الصلاحيات يدخل كموظف 
         // التحقيق والرد على طلبات العملاء 
         // مشرف تنسيق

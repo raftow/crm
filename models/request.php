@@ -424,7 +424,7 @@ class Request extends CrmObject
 
     public static $DATABASE        = "";
     public static $MODULE            = "crm";
-    public static $TABLE            = "";
+    public static $TABLE            = "request";
     public static $DB_STRUCTURE = null;
 
 
@@ -2532,53 +2532,81 @@ class Request extends CrmObject
         return false;
     }
 
-    public static function nbDaysReactionByTicketAverage()
+    public static function nbDaysReactionByTicketAverage($nbDaysWorkByTicketAverage=0)
     {
+        if(!$nbDaysWorkByTicketAverage) $nbDaysWorkByTicketAverage = self::nbDaysWorkByTicketAverage();
         // average work of customer to complete ticket data
         $avg_customer_work = round((5 + sin(date("m"))) * 10) / 10;
-        $return = self::nbDaysWorkByTicketAverage() - $avg_customer_work;
-        if ($return < 0.4) $return = 0.3;
+        $return = $nbDaysWorkByTicketAverage - $avg_customer_work;
+        if ($return < 0.3) $return = 0.3;
 
         return $return;
     }
 
-
-    public static function nbClosedTicketsWithoutTaqib()
+    public static function nbClosedTickets()
     {
+        $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (7) and nb_taqibs = 0");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id=7 and request_date >= '$date_start_stats'");
     }
 
-    public static function nbClosedTicketsWithTaqib()
+
+    public static function nbRespondedTicketsWithoutTaqib()
     {
+        $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (7) and nb_taqibs > 0");
+        // نستثني التعقيب نفسه كما نستثني الطلب المعقب عليه
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null) and (related_request_code = '' or related_request_code is null)");
+    }
+
+    public static function nbRespondedTicketsWithTaqib()
+    {
+        $date_start_stats = self::calc_date_start_stats();
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        // نحسب التعقيب نفسه كما نحسب الطلب المعقب عليه
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0 or related_request_code > '')");
     }
 
     public static function pctClosedTicketsWithoutTaqib()
     {
-        $without = self::nbClosedTicketsWithoutTaqib();
-        $with = self::nbClosedTicketsWithTaqib();
+        // $date_start_stats = self::calc_date_start_stats();
+        $without = self::nbRespondedTicketsWithoutTaqib();
+        $with = self::nbRespondedTicketsWithTaqib();
 
-        return round($without * 100 / ($without + $with));
+        return self::calcPctRespondedTicketsWithoutTaqib($without, $with);
+
+    }
+
+
+    public static function calcPctRespondedTicketsWithoutTaqib($without, $with)
+    {        
+        $total = $without + $with;
+
+        if($total>0) return round($without * 100 / ($total));
+        else return "0";
     }
 
 
     public static function nbDaysWorkByTicketAverage()
     {
-        $date_start = AfwDateHelper::shiftHijriDate('', -354 * 3); // 3 hijri years
+        // nb hijri years
+        /* $nb_hijri_years = 0.5;
+        $date_start = AfwDateHelper::shiftHijriDate('', -round(354 * $nb_hijri_years)); */
+        $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
-        $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg from $server_db_prefix" . "crm.request where request_date > '$date_start'");
+        $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg from $server_db_prefix" . "crm.request where status_id in (5,6,7,8,9) and request_date > '$date_start_stats'");
 
-        return round($return);
+        return round($return*10)/10;
     }
     public static function satisfactionPct()
     {
-        $satisfied = Request::aggreg("count(*)", "service_satisfied = 'Y'");
-        $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N'");
-        $neutral = Request::aggreg("count(*)", "service_satisfied = 'W'");
+        $date_start_stats = self::calc_date_start_stats();
+        $satisfied = Request::aggreg("count(*)", "service_satisfied = 'Y' and request_date >= '$date_start_stats'");
+        $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N' and request_date >= '$date_start_stats'");
+        // $neutral = Request::aggreg("count(*)", "service_satisfied = 'W' and request_date >= '$date_start_stats'");
         $total = $satisfied + $not_satisfied; //  + $neutral
-        $pct = round($satisfied * 1000 / $total) / 10;
+        if($total>0) $pct = round($satisfied * 100 / $total);
+        else $pct = 0;
 
         return $pct;
     }
@@ -3241,16 +3269,22 @@ class Request extends CrmObject
     }
 
 
-    public function calcDate_start_stats()
+    public function calcDate_start_stats() {
+        return self::calc_date_start_stats();
+    }
+
+
+    public static function calc_date_start_stats()
     {
-        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
-        if (is_integer($period) and $period > 0) return AfwDateHelper::shiftHijriDate("", -$period);
-        else return AfwDateHelper::shiftHijriDate("", -90);
+        $period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"));
+        
+        if (is_integer($period) and ($period > 0)) return AfwDateHelper::shiftHijriDate("", -$period);
+        else return AfwDateHelper::shiftHijriDate("", -90); // die(" CrmOrgunit::getGlobalCRMCenter()->getVal(standard_stats_days) = [$period]"); // 
     }
 
     public function calcDate_start_stats_greg()
     {
-        $period = CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days");
+        $period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"));
         if (is_integer($period) and $period > 0) return AfwDateHelper::shiftGregDate("", -$period);
         else return AfwDateHelper::shiftHijriDate("", -90);
     }
@@ -3295,6 +3329,21 @@ class Request extends CrmObject
         }
     }
 
+
+    public static function lateRequestsCount() {
+        $date_start_stats = self::calc_date_start_stats();
+        $late_days = self::getLatePeriod();
+
+        $obj = new Request();
+        // for request date we accept 4 times late period because we consider redirections, customer data incomplete, etc...
+        $request_date_limit_late = AfwDateHelper::shiftHijriDate('',-4*$late_days); 
+        // but for status date should be only one period date because it change at any action taken on status
+        $status_date_limit_late = AfwDateHelper::shiftHijriDate('',-$late_days);
+        $obj->where("request_date >= '$date_start_stats' and (request_date < '$request_date_limit_late' or status_date < '$status_date_limit_late')");
+        $obj->where("(employee_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")) 
+                         or (supervisor_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_SUPERVISOR . "))");
+        return $obj->count();
+    }
 
 
     public static function getLatePeriod()
@@ -3792,7 +3841,7 @@ class Request extends CrmObject
     }
 
 
-    public static function closeOldDoneRequests($silent = false, $lang = "ar", $limit = "200")
+    public static function closeOldDoneRequests($silent = false, $lang = "ar", $limit = "1000", $log_details=false)
     {
         $obj = new Request();
 
@@ -3806,17 +3855,22 @@ class Request extends CrmObject
 
         $errors_arr = array();
         $infos_arr = array();
+        $warning_arr = array();
 
-        foreach ($reqList as $reqItem) {
-            list($err, $info) = $reqItem->closeRequest($lang, $caller = "closeOldDoneRequests");
-
-            if ($err) $errors_arr[] = $err;
-            if ($info) $infos_arr[] = $info;
+        foreach ($reqList as $reqId => $reqItem) {
+            try {
+                list($err, $info) = $reqItem->closeRequest($lang, $caller = "closeOldDoneRequests");
+                if ($err) $errors_arr[] = $err;
+                if ($info and $log_details) $infos_arr[] = $info;
+            }
+            catch (Exception $e) {
+                $err = "Exception caught for request (Id=$reqId) : " . $e->getMessage();
+            }
         }
 
         $nb_errs = count($errors_arr);
 
-        $infos_arr[] = "closed " . count($reqList) . " request(s) with $nb_errs error(s)";
+        $warning_arr[] = "closed " . count($reqList) . " request(s) with $nb_errs error(s)";
 
         if ((!$silent) and (count($errors_arr) > 0)) {
             AfwSession::pushError(implode("<br>", $errors_arr));
@@ -3826,7 +3880,7 @@ class Request extends CrmObject
             AfwSession::pushInformation(implode("<br>", $infos_arr));
         }
 
-        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warning_arr);
     }
 
     public static function silentAssignInvestigatorForNonAssigned($lang = "ar", $limit = "200")
@@ -4035,6 +4089,38 @@ class Request extends CrmObject
         else  return true;
     }
 
+    public static function inboxDailyCapacityForMe(){
+        $objme = AfwSession::getUserConnected();
+        if ($objme and $objme->isAdmin()) {
+                $employee_id = 0;
+        } else {
+                $employee_id = $objme ? $objme->getEmployeeId() : 0;
+        }
+
+        if(!$employee_id) return 0;
+
+        $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id);
+
+        if(!$crmEmplObj) return 0;
+
+        $requests_nb = $crmEmplObj->getVal("requests_nb");
+
+        return $requests_nb ? $requests_nb : 15;
+    }
+
+    public static function inboxCountForMe()
+    {
+        $objme = AfwSession::getUserConnected();
+        if ($objme and $objme->isAdmin()) {
+                $employee_id = 0;
+        } else {
+                $employee_id = $objme ? $objme->getEmployeeId() : 0;
+        }
+
+        if(!$employee_id) return 0;
+
+        return self::inboxCountFor($employee_id);
+    }
 
     public static function inboxCountFor($employee_id)
     {

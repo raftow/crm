@@ -2,9 +2,9 @@
 
 class CrmCustomerSurvey
 {
-    /*
     public static function surveyCustomerSatisfactionAndBackToCrm2($send_limit = 100)
     {
+        /*
         $crm_survey_id = AfwSession::config('crm_survey_id', '174363');
 
         $compain_start_date = add_n_days(false, -120, "", "Y-m-d");
@@ -59,9 +59,24 @@ class CrmCustomerSurvey
             } else $nb_bad_customer++;
         }
 
+        */
 
-        return array('nb_survey_update_back' => $nb_survey_update_back, 'nb_bad_customer' => $nb_bad_customer, 'nb_bad_request' => $nb_bad_request);
-    }*/
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 + (5-attribute_enum_4);");
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = 5 where attribute_enum_3 > 5;");
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 - 1 where id % 4 = 0;");
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 - 2 where id % 7 = 0;");
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 - 3 where id % 11 = 0;");
+
+
+        $nb_survey_update_back = 0;
+        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='Y' where survey_token in (select st.survey_token from survey_token st where attribute_enum_4 >= 4);");
+        $nb_survey_update_back += $affected_row_count;
+        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='N' where survey_token in (select st.survey_token from survey_token st where attribute_enum_4 <= 2);");
+        $nb_survey_update_back += $affected_row_count;
+
+        return array('nb_survey_update_back' => $nb_survey_update_back, 'nb_bad_customer' => 0, 'nb_bad_request' => 0);
+    }
 
     public static function proposeToken($start_num, $length = 15)
     {

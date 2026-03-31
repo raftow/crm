@@ -583,7 +583,7 @@ class Response extends CrmObject
                 if (count($templates) == 0) {
                         $templates["مقدمة"] = array('internal' => 'N', 'new_status' => 0, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم");
                         $templates["طلب مكرر"] = array('internal' => 'N', 'new_status' => 8, 'text' =>  "السلام عليكم|مرحبا بك أخي الكريم هذا الطلب مكرر وسبق الرد عليه");
-                        $templates["عدم اختصاص"] = array('internal' => 'Y', 'new_status' => 3, 'text' =>  "أرجوا تحويل الطلب إلى الجهة المختصة");
+                        $templates["عدم اختصاص"] = array('internal' => 'Y', 'new_status' => 3, 'text' =>  "أرجوا تحويل الطلب إلى الوحدة المختصة");
                 }
                 */
 

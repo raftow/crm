@@ -10,6 +10,6 @@
 	$trad["crm_erequest"]["crm_erequest_fup_hdate"] = "تاريخ آخر متابعة للطلب";
 	$trad["crm_erequest"]["crm_erequest_name"] = "مسمى الطلب الالكتروني";
 	$trad["crm_erequest"]["crm_erequest_details"] = "تفاصيل الطلب الالكتروني";
-	$trad["crm_erequest"]["owner_stakeholder_id"] = "الجهة المعنية بالطلب";
+	$trad["crm_erequest"]["owner_stakeholder_id"] = "الوحدة المعنية بالطلب";
 	$trad["crm_erequest"]["owner_auser_id"] = "الموظف المكلف بالطلب";
 ?>

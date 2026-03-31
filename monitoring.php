@@ -53,7 +53,7 @@ $employee_title = $objme->getDisplay($lang);
 
 // 
 
-$header_trad = array("missed"=>"عدد الطلبات", "name" => 'الادارة - المشرف');
+
 if($objme->isSuperAdmin())
 {
     $wb_prefix = AfwLanguageHelper::tt("Welcome to the General Supervisor of the Customer Happiness and Comfort Platform",$lang);
@@ -70,6 +70,7 @@ $out_scr .= Page::showPage("crm", "main-page", $lang);
 $out_scr .= "<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>";
 
 // customer number increasing (cni)
+/*
 if(false)
 {
     $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'><h1>احصائيات نمو عدد العملاء الخمس سنوات الأخيرة</h1></div>";
@@ -83,6 +84,8 @@ if(false)
     $out_scr .= "<canvas id=\"rni\" style=\"width:100%;max-width:900px;margin:auto\"></canvas>";
     $out_scr .= AfwChartHelper::oniChartScript("Request", "rni", "line", -60, 0, 1, 'm', 'month', 'never', ['min'=>50, 'max'=>150], 'request_date', 'hijri');
 }
+
+$header_trad = array("missed"=>"عدد الطلبات", "name" => 'الادارة - المشرف');
 
 if(false and count($statsMatrix)>0)
 {
@@ -101,7 +104,7 @@ if(false and count($reqList)>0)
     list($data,$isAvail) = AfwLoadHelper::getRetrieveDataFromObjectList($reqList,$header_trad, $lang, $newline="\n<br>");
     $out_scr .= AfwHtmlHelper::tableToHtml($data, $header_trad);
     $out_scr .= "</div>";
-}
+}*/
 
 
 $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'>

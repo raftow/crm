@@ -8,8 +8,8 @@
 	$trad["customer_type"]["desc_en"] = "وصف نوع العميل بالانجليزية";
         
         $trad["customer_type"]["internal"] = "ينتمي للمؤسسة؟";
-        $trad["customer_type"]["org_ar"] = "مسمى الجهة بالعربية";
-        $trad["customer_type"]["org_en"] = "مسمى الجهة بالانجليزية";
+        $trad["customer_type"]["org_ar"] = "مسمى الوحدة بالعربية";
+        $trad["customer_type"]["org_en"] = "مسمى الوحدة بالانجليزية";
         $trad["customer_type"]["ref_ar"] = "مسمى المرجع بالعربية";
         $trad["customer_type"]["ref_en"] = "مسمى المرجع بالانجليزية";
         

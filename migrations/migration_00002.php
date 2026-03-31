@@ -4,6 +4,8 @@ if(!class_exists("AfwSession")) die("Denied access");
 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
 try
 {  
+
+    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add   unit_token varchar(32)  DEFAULT NULL  AFTER division_id;");
     
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request change reject_reason_ar log_text text;");
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request change reject_reason_en error_text text;");

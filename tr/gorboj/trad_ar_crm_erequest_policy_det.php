@@ -8,7 +8,7 @@
 	$trad["crm_erequest_policy_det"]["crm_erequest_cat_id"] = "الصنف طلب الكتروني";
 	$trad["crm_erequest_policy_det"]["crm_erequest_level_enum"] = "مستوى الطلب";
 	$trad["crm_erequest_policy_det"]["internal"] = "يتم إدارة الطلب بشكل داخلي";
-	$trad["crm_erequest_policy_det"]["external_stakeholder_id"] = "الجهة الخارجية في حالة طلب خارجي";
+	$trad["crm_erequest_policy_det"]["external_stakeholder_id"] = "الوحدة الخارجية في حالة طلب خارجي";
 	$trad["crm_erequest_policy_det"]["dep_crm_activity_id"] = "نشط الإدارة المكلفة بالطلب في حالة طلب د";
 	$trad["crm_erequest_policy_det"]["owner_jobrole_id"] = "وظيفة المكلف بالطلب";
 ?>
