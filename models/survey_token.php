@@ -65,12 +65,12 @@ class SurveyToken extends CrmObject
                         }
                     }
             }
-
+            /*
             if (!intval($this->getVal("new_status_id"))) {
                     $this->calcNewStatusNeeded();
             } else {
                     // throw new AfwRuntimeException("see = this->getVal(new_status_id)=".$this->getVal("new_status_id"));
-            }
+            }*/
 
             return true;
     }
