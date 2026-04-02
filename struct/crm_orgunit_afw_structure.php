@@ -14,6 +14,8 @@
 						$obj->UNIQUE_KEY = array('orgunit_id');
 						$obj->editByStep = true;
 						$obj->editNbSteps = 5;
+
+						$obj->excelExport = true;
 						
 						$obj->showQeditErrors = true;
 						$obj->showRetrieveErrors = true;
@@ -88,7 +90,7 @@
 							'RETRIEVE' => true,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  'STEP' => 1,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
-			'requests_nb' => array('SEARCH' => true,  'QSEARCH' => false,  'SHOW' => true,  'RETRIEVE' => true,  
+			'requests_nb' => array('SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  
 				'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32, 'CSS' => 'width_pct_25', 
 				'MANDATORY' => true,  'UTF8' => false,  
 				'TYPE' => 'INT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 1,  

@@ -610,6 +610,25 @@ class CrmCrmCustomerAfwStructure
 			'READONLY' => true,
 		),
 
+		'last_login_date' => array(
+			'FGROUP' => 'tech_data',  /* 'STEP' => 1,  */
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'QSEARCH_OPER' => 'between',
+			'QSIZE' => 6,
+			'CSS' => 'width_pct_33',
+			'SIZE' => 40,
+			'TYPE' => 'DATE',
+			'FORMAT' => 'CONVERT_NASRANI_VERY_SIMPLE',
+			'RETRIEVE-VALUE' => false,
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'READONLY' => true,
+		),
+
 
 		'requestList' => array(
 			'STEP' => 3,
@@ -734,6 +753,20 @@ class CrmCrmCustomerAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+		'ppa' => array(
+			'SHOW-ADMIN' => true,
+			'RETRIEVE' => false,
+			'EDIT' => false,
+			'QEDIT' => false,
+			'DEFAUT' => 'Y',
+			'TYPE' => 'YN',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
 		'created_by'         => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
@@ -803,9 +836,6 @@ class CrmCrmCustomerAfwStructure
 			'TYPE' => 'GDAT',
 			'FGROUP' => 'tech_fields'
 		),
-
-		/* 'active'                   => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 
-                                                                'QEDIT' => false, "DEFAULT" => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields'),*/
 
 		'version'                  => array(
 			'STEP' => 99,

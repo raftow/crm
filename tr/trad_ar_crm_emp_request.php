@@ -19,9 +19,9 @@ class CrmEmpRequestArTranslator{
         $trad["crm_emp_request"]["division_id"] = "القسم";
 
         $trad["crm_emp_request"]["active"] = "نشط";
-        $trad["crm_emp_request"]["approved"] = "حالة الاستيراد"; 
-        $trad["crm_emp_request"]["approved.EUH"] = "لم يتم الاستيراد يعد"; 
-        $trad["crm_emp_request"]["approved.YES"] = "تم الاستيراد"; 
+        $trad["crm_emp_request"]["approved"] = "حالة الاستيراد والإعتماد"; 
+        $trad["crm_emp_request"]["approved.EUH"] = "تم الاستيراد"; 
+        $trad["crm_emp_request"]["approved.YES"] = "تم الإعتماد"; 
         $trad["crm_emp_request"]["approved.NO"] = "يوجد أخطاء"; 
 
         $trad["crm_emp_request"]["log_text"] = "تفاصيل تقنية";

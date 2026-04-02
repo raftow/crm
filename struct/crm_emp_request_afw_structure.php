@@ -177,7 +177,7 @@ class CrmCrmEmpRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
-			'READONLY' => '::approved',
+			// 'READONLY' => '::request_approved',
 		),
 
 		'orgunit_id' => array(
@@ -201,7 +201,7 @@ class CrmCrmEmpRequestAfwStructure
 			'DEPENDENT_OFME' => ['employee_id'],
 			// here below substr(xxxx ,2,6) in mySQL <=> substr(xxxx ,1,6) in php
 			'WHERE' => "id != 1 and (id in (§company_id§, §department_id§, §division_id§) or id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit o where o.active = 'Y' and substr(md5(o.id),2,6)=§unit_token§))",
-			'READONLY' => '::approved',
+			//'READONLY' => '::request_approved',
 			'RELATION' => 'ManyToOne',
 			
 			'SEARCH-BY-ONE' => true,
@@ -256,7 +256,7 @@ class CrmCrmEmpRequestAfwStructure
 			'TYPE' => 'YN',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => true,
-			'READONLY' => '::approved',
+			//'READONLY' => '::request_approved',
 			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',

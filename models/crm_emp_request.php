@@ -214,6 +214,7 @@ class CrmEmpRequest extends CrmObject
                         
                 }
 
+                /*
                 if (!$this->estApproved()) {
                         $methodConfirmationWarningEn = "We can not automatically approve that this employee is from this organization";
                         $methodConfirmationWarning = $this->tm($methodConfirmationWarningEn, "ar");
@@ -232,7 +233,7 @@ class CrmEmpRequest extends CrmObject
                                 'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
                                 'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
                         );
-                }
+                }*/
 
 
 
@@ -264,19 +265,28 @@ class CrmEmpRequest extends CrmObject
                         $employee_id = $emplObj->id;
                         // $sh_name_ar = $emplObj->showAttribute("id_sh_org", null, true, "ar") . " >> " . $emplObj->showAttribute("id_sh_dep", null, true, "ar") . "-" . $emplObj->showAttribute("id_sh_div", null, true, "ar");
                         // $sh_name_en = $emplObj->showAttribute("id_sh_org", null, true, "en") . " >> " . $emplObj->showAttribute("id_sh_dep", null, true, "en") . "-" . $emplObj->showAttribute("id_sh_div", null, true, "en");
-                        $this->set("approved", "Y");
+                        $orgunit_id = $this->getVal("orgunit_id");
+                        $approved = $orgunit_id ? "Y" : "W";
+                        $this->set("approved", $approved);
                         $this->set("employee_id", $employee_id);
                         $this->set("division_id", $division_id);
                         $this->set("department_id", $department_id);
                         $this->set("company_id", $company_id);
                         $this->set("log_text", $info);
                         $this->set("error_text", "--");
+
+                        
+                        if($approved=="Y") {
+                                $this->calcCrm_orgunit_id('object', $create_obj_if_not_found = true);
+                                $this->calcCrm_employee_id('object', $create_obj_if_not_found = true);
+                        }
+                        
                 }
 
                 if ($commit) $this->commit();
 
                 if($pbm) return [$err, $info, $war];
-                else return $this->sureIs("approved");
+                else return (!$err);
         }
 
 
@@ -285,23 +295,24 @@ class CrmEmpRequest extends CrmObject
                 $lang = AfwLanguageHelper::getGlobalLanguage();
                 $email = $this->getVal("email");
                 $orgunit_id = $this->getVal("orgunit_id");
-                $employee_id = $this->getVal("employee_id");
+                // $employee_id = $this->getVal("employee_id");
                 $division_id = $this->getVal("division_id", );
                 $department_id = $this->getVal("department_id");
                 $company_id = $this->getVal("company_id");
-                $approved = $this->sureIs("approved");
-
-                $auto_approve = (($orgunit_id==$company_id) or ($orgunit_id==$department_id) or ($orgunit_id==$division_id));
-
+                // $approved = $this->sureIs("approved");
+                // $auto_approve = (($orgunit_id==$company_id) or ($orgunit_id==$department_id) or ($orgunit_id==$division_id));
+                /*
                 if ($fields_updated["email"] and $email and $auto_approve) {
                         $this->approveAndUpdateDataAndRoles($lang, $pbm = true, $commit = false);
-                        $approved = $this->sureIs("approved");
+                        
                 }
+
+                $approveDataIsReady = $this->approveDataIsReady();
                 
-                if ($this->sureIs("active") and $approved  and ($orgunit_id > 0) and ($employee_id > 0)) {
+                if ($this->sureIs("active") and $approveDataIsReady and $approved and ($orgunit_id > 0) and ($employee_id > 0)) {
                         $this->calcCrm_orgunit_id('object', $create_obj_if_not_found = true);
                         $this->calcCrm_employee_id('object', $create_obj_if_not_found = true);
-                }
+                }*/
 
 
                 return true;
@@ -309,6 +320,7 @@ class CrmEmpRequest extends CrmObject
 
         public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent = false) {}
 
+        
         public function  calcCrm_orgunit_id($what='value', $create_obj_if_not_found = false)
         {
                 if (!$this->getVal("orgunit_id")) $obj = null;
@@ -372,17 +384,27 @@ class CrmEmpRequest extends CrmObject
             }    
 	}
 
-        public function alreadyApproved($returnObjects=false) {
-                $orgObj = $this->calcCrm_orgunit_id('object');
-                $emplObj = $this->calcCrm_employee_id('object');
+        public function approveDataIsReady($returnObjects=false) {
+                $orgObj = $this->het('orgunit_id');
+                $emplObj = $this->het('employee_id');
 
                 if($returnObjects) return [$orgObj, $emplObj];
                 return ($orgObj and $emplObj);
         }
+
+        public function alreadyApproved($returnObjects=false) {
+                /*$orgObj = $this->calcCrm_orgunit_id('object');
+                $emplObj = $this->calcCrm_employee_id('object');
+
+                if($returnObjects) return [$orgObj, $emplObj];
+                return ($orgObj and $emplObj);*/
+
+                return false;
+        }
         
 
-        public function approved($field_name, $col_struct)
+        public function request_approved($field_name, $col_struct)
         {                
-                return $this->estApproved();
+                return ($this->approveDataIsReady() and $this->sureIs("approved"));
         }
 }

@@ -35,7 +35,8 @@
 	$trad["crm_customer"]["pb_resolved.YES"] = "نعم";
 	$trad["crm_customer"]["pb_resolved.NO"]  = "لا";
 	$trad["crm_customer"]["pb_resolved.EUH"] = "محايد";
-
+	$trad["crm_customer"]["ppa"] = "الموافقة على سياسة الخصوصية";
+	$trad["crm_customer"]["last_login_date"] = "تاريخ آخر تسجيل دخول";
 	
                 
         
