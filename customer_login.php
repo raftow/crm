@@ -53,9 +53,13 @@ if(AfwSession::customerIsConnected())
 } 
 elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_POST["crm_go"]))
 {
-      $sessionVarCpt = AfwSession::getSessionVar("cpt");  
-      if((!AfwSession::config("sms-captcha-login",false)) or (strtoupper($_POST["customer_cpt"])==strtoupper($sessionVarCpt)))
-      {
+        if($_POST["ppa"]!="Y")   {
+                include("$file_dir_name/../crm/customer_ppa.php");
+                die(); 
+        }
+        $sessionVarCpt = AfwSession::getSessionVar("cpt");  
+        if((!AfwSession::config("sms-captcha-login",false)) or (strtoupper($_POST["customer_cpt"])==strtoupper($sessionVarCpt)))
+        {
               $customer_mobile_or_email = AfwStringHelper::hardSecureCleanString(trim(strtolower($_POST["customer_mobile_or_email"])));
               $customer_idn = AfwStringHelper::hardSecureCleanString(trim($_POST["customer_idn"]));
               
@@ -240,7 +244,9 @@ if($desc_site)
                             </div>
                         </div>
                     <?php 
-                       }         
+                       }  
+                       $company = AfwSession::currentCompany();
+                       $main_company_domain = AfwSession::config("main_company_domain", "$company.gov.sa");       
                     ?>                    
                 <div class="modal-body"><h1>من فضلك قم بادخال بياناتك</h1><br>
                         <form id="formlogin1" name="formlogin1" method="post" action="customer_login.php"  onSubmit="return customer_checkForm();" dir="rtl" enctype="multipart/form-data">
@@ -251,8 +257,6 @@ if($desc_site)
                                         <input type="text" class="form-control customer-login idn" name="customer_idn" value="<?php echo $customer_idn?>"  autocomplete="off" placeholder="رقم الهوية" required>                                        
                                         <input type="hidden" name="customer_id" value="<?php echo $customer_id?>">                                        
                                 </div>
-
-
 <?php                                
                                 if(AfwSession::config("sms-captcha-login",false))
                                 {
@@ -278,8 +282,7 @@ if($desc_site)
 ?>
                                 
                                 <!-- logbl:<?php echo $logbl?> -->
-                                <input type="submit" class="btnbtsp btn-primary btnregister" value="تسجيل الدخول" name="crm_go">&nbsp;
-                                
+                                <input type="submit" class="btnbtsp btn-primary btnregister" value="تسجيل الدخول" id="crm_go" name="crm_go">&nbsp;
                                 
                         </form>
                 </div>

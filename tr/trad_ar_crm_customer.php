@@ -22,7 +22,7 @@
 	$trad["crm_customer"]["region_id"] = "المنطقة";
 	$trad["crm_customer"]["city_id"] = "المدينة";
 	$trad["crm_customer"]["other_city"] = "مدينة أخرى";
-	$trad["crm_customer"]["customer_orgunit_id"] = "وحدة العميل"; 
+	$trad["crm_customer"]["customer_orgunit_id"] = "عنصر الهيكل"; 
 	$trad["crm_customer"]["last_request_date"] = "تاريخ آخر طلب";
 
 	$trad["crm_customer"]["service_satisfied"] = "رضا العميل";

@@ -859,7 +859,7 @@ span.prog-name.prog-archive {
 .mb_med_title.my_ticket {
         font-size: 22px;
         width: 99.9%;
-        min-height: 60px;
+        min-height: 10px;
         height: -webkit-fill-available;
         margin-right: 0 !important;
         margin-left: 0 !important;
@@ -1014,6 +1014,27 @@ span.prog-name.prog-archive {
     line-height: 16px;
 }
 
+.edit.row.crm_data {
+    width: 49%;
+    float: right;
+}
+
+label.edit.hzm_label {
+    background-color: #e3e3e3;
+    border: 2px solid white;
+    padding: 6px;
+}
+
+label.edit.hzm_label.bgwhite {
+    background-color: white !important;
+}
+
+.edit.hzm_data_prop {
+    width: 99%;
+    margin-bottom: 10px;
+    border: none !important;
+}
+
 .row.crm_data.survey {
     width: 33%;
     float: right;
@@ -1150,6 +1171,13 @@ div.crm_data>label {
     margin-bottom: 0px;
 }
 
+div.my_crm_bloc_title label {
+    background-color: #0670bb;
+    color: white;
+    padding: 8px 4px;
+    text-align: center;
+}
+
 div.crm_calendar {
         font-size: 18px;
         background-color: #ffffff;
@@ -1199,6 +1227,17 @@ div.crm_calendar {
         /* border-bottom: 1px solid black;*/
 }
 
+.my_crm_bloc_title {
+    background-color: white;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 8px;
+    /* height: 60px !important; */
+    float: right;
+    border-bottom: 1px solid #d3d3d3;
+    border-top: 1px solid #d3d3d3;
+}
 
 @media screen and (max-width: 980px) {
     .modal-dialog.popup-login {
@@ -1282,7 +1321,7 @@ label {
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
-    font-weight: bold !important;
+    /* font-weight: bold !important;*/
     color: #023145;
 }
 
@@ -1402,7 +1441,7 @@ input.btnbtsp.btn-primary.btncheck {
 .hzm_attribute.hzm_minibox_header0 {
     min-height: 40px !important;
     margin-bottom: 0px;
-    border-top: 6px double #0670bbbf;
+    /* border-top: 6px double #0670bbbf;*/
 }
 
 
@@ -1782,7 +1821,7 @@ a.btnbtsp.btn_link:hover {
 }
 
 
-.hzm-info {
+.hzm-info, .hzm-warning {
     margin: 20px 10%;
 }
 
@@ -1836,6 +1875,23 @@ a.btnbtsp.btn_link:hover {
     background-color: #dbf7facc;
     color: #047e7a;
     margin-top: 50px;
+}
+
+.crm-title.hzm-warning {
+    font-size: 22px;
+    border: 1px solid #d16d0a;
+    padding: 8px;
+    background-color: #faefdbcc;
+    color: #d16d0a;
+    margin-top: 50px;
+}
+
+.crm-title.hzm-warning.note {
+  font-size: 17px;
+  background-color: #fdfdeb;
+  color: #6e2907;
+  border: 3px double #c7490c;
+  white-space: pre;
 }
 
 .hzm_data.hzm_data_response_type_id {
@@ -3741,7 +3797,7 @@ div.confidential>div.request-desc {
     min-height: 180px;
 }
 
-#confidentialbtn {
+.confidential-button {
     width: 12%;
     min-width: 52px;
     height: 52px;
@@ -3753,11 +3809,11 @@ div.confidential>div.request-desc {
     float: right;
 }
 
-#confidentialbtn.confidential {
+.confidential-button.confidential {
     background-image: url(../pic/shown_eye.png);
 }
 
-#confidentialbtn.non-confidential {
+.confidential-button.non-confidential {
     background-image: url(../pic/hidden_eye.png);
 }
 
@@ -3819,3 +3875,4 @@ p.request-status.returned.opened.waiting {
     background-color: #ff5b00 !important;
     padding: 10px;
 }
+

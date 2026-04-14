@@ -76,8 +76,60 @@ class CustomerType extends AFWObject{
            return $objList;
         }
 
+        public static function reloadAllFromConfig($lang='ar') 
+        {
+                $nb_inserted = 0;
+                $nb_updated = 0;
+                $custTypeList = AfwSession::config("cust_type_list", []);
+                $custTypeLogic = AfwSession::config("cust_type_logic", []);
+                foreach ($custTypeList as $custTypeId => $custTypeName) {
+                        $ctObj = CustomerType::loadById($custTypeId);
+                        $action = "update";
+                        if(!$ctObj) {
+                                $ctObj = new CustomerType();
+                                $ctObj->set("id", $custTypeId);
+                                $action = "insert";
+                        }
+                        $internal = $custTypeLogic[$custTypeId] ? "Y" : "N";
+                        $org_ar = $custTypeLogic[$custTypeId]['org_name']['title_ar'];
+                        $org_en = $custTypeLogic[$custTypeId]['org_name']['title_en'];
+                        $ref_ar = $custTypeLogic[$custTypeId]['ref_num']['title_ar'];
+                        $ref_en = $custTypeLogic[$custTypeId]['ref_num']['title_en'];
+                        $module_crm = 1073;
+                        $active = "Y";
+
+                        foreach($custTypeName as $var => $val) $$var = $val;
+                              
+
+                        $ctObj->set("lookup_code", $code);
+                        $ctObj->set("name_ar", $ar);
+                        $ctObj->set("name_en", $en);
+                        $ctObj->set("desc_ar", $ar);
+                        $ctObj->set("desc_en", $en);
+                        $ctObj->set("internal", $internal);
+                        $ctObj->set("org_ar", $org_ar);
+                        $ctObj->set("org_en", $org_en);
+                        $ctObj->set("ref_ar", $ref_ar);
+                        $ctObj->set("ref_en", $ref_en);
+                        $ctObj->set("active", $active);
+                        $ctObj->addRemoveInMfk("module_mfk", [$module_crm], []);
+
+                        if($action == "insert") { 
+                                $ctObj->insert();
+                                $nb_inserted++;
+                        }
+                        else {
+                                $ctObj->commit();
+                                $nb_updated++;
+                        }
+                }
+
+                return ["", "$nb_inserted row(s) inserted, $nb_updated row(s) updated, "];
+                
+        }
+
         
-        public static function loadByMainIndex($lookup_code,$create_obj_if_not_found=false)
+        public static function loadByMainIndex($lookup_code, $create_obj_if_not_found=false)
         {
            $obj = new CustomerType();
            if(!$lookup_code) $obj->_error("loadByMainIndex : lookup_code is mandatory field");
@@ -236,6 +288,7 @@ class CustomerType extends AFWObject{
         
         public function attributeIsApplicable($attribute)
         {
+
                 if(($attribute=="org_ar") or ($attribute=="ref_ar") or ($attribute=="org_en") or ($attribute=="ref_en"))
                 {
                         return ($this->estInternal());
@@ -243,6 +296,8 @@ class CustomerType extends AFWObject{
                 
                 return true;
         }
+
+        
              
 }
 ?>

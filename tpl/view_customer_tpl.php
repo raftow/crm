@@ -2,7 +2,7 @@
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
 </div>  
-<div class="content_big_title registration">حساب عميل</div>
+<div class="content_big_title registration">الملف الشخصي للعميل</div>
 <div class="cms_bg">
 <?
         /* */
@@ -12,8 +12,16 @@
         
         
         //if(!$theCustomer) die("this ticket is lost");
-        $my_status = 3;
-        $my_status_decoded = "نشط";//$theCustomer->getCustomerStatus("ar");
+        if($theCustomer->sureIs("active")) {
+                $my_status = $theCustomer->sureIs("ppa") ? 3 : 9;
+                $my_status_decoded = $theCustomer->sureIs("ppa") ? "نشط" : "حساب مجمد"; //$theCustomer->getCustomerStatus("ar");
+        }
+        else {
+                $my_status = 8;
+                $my_status_decoded = "غير نشط";
+        }
+
+        
         
         // test of ->showAttribute(..) after ->set(..)
         // $theCustomer->set("status_id", Request::$REQUEST_STATUS_REDIRECT);
@@ -24,8 +32,12 @@
                     
         $ref_num_label = $theCustomer->getAttributeLabel("ref_num", $lang);
         $org_name_label = $theCustomer->getAttributeLabel("org_name", $lang);
+
+
+        $note = "عزيزي المستفيد، نود التأكيد على أن الحصول على أياً من: اسمك ورقم جوالك وهويتك والرقم الوظيفي أو التدريبي هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك";
                     
 ?>
+<div class='crm-title hzm-info'><?php echo $note; ?></div>
 <div class="cms_container ticket_div">
         <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
                 
@@ -69,7 +81,18 @@
                                                 <?php echo $theCustomer->getVal("idn"); ?> 
                                                 </div>
                                         </div>
+                                        <div class="row crm_data">
+                                                <label>الاطلاع والموافقة على سياسة الخصوصية</label>
+                                                <div class='hzm_data_prop ppa-prop'>
+                                                <?php echo $theCustomer->sureIs("ppa") ? "تم الاطلاع والموافقة" : "حساب مجمد"; ?> 
+                                                </div>
+                                        </div>
 
+                                        <div class="row crm_data">
+                                                <div class='hzm_data_prop perso-data-prop'>
+                                                        <a href='i.php?cn=customer&mt=editaccount'><div class="hzm_blue hzm_print">تعديل</div></a>
+                                                </div>
+                                        </div>
 
 
                                 

@@ -57,6 +57,8 @@ $wb_prefix = AfwLanguageHelper::tt("صندوق الوارد لـ");
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix$employee_title</div>";
 
+include("crm_employee_tipofday.php");
+
 if($datatable_on) 
 {
 	if($data_count>0) $out_scr .= $search_result_html; // die("search_result_html=".$search_result_html); // 

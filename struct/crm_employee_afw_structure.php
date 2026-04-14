@@ -24,7 +24,7 @@ class CrmCrmEmployeeAfwStructure
 
 			$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmOrgunit");
 			$obj->editByStep = true;
-			$obj->editNbSteps = 3;
+			$obj->editNbSteps = 4;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 			$obj->general_check_errors = true;
@@ -247,6 +247,7 @@ class CrmCrmEmployeeAfwStructure
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => true,
 			'STEP' => 1,
+			'FORMAT' => 'icon',
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -421,6 +422,50 @@ class CrmCrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
+
+
+		'currentNotes' => array(
+			'STEP' => 4,
+			'TYPE' => 'FK',
+			'ANSWER' => 'crm_emp_note',
+			'ANSMODULE' => 'crm',
+			'CATEGORY' => 'ITEMS',
+			'ITEM' => '', //'HIDE_COLS' => ['employee_id','orgunit_id'],
+			'WHERE' => "(orgunit_id = §orgunit_id§ and employee_id = §employee_id§) and noted!='Y'",
+			'FORMAT' => 'retrieve',
+			'SHOW' => true,
+			'EDIT' => false,
+			'ICONS' => true,
+			'DELETE-ICON' => false,
+			'BUTTONS' => true,
+			'NO-LABEL' => false,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'finishedNotes' => array(
+			'STEP' => 4,
+			'TYPE' => 'FK',
+			'ANSWER' => 'crm_emp_note',
+			'ANSMODULE' => 'crm',
+			'CATEGORY' => 'ITEMS',
+			'ITEM' => '',
+			'WHERE' => "(orgunit_id = §orgunit_id§ and employee_id = §employee_id§) and noted='Y'",
+			'FORMAT' => 'retrieve',
+			'SHOW' => true,
+			'EDIT' => false,
+			'ICONS' => true,
+			'DELETE-ICON' => false,
+			'BUTTONS' => true,
+			'NO-LABEL' => false,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
 
 		'allOrgunitList' => array(
 			'STEP' => 3,

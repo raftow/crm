@@ -35,6 +35,9 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["finishedRequests"] = "الطلبات المنتهية";
         $trad["crm_employee"]["allOrgunitList"] = "الوحدات التي يعمل معها";
 
+        $trad["crm_employee"]["currentNotes"] = "الملاحظات الحالية";
+        $trad["crm_employee"]["finishedNotes"] = "الملاحظات المنتهية";
+
 
         $trad["crm_employee"]["active"] = "نشط";
         $trad["crm_employee"]["admin"] = "مشرف تنسيق";
@@ -43,6 +46,7 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["step1"] = "البيانات العامة";
         $trad["crm_employee"]["step2"] = "الطلبات المسندة";
         $trad["crm_employee"]["step3"] = "وحدات المتابعة";
+        $trad["crm_employee"]["step4"] = "الملاحظات";
     
         return $trad;
     }

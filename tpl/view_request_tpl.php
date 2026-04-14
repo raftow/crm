@@ -9,8 +9,8 @@
         $my_status = $ticketObj->getVal("status_id");
         $my_status_decoded = $ticketObj->getCustomerStatus("ar");
         $confidential_class = $ticketObj->sureIs("confidential") ? "confidential" : "non-confidential";
-
-        $confidential_button = $ticketObj->sureIs("confidential") ? "<button id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class' />" : "";
+        $this_id = $ticketObj->id;
+        $confidential_button = $ticketObj->sureIs("confidential") ? "<button id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
         // test of ->showAttribute(..) after ->set(..)
         // $ticketObj->set("status_id", Request::$REQUEST_STATUS_REDIRECT);
         // $my_status_show = $ticketObj->showAttribute("status_id");

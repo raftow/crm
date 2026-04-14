@@ -65,9 +65,13 @@ else
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix $employee_title</div>";
 
+include("crm_employee_tipofday.php");
+
 $out_scr .= Page::showPage("crm", "main-page", $lang);
 
 $out_scr .= "<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>";
+
+
 
 // customer number increasing (cni)
 /*

@@ -2543,35 +2543,35 @@ class Request extends CrmObject
         return $return;
     }
 
-    public static function nbClosedTickets()
+    public static function nbClosedTickets($employee_id=0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id=7 and request_date >= '$date_start_stats'");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id=7 and request_date >= '$date_start_stats'");
     }
 
 
-    public static function nbRespondedTicketsWithoutTaqib()
+    public static function nbRespondedTicketsWithoutTaqib($employee_id=0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نستثني التعقيب نفسه كما نستثني الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null) and (related_request_code = '' or related_request_code is null)");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null) and (related_request_code = '' or related_request_code is null)");
     }
 
-    public static function nbRespondedTicketsWithTaqib()
+    public static function nbRespondedTicketsWithTaqib($employee_id=0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نحسب التعقيب نفسه كما نحسب الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0 or related_request_code > '')");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0 or related_request_code > '')");
     }
 
-    public static function pctClosedTicketsWithoutTaqib()
+    public static function pctClosedTicketsWithoutTaqib($employee_id=0)
     {
         // $date_start_stats = self::calc_date_start_stats();
-        $without = self::nbRespondedTicketsWithoutTaqib();
-        $with = self::nbRespondedTicketsWithTaqib();
+        $without = self::nbRespondedTicketsWithoutTaqib($employee_id);
+        $with = self::nbRespondedTicketsWithTaqib($employee_id);
 
         return self::calcPctRespondedTicketsWithoutTaqib($without, $with);
 
@@ -2583,7 +2583,7 @@ class Request extends CrmObject
         $total = $without + $with;
 
         if($total>0) return round($without * 100 / ($total));
-        else return "0";
+        else return "N/A";
     }
 
 
@@ -4465,14 +4465,15 @@ class Request extends CrmObject
         $pb_resolved = $this->sureIs("pb_resolved");
         $resolved_class = $pb_resolved ? "resolved" : "waiting";
         $isClosed = $this->isClosed();
+        $this_id = $this->id;
         $status_class = $isClosed ? "closed" : "opened";
 
         $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
 
         $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
-        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn' name='confidentialbtn' class='confidential-button $confidential_class'>&nbsp;</p><p class='help p-helper'>$help</p>" : "";
+        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class'>&nbsp;</p><p class='help p-helper'>$help</p>" : "";
 
-        $html = "<div class='security $confidential_class'>";
+        $html = "<div id='div-request-body-$this_id' class='security $confidential_class'>";
         $html .= "<div class='request-desc $request_late_color'>";
         $html .= "<h3 class='request-type $request_type_code'>$request_type $intitled</h3>";
         $html .= "<h1 class='request-title ST$status_id $status_class'>$request_title</h1>";
