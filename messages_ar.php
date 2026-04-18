@@ -56,5 +56,16 @@ $messages = [
 
     "Seems that survey token has been removed or the survey was an old version" => "يبدو أن رمز الاستبيان قد أُزيل أو أن الاستبيان كان إصدارًا قديمًا",   
 
+    "customer advanced-information is confidential, please use an account with the same mobile number and email you used to register with your organization" =>
+    "معلومات العميل المتقدمة سرية، يرجى استخدام حساب بنفس رقم الجوال والبريد الإلكتروني الذي استخدمته للتسجيل مع مؤسستك",
+
+    "customer advanced-information is not available, " => "المعلومات المتقدمة لهذا العميل غير متوفرة، ",
+
+    "please check with the system administrator" => "يرجى التحقق مع مسؤول النظام",
+
+    "no data found" => "لم يتم العثور على بيانات",
+
+    
+
 ];
      

@@ -1878,11 +1878,11 @@ a.btnbtsp.btn_link:hover {
 }
 
 .crm-title.hzm-warning {
-    font-size: 22px;
+    font-size: 18px;
     border: 1px solid #d16d0a;
-    padding: 8px;
-    background-color: #faefdbcc;
-    color: #d16d0a;
+    padding: 15px;
+    background-color: #faefdb4f;
+    color: #ad5b09;
     margin-top: 50px;
 }
 
@@ -3876,3 +3876,7 @@ p.request-status.returned.opened.waiting {
     padding: 10px;
 }
 
+.cms_bg.advanced_info {
+  padding: 20px;
+  border: 1px solid #c0baba;
+}

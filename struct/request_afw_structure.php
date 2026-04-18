@@ -119,7 +119,7 @@ class CrmRequestAfwStructure
 			'SIZE' => 10,
 			'UTF8' => false,
 			'TYPE' => 'DATE',
-			'FORMAT' => 'HIJRI_UNIT',
+			'FORMAT' => 'CONVERT_SYSTEM_FORMAT',
 			'READONLY' => true,
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => true,
@@ -250,7 +250,7 @@ class CrmRequestAfwStructure
 			'MANDATORY' => true,
 			'UTF8' => false,
 			'TYPE' => 'DATE',
-			'FORMAT' => 'HIJRI_UNIT',
+			'FORMAT' => 'CONVERT_SYSTEM_FORMAT',
 			'READONLY' => true,
 			'AUDIT' => false,
 			'SEARCH-BY-ONE' => false,
@@ -791,9 +791,6 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
-		
-
 
 		'service_category_id' => array(
 			'FGROUP' => 'props',  'STEP' => 1,

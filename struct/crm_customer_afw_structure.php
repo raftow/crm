@@ -18,8 +18,9 @@ class CrmCrmCustomerAfwStructure
 					$obj->FORMULA_DISPLAY_FIELD  = "concat(IF(ISNULL(first_name_ar), '', first_name_ar) , ' ' , IF(ISNULL(father_name_ar), '', father_name_ar) , ' ' , IF(ISNULL(last_name_ar), '', last_name_ar), ' ' , IF(ISNULL(mobile), '', mobile), ' ' , IF(ISNULL(idn), '', idn))";
 
 					$obj->UNIQUE_KEY = array('mobile', 'email', 'idn_type_id', 'idn');
+					$obj->migrationExport = true;
 					$obj->editByStep = true;
-					$obj->editNbSteps = 3;
+					$obj->editNbSteps = 4;
 					$obj->showQeditErrors = true;
 					$obj->showRetrieveErrors = true;
 					$obj->STATS_DEFAULT_CODE = "gs001";
@@ -695,6 +696,7 @@ class CrmCrmCustomerAfwStructure
 			'MANDATORY' => false,
 			'UTF8' => false,
 			'TYPE' => 'FK',
+			'PILLAR' => true,
 			'CATEGORY' => 'ITEMS',
 			'ANSWER' => 'request',
 			'ANSMODULE' => 'crm',
@@ -723,6 +725,7 @@ class CrmCrmCustomerAfwStructure
 			'EDIT' => true,
 			'QEDIT' => false,
 			'SIZE' => 32,
+			'PILLAR' => true,
 			'MANDATORY' => false,
 			'UTF8' => false,
 			'TYPE' => 'FK',

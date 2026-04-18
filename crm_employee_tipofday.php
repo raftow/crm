@@ -11,7 +11,9 @@ if(date("Y-m-d")<="2026-05-05") {
         $arabic_name = $crmEmplObj->getShortDisplay("ar");
         $ai_notes = [];
         $pctWithoutTaqib = $crmEmplObj->pctWithoutTaqib();
-        if(($pctWithoutTaqib!="N/A") and $pctWithoutTaqib<95) {
+        if(($pctWithoutTaqib!="N/A") and $pctWithoutTaqib<90) {
+            $crmEmplObj->set("approved", "W");
+            $crmEmplObj->commit();
             $pctWithTaqib = round(100 - $pctWithoutTaqib);
             $ai_notes[] = "المنسق المكرم $arabic_name ،
             خضعت أجوبتك على العملاء لعملية تحليل الذكاء الاصطناعي وذلك أنه يوجد

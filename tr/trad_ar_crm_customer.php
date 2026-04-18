@@ -47,6 +47,7 @@
 	$trad["crm_customer"]["step1"] = "المعلومات الأساسية";
 	$trad["crm_customer"]["step2"] = "معلومات أخرى";
 	$trad["crm_customer"]["step3"] = "قائمة الطلبات";
+	$trad["crm_customer"]["step4"] = "المعلومات المتقدمة";
 
 	$trad["crm_customer"]["this_month"] = "الشهر الحالي";
 	$trad["crm_customer"]["previous_month"] = "الشهر الماضي";

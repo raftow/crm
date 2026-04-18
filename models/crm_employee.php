@@ -742,6 +742,57 @@ class CrmEmployee extends CrmObject
 
 
 
+        public static function reclassifyCrmEmployees($silent = false, $lang = "ar")
+        {
+                $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+                $sql_inbox = "select orgunit_id, employee_id, count(*) as withtaqib 
+                          from $server_db_prefix" . "crm.request 
+                          where (nb_taqibs > 0) or (related_request_code > '')
+                          group by orgunit_id, employee_id 
+                          order by count(*) desc";
+                // $sql_inbox .= " limit 30";
+
+                $inbox_data = AfwDatabase::db_recup_rows($sql_inbox);
+
+                $errors_arr = array();
+                $infos_arr = array();
+                // $token_arr = [];
+                // $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
+                // $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tv" . "tc.gov.sa");
+                $err = "";
+                $info = "";
+                $nb_disapproved = 0;
+                foreach ($inbox_data as $inbox_row) {
+                        if ($inbox_row["orgunit_id"] and $inbox_row["employee_id"]) {
+                                // $token_arr["[waiting]"] = $inbox_row["waiting"];                                
+                                $crmEmployeeObj = CrmEmployee::loadByMainIndex($inbox_row["orgunit_id"], $inbox_row["employee_id"]);
+                                if($crmEmployeeObj and $crmEmployeeObj->sureIs("approved"))
+                                {
+                                        $pctWithoutTaqib = $crmEmployeeObj->pctWithoutTaqib();
+                                        if(($pctWithoutTaqib!="N/A") and $pctWithoutTaqib<90) {
+                                                $crmEmployeeObj->set("approved", "W");
+                                                $crmEmployeeObj->commit();                                
+                                                $nb_disapproved++;                                                
+                                        }
+                                }
+                                
+                        }
+                }
+
+                if ($err) $errors_arr[] = $err;
+                $infos_arr[] = "$nb_disapproved employee(s) have been reclassified as waiting for approval because their pct of closed tickets without taqib is less than 90%";
+
+                if ((!$silent) and (count($errors_arr) > 0)) {
+                        AfwSession::pushError(implode("<br>", $errors_arr));
+                }
+
+                if ((!$silent) and (count($infos_arr) > 0)) {
+                        AfwSession::pushInformation(implode("<br>", $infos_arr));
+                }
+
+                return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+        }
+
         public static function notifyCrmEmployees($silent = false, $lang = "ar")
         {
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");

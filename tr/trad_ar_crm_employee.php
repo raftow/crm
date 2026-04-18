@@ -43,6 +43,9 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["admin"] = "مشرف تنسيق";
         $trad["crm_employee"]["super_admin"] = "مشرف عام";
         $trad["crm_employee"]["approved"] = "منسق معتمد"; 
+        $trad["crm_employee"]["approved.YES"] = "منسق معتمد";
+	    $trad["crm_employee"]["approved.NO"]  = "منسق مستجد";
+	    $trad["crm_employee"]["approved.EUH"] = "منسق تحت إعادة التدريب";
         $trad["crm_employee"]["step1"] = "البيانات العامة";
         $trad["crm_employee"]["step2"] = "الطلبات المسندة";
         $trad["crm_employee"]["step3"] = "وحدات المتابعة";

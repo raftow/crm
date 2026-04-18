@@ -70,12 +70,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
                         //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
 
-                ),*/
-
-
-
-
-        );
+                ),*/);
 
 
 
@@ -149,7 +144,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                         if ($create_obj_if_not_found) {
                                 $obj->set("idn_type_id", $idn_type_id);
-                                if(!$obj->getVal("customer_type_id")) $obj->set("customer_type_id", 1);
+                                if (!$obj->getVal("customer_type_id")) $obj->set("customer_type_id", 1);
 
                                 $obj->activate();
                         }
@@ -325,7 +320,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                 $return = trim(implode(" ", $data));  // $this->getId().":".
                 if (!$return) $return = "عميل جديد";
-                else $return .= " (".$this->showAttribute("customer_type_id",null,true,$lang).")";
+                else $return .= " (" . $this->showAttribute("customer_type_id", null, true, $lang) . ")";
 
                 return $return;
         }
@@ -546,10 +541,11 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
               return ($this->getVal("customer_type_id") == 3);
         }*/
 
-        public function hetType()  {
-                if(!$this->getVal("customer_type_id")) return null;
+        public function hetType()
+        {
+                if (!$this->getVal("customer_type_id")) return null;
                 return CustomerType::loadById($this->getVal("customer_type_id"));
-        }    
+        }
 
         public function getAttributeLabel($attribute, $lang = "ar", $short = false)
         {
@@ -564,7 +560,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 if ($attribute == "ref_num") {
                         // $customerTypeObj = $this->hetType();
                         if (!$lang) $lang = "ar";
-                        $custTypeLogic = AfwSession::config("cust_type_logic", []);                
+                        $custTypeLogic = AfwSession::config("cust_type_logic", []);
                         // $customerTypeId = $customerTypeObj->id;            
                         $customerTypeId = $this->getVal("customer_type_id");
                         $return = $custTypeLogic[$customerTypeId]["ref_num"]["title_$lang"];
@@ -579,7 +575,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 if ($attribute == "org_name") {
                         // $customerTypeObj = $this->hetType();
                         if (!$lang) $lang = "ar";
-                        $custTypeLogic = AfwSession::config("cust_type_logic", []);                
+                        $custTypeLogic = AfwSession::config("cust_type_logic", []);
                         // $customerTypeId = $customerTypeObj->id;
                         $customerTypeId = $this->getVal("customer_type_id");
                         $return = $custTypeLogic[$customerTypeId]["org_name"]["title_$lang"];
@@ -671,7 +667,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 return AfwDateHelper::currentHijriDate();
         }
 
-        public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false)
+        public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent = false)
         {
                 $this->set("last_request_date", AfwDateHelper::currentHijriDate());
                 $this->commit();
@@ -733,7 +729,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                 if ($customer_mobile and $customer_mobile_correct) {
                         $file_dir_name = dirname(__FILE__);
-                        $sms_template = $actionParamsArr[0];                        
+                        $sms_template = $actionParamsArr[0];
                         /*
                         if (!$only_get_description) {
                                 $exceptional_sms_template = $this->decideSMSTemplate($sms_template);
@@ -758,17 +754,16 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         include("$file_dir_name/../tpl/template_sms_$sms_template.php");
 
                         if ($sms_body_arr[$lang]) {
-                                $sms_body_before =$sms_body_arr[$lang];
+                                $sms_body_before = $sms_body_arr[$lang];
                                 $sms_body = $this->decodeTpl($sms_body_before, array(), $lang, $token_arr);
-                                AfwBatch::print_info('before decode : '.$sms_body_before);
-                                AfwBatch::print_info('after decode : '.$sms_body);
+                                AfwBatch::print_info('before decode : ' . $sms_body_before);
+                                AfwBatch::print_info('after decode : ' . $sms_body);
                                 // ****
                         } else {
                                 $sms_body = "";
                         }
 
-                        if (!$only_get_description) 
-                        {
+                        if (!$only_get_description) {
                                 if (!$sms_body) return array(false, $this->tm("can't find body of SMS for this template and langue") . " [$sms_template/$exceptional_sms_template, $lang]", $sms_body);
 
 
@@ -804,9 +799,9 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                 // use initials like RB for Rafik BOUBAKER
                 $en_name = $this->calcFull_name_en();
-                if(!$en_name) $en_name = AfwStringHelper::arabic_to_latin_chars($this->calcFull_name());
-                if(!$en_name) $en_name = "??";
-                $initials = AfwStringHelper::initialsOfName($en_name);                
+                if (!$en_name) $en_name = AfwStringHelper::arabic_to_latin_chars($this->calcFull_name());
+                if (!$en_name) $en_name = "??";
+                $initials = AfwStringHelper::initialsOfName($en_name);
                 $html = "<div class='user-account'>$initials</div>";
                 return $html;
         }
@@ -835,7 +830,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         {
                 return $this->tm("customer", $lang);
         }
-        
+
         public function getUserPicture()
         {
                 return $this->getCustomerPicture();
@@ -845,15 +840,12 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         {
                 if ($attribute == "type") return "customer_type_id";
                 // if ($attribute == "type") return "customer_type_id";
-                
+
                 return $attribute;
         }
 
 
-        public function generateCacheFile($lang="ar", $onlyIfNotDone=false, $throwError=false)
-        {
-                 
-        }
+        public function generateCacheFile($lang = "ar", $onlyIfNotDone = false, $throwError = false) {}
 
         protected function supervisorCanEditMe()
         {
@@ -864,7 +856,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         {
                 return false;
         }
-        
+
 
         public final function isAdmin()
         {
@@ -887,82 +879,51 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 $quick_links_arr = array();
 
                 $company = AfwSession::currentCompany();
-                $main_company_domain = AfwSession::config("main_company_domain", "$company.gov.sa");       
-                $url_ppa = AfwSession::config("url_ppa", "https://$main_company_domain/ar/Pages/PrivacyPolicy.aspx");       
+                $main_company_domain = AfwSession::config("main_company_domain", "$company.gov.sa");
+                $url_ppa = AfwSession::config("url_ppa", "https://$main_company_domain/ar/Pages/PrivacyPolicy.aspx");
                 $quick_links_arr[] = array(
-                                        'target' => "ppa",
-                                        'name_ar' => "سياسة الخصوصية",
-                                        'name_en' => "Privacy policy",
-                                        'url' => $url_ppa
-                                );
+                        'target' => "ppa",
+                        'name_ar' => "سياسة الخصوصية",
+                        'name_en' => "Privacy policy",
+                        'url' => $url_ppa
+                );
 
                 return $quick_links_arr;
         }
 
 
-        public function calcOinfo_html($what = "value")
+        public function calcOinfo_html($what = "value", $forCustomer=false)
         {
-                $lang = AfwLanguageHelper::getGlobalLanguage();
                 
+                $lang = AfwLanguageHelper::getGlobalLanguage();
+                $objme = AfwSession::getUserConnected();
+                $superAdmin = ($objme and $objme->isSuperAdmin());
+                $res = [];
                 $company = AfwSession::currentCompany();
                 $file_dir_name = dirname(__FILE__);
                 if (file_exists("$file_dir_name/../../client-$company/customer_extended_info.php")) {
                         require_once("$file_dir_name/../../client-$company/customer_extended_info.php");
                         if (class_exists('CustomerExtendedInfo')) {
-                                $res = CustomerExtendedInfo::getExtendedInfo($this);
-
-                                return var_export($res, true);
+                                $level = $forCustomer ? "customer" : ( $superAdmin ? "admin" : "employee");
+                                list($html, $res) = CustomerExtendedInfo::getExtendedInfoHtml($this, $level, $lang);
                         }
                 }
+
                 
-                $request_late = $this->calc("request_late");
-                if ($request_late >= 2) $request_late_color = "red";
-                elseif ($request_late >= 1) $request_late_color = "orange";
-                else $request_late_color = "good";
-                $request_typeObj = $this->het("request_type_id");
-                if ($request_typeObj) $request_type_code = $request_typeObj->getVal("lookup_code");
-                else $request_type_code = "unknown";
-                $status_id = $this->getVal("status_id");
-                $request_title = $this->getVal("request_title");
-                $intitled = $this->getAttributeLabel("intitled", $lang);
-                $request_text = $this->getVal("request_text");
-                $request_type = $this->showAttribute("request_type_id", null, true, $lang);
-                $request_status = $this->showAttribute("status_id", null, true, $lang);
-                $request_status_title = $this->getAttributeLabel("status_id", $lang);
-                $pb_resolved = $this->sureIs("pb_resolved");
-                $resolved_class = $pb_resolved ? "resolved" : "waiting";
-                $isClosed = $this->isClosed();
-                $this_id = $this->id;
-                $status_class = $isClosed ? "closed" : "opened";
 
-                $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
-
-                $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
-                $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class'>&nbsp;</p><p class='help p-helper'>$help</p>" : "";
-
-                $html = "<div id='div-request-body-$this_id' class='security $confidential_class'>";
-                $html .= "<div class='request-desc $request_late_color'>";
-                $html .= "<h3 class='request-type $request_type_code'>$request_type $intitled</h3>";
-                $html .= "<h1 class='request-title ST$status_id $status_class'>$request_title</h1>";
-                $html .= "<h2 class='request-text $status_class'>$request_text</h2>";
-                $html .= "<p class='request-status $status_class $resolved_class'>$request_status_title : $request_status</p>";
-                $html_rti = "";
-                $respObj = $this->getLastResponse();
-                if ($respObj and $respObj->isReturnToInvestigator()) {
-                $response_returned = $respObj->getVal("response_text");
-                $intro = $respObj->tm("The supervisor has returnted the request to you with this comment");
-                $html_rti .= "<div class='request-desc red'>";
-                $html_rti .= "<p class='request-status returned opened waiting'>$intro : $response_returned</p>";
-                $html_rti .= "</div>";
+                if (!$res['success']) {
+                        $message = $this->tm("customer advanced-information is not available, ", $lang) . " ";
+                        if(!$forCustomer) {
+                                                        
+                                $message .= $this->tm($res['message'], $lang);                        
+                                if ($superAdmin) {
+                                        $return .= "res = " . var_export($res, true);
+                                }                        
+                        }
+                        $return = "<div class='data-report security'>$message</div>";
+                        return $return;
+                        
                 }
-
-                $html .= $html_rti;
-                $html .= "</div>";
-                $html .= "</div>";
-                $html .= $confidential_button;
-
-
-                return $html;
+                else return $html;
         }
-                
 }
