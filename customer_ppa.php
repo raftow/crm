@@ -104,6 +104,15 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
                                 <p class="special-link todo">قبل تسجيل الدخول فضلا نأمل منكم فتح الرابط أسفله ثم قراءة تفاصيل وينود سياسة الخصوصية في النافذة الجديدة ثم غلقها والموافقة عليها في هذه النافذة</p>
                                 <p class="special-link ppa read"><a target="_new" href="<?php echo $url_ppa;?>">الاطلاع على سياسة الخصوصية</a></p>
                         </div><br>
+                        <?php
+                        if($custObj->getVal("ppa") == "W") {
+                        ?>
+                        <div class="ppa warning">
+                                <p class="special-link important">يبدوا أن هذا الحساب مجمد يكفي قراءة سياسة الخصوصية والموافقة عليها واكمال عملية تسجيل الدخول لرفع التجميد</p>
+                        </div><br>
+                        <?php
+                        }
+                        ?>
                         <form id="formlogin2" name="formlogin2" method="post" action="customer_login.php" dir="rtl" enctype="multipart/form-data">
                                         <input type="hidden" name="customer_mobile_or_email" value="<?php echo $customer_mobile_or_email?>">
                                         <input type="hidden" name="customer_idn" value="<?php echo $customer_idn?>">                                        

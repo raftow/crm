@@ -92,6 +92,33 @@
                                                 <div class='hzm_data_prop perso-data-prop'>
                                                         <a href='i.php?cn=customer&mt=editaccount'><div class="hzm_blue hzm_print">تعديل</div></a>
                                                 </div>
+                                        
+                                                <div class='hzm_data_prop perso-data-prop'>
+                                                        <a href='#' willhref='/crm/i.php?cn=customer&mt=ppnotaccepted' class='ppna'><div class="hzm_red hzm_print">تجميد الحساب</div></a>
+                                                </div>
+                                                <script>
+                                                        $(document).ready(function() {
+                                                                $(".ppna").click(function(e) {
+                                                                        e.preventDefault();
+                                                                        swal({
+                                                                                title: "هل أنت متأكد من طلب تجميد حسابك؟",
+                                                                                text: "إذا تم تجميد الحساب فلا يمكنك استخدامه في ارسال طلبات جديدة أو الاستعلام عن طلبات سابقة إلا بإزالة التجميد. وهذه الأخيرة تتم فقط بإعادة تسجيل الدخول والموافقة على سايسة خصوصية البيانات", 
+                                                                                icon: "warning",
+                                                                                buttons: true,
+                                                                                dangerMode: true,
+                                                                        })
+                                                                        .then((willPPNA) => {
+                                                                                if (willPPNA) {
+                                                                                        // alert("will href : "+$(this).attr("willhref"));
+                                                                                        window.location.href = $(this).attr("willhref");
+                                                                                } else {
+                                                                                        swal("تم إلغاء طلب تجميد الحساب");
+                                                                                }
+                                                                        });
+                                                                                
+                                                                });
+                                                        });
+                                                </script>
                                         </div>
 
 

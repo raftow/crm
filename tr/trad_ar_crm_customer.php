@@ -36,6 +36,9 @@
 	$trad["crm_customer"]["pb_resolved.NO"]  = "لا";
 	$trad["crm_customer"]["pb_resolved.EUH"] = "محايد";
 	$trad["crm_customer"]["ppa"] = "الموافقة على سياسة الخصوصية";
+	$trad["crm_customer"]["ppa.YES"] = "نعم تمت الموافقة";
+	$trad["crm_customer"]["ppa.NO"]  = "لا ليس بعد";
+	$trad["crm_customer"]["ppa.EUH"] = "حساب مجمد";
 	$trad["crm_customer"]["last_login_date"] = "تاريخ آخر تسجيل دخول";
 	
                 

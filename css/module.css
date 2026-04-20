@@ -1868,6 +1868,15 @@ a.btnbtsp.btn_link:hover {
     background-color: #b3dee20d;
 }
 
+.crm-title.hzm-error {
+  font-size: 18px;
+  border: 1px solid #dd0a31;
+  padding: 8px;
+  background-color: #fff1f2cc;
+  color: #dd0a31;
+  margin-top: 50px;
+}
+
 .crm-title.hzm-info {
     font-size: 18px;
     border: 1px solid #047e7a;
@@ -3879,4 +3888,33 @@ p.request-status.returned.opened.waiting {
 .cms_bg.advanced_info {
   padding: 20px;
   border: 1px solid #c0baba;
+}
+
+
+.hzm_red.hzm_print {
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+}
+
+.ppa.warning {
+  border-radius: 0;
+  box-shadow: none;
+  background-color: #9ad5fb;
+}
+
+.hzm_red.hzm_print.ppna {
+  margin-right: 155px !important;
+}
+
+tr.data-row.status_action_enum.hzm_row_14 {
+    background-color: #efffac59 !important;
+}
+
+tr.data-row.status_action_enum.hzm_row_15 {
+    background-color: #effcff59 !important;
+}
+
+tr.data-row.request_late.hzm_row_1 {
+    background-color: #ffe5e5 !important;
 }

@@ -98,6 +98,17 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
 
                 $note = "عزيزي المستفيد، نود التأكيد على أن الحصول على أياً من: اسمك ورقم جوالك وهويتك والرقم الوظيفي أو التدريبي هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك";
 
+                if($all_error) {
+                ?>
+                <div class='crm-title hzm-error'><?php echo $all_error; ?></div>
+                <?php
+                }
+
+                if($all_info) {
+                ?>
+                <div class='crm-title hzm-info'><?php echo $all_info; ?></div>
+                <?php
+                }
                 ?>
                 <div class='crm-title hzm-info'><?php echo $note; ?></div>
                 <div class="cms_container ticket_div">

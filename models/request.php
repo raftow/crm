@@ -1963,6 +1963,21 @@ class Request extends CrmObject
 
             if($resoObj) $this->theLastResponse = $resoObj;
 
+            $filesUploaded_action_enum = Request::status_action_by_code("filesUploaded");
+            $dataCompleted_action_enum = Request::status_action_by_code("dataCompleted");
+
+            if(($status_action_enum==$filesUploaded_action_enum) or
+                ($status_action_enum==$dataCompleted_action_enum)
+            )
+            {
+                $this->set("request_priority", 2);    
+            }
+
+            if($this->calcRequest_late())
+            {
+                $this->set("request_priority", 1);    
+            }
+
             $this->set("status_id", $new_status_id);
             $this->set("status_action_enum", $status_action_enum);
             $this->set("status_date", AfwDateHelper::currentHijriDate());
@@ -2556,7 +2571,7 @@ class Request extends CrmObject
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نستثني التعقيب نفسه كما نستثني الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null) and (related_request_code = '' or related_request_code is null)");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null)");
     }
 
     public static function nbRespondedTicketsWithTaqib($employee_id=0)
@@ -2564,7 +2579,7 @@ class Request extends CrmObject
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نحسب التعقيب نفسه كما نحسب الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0 or related_request_code > '')");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0)");
     }
 
     public static function pctClosedTicketsWithoutTaqib($employee_id=0)
@@ -3120,7 +3135,9 @@ class Request extends CrmObject
 
     public function calcPrio_icon()
     {
-        if ($this->getVal("request_priority") <= 2) {
+        if ($this->getVal("request_priority") == 1) {
+            return "<img lbl='no-ajax' src='../lib/images/ultra-urgent.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='هذا الطلب تم تصنيفه بأولوية عالية' data-original-title='هذا الطلب تم تصنيفه بأولوية عالية جدا' class='red-tooltip'>";
+        } elseif ($this->getVal("request_priority") == 2) {
             return "<img lbl='no-ajax' src='../lib/images/urgent.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='هذا الطلب تم تصنيفه بأولوية عالية' data-original-title='هذا الطلب تم تصنيفه بأولوية عالية' class='red-tooltip'>";
         } else {
             return "";
@@ -4499,9 +4516,16 @@ class Request extends CrmObject
     }
 
 
-    public function rowCategoryAttribute()
+    public function rowCategoryAttribute($mode="retrieve")
     {
-        return "request_late:FORMULA";
+
+        if(($mode=="retrieve") or ($this->calcRequest_late()>0)) {
+            return "request_late:FORMULA";
+        }
+        else {
+            return "status_action_enum";
+        }
+        
     }
 
 

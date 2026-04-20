@@ -65,7 +65,17 @@ $messages = [
 
     "no data found" => "لم يتم العثور على بيانات",
 
-    
+    "Your account has been updated successfully" => "تم تحديث حسابك بنجاح",
+
+    "Nothing was updated in your account" => "لم يتم تحديث أي شيء في حسابك",
+
+    "SMS notification has been sent to customer's mobile number to inform him about the account update" 
+       => "تم إرسال رسالة قصيرة إلى رقم جوال العميل لإبلاغه بتحديث الحساب",
+
+    "Failed to send SMS notification to customer's mobile number to inform him about the account update" 
+       => "فشلت عملية إرسال رسالة قصيرة إلى رقم جوال العميل لإبلاغه بتحديث الحساب",
+
+    "Your account has been frozen" => "تم تجميد حسابك",
 
 ];
      

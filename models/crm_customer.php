@@ -711,7 +711,12 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         }
 
 
-
+        public function sendSmsToCustomer($template, $lang, $token_arr)
+        {
+                $actionParamsArr = [];
+                $actionParamsArr[0] = $template;
+                return $this->smsRetrieveAction($lang, $actionParamsArr, false, $token_arr);
+        }
 
 
         public function smsRetrieveAction($lang, $actionParamsArr, $only_get_description = false, $token_arr = array())

@@ -747,8 +747,9 @@ class CrmEmployee extends CrmObject
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
                 $sql_inbox = "select orgunit_id, employee_id, count(*) as withtaqib 
                           from $server_db_prefix" . "crm.request 
-                          where (nb_taqibs > 0) or (related_request_code > '')
+                          where nb_taqibs > 0
                           group by orgunit_id, employee_id 
+                          having count(*) > 3
                           order by count(*) desc";
                 // $sql_inbox .= " limit 30";
 
@@ -865,6 +866,11 @@ class CrmEmployee extends CrmObject
                 // $receiver["email"] = "rboubaker@tv.tc.gov.sa";
 
                 // $cc_to = "rboubaker@tv.tc.gov.sa";
+                if(date("w") == 3) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
+                {
+                        $cc_to = $employeeObj->getManagerEmail();
+                }
+                else
                 $cc_to = null;
 
                 $file_dir_name = dirname(__FILE__);

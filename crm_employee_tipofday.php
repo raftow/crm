@@ -7,22 +7,32 @@ if(date("Y-m-d")<="2026-05-05") {
     $out_scr .= "<div class='crm-title hzm-warning'>$warning_employee</div>";
 
     $crmEmplObj = CrmEmployee::findCrmEmployee($myEmplId);
+    $ai_when = "";
     if($crmEmplObj) {
         $arabic_name = $crmEmplObj->getShortDisplay("ar");
         $ai_notes = [];
-        $pctWithoutTaqib = $crmEmplObj->pctWithoutTaqib();
-        if(($pctWithoutTaqib!="N/A") and $pctWithoutTaqib<90) {
-            $crmEmplObj->set("approved", "W");
-            $crmEmplObj->commit();
+        /*
+        if($crmEmplObj->sureIs("approved")){
+            $ai_when = "اليوم";
+            $pctWithoutTaqib = $crmEmplObj->pctWithoutTaqib();
+            if(($pctWithoutTaqib!="N/A") and $pctWithoutTaqib<90) {
+                $crmEmplObj->set("approved", "W");
+                $crmEmplObj->commit();
+            }
+        } */
+        
+
+        if($crmEmplObj->getVal("approved") == "W")
+        {
             $pctWithTaqib = round(100 - $pctWithoutTaqib);
             $ai_notes[] = "المنسق المكرم $arabic_name ،
-            خضعت أجوبتك على العملاء لعملية تحليل الذكاء الاصطناعي وذلك أنه يوجد
+            خضعت $ai_when أجوبتك على العملاء لعملية تحليل الذكاء الاصطناعي وذلك أنه يوجد
 عدد كبير من العملاء غير راض عن الخدمة المقدمة له وكذلك بعض التعقيبات المتكررة  ($pctWithTaqib %)
 لذلك نذكرك عزيزي المنسق بالتوجيهات التالية
     . عدم احالة العميل على منصات أخرى أو على مكتب الادارة مباشرة 
     . عدم احالة العميل على البريد الالكتروني للادارة
-    . تقديم الدعم والجواب المطلوب للعميل مباشرة عبر منصة خدمة العملاء
-    . اجتناب غلق التذكرة قبل التأكد من اكتمال الرد وأنه يفي للعميل بالمطلوب بشكل تام وواضح
+    . تقديم الدعم المطلوب للعميل وتحرير الجواب مباشرة عبر منصة خدمة العملاء الزاميا ولو تمت افادة العميل بالجواب عبر قنوات أخرى مثل الواتساب او الاتصال الهاتفي
+    . اجتناب غلق التذكرة قبل التأكد من اكتمال وتحرير الرد وأنه يفي للعميل بالمطلوب بشكل تام وواضح
 
 مع جزيل الشكر";
         }
