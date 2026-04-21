@@ -12,12 +12,13 @@ if ($objme) {
                                 require_once("$file_dir_name/../client-$company/organization_business.php");
                                 if (class_exists('OrganizationBusiness')) {
                                         $res = OrganizationBusiness::update_all_organizations();
-
+                                        $warning = implode("<br>\n", $res['warnings']);
                                         $error = implode("<br>\n", $res['errors']);
                                         $info = implode("<br>\n", $res['log']);
 
                                         if ($info) AfwSession::pushInformation($info);
                                         if ($error) AfwSession::pushError($error);
+                                        if ($warning) AfwSession::pushWarning($warning);
                                 }
                         }
                 }
