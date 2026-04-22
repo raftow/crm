@@ -390,8 +390,45 @@ echo $js_for_cust_type;
                                         <label class="hzm_label label_mandatory">  النجمة الحمراء تعني حقل إجباري  
                                         </label>                                                                               
                                 </div>
+                                <?php                         
+                                        $company = AfwSession::currentCompany();
+                                        $main_company_domain = AfwSession::config("main_company_domain", "$company.gov.sa");       
+                                        $url_ppa = AfwSession::config("url_ppa", "https://$main_company_domain/ar/Pages/PrivacyPolicy.aspx");       
+                                ?> 
+                                <div class="ppa">
+                                        <p class="special-link todo register">
+                                                قبل تسجيل الدخول فضلا نأمل منكم فتح الرابط أسفله ثم قراءة تفاصيل وبنود سياسة الخصوصية في النافذة الجديدة التي ستفتح لك
+                                                ثم غلق هذه الأخيرة والرجوع إلى هذه النافذة للموافقة على سياسة الخصوصية واكمال عملية التسجيل</p>
+                                        <p class="special-link ppa read"><a target="_new" href="<?php echo $url_ppa;?>">الاطلاع على سياسة الخصوصية</a></p>
+                                </div>
+                                <p class="ppa-acceptance hide">
+                                        <input type="checkbox" name="ppa" id="ppa" value="Y">
+                                        <span>
+                                        أوافق على سياسة الخصوصية
+                                        </span>    
+                                </p>
+                                <script>  
+                                $(document).ready(function() {       
+                                        $(".special-link.ppa.read>a").click(function() {
+                                                $(".ppa-acceptance.hide").removeClass("hide");
+                                        });
+
+                                        $(".ppa-acceptance").click(function() {
+                                            if($("#ppa").val() == "Y")
+                                            {
+                                                $("#crm_new_go").removeAttr("disabled");
+                                            }
+                                            else 
+                                            {
+                                                alert("ppa val = "+$("#ppa").val());    
+                                            }    
+                                                
+                                        });
+                                });
+                                </script>
+                                <br>
                                 <!-- logreg:<?php echo $logbl?> -->
-                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_new_go">&nbsp;
+                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_new_go" disabled>&nbsp;
                                 
                                 
                         </form>

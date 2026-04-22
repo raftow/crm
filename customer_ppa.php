@@ -63,7 +63,14 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
 
     $custObj = CrmCustomer::loadByLoginInfos($customer_mobile, $customer_email, $customer_idn);
 
-    if($custObj and $custObj->sureIs("ppa"))
+    if(!$custObj)
+    {
+        $_POST["ppa"] = "X";
+        $customer_msg = "بيانات الدخول غير صحيحة، يرجى إعادة المحاولة";        
+        include("$file_dir_name/../crm/customer_login.php");
+        die();
+    }
+    elseif($custObj->sureIs("ppa"))
     {
         $_POST["ppa"] = "Y";
         include("$file_dir_name/../crm/customer_login.php");
@@ -101,7 +108,9 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
                     ?>                    
                 <div class="modal-body">
                         <div class="ppa">
-                                <p class="special-link todo">قبل تسجيل الدخول فضلا نأمل منكم فتح الرابط أسفله ثم قراءة تفاصيل وينود سياسة الخصوصية في النافذة الجديدة ثم غلقها والموافقة عليها في هذه النافذة</p>
+                                <p class="special-link todo">
+                                        قبل تسجيل الدخول فضلا نأمل منكم فتح الرابط أسفله ثم قراءة تفاصيل وبنود سياسة الخصوصية في النافذة الجديدة التي ستفتح لك
+                                         ثم غلق هذه الأخيرة والرجوع إلى هذه النافذة للموافقة على سياسة الخصوصية واكمال عملية تسجيل الدخول</p>
                                 <p class="special-link ppa read"><a target="_new" href="<?php echo $url_ppa;?>">الاطلاع على سياسة الخصوصية</a></p>
                         </div><br>
                         <?php

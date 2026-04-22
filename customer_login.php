@@ -53,7 +53,7 @@ if(AfwSession::customerIsConnected())
 } 
 elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_POST["crm_go"]))
 {
-        if($_POST["ppa"]!="Y")   {
+        if(($_POST["ppa"]!="Y") and ($_POST["ppa"]!="X"))   {
                 include("$file_dir_name/../crm/customer_ppa.php");
                 die(); 
         }
@@ -193,18 +193,21 @@ if($desc_site)
 ?>
 <div class="home_banner login_banner">
 <div class="modal-dialog popup-login-customer">
-        <div class="modal-header">                        
-                    <?php
-                       if($customer_msg)
-                       {
-                    ?>
+<?php   
+        if($customer_msg)
+        {
+?>
                         <div class="quote">
                             <div class="quoteinn">
                                <p class='login_error'><?=$customer_msg?></p>
                             </div>
                         </div>
-                    <?php 
-                       }
+<?php 
+        }     
+?>
+        <div class="modal-header">                        
+                    <?php
+                       
                        $new_customer_managed = AfwSession::config("new_customer_managed", true);
                        if($new_customer_managed)
                        {
@@ -212,11 +215,10 @@ if($desc_site)
                         <div class="q_new_customer">                                                                                                          
                                 <h2 class="crm_question">هل أنت عميل جديد؟</h2>
                                 <br>         
-                                <center>
                                         <a href="customer_register.php?id=<?php echo $customer_idn?>&em=<?php echo $customer_email?>&mb=<?php echo $customer_mobile?>">
                                                 <div class="btnbtsp btn-success btnregister" name="register">التسجيل لأول مرة 
-                                                </div></a>
-                                </center>         
+                                                </div>
+                                        </a>
                                 <br>                                  
                         </div>  
                     <?php 

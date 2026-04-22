@@ -632,11 +632,15 @@ div.btnbtsp.btn-success.btnregister {
     margin-top: 9px;
     font-size: 110%;
     font-weight: normal;
-    background-color: #ffffff;
-    color: #167868;
-    text-shadow: #6bc9be 1px 1px;
+    background-color: #108f7a;
+    color: white;
+    /* text-shadow: #6bc9be 1px 1px; */
     border-color: #167868;
     border-width: 1px;
+    width: 60%;
+    margin-right: 20%;
+    float: right;
+    margin-bottom: 25px;
 }
 
 .q_new_customer {
@@ -3917,4 +3921,12 @@ tr.data-row.status_action_enum.hzm_row_15 {
 
 tr.data-row.request_late.hzm_row_1 {
     background-color: #ffe5e5 !important;
+}
+
+p.special-link.todo.register {
+    font-size: 13px;
+    padding: 5px;
+    text-align: justify;
+    background-color: #ffeece;
+    color: #74320a;
 }
