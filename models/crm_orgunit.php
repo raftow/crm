@@ -87,7 +87,7 @@ class CrmOrgunit extends CrmObject{
          * @return CrmOrgunit:
          */
         
-        public static function loadByMainIndex($orgunit_id,$create_obj_if_not_found=false)
+        public static function loadByMainIndex($orgunit_id,$create_obj_if_not_found=false, $activate_obj_if_found=true)
         {
            $obj = new CrmOrgunit();
            if(!$orgunit_id) $obj->simpleError("loadByMainIndex : orgunit_id is mandatory field");
@@ -97,7 +97,7 @@ class CrmOrgunit extends CrmObject{
 
            if($obj->load())
            {
-                if($create_obj_if_not_found) $obj->activate();
+                if($activate_obj_if_found) $obj->activate();
                 return $obj;
            }
            elseif($create_obj_if_not_found)
