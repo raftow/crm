@@ -954,7 +954,7 @@ class Request extends CrmObject
 
 
 
-    public function getStatusDisplay($lang = "ar")
+    public function getStatusDisplay($lang = "ar", $context = 'default')
     {
 
         $data = array();
