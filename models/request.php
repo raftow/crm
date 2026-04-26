@@ -961,7 +961,8 @@ class Request extends CrmObject
         $link = array();
         list($status_comment, $link[0]) = $this->displayAttribute("status_comment", false, $lang);
         list($data_status, $link[1]) = $this->displayAttribute("status_id", false, $lang);
-        $status_date = $this->showAttribute("request_date"); // $this->decode("status_date", "HIJRI_ONLY");
+        $status_date = $this->showAttribute("status_date");
+        if(!$status_date) $status_date = $this->showAttribute("request_date"); 
         list($status_time, $link[3]) = $this->displayAttribute("status_time", false, $lang);
 
         return "<span class='crm_status_comment'>$status_comment</span> <span class='crm_status'>$data_status</span> <br><span class='status_date'>$status_date</span>&nbsp;&nbsp;<span class='status_time'>$status_time</span>";
@@ -1977,6 +1978,16 @@ class Request extends CrmObject
             {
                 $this->set("request_priority", 1);    
             }
+
+            if(($new_status_id==self::$REQUEST_STATUS_DONE) or
+            ($new_status_id==self::$REQUEST_STATUS_CANCELED) or
+            ($new_status_id==self::$REQUEST_STATUS_CLOSED) or
+            ($new_status_id==self::$REQUEST_STATUS_REJECTED) or
+            ($new_status_id==self::$REQUEST_STATUS_IGNORED))
+            {
+                $this->calculateHoursInvestigatorWork(false);
+            }
+            
 
             $this->set("status_id", $new_status_id);
             $this->set("status_action_enum", $status_action_enum);
@@ -3440,15 +3451,15 @@ class Request extends CrmObject
     }
 
 
-    public static function getPerf($row, $formatted = false)
+    public static function getPerf($rowPerf, $formatted = false)
     {
-        // ex of $row
+        // ex of $rowPerf
         // array ( 'orgunit_id' => '70', 'count_request' => 99, 'is_request' => '0', 'is_enquiry' => '89', 'is_complaint' => '7', 'is_suggestion' => '1', 'is_support' => '2', 'request_done' => '3', 'request_late' => '43', 'request_ongoing' => '53', )
-        // got frpm die("getPerf(row=".var_export($row,true).")");
+        // got frpm die("getPerf(rowPerf=".var_export($rowPerf,true).")");
 
-        $count_request = $row["count_request"];
-        $request_done = $row["request_done"];
-        $request_late = $row["request_late"];
+        $count_request = $rowPerf["count_request"];
+        $request_done = $rowPerf["request_done"];
+        $request_late = $rowPerf["request_late"];
 
 
 
@@ -4564,5 +4575,39 @@ class Request extends CrmObject
                     $employee_id = $objme ? $objme->getEmployeeId() : 0;
                     return ($employee_id and (($employee_id == $this->getVal("employee_id")) or ($employee_id == $this->getVal("supervisor_id"))));
             }
+    }
+
+    public function calculateHoursInvestigatorWork($commit=true)
+    {
+            $status_date = $this->getVal("status_date");
+            $status_time = $this->getVal("status_time");
+            if(!$status_time) $status_time = "14:00:00";
+            $request_date = $this->getVal("request_date");
+            $request_time = $this->getVal("request_time");
+            if(!$request_time) $request_time = "14:00:00";
+
+            $status_gdate = AfwDateHelper::convertHijriToGreg($status_date);
+            $request_gdate = AfwDateHelper::convertHijriToGreg($request_date);
+
+            $diffH = AfwDateHelper::timeDiffInHours("$status_gdate $status_time", "$request_gdate $request_time", true);
+
+            if($diffH<0) $diffH = 0;
+
+            $this->set("hours_investigator_work", $diffH);
+            if($commit) $this->commit();
+
+            return $diffH;
+    }
+
+    public static function calculateEmployeeTimeWork($limit=1000, $lang="ar") {
+        $requestObj = new Request();
+        $requestObj->where("hours_investigator_work is null");
+        $requestList = $requestObj->loadMany($limit, "request_date desc");
+        $diffH = 0;
+        foreach($requestList as $requestItem) {
+            $diffH += $requestItem->calculateHoursInvestigatorWork();
+        }
+
+        return ["", "$diffH hours calculated"];
     }
 }

@@ -794,11 +794,11 @@ class CrmEmployee extends CrmObject
                 return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
 
-        public static function notifyCrmEmployees($silent = false, $lang = "ar")
+        public static function notifyCrmEmployees($silent = false, $lang = "ar", $simul=false)
         {
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
                 $sql_inbox = "select orgunit_id, employee_id, count(*) as waiting from $server_db_prefix" . "crm.request where status_id in (201,4) group by orgunit_id, employee_id order by count(*) desc";
-                // $sql_inbox .= " limit 30";
+                if($simul) $sql_inbox .= " limit 30";
 
                 $inbox_data = AfwDatabase::db_recup_rows($sql_inbox);
 
@@ -812,7 +812,7 @@ class CrmEmployee extends CrmObject
                                 $token_arr["[waiting]"] = $inbox_row["waiting"];
 
                                 $crmEmployeeObj = CrmEmployee::loadByMainIndex($inbox_row["orgunit_id"], $inbox_row["employee_id"]);
-                                list($err, $info) = $crmEmployeeObj->notifyMe($lang, $token_arr);
+                                list($err, $info) = $crmEmployeeObj->notifyMe($lang, $token_arr, $simul);
                                 if ($err) $errors_arr[] = $err;
                                 if ($info) $infos_arr[] = $info;
                         }
@@ -833,7 +833,36 @@ class CrmEmployee extends CrmObject
                 return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
 
-        public function notifyMe($lang = "ar", $token_arr = [])
+        public function getMyPerf($lang = "ar") {
+
+                $obj = new Request();
+                $date_start_perf = $obj->calcDate_start_perf();
+                $me_id = $this->getVal("employee_id");
+                $me_org_id = $this->getVal("orgunit_id");
+
+
+                $obj->where("active = 'Y' and request_date >= '$date_start_perf'");
+                $obj->where("(employee_id = $me_id and orgunit_id = $me_org_id)");
+                $reqList = $obj->loadMany();
+                $rowPerf = [];
+                $count_request = 0;
+                $request_done = 0;
+                $request_late = 0;
+                foreach($reqList as $reqItem) {
+                        /** @var Request $reqItem */
+                        $count_request ++;
+                        $request_done += $reqItem->calcRequest_done();
+                        $request_late += $reqItem->calcRequest_late();
+                }
+
+                $rowPerf["count_request"] = $count_request;
+                $rowPerf["request_done"] = $request_done;
+                $rowPerf["request_late"] = $request_late;
+
+                return [$request_late, Request::getPerf($rowPerf, true)];
+        }
+
+        public function notifyMe($lang = "ar", $token_arr = [], $simul = false)
         {
                 $employeeObj = $this->het("employee_id");
                 if (!$employeeObj) return ["This crm employee has no hrm employee defined : crm-employee-id=" . $this->id, ""];
@@ -850,6 +879,8 @@ class CrmEmployee extends CrmObject
                         $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tv" . "tc.gov.sa");
                 }
 
+                list($token_arr["[nb_lates]"],$token_arr["[perf_status]"]) = $this->getMyPerf($lang);
+
                 $token_arr["[the_orgunit]"] = $this->showAttribute("orgunit_id", null, true, $lang);
 
                 $errors_arr = array();
@@ -862,11 +893,15 @@ class CrmEmployee extends CrmObject
 
                 $receiver["mobile"] = $employeeObj->getVal("mobile");
                 $receiver["email"] = $employeeObj->getVal("email");
-                // $receiver["mobile"] = "0598988330";
-                // $receiver["email"] = "rboubaker@tv.tc.gov.sa";
+                if($simul) {
+                        $receiver["mobile"] = "0598988330";
+                        $receiver["email"] = "rboubaker@tv"."tc.gov.sa";
+                }
+
+                
 
                 // $cc_to = "rboubaker@tv.tc.gov.sa";
-                if(date("w") == 3) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
+                if(!$simul and (date("w") == 3)) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
                 {
                         $cc_to = $employeeObj->getManagerEmail();
                 }

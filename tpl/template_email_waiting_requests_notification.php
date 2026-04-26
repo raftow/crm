@@ -1,12 +1,19 @@
 <?php
+    $css = include("perf_css_tpl.php");    
     $company = AfwSession::currentCompany();
     $email_body_arr = array();
     $crm_center_email = CrmOrgunit::getGlobalCRMCenter()->getVal("email");
     if(!$crm_center_email) $crm_center_email = "cso@$company.gov.sa";
-    $email_body_arr["ar"] = "<html><body style='font-family: calibri;font-size: 16px;'>
+    $email_body_arr["ar"] = "<html>
+    <style>
+    $css
+    </style>
+    <body style='font-family: calibri;font-size: 16px;direction:rtl'>
             المكرم(ة) [firstname] [lastname]<br>
             إذا كان هذا البريد لا يعنيك أو لم تعد المنسق لـ : [the_orgunit] الرجاء تحويل هذه الرسالة إلى مكتب العلاقات مع العملاء $crm_center_email وأخبرهم بذلك<br>
             <b>يوجد لديك [waiting] طلبات في انتظار الرد من قبلكم</b><br>
+            عدد التذاكر المتأخرة : [nb_lates] <br>
+            تقييم الأداء : [perf_status] <br>
             للقيام بالمهام المطلوبة، يرجى زيارة منصة خدمة العملاء : <br>
             <a href='[crm_site_url]/login.php'>[crm_site_url]/login.php</a><br>
             <br><b>ثم &larr; صندوق الوارد</b><br>
@@ -18,7 +25,7 @@
             <hr>
             <i>ملاحظات : </i><br>
             <i>هذا البريد آلي لا ترد عليه</i><br>            
-            <i>لمزيد الاستفسار : [crm_general_admin]</i><br>";
+            <i>لمزيد الاستفسار : [crm_general_admin]</i><br></body></html>";
 
     $email_body_arr["subject-ar"] = "خدمة العملاء - يوجد طلبات في الانتظار";
 

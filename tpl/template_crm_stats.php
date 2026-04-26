@@ -64,6 +64,17 @@
                                                 <p>[crm_stats_responses_title]</p>
                                             </div>
                                         </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/checklist_[crm_stats_mytasks_nb_status].svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter [crm_stats_mytasks_nb_status]">[crm_stats_mytasks_nb]</span> </h3>
+                                                <p>[crm_stats_mytasks_title]</p>
+                                            </div>
+                                        </div>
+                                        
                                     </div>    
                                 </div>    
                             </div>
@@ -79,15 +90,6 @@
                             <div class="row">                                 
                                 <div class="col-12">                                                                        
                                     <div class="quick_activity_wrap">    
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/checklist_[crm_stats_mytasks_nb_status].svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter [crm_stats_mytasks_nb_status]">[crm_stats_mytasks_nb]</span> </h3>
-                                                <p>[crm_stats_mytasks_title]</p>
-                                            </div>
-                                        </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/watch_[crm_stats_days_avg_status].svg" alt="">
