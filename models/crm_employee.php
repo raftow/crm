@@ -920,11 +920,11 @@ class CrmEmployee extends CrmObject
                         $notification_sender_result_message = $notification_sender_result_item[1];
                         $notification_message = $notification_sender_result_item[2];
                         if (!$notification_sender_result_ok) {
-                                $notif_error = $this->tr($notification_type) . " &larr; " . $notification_message . " &larr; " . $notification_sender_result_message;
+                                $notif_error = $this->tr($notification_type) . " &larr; " . $notification_sender_result_message . " &larr; " . $notification_message;
                                 if ($development_mode) AfwSession::pushError($notif_error);
                                 $errors_arr[] = $notif_error;
                         } else {
-                                $notif_info = $this->tr($notification_type) . " &larr; " . $notification_message . " &larr; " . $notification_sender_result_message . " >> sent successfully to $receiver_label";
+                                $notif_info = $this->tr($notification_type) . " &larr; " . $notification_sender_result_message . " >> sent successfully to $receiver_label" . " &larr; " . $notification_message;
                                 $infos_arr[]  = $notif_info;
                         }
                 }

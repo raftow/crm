@@ -145,46 +145,58 @@ class Survey extends CrmObject{
         public static function getQuestionList($survey_id, $question_num="all")
         {
             $question_list = [];
+            if($survey_id==1) {
+                    if(($question_num==1) or ($question_num=="all")) $question_list[1] = [
+                        'question_type'=>'yn',
+                        'question_type_order'=>1,
+                        'question_title'=>'أوافق على مشاركة بياناتي مع الجهات الحكومية',
+                    ];
 
-            if(($question_num==1) or ($question_num=="all")) $question_list[1] = [
-                'question_type'=>'yn',
-                'question_type_order'=>1,
-                'question_title'=>'أوافق على مشاركة بياناتي مع الجهات الحكومية',
-            ];
+                    if(($question_num==2) or ($question_num=="all")) $question_list[2] = [
+                        'question_type'=>'enum',
+                        'question_type_order'=>1,
+                        'question_title'=>'ما مدى رضاك عن وضوح الإفادة لطلبك؟',
+                    ];
 
-            if(($question_num==2) or ($question_num=="all")) $question_list[2] = [
-                'question_type'=>'enum',
-                'question_type_order'=>1,
-                'question_title'=>'ما مدى رضاك عن وضوح الإفادة لطلبك؟',
-            ];
+                    if(($question_num==3) or ($question_num=="all")) $question_list[3] = [
+                        'question_type'=>'enum',
+                        'question_type_order'=>2,
+                        'question_title'=>'ما مدى رضاك عن وضوح الإجراءات والتعليمات المطلوبة لتقديم طلبك؟',
+                    ];
 
-            if(($question_num==3) or ($question_num=="all")) $question_list[3] = [
-                'question_type'=>'enum',
-                'question_type_order'=>2,
-                'question_title'=>'ما مدى رضاك عن وضوح الإجراءات والتعليمات المطلوبة لتقديم طلبك؟',
-            ];
+                    if(($question_num==4) or ($question_num=="all")) $question_list[4] = [
+                        'question_type'=>'enum',
+                        'question_type_order'=>3,
+                        'question_title'=>'ما مدى رضاك عن سرعة حصولك على الخدمة المطلوبة؟',
+                    ];
+
+                    if(($question_num==5) or ($question_num=="all")) $question_list[5] = [
+                        'question_type'=>'enum',
+                        'question_type_order'=>4,
+                        'question_title'=>'ما مدى رضاك عن جودة الخدمة المقدمة بشكل عام؟',
+                    ];
+
+                    if(($question_num==6) or ($question_num=="all")) $question_list[6] = [
+                        'question_type'=>'area',
+                        'question_type_order'=>1,
+                        'question_title'=>'يرجى ذكر أي ملاحظات أو اقتراحات لتحسين الخدمة:',
+                    ];
+
+                    return $question_list;
 
 
-            if(($question_num==4) or ($question_num=="all")) $question_list[4] = [
-                'question_type'=>'enum',
-                'question_type_order'=>3,
-                'question_title'=>'ما مدى رضاك عن سهولة استخدام منصة تواصل معنا؟',
-            ];
+            }
+            
+            if($survey_id==2) {
+                if(($question_num==1) or ($question_num=="all")) $question_list[1] = [
+                    'question_type'=>'enum',
+                    'question_type_order'=>1,
+                    'question_title'=>'ما مدى رضاك عن سهولة استخدام منصة تواصل معنا؟',
+                ];
+            }
 
 
-            if(($question_num==5) or ($question_num=="all")) $question_list[5] = [
-                'question_type'=>'enum',
-                'question_type_order'=>4,
-                'question_title'=>'ما مدى رضاك عن جودة الخدمة المقدمة بشكل عام؟',
-            ];
-
-            if(($question_num==6) or ($question_num=="all")) $question_list[6] = [
-                'question_type'=>'area',
-                'question_type_order'=>1,
-                'question_title'=>'يرجى ذكر أي ملاحظات أو اقتراحات لتحسين الخدمة:',
-            ];
-
-            return $question_list;
+            
         }
         
         
