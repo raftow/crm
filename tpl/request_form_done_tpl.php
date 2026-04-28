@@ -7,6 +7,7 @@
 <div class="success_hzm">
       <div class="register_success_message">تم تسجيل طلبكم بنجاح. <br><br>
 <?php
+$my_survey2_url = $ticketObj->mySurvey2Url();
       if($customer_connected)
       {
 ?>
@@ -22,7 +23,9 @@
       }
 ?>
       </div>
-
+      <div class='hzm_data_prop'>
+            <a href='<?php echo $my_survey2_url ?>'><div class='hzm_blink hzm_print'>تقييم المنصة</div></a>
+      </div>
 </div>
 
 

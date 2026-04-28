@@ -53,13 +53,19 @@ else
         }
         else {
                 if($ticketObj->customerCanComment())
-                {
+                {                        
                 ?>                                        
                 <div class='hzm_data_prop'>
                         <a href='i.php?cn=crm&mt=comment_request&rid=<?php echo $ticketObj->id ?>'><div class='hzm_blue hzm_print'>تعليق</div></a>
                 </div>
                 <?php 
                 }
+                $my_survey2_url = $ticketObj->mySurvey2Url();
+                ?>                                        
+                <div class='hzm_data_prop'>
+                        <a href='<?php echo $my_survey2_url ?>'><div class='hzm_blink hzm_print'>تقييم المنصة</div></a>
+                </div>
+                <?php 
                 if($ticketObj->customerCanClose())
                 {
                 ?>                                        

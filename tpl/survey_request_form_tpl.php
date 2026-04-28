@@ -1,5 +1,9 @@
 <?php
         $company = AfwSession::currentCompany();
+        if(!$survey_id) $survey_id = $objSurveyToken->getVal("survey_id");
+        if(!$survey_id) $survey_id = 1;
+        if(!$lang) $lang = "ar";
+        $surveyObject = Survey::loadById($survey_id);
 ?>
 <div class="survey-header">
       <div class="survey logo_company">
@@ -9,9 +13,9 @@
             <img src="../client-<?php echo $company ?>/pic/title-company-<?php echo $company ?>.png" alt="" style="margin-top: 0px;width: 206px !important;height: 43px;border-radius: 0;margin-right: auto;margin-left: auto;"> 
       </div>
 </div>
-<div class="survey_bg survey">
+<div class="survey_bg survey survey<?php echo $survey_id ?>">
 <div class="content_form_bg survey">
-        <div class="content_big_title survey">استبانة تحسين جودة خدمة العملاء</div>
+        <div class="content_big_title survey"><?php echo $surveyObject->getDisplay($lang); ?></div>
 <div id="container_div" class="table_div">
         <?php
                 list($save_form_hidden, $save_form_hidden_message) = $objSurveyToken->saveFormHidden();
@@ -21,11 +25,12 @@
                 <input type="hidden" name="tkn" id="tkn" value="<?php echo $tkn ?>">
                 <input type="hidden" name="cn" id="cn" value="survey">
                 <input type="hidden" name="mt" id="mt" value="submit_survey">                
+                <input type="hidden" name="survey_id" id="survey_id" value="<?php echo $survey_id ?>">                
 
                 <div id="infos_left_div" class="table_cell_div content_form survey_form">
                         <div id="fg-warn" class="attrib-warn form-group width_pct_100 ">
                         
-                                <div id="surveyintro" class="attrib-warn form-group width_pct_100 survey-intro">
+                                <div id="surveyintro" class="attrib-warn form-group width_pct_100 survey-intro intro0 <?php echo $hide_intro0 ?>">
 نشكر لكم وقتكم في الإجابة على هذه الاستبانة، والتي تهدف إلى تحسين جودة خدماتنا.<br>
 علماً بأنها لا تستغرق سوى دقيقة واحدة، ونؤكد لكم أنه لن تُكشف هوية أصحاب الإجابات التي سنحصل عليها،<br>
 وسيتم معالجة المعلومات بشكل كلي فقط دون الرجوع للبيانات الفردية.<br>
@@ -45,11 +50,14 @@
                                         <div class='ticket-final-response'><?php echo $objSurveyToken->getVal("attribute_area_2") ?></div>
                                         <div class='paragraph'> لتقييم الخدمة نتطلع إلى أجوبتكم على الأسئلة التالية</div>
                                 </div>                                
-                                <label id="label_save_form" class="hzm_front_warning">
+                                <label id="label_save_form" class="hzm_front_warning <?php echo $hide_warning ?>">
                                         <?php echo $save_form_hidden_message ?>           
                                         <!-- لا يمكنك ارسال الأجوبة إلا إذا وافقت أعلاه على مشاركتها مع الجهات الحكومية مثل مركز اداء الذي يقوم بدراسة نتائج قياس رضا المستفيد -->
                                 </label>
                                 <?php
+                                        if(count($question_list)==0) {
+                                                echo "لا يوجد أسئلة في هذا الاستبيان";
+                                        }
                                         /**
                                          * @var SurveyToken $objSurveyToken
                                          */
@@ -61,7 +69,7 @@
                                                 $question_attribute = "attribute_$question_type"."_$question_type_order";
                                 ?>
                                         <label class="hzm_front_label <?php echo "for_question $question_attribute" ?>"><?php echo $question_title ?></label>
-                                        <p class="for_question">
+                                        <p class="for_question"></p>
                                 <?php 
                                         $info = AfwEditMotor::prepareEditInfoForColumn($objSurveyToken, $question_attribute);
                                         echo $info["input"];        
@@ -70,10 +78,9 @@
 
                                         }
                                 ?>
-                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright hide <?php echo $save_form_hidden ?>" value="&nbsp; <?php echo AfwLanguageHelper::tt("send participation", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
-                                
-                                
                         </div>
+                        <p class="for_question"></p>
+                        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright <?php echo $hide_submit ?> <?php echo $save_form_hidden ?>" value="&nbsp; <?php echo AfwLanguageHelper::tt("send participation", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
                         
                 </div> 
         </form>

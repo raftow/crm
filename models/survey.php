@@ -42,7 +42,7 @@ class Survey extends CrmObject{
         
         public function getDisplay($lang="ar")
         {
-               
+               return $this->getVal("name_$lang");
         }
 
 
@@ -50,13 +50,11 @@ class Survey extends CrmObject{
         {
             $server_db_prefix = AfwSession::config("db_prefix","ttc_");
             $lang= AfwLanguageHelper::getGlobalLanguage();
-            $survey_id = $paramsArr["sid"];
-            if(!$survey_id) $survey_id = 1;
-
+            
             $start_date = self::calcCrmDate_start_satisfaction();
             $end_date = self::calcCrmDate_end_satisfaction();
 
-            $question_list = self::getQuestionList($survey_id);
+            $question_list = self::getQuestionList(1);
             $sql_arr = [];
             $stat_trad = [];
             // $stat_trad["question"] = AfwLanguageHelper::translateStatsColumn("question", "Survey", null, $lang);
@@ -96,13 +94,39 @@ class Survey extends CrmObject{
                 }
             }
 
+            $question2_list = self::getQuestionList(2);
+            foreach($question2_list as $question2_order => $question2_row)
+            {
+                $question_type = $question2_row["question_type"];
+                if($question_type=="enum")
+                {
+                    $question_order++;
+                    $question_title_arr[$question_order] = $question_title = $question2_row["question_title"];;
+                    
+                    $question_type_order = $question2_row["question_type_order"];
+                    $sql_arr[] = "select $question_order as question,
+                    '$question_title' as question_title,
+        sum(IF(attribute_enum_$question_type_order=5,1,0)) as verysatisfied,
+        sum(IF(attribute_enum_$question_type_order=4,1,0)) as satisfied,
+        sum(IF(attribute_enum_$question_type_order=3,1,0)) as indifferent,
+        sum(IF(attribute_enum_$question_type_order=2,1,0)) as unsatisfied,
+        sum(IF(attribute_enum_$question_type_order=1,1,0)) as veryunsatisfied,
+        sum(IF(attribute_enum_$question_type_order=0,1,0)) as noresponse,
+        count(*) as all_count
+    from $server_db_prefix"."crm.survey_token
+    where survey_id=2 
+    and active = 'Y' 
+    and attribute_date_1 between '$start_date' and '$end_date'";
+                }
+            }
+
             $sql = implode("\n union \n", $sql_arr);
 
             
             
 
 
-            return [AfwDatabase::db_recup_rows($sql), $stat_trad, $question_title_arr];
+            return [AfwDatabase::db_recup_rows($sql), $stat_trad, $question_title_arr, $sql];
 
             
         }
@@ -118,7 +142,11 @@ class Survey extends CrmObject{
                 foreach($question_row as $question_prop => $question_prop_value) $$question_prop = $question_prop_value;
                 $question_attribute = "attribute_$question_type"."_$question_type_order";
 
-                if($question_attribute==$attribute) return $question_title;
+                if($question_attribute==$attribute) {
+                    $question_title = str_replace("ما مدى","",$question_title);
+                    $question_title = str_replace("يرجى ذكر","",$question_title);
+                    return $question_title;
+                }
             }
 
 
@@ -131,12 +159,19 @@ class Survey extends CrmObject{
             $enabled = [];
 
             $enabled['yn'][1] = true;
+            $enabled['date'][1] = true;
+            
             $enabled['enum'][1] = true;
             $enabled['enum'][2] = true;
             $enabled['enum'][3] = true;
             $enabled['enum'][4] = true;
+            $enabled['string'][1] = true;
+            $enabled['string'][2] = true;
+            $enabled['string'][3] = true;
 
             $enabled['area'][1] = true;
+            $enabled['area'][2] = true;
+            $enabled['area'][3] = true;
 
             return $enabled[$question_type][$question_type_order];
 
@@ -158,22 +193,25 @@ class Survey extends CrmObject{
                         'question_title'=>'ما مدى رضاك عن وضوح الإفادة لطلبك؟',
                     ];
 
+                    /*
                     if(($question_num==3) or ($question_num=="all")) $question_list[3] = [
                         'question_type'=>'enum',
                         'question_type_order'=>2,
                         'question_title'=>'ما مدى رضاك عن وضوح الإجراءات والتعليمات المطلوبة لتقديم طلبك؟',
                     ];
 
+                    
                     if(($question_num==4) or ($question_num=="all")) $question_list[4] = [
                         'question_type'=>'enum',
                         'question_type_order'=>3,
                         'question_title'=>'ما مدى رضاك عن سرعة حصولك على الخدمة المطلوبة؟',
                     ];
+                    */
 
                     if(($question_num==5) or ($question_num=="all")) $question_list[5] = [
                         'question_type'=>'enum',
                         'question_type_order'=>4,
-                        'question_title'=>'ما مدى رضاك عن جودة الخدمة المقدمة بشكل عام؟',
+                        'question_title'=>'ما مدى رضاك عن الخدمة المقدمة بشكل عام؟',
                     ];
 
                     if(($question_num==6) or ($question_num=="all")) $question_list[6] = [
@@ -182,7 +220,7 @@ class Survey extends CrmObject{
                         'question_title'=>'يرجى ذكر أي ملاحظات أو اقتراحات لتحسين الخدمة:',
                     ];
 
-                    return $question_list;
+                    
 
 
             }
@@ -193,9 +231,15 @@ class Survey extends CrmObject{
                     'question_type_order'=>1,
                     'question_title'=>'ما مدى رضاك عن سهولة استخدام منصة تواصل معنا؟',
                 ];
+
+                if(($question_num==2) or ($question_num=="all")) $question_list[2] = [
+                        'question_type'=>'area',
+                        'question_type_order'=>1,
+                        'question_title'=>'يرجى ذكر أي ملاحظات أو اقتراحات لتحسين المنصة:',
+                    ];
             }
 
-
+            return $question_list;
             
         }
         

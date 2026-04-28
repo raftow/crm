@@ -3407,7 +3407,7 @@ div#div_data_tip_of_day {
 }
 
 .signin-content {
-    background-image: url(../../crm/pic/login_banner.jpg) !important;
+    /* background-image: url(../../crm/pic/login_banner.jpg) !important;*/
     background-size: 82% 100% !important;
     background-color: transparent !important;
     background-position: left top !important;

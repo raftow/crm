@@ -139,33 +139,48 @@ class SurveyController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
 
-                if(!$survey_id) $survey_id = 1;
+                
 
                 if(!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
+                $survey_id = $objSurveyToken->getVal("survey_id");
+                if(!$survey_id) $survey_id = 1;
 
                 if(!$objSurveyToken) {
                     $this->renderError("action aborted ! survey token not found, contact your admin");
                     return;
                 }
 
-                $objSurveyRequest = $objSurveyToken->getMyRequest();
                 $data["hide_intro2"] = "hide";
-                $data["hide_intro1"] = "";
+                $data["hide_intro1"] = "hide";                
+                $data["hide_intro0"] = "hide"; 
+                $data["hide_warning"] = "hide"; 
+                $data["hide_submit"] = ""; 
                 
-                if($objSurveyRequest and (!$objSurveyRequest->intro2ToHide()))
+                $objSurveyRequest = $objSurveyToken->getMyRequest();
+                if($objSurveyRequest)
                 {
-                        $data["hide_intro2"] = "";
-                        $data["hide_intro1"] = "hide";                        
+                        $data["hide_intro2"] = "hide";
+                        $data["hide_intro1"] = "";
+                        $data["hide_intro0"] = ""; 
+                        $data["hide_warning"] = ""; 
+                        $data["hide_submit"] = "hide"; 
+                        
+                        if($objSurveyRequest and (!$objSurveyRequest->intro2ToHide()))
+                        {
+                                $data["hide_intro2"] = "";
+                                $data["hide_intro1"] = "hide";                                
+                        }
+                        $oldRequest = $objSurveyRequest ? $objSurveyRequest->isOldRequest() : "no-request";
+                        if($oldRequest)
+                        {
+                                $data["hide_intro1"] = $oldRequest;                        
+                        }
+                        else
+                        {
+                                $data["hide_intro1"] = "hide";   
+                        }        
                 }
-                $oldRequest = $objSurveyRequest ? $objSurveyRequest->isOldRequest() : "no-request";
-                if($oldRequest)
-                {
-                        $data["hide_intro1"] = $oldRequest;                        
-                }
-                else
-                {
-                        $data["hide_intro1"] = "hide";   
-                }
+                
 
                 
 
@@ -177,7 +192,7 @@ class SurveyController extends AfwController
                 if (true) {
                         // $objSurveyToken->set("attribute_yn_1", "N");
                         $data["objSurveyToken"] = $objSurveyToken;
-
+                        $data["survey_id"] = $survey_id;
                         $data["question_list"] = Survey::getQuestionList($survey_id);
 
 

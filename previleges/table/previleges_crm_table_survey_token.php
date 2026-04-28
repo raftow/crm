@@ -4,23 +4,23 @@
   'id' => '13973',
   'display' => 
   array (
-    'id' => -1,
+    'id' => '104608',
   ),
   'search' => 
   array (
-    'id' => -1,
+    'id' => '104609',
   ),
   'qsearch' => 
   array (
-    'id' => -1,
+    'id' => '104610',
   ),
   'edit' => 
   array (
-    'id' => -1,
+    'id' => '104605',
   ),
   'qedit' => 
   array (
-    'id' => -1,
+    'id' => '104606',
   ),
   'crossed' => 
   array (
@@ -40,9 +40,10 @@
   ),
   'delete' => 
   array (
-    'id' => -1,
+    'id' => '104607',
   ),
 );
+
 
 
 	$tab_info[13973] = array (

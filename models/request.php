@@ -2061,7 +2061,13 @@ class Request extends CrmObject
                 return SurveyToken::getTokenUrl($token);
             }
         }
-        return null;
+        return "##";
+    }
+
+    public function getPlateformEvalToken() {
+        $mpid_value = 987 + $this->id;
+        $token = substr(md5("mp".$mpid_value."rd".$this->getVal("request_date")), 0, 11);
+        return "s2".$token."2s";
     }
 
     public function resetSurveyForMe($lang = "ar")
@@ -2075,6 +2081,8 @@ class Request extends CrmObject
 
         return ['', 'survey data has been reset : tkn = ' . $token];
     }
+
+    
 
     public function createTokenForMe($token, $forceUpdateData = false)
     {
@@ -2116,6 +2124,28 @@ class Request extends CrmObject
         $this->commit();
 
         return $objToken;
+    }
+
+    public function createSurvey2TokenForMe($forceUpdateData = false)
+    {
+        $token2 = $this->getPlateformEvalToken();
+        $objToken = SurveyToken::loadByToken($token2, true);
+        if ($objToken->is_new or $forceUpdateData) {
+            $objToken->set("survey_id", 2);
+            $objToken->set("customer_id", $this->getVal("customer_id"));
+            $objToken->set("attribute_enum_1", 0);
+            $objToken->set("attribute_date_1", $this->getVal("request_date"));
+            $objToken->set("attribute_string_1", $this->getVal("request_code"));
+            $objToken->commit();
+        }
+
+        return [$token2, $objToken];
+    }
+
+    public function mySurvey2Url()
+    {
+        list($token2, ) = $this->createSurvey2TokenForMe();
+        return SurveyToken::getTokenUrl($token2);
     }
 
     public function isOldRequest()
@@ -2343,14 +2373,14 @@ class Request extends CrmObject
     public function resetRequestNew($lang = "ar")
     {
         $objme = AfwSession::getUserConnected();
-        $employeeObj = $objme->getEmployee(); // , "N", false, 0, null, $employeeObj
+        $employeeObj = $objme ? $objme->getEmployee() : null; // , "N", false, 0, null, $employeeObj
         /*
             if($objme) 
                $status_comment = "تعديل حالة التذكرة بطلب من الموظف ".$objme->getDisplay($lang);
             else*/
         $status_comment = "يمكن للعميل اجراء التعديلات على طلبه الآن";
 
-        $this->changeStatus("resetRequestNew-by-customer", self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"), "N", false, 0, null, $employeeObj);
+        $this->changeStatus("resetRequestNew-by-customer", self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"), "N", false, 0, null, $employeeObj, ($employeeObj==null));
         return array("", $status_comment);
     }
 
@@ -3157,7 +3187,7 @@ class Request extends CrmObject
 
     public function calcSurvey_icon()
     {
-        $url = "";
+        $url = "#";
         if ($this->sureIs("survey_sent") or $this->sureIs("survey_opened")) {
             $url = $this->mySurveyUrl();
             if ($this->sureIs("survey_opened")) {
@@ -3920,6 +3950,12 @@ class Request extends CrmObject
     {
         $server_db_prefix = AfwSession::currentDBPrefix();
         $obj = new Request();
+
+        $obj->setForce("orgunit_id", 0);
+        $obj->setForce("status_comment", "assignInvestigatorForNonAssigned-doing-reset");
+        $obj->where("(me.orgunit_id not in (select orgunit_id from " . $server_db_prefix . "crm.crm_employee ce where ce.active='Y') or me.orgunit_id is null) and status_id not in (" . self::$REQUEST_STATUSES_FINISHED . ")");
+        $obj->update(false);
+
 
         $obj->setForce("employee_id", 0);
         $obj->setForce("status_comment", "assignInvestigatorForNonAssigned-doing-reset");

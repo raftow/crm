@@ -140,6 +140,8 @@ class SurveyToken extends CrmObject
         // $params = self::getAdditionalFieldParams($field_name);
         $params = [];
 
+        $survey_id = $this->getVal("survey_id");
+        if(!$survey_id) $survey_id = 1;
         $field_part_arr = explode("_", $field_name);
         $field_type = $field_part_arr[1];
         $field_order = $field_part_arr[2];
@@ -409,8 +411,10 @@ class SurveyToken extends CrmObject
 
     public function getAttributeLabel($attribute, $lang = 'ar', $short = false)
     {
+        $surveyId = $this->getVal("survey_id");
+        if(!$surveyId) $surveyId = 1;
         if (AfwStringHelper::stringStartsWith($attribute, "attribute_")) {
-            return Survey::getQuestionLabel(1, $attribute, $lang);
+            return Survey::getQuestionLabel($surveyId, $attribute, $lang);
         }
         // die("calling getAttributeLabel($attribute, $lang, short=$short)");
         return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
@@ -455,6 +459,10 @@ class SurveyToken extends CrmObject
         }
 
         return [$class_hidden, $message_hidden];
+    }
+
+    public function containComment() {
+        $this->where("length(attribute_area_1) > 7");
     }
 }
 

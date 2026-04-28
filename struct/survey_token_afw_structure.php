@@ -28,7 +28,7 @@ class CrmSurveyTokenAfwStructure
 
     public static $DB_STRUCTURE =
     array(
-        'id' => array( 'SHOW' => true, 'RETRIEVE' => true, 'EDIT' => false, 'TYPE' => 'PK' ),
+        'id' => array( 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 'TYPE' => 'PK' ),
 
         'survey_id' => array(
             'STEP' => 1,
@@ -66,7 +66,7 @@ class CrmSurveyTokenAfwStructure
             'SEARCH' => true,
             'QSEARCH' => false,
             'SHOW' => true,
-            'RETRIEVE' => false,
+            'RETRIEVE' => true,
             'EXCEL' => true,
             'EDIT' => true,
             'QEDIT' => false,
@@ -259,7 +259,7 @@ class CrmSurveyTokenAfwStructure
         'CSS' => 'width_pct_100', ),
 
         'attribute_string_2' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,
-        'RETRIEVE' => false, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
+        'RETRIEVE' => true, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
         'EDIT' => true,  'QEDIT' => true,
         'SIZE' => 128,  'MAXLENGTH' => '::additional',  'MIN-SIZE' => 5,  'CHAR_TEMPLATE' => 'ARABIC-CHARS,SPACE',  'UTF8' => true,
         'TYPE' => 'TEXT',  'READONLY' => false,
@@ -273,7 +273,7 @@ class CrmSurveyTokenAfwStructure
         'CSS' => 'width_pct_100', ),
 
         'attribute_area_1' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,
-        'RETRIEVE' => false, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
+        'RETRIEVE' => true, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
         'EDIT' => true,  'QEDIT' => false,
         'SIZE' => 'AREA',  'MAXLENGTH' => '::additional',  'MIN-SIZE' => 1,  'CHAR_TEMPLATE' => 'ALPHABETIC,SPACE',  'UTF8' => true,
         'TYPE' => 'TEXT',  'READONLY' => false,
@@ -294,7 +294,7 @@ class CrmSurveyTokenAfwStructure
         'CSS' => 'width_pct_100', ),
 
         'active'             => array( 'STEP' =>1, 'HIDE_IF_NEW' => true, 'SHOW' => true,
-                'RETRIEVE' => true, 'EDIT' => true, 'QEDIT' => true, 
+                'RETRIEVE' => false, 'EDIT' => true, 'QEDIT' => true, 
                 'MINIBOX'=>false,
                 'DEFAULT' => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields' ),
 

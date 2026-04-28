@@ -135,9 +135,8 @@
 							'DO-NOT-RETRIEVE-COLS' => ['man','service_satisfied','supervisor_id'],
 							'FORCE-RETRIEVE-COLS' => ['days_delay'],
 							'WHERE' => "request_date >= §archive_date§ 
-							        and supervisor_id > 0 and orgunit_id > 0 
-									and orgunit_id = §orgunit_id§ 
-									and status_id in (2, 4, 201)", 
+							        and orgunit_id = §orgunit_id§ 
+									",   // and status_id in (2, 4, 201)
 							'FORMAT' => 'retrieve',  'SHOW' => true,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 							),

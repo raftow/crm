@@ -1162,7 +1162,7 @@ class CrmController extends AfwController
                                         $reqObj->addCustomerComment($request["comment"], $lang);
                                 }
                         }
-
+                        $data["ticketObj"] = $reqObj;
                         if (!$reqObj->isOk(true)) {
                                 $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj, ));
                         }
@@ -1547,6 +1547,7 @@ class CrmController extends AfwController
                                 } else {
                                         $data["is_new"] = false;
                                 }
+                                $data["ticketObj"] = $reqObj;
                         }
                 }
 
