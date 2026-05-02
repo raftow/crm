@@ -12,9 +12,9 @@ $logbl = substr(md5($_SERVER["HTTP_USER_AGENT"] . "-" . date("Y-m-d")),0,10);
 if(!$lang) $lang = "ar";
 $module_dir_name = $file_dir_name;
 
-require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
+require_once("$file_dir_name/../lib/afw/core/afw_autoloader.php");
 AfwSession::startSession();
-$uri_module = AfwUrlManager::currentURIModule();       
+$uri_module = UfwUrlManager::currentURIModule();       
 AfwAutoLoader::addMainModule($uri_module);
 if(!$uri_module) die("site code not defined !!!");
 else
@@ -268,7 +268,7 @@ if($desc_site)
                                         </label>                                        
                                         <input type="text" class="form-control customer_cpt" name="customer_cpt" value=""  autocomplete="off" required>
                                         <div class='hzm_captcha'>
-                                                <img style="width: auto;height: 42px;margin-right: 2%;" src="../lib/afw/afw_captcha.php" />
+                                                <img style="width: auto;height: 42px;margin-right: 2%;" src="../lib/afw/includes/afw_captcha.php " />
                                                 <div class="hzm_help"> 
                                                         upper or lower case doesn't matter <br>
                                                         لا يهم حجم الحرف صغيرا كان أو كبيرا

@@ -4,7 +4,7 @@ if(date("Y-m-d")<="2026-05-05") {
      لأجل الاستفادة من الوظائف الجديدة يرجى القيام بالضغط على الزرين 
     CTRL+F5 في نفس الوقت ثلاث مرات لأجل تحديث ملفات التصفح. 
     <br>شاكرين تعاونكم";
-    $out_scr .= "<div class='crm-title hzm-warning'>$warning_employee</div>";
+    $out_scr .= "<div class='crm-title hzm-warning note statusY1'>$warning_employee</div>";
 
     $crmEmplObj = CrmEmployee::findCrmEmployee($myEmplId);
     $ai_when = "";

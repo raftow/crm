@@ -22,9 +22,15 @@ $my_survey2_url = $ticketObj->mySurvey2Url();
 
       }
 ?>
-      </div>
-      <div class='hzm_data_prop'>
-            <a href='<?php echo $my_survey2_url ?>'><div class='hzm_blink hzm_print'>تقييم المنصة</div></a>
+      <hr class="separator">
+      <br>
+      كما نأمل منكم تقديم ملاحظاتكم على منصة تواصل معنا، فإن ذلك يساعدنا على تقديم أفضل الخدمات لكم.<br>
+      علما وأن هذا التقييم ليس له علاقة برضاكم عن ردود الموظفين وانما هو فقط لأجل تحسين هذه المنصة الالكترونية من قبل فريق تقنية المعلومات
+            <div class='hzm_xgreen hzm_blink hzm_print'>
+                  <a href='<?php echo $my_survey2_url ?>'>
+                  تقييم المنصة
+                  </a>
+            </div>
       </div>
 </div>
 

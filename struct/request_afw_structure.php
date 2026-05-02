@@ -8,7 +8,7 @@ class CrmRequestAfwStructure
 			$obj->DISPLAY_FIELD = "request_title";
 			// $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
 			$obj->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
-			$obj->AUDIT_DATA = false;
+			$obj->AUDIT_DATA = true;
 
 			$obj->STATS_DEFAULT_CODE = "gs001";
 
@@ -358,7 +358,7 @@ class CrmRequestAfwStructure
 
 
 		'request_code' => array(
-			'FGROUP' => 'tech_data',  'STEP' => 1,  
+			'FGROUP' => 'status',  'STEP' => 1,  
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,

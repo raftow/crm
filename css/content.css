@@ -16,7 +16,7 @@ line-height: 24px;
 }
 
 .content_title {
-    font-weight: bold;
+    font-weight: normal;
     margin-top: 22px;
     margin-bottom: 30px;
 }
@@ -24,7 +24,7 @@ line-height: 24px;
 .content_title.contact {
     font-size: 24px;
     text-align: center;
-    color: #938f8f;
+    color: #000;
 }
 
 .bulles{
@@ -146,9 +146,9 @@ div.content_form>form>.in-group-customer_data {
     margin-left: 20%;
     float: right;
     font-size: 34px;
-    font-weight: bold;
-    color: #636c6c !important
-    /* text-shadow: 4px 4px 8px #f2f9f8;*/
+    font-weight: normal;
+    color: #040404 !important;
+    text-shadow: 2px 2px 2px #fff;
 }
 
 @media (max-width: 660px) {

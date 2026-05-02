@@ -914,7 +914,7 @@ class CrmEmployee extends CrmObject
 
 
                 $receiver_label = $receiver["email"] . "/" . $receiver["mobile"];
-                $notification_sender_result_arr = AfwNotificationManager::sendNotification($notify_employee_daily_waiting_requests_settings, $receiver, "waiting_requests_notification", $employeeObj, $lang, $from_template_file, $token_arr, $cc_to);
+                $notification_sender_result_arr = UfwNotificationManager::sendNotification($notify_employee_daily_waiting_requests_settings, $receiver, "waiting_requests_notification", $employeeObj, $lang, $from_template_file, $token_arr, $cc_to);
                 foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
                         $notification_sender_result_ok = $notification_sender_result_item[0];
                         $notification_sender_result_message = $notification_sender_result_item[1];

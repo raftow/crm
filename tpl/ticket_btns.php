@@ -62,9 +62,6 @@ else
                 }
                 $my_survey2_url = $ticketObj->mySurvey2Url();
                 ?>                                        
-                <div class='hzm_data_prop'>
-                        <a href='<?php echo $my_survey2_url ?>'><div class='hzm_blink hzm_print'>تقييم المنصة</div></a>
-                </div>
                 <?php 
                 if($ticketObj->customerCanClose())
                 {

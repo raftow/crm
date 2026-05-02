@@ -172,7 +172,7 @@ class Response extends CrmObject
                 }
 
                 $return = implode(" ", $data);
-                $return = AfwReplacement::trans_replace($return, "crm", $lang);
+                $return = UfwReplacement::trans_replace($return, "crm", $lang);
                 return $return;
         }
 
@@ -265,7 +265,7 @@ class Response extends CrmObject
                 $return = implode(" ", $data);
 
                 if (!$this->id) {
-                        $return = AfwReplacement::trans_replace($return, "crm", $lang);
+                        $return = UfwReplacement::trans_replace($return, "crm", $lang);
                 }
 
                 return $return;

@@ -20,6 +20,7 @@ ALTER TABLE `crm_customer` CHANGE `ref_num` `ref_num` VARCHAR(32) CHARACTER SET 
 */
 
 
+include_once("$file_dir_name/../../lib/afw/interfaces/afw_front_end_user.php");
 
 class CrmCustomer extends CrmObject implements AfwFrontEndUser
 {
@@ -761,8 +762,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         if ($sms_body_arr[$lang]) {
                                 $sms_body_before = $sms_body_arr[$lang];
                                 $sms_body = $this->decodeTpl($sms_body_before, array(), $lang, $token_arr);
-                                AfwBatch::print_info('before decode : ' . $sms_body_before);
-                                AfwBatch::print_info('after decode : ' . $sms_body);
+                                UfwBatch::print_info('before decode : ' . $sms_body_before);
+                                UfwBatch::print_info('after decode : ' . $sms_body);
                                 // ****
                         } else {
                                 $sms_body = "";
@@ -780,7 +781,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                                 else $sms_mobile = $customer_mobile;
 
                                 // send SMS to customer       
-                                list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $sms_body);
+                                list($sms_ok, $sms_info) = UfwSmsSender::sendSMS($sms_mobile, $sms_body);
 
                                 return array($sms_ok, $sms_info, $sms_body);
                         } else {

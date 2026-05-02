@@ -148,7 +148,7 @@ class SurveyToken extends CrmObject
 
         $col_struct = strtolower($col_struct);
         if ($col_struct == "obsolete") {
-            return (!Survey::isQuestionEnabled(1, $field_type, $field_order));
+            return (!Survey::isQuestionEnabled($survey_id, $field_type, $field_order));
         }
         if ($col_struct == "required") {
             return !$params["optional"];

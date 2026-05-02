@@ -34,10 +34,6 @@ try {
         $action = "retrieve-simple";
         // $actions_tpl_arr['edit'] = array('framework_action');
 
-        $fixed_criterea_arr =  array(
-                0 => array('col' => 'survey_id', 'oper' => '=', 'val' => '1',),
-                1 => array('col' => 'datatable_off', 'oper' => '=', 'val' => true,),
-        );
 
         $current_page = "custcomments.php";
         $special_filter = "containComment";
@@ -51,14 +47,16 @@ try {
 
 
 
-        $formColumns = [
-                'survey_id',
-                'attribute_date_1',
-                'attribute_enum_1',
-                'attribute_enum_4',
-        ];
-
+        
         if ($option == "service") {
+                $formColumns = [
+                        'survey_id',
+                        'attribute_date_1',
+                        'attribute_enum_1',
+                        'attribute_enum_4',
+                ];
+
+                $fixed_survey_id = 1;
                 $forced_retrieve_cols = [
                         'customer_id',
                         'attribute_string_2',
@@ -77,8 +75,17 @@ try {
 
                 $qsearch_page_title = AfwLanguageHelper::tt('ملاحظات العملاء على الخدمة', $lang, $currmod);
         } else {
-                $forced_retrieve_cols = [
+                $formColumns = [
+                        'survey_id',
+                        'attribute_date_1',
+                        'attribute_enum_1',
+                ];
 
+                $fixed_survey_id = 2;
+                $forced_retrieve_cols = [
+                        'customer_id',
+                        'attribute_string_2',
+                        'attribute_area_1',                          
                 ];
                 $hide_retrieve_cols = [
                         
@@ -91,6 +98,11 @@ try {
                 $specialStructure = [];
                 $qsearch_page_title = AfwLanguageHelper::tt('ملاحظات العملاء على المنصة', $lang, $currmod);
         }
+
+        $fixed_criterea_arr =  array(
+                0 => array('col' => 'survey_id', 'oper' => '=', 'val' => $fixed_survey_id,),
+                1 => array('col' => 'datatable_off', 'oper' => '=', 'val' => true,),
+        );
 
         $instanceOptions = [
                 'excelExport' => true,

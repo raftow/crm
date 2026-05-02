@@ -58,12 +58,13 @@ class SurveyController extends AfwController
 
         public function prepareStandard($request)
         {
+                $crst = md5("crst" . date("YmdHis"));
                 if($request["all_error"])
                 {
                         self::pushError($request["all_error"]);
                 }
                 $custom_scripts = array();
-                $custom_scripts[] = array('type' => 'css', 'path' => "./css/content.css");
+                $custom_scripts[] = array('type' => 'css', 'path' => "./css/content.css?crst=$crst");
                 $custom_scripts[] = array('type' => 'css', 'path' => "./css/survey.css");
                 // $custom_scripts[] = array('type' => 'css', 'path' => "../lib/css/sweetalert2.min.css");
                 // $custom_scripts[] = array('type' => 'js',   'path' => "../lib/js/sweetalert2.min.js");
@@ -142,13 +143,15 @@ class SurveyController extends AfwController
                 
 
                 if(!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
-                $survey_id = $objSurveyToken->getVal("survey_id");
-                if(!$survey_id) $survey_id = 1;
-
+                
                 if(!$objSurveyToken) {
                     $this->renderError("action aborted ! survey token not found, contact your admin");
                     return;
                 }
+
+                $survey_id = $objSurveyToken->getVal("survey_id");
+                if(!$survey_id) $survey_id = 1;
+
 
                 $data["hide_intro2"] = "hide";
                 $data["hide_intro1"] = "hide";                

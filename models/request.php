@@ -1674,6 +1674,8 @@ class Request extends CrmObject
     }
 
 
+    
+
     public function removeLastResponse($lang = "ar")
     {
         // @todo what to do if a notification by email or SMS is sent about this response
@@ -1697,7 +1699,7 @@ class Request extends CrmObject
 
     public function updateRequestAsPerLastResponse($lang = "ar", $commit=true) {
         $respObj = $this->getLastResponse();
-        $info = "";
+        $info = "لا يوجد تغييرات";
         $error = "";
         if ($respObj) {
             $status_id = $respObj->getVal("new_status_id");
@@ -1714,12 +1716,18 @@ class Request extends CrmObject
             if($status_comment == "-- FROM LASTRESPONSE --") $status_comment = "-- NO-LAST-RESPONSE-NEW-STATUS-SO-TAKE-DEFAULT --";
         }
         
-
-        $this->set("status_id", $status_id);
-        $this->set("status_date", AfwDateHelper::currentHijriDate());
-        $this->set("status_time", date("H:i:s"));
-        $this->set("status_comment", $status_comment);
-        if($commit) $this->commit();
+        if($this->getVal("status_id") != $status_id)
+        {
+            $this->set("status_id", $status_id);
+            $this->set("status_date", AfwDateHelper::currentHijriDate());
+            $this->set("status_time", date("H:i:s"));
+            $this->set("status_comment", $status_comment);
+            if($commit) $this->commit();
+        }    
+        else {
+            $info = "لا يوجد تغييرات";
+            $error = "";
+        }
 
         return [$error, $info];
     }
@@ -2334,7 +2342,7 @@ class Request extends CrmObject
                 $receiver = array();
                 $receiver["mobile"] = $the_customer->getVal("mobile");
                 $receiver["email"] = $the_customer->getVal("email");
-                $notification_sender_result_arr = AfwNotificationManager::sendNotification($notify_customer_new_request_settings, $receiver, "new_request", $this, $lang);
+                $notification_sender_result_arr = UfwNotificationManager::sendNotification($notify_customer_new_request_settings, $receiver, "new_request", $this, $lang);
                 foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
                     $notification_sender_result_ok = $notification_sender_result_item[0];
                     $notification_sender_result_message = $notification_sender_result_item[1];
@@ -2356,7 +2364,7 @@ class Request extends CrmObject
                 $receiver = array();
                 $receiver["mobile"] = $supervisorObj->getVal("mobile");
                 $receiver["email"] = $supervisorObj->getVal("email");
-                $notification_sender_result_arr = AfwNotificationManager::sendNotification($notify_supervisor_assign_settings, $receiver, "assign_request", $this, $lang);
+                $notification_sender_result_arr = UfwNotificationManager::sendNotification($notify_supervisor_assign_settings, $receiver, "assign_request", $this, $lang);
                 foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
                     $notification_sender_result_ok = $notification_sender_result_item[0];
                     $notification_sender_result_message = $notification_sender_result_item[1];
@@ -2705,6 +2713,25 @@ class Request extends CrmObject
         $pbms = array();
         if ($objme) /* @todo */ {
 
+            $methodConfirmationWarningEn = "You will update status of request depending on last response";
+            $methodConfirmationWarning = AfwLanguageHelper::tt($methodConfirmationWarningEn, 'ar', 'crm');
+            $methodConfirmationQuestionEn = "Are you sure ?";
+            $methodConfirmationQuestion = AfwLanguageHelper::tt($methodConfirmationQuestionEn, 'ar', 'crm');
+
+            $color = "red";
+            $title_ar = "تحديث الحالة بحسب آخر الردود";
+            $pbms["xart0B"] = array(
+                "METHOD" => "updateRequestAsPerLastResponse",
+                "COLOR" => $color,
+                "LABEL_AR" => $title_ar,
+                "PUBLIC" => true,
+                "BF-ID" => "",
+                "HZM-SIZE" => 12,
+                'CONFIRMATION_NEEDED' => true,
+                'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
+                'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
+            );
+
             if ($objme->isSuperAdmin()) {
                 /*
                 $color = "red";
@@ -2719,24 +2746,7 @@ class Request extends CrmObject
                 );*/
 
 
-                $methodConfirmationWarningEn = "You will update status of request depending on last response";
-                $methodConfirmationWarning = AfwLanguageHelper::tt($methodConfirmationWarningEn, 'ar', 'crm');
-                $methodConfirmationQuestionEn = "Are you sure ?";
-                $methodConfirmationQuestion = AfwLanguageHelper::tt($methodConfirmationQuestionEn, 'ar', 'crm');
-
-                $color = "red";
-                $title_ar = "تحديث الحالة بحسب آخر الردود";
-                $pbms["xart0B"] = array(
-                    "METHOD" => "updateRequestAsPerLastResponse",
-                    "COLOR" => $color,
-                    "LABEL_AR" => $title_ar,
-                    "PUBLIC" => true,
-                    "BF-ID" => "",
-                    "HZM-SIZE" => 12,
-                    'CONFIRMATION_NEEDED' => true,
-                    'CONFIRMATION_WARNING' => array('ar' => $methodConfirmationWarning, 'en' => $methodConfirmationWarningEn),
-                    'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
-                );
+                
                 
 
                 if ((!$this->id) or ($this->isClosed())) {
@@ -2908,7 +2918,7 @@ class Request extends CrmObject
              
 
 
-            AfwBatch::disableEcho();
+            UfwBatch::disableEcho();
 
             require_once("$file_dir_name/../lib/hzm/db/hzm_db.php"); 
               
@@ -2932,9 +2942,9 @@ class Request extends CrmObject
             $error_text = "";
             $info_text = "";
             
-            if($nb_errors) $error_text = "$nb_errors error(s) : " . AfwBatch::getErrors("\n<br>");
-            if($nb_warnings) $info_text .= "$nb_warnings warning(s) : " . AfwBatch::getWarnings("\n<br>")."<br>";
-            $info_text .= AfwBatch::getInfos("\n<br>")."<br>";
+            if($nb_errors) $error_text = "$nb_errors error(s) : " . UfwBatch::getErrors("\n<br>");
+            if($nb_warnings) $info_text .= "$nb_warnings warning(s) : " . UfwBatch::getWarnings("\n<br>")."<br>";
+            $info_text .= UfwBatch::getInfos("\n<br>")."<br>";
             
             return array($error_text, $info_text);
              
@@ -3090,7 +3100,7 @@ class Request extends CrmObject
 
             $request_time = $this->getVal("request_time");
             $title_new_request_sms = $this->tm("Request received approval notification", $lang);
-            list($new_request_sms, $new_request_sms_subject) = AfwNotificationManager::prepareNotificationBody($this, "new_request", "sms", $lang);
+            list($new_request_sms, $new_request_sms_subject) = UfwNotificationManager::prepareNotificationBody($this, "new_request", "sms", $lang);
             $html .= "<h1>$title_new_request_sms <div class='simple_datetime'>$request_date هـ $request_time </div><div class=\"sms-notif\">&nbsp;</div></h1><p class='sms notification'>$request_date_h : $new_request_sms_subject : $new_request_sms</p>";
         } else $html .= "reuqest not yet sent : status_reel_id = $status_reel_id";
 
@@ -3454,7 +3464,7 @@ class Request extends CrmObject
 
             // send SMS to customer       
             if ($sms_mobile and AfwFormatHelper::isCorrectMobileNum($sms_mobile)) {
-                list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $message);
+                list($sms_ok, $sms_info) = UfwSmsSender::sendSMS($sms_mobile, $message);
                 if ($sms_ok) {
                     AfwSession::pushInformation(AfwLanguageHelper::tt("Customer has been informed by sms about this status change", $lang));
                 } else {
@@ -3608,7 +3618,7 @@ class Request extends CrmObject
                         $bodyHtml .= "<h4><b>" . AfwLanguageHelper::tt("Ticket body", $lang) . " : </b></h4><br>";
                         $bodyHtml .= "<p>" . $body . "</p>";
 
-                        $res = AfwMailer::htmlSimpleMail("CRM-V2", "ticket-$request_id", $to_email_arr, $subject, $bodyHtml, $lang);
+                        $res = UfwMailer::htmlSimpleMail("CRM-V2", "ticket-$request_id", $to_email_arr, $subject, $bodyHtml, $lang);
                     } catch (Exception $e) {
                         AfwSession::pushError(AfwLanguageHelper::tt("failed to inform investigator by email : ", $lang) . $e->getMessage());
                     }
@@ -3625,7 +3635,7 @@ class Request extends CrmObject
 
                         // send SMS to customer       
                         if ($sms_mobile and AfwFormatHelper::isCorrectMobileNum($sms_mobile)) {
-                            list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $subject);
+                            list($sms_ok, $sms_info) = UfwSmsSender::sendSMS($sms_mobile, $subject);
                             if ($sms_ok) {
                                 AfwSession::pushInformation(AfwLanguageHelper::tt("Investigator has been informed by sms about this prio", $lang));
                             } else {
@@ -3767,14 +3777,34 @@ class Request extends CrmObject
 
     public static function bootstrapBlockedRequests($silent = false, $lang = "ar", $limit = "100")
     {
+        $errors_arr = array();
+        $infos_arr = array();
+        $before_3_months_hdate = AfwDateHelper::addHijriPeriodToHijriDate('',-3);
+        $obj = new Request();
+        $obj->where("employee_id > 0");
+        $obj->where("status_date > '$before_3_months_hdate'");
+        $obj->where("status_id not in (" . self::$REQUEST_STATUSES_FINISHED . ")");
+
+        $requestList = $obj->loadMany($limit);
+
+        /**
+         * @var Request $requestItem
+         */
+        foreach ($requestList as $requestItem) {
+            list($err, $info) = $requestItem->updateRequestAsPerLastResponse($lang,true);
+
+            if ($err) $errors_arr[] = $err;
+            if ($info) $infos_arr[] = $info;
+        }
+
+
+        unset($requestList);
         $obj = new Request();
         $obj->where("employee_id > 0");
         $obj->select("status_id", self::$REQUEST_STATUS_SENT);
 
         $reqList = $obj->loadMany($limit);
 
-        $errors_arr = array();
-        $infos_arr = array();
 
         /**
          * @var Request $reqItem
@@ -3876,7 +3906,7 @@ class Request extends CrmObject
 
         foreach ($reqList as $reqId => $reqItem) {
             $doing++;
-            if ($jobContext) AfwBatch::print_comment("----------------------- JOB archiveOldRequests Context : " . $jobContext . " For Request ID = $reqId ($doing / $total) -----------------------");
+            if ($jobContext) UfwBatch::print_comment("----------------------- JOB archiveOldRequests Context : " . $jobContext . " For Request ID = $reqId ($doing / $total) -----------------------");
             list($err, $info) = $reqItem->archiveRequest($lang, "archiveOldRequests");
 
             if ($err) $errors_arr[] = $err;
@@ -4003,7 +4033,7 @@ class Request extends CrmObject
         $nb_done = 0;
 
         $obj = new Request();
-        if ($jobContext) AfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " -----------------------");
+        if ($jobContext) UfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " -----------------------");
         if ($reset) {
             $obj->setForce("supervisor_id", 0);
             $obj->setForce("employee_id", 0);
@@ -4011,7 +4041,7 @@ class Request extends CrmObject
             $obj->where("employee_id = 0 and status_id not in (" . self::$REQUEST_STATUSES_NO_NEED_ASSIGN . ")"); //  or (supervisor_id = 1917 and employee_id = 1791) //  or (orgunit_id = " . self::$CRM_CENTER_ID . ")
             $nb_rows_rest = $obj->update(false);
             $warn_arr[] = "$nb_rows_rest request(s) assignment has been reset";
-        } elseif ($jobContext) AfwBatch::print_error("$jobContext >> assignSupervisorForNonAssigned->reset should be true for the moment");
+        } elseif ($jobContext) UfwBatch::print_error("$jobContext >> assignSupervisorForNonAssigned->reset should be true for the moment");
 
         $silent = false;
 
@@ -4023,13 +4053,13 @@ class Request extends CrmObject
         $doing = 0;
         foreach ($reqList as $reqId => $reqItem) {
             $doing++;
-            if ($jobContext) AfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " assignBestAvailableSupervisor For Request ID = $reqId ($doing / $total) -----------------------");
+            if ($jobContext) UfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " assignBestAvailableSupervisor For Request ID = $reqId ($doing / $total) -----------------------");
             list($err, $info) = $reqItem->assignBestAvailableSupervisor($lang, $pbm = true, $commit = true, $re_distribution = false);
 
             if ($err) {
                 $tech_arr[] = "Error : " . $err;
                 $nb_errs++;
-                if ($jobContext) AfwBatch::print_error(">> $jobContext >> Error : .$err");
+                if ($jobContext) UfwBatch::print_error(">> $jobContext >> Error : .$err");
             } else $nb_done++;
             if ($info) $tech_arr[] = $info;
         }

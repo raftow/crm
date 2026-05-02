@@ -6,6 +6,6 @@ if(AfwSession::userIsAuthenticated())
 {
         $Direct_Page = "ghgen_work.php";
         
-        include("$file_dir_name/../lib/afw/afw_direct_page.php");
+        include("$file_dir_name/../lib/afw/cms/cms_direct_page.php");
 }
 else echo "please connect first";

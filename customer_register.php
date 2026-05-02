@@ -15,8 +15,8 @@ else $uri_module = $uri_items[1];
 if(!$lang) $lang = "ar";
 $module_dir_name = $file_dir_name;
 
-require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
-$uri_module = AfwUrlManager::currentURIModule();       
+require_once("$file_dir_name/../lib/afw/core/afw_autoloader.php");
+$uri_module = UfwUrlManager::currentURIModule();       
 AfwAutoLoader::addMainModule($uri_module);
 AfwSession::startSession();
 
@@ -219,7 +219,7 @@ else
                                 <div class='form-group width_pct_50 hzm_captcha'>
                                         <label class="hzm_label hzm_label_customer_cpt">الرمز البصري
                                         </label>
-                                        <img style="width: auto;height: 42px;margin-right: 2%;" src="../lib/afw/afw_captcha.php" />                                        
+                                        <img style="width: auto;height: 42px;margin-right: 2%;" src="../lib/afw/includes/afw_captcha.php " />                                        
                                 </div>
                                 <div class="form-group width_pct_100 hzm_help"> 
                                         upper or lower case doesn't matter <br>

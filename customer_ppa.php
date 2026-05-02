@@ -12,9 +12,9 @@ $logbl = substr(md5($_SERVER["HTTP_USER_AGENT"] . "-" . date("Y-m-d")),0,10);
 if(!$lang) $lang = "ar";
 $module_dir_name = $file_dir_name;
 
-require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
+require_once("$file_dir_name/../lib/afw/core/afw_autoloader.php");
 AfwSession::startSession();
-$uri_module = AfwUrlManager::currentURIModule();       
+$uri_module = UfwUrlManager::currentURIModule();       
 AfwAutoLoader::addMainModule($uri_module);
 if(!$uri_module) die("site code not defined !!!");
 else

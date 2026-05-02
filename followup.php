@@ -25,7 +25,7 @@ if($objme)
                 $MODULE = $My_Module = "crm";
                 $customerMe = null;
         
-                require("$file_dir_name/../lib/afw/afw_main_page.php"); AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name);
+                // require("$file_dir_name/../lib/afw/cms/cms_main_page.php"); CmsMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name);
         }
         elseif($objme_has_crm_employee_role)
         {
@@ -33,7 +33,7 @@ if($objme)
                 $MODULE = $My_Module = "crm";
                 $customerMe = null;
         
-                AfwMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name);
+                CmsMainPage::echoMainPage($MODULE, $Main_Page, $file_dir_name);
         }
         
         
@@ -41,7 +41,7 @@ if($objme)
         $force_allow_access_to_customers = true; 
         $Direct_Page = "main_menu.php";
         
-        include("$file_dir_name/../lib/afw/afw_direct_page.php");*/
+        include("$file_dir_name/../lib/afw/cms/cms_direct_page.php");*/
 }
 
 if($customerMe)  // يدخل كعميل

@@ -10,9 +10,9 @@ $logbl = substr(md5($_SERVER["HTTP_USER_AGENT"] . "-" . date("Y-m-d")),0,10);
 if(!$lang) $lang = "ar";
 $module_dir_name = $file_dir_name;
 
-require_once("$file_dir_name/../lib/afw/afw_autoloader.php");
+require_once("$file_dir_name/../lib/afw/core/afw_autoloader.php");
 AfwAutoLoader::addMainModule("crm");
-$uri_module = AfwUrlManager::currentURIModule();       
+$uri_module = UfwUrlManager::currentURIModule();       
 AfwAutoLoader::addModule($uri_module);
 
 AfwSession::startSession();
@@ -173,7 +173,7 @@ elseif($_POST["customer_verify_code"])
 elseif($customer_mobile)
 {
        // random code
-       $customer_OTP = AfwSmsSender::verifyCode(); 
+       $customer_OTP = UfwSmsSender::verifyCode(); 
        AfwSession::setSessionVar("customer_OTP", $customer_OTP);
        $customer_verify_the_message = "رمز التحقق " . $customer_OTP;
 
@@ -193,9 +193,9 @@ elseif($customer_mobile)
        }
        else
        {
-                list($sms_ok, $sms_info) = AfwSmsSender::sendSMS($sms_mobile, $customer_verify_the_message);
+                list($sms_ok, $sms_info) = UfwSmsSender::sendSMS($sms_mobile, $customer_verify_the_message);
                 $sms_info_export = var_export($sms_info,true);
-                if((!$sms_ok) and (!$sms_info)) $sms_info_export = "call to AfwSmsSender::sendSMS($sms_mobile, xxx) failed without known reason, contact admin";
+                if((!$sms_ok) and (!$sms_info)) $sms_info_export = "call to UfwSmsSender::sendSMS($sms_mobile, xxx) failed without known reason, contact admin";
        }
        
        

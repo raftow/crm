@@ -22,7 +22,7 @@ class CrmCustomerSurvey
         $data = getDataFromSQL("limesurvey", $sql_data_from_survey);
         $data_count = count($data);
         foreach ($data as $rowi => $row) {
-            AfwBatch::print_info(" --** surveyCustomerSatisfactionAndBackToCrm2 row $rowi/$data_count **-- ");
+            UfwBatch::print_info(" --** surveyCustomerSatisfactionAndBackToCrm2 row $rowi/$data_count **-- ");
             foreach ($row as $col => $val) ${$col . "_value"} = $val;
 
             if (!$FAST_value) $FAST_value = "Y";
@@ -219,7 +219,7 @@ class CrmCustomerSurvey
                 $request["attribute_7"] = $final_decision;
                 $request["attribute_8"] = $ticket_orgunit;
 
-                $jsonExternalApi = AfwApi::getResponseFromApi($limesurvey_api_external_url, $request);
+                $jsonExternalApi = UfwApi::getResponseFromApi($limesurvey_api_external_url, $request);
                 if (is_array($jsonExternalApi) and $jsonExternalApi["status"] == "done") {
                     $token = $jsonExternalApi["token"];
                     $case = $jsonExternalApi["case"];                
@@ -284,8 +284,8 @@ class CrmCustomerSurvey
             {
                 list($error, $sucess) = self::surveyClosedTicket($closedTicketItem, $lang, true);
                 
-                if($sucess) { AfwBatch::print_info(" surveyClosedTicket success : $sucess "); $nb_ok++; }
-                if($error) { AfwBatch::print_error(" surveyClosedTicket failed : $error "); $nb_error++; }
+                if($sucess) { UfwBatch::print_info(" surveyClosedTicket success : $sucess "); $nb_ok++; }
+                if($error) { UfwBatch::print_error(" surveyClosedTicket failed : $error "); $nb_error++; }
                 
             }
             catch(Exception $ex)
@@ -295,7 +295,7 @@ class CrmCustomerSurvey
                 $traces = $ex->getTraceAsString();
                 $message = $ex->getMessage();
                 $nb_exception++;
-                AfwBatch::print_error(" surveyClosedTicket fail : Exception : $message in file $file : line $line \n $traces");
+                UfwBatch::print_error(" surveyClosedTicket fail : Exception : $message in file $file : line $line \n $traces");
             }
             catch(Error $e)
             {
@@ -304,7 +304,7 @@ class CrmCustomerSurvey
                 $traces = $e->getTraceAsString();
                 $message = $e->getMessage();
                 $nb_error++;
-                AfwBatch::print_error(" surveyClosedTicket fail : Error : $message in file $file : line $line \n $traces");
+                UfwBatch::print_error(" surveyClosedTicket fail : Error : $message in file $file : line $line \n $traces");
             }
             
         }

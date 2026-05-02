@@ -46,7 +46,7 @@ class CrmController extends AfwController
                 
                 $login_template = AfwSession::config("customer-login-template", "right-left");
                 $xmodule = AfwSession::getCurrentlyExecutedModule();
-                $module = AfwUrlManager::currentURIModule();
+                $module = UfwUrlManager::currentURIModule();
                 $company = AfwSession::currentCompany();
                 $login_out_css = "sign-in";
                 $login_out_cl = "login $login_template";
@@ -371,8 +371,9 @@ class CrmController extends AfwController
                 {
                         self::pushError($request["all_error"]);
                 }
+                $crst = md5("crst" . date("YmdHis"));
                 $custom_scripts = array();
-                $custom_scripts[] = array('type' => 'css', 'path' => "./css/content.css");
+                $custom_scripts[] = array('type' => 'css', 'path' => "./css/content.css?crst=$crst");
                 $custom_scripts[] = array('type' => 'css', 'path' => "../lib/css/sweetalert2.min.css");
                 $custom_scripts[] = array('type' => 'js',   'path' => "../lib/js/sweetalert2.min.js");
                 $custom_scripts[] = array('type' => 'js',   'path' => "../lib/js/sweetalert.min.js");
@@ -1388,7 +1389,7 @@ class CrmController extends AfwController
                                                 $completed_action = "files";
                                                 if ($continue_complete) {
                                                         $file_title = ${"title_of_$file_code"};
-                                                        $uploadResult = AfwFileUploader::completeUpload($file_title, $file_code, $file_arr, $responseObj);
+                                                        $uploadResult = UfwFileUploader::completeUpload($file_title, $file_code, $file_arr, $responseObj);
 
                                                         $status = $uploadResult["status"];
                                                         $message = $uploadResult["message"];

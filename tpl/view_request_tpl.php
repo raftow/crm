@@ -127,7 +127,7 @@
                                                                 $css_resp = strtolower($responseItem->calcResponse_aut("value", "en"))."-crm ";
                                                                 $full_response_date = ($ds == "hijri") ? $responseItem->fullHijriDate("response_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($responseItem->getVal("response_date")));
                                                                 $short_response = $responseItem->getShortDisplay($lang);
-                                                                $short_response = AfwReplacement::trans_replace($short_response, "crm", $lang);
+                                                                $short_response = UfwReplacement::trans_replace($short_response, "crm", $lang);
                                 ?>
                                         <div class="row <?php echo $odd.$css_resp?>crm_data crm_response type<?php echo $responseItem->getVal("response_type_id")?>">
                                                 <div class='hzm_small_calendar calendar_left'>
@@ -215,11 +215,6 @@
                                         }
                                         ?>
 
-
-                                
-                                
-                                
-                                
                                 </div>                                
                         </div>
                 </div>
@@ -228,6 +223,7 @@
         </div>
 </div>
 <?
+$my_survey2_url = $ticketObj->mySurvey2Url();
 $cr_prefix = "العودة إلى";
 include("back_to_my_requests_tpl.php");
 ?>

@@ -18,7 +18,7 @@ $module_dir_name = $file_dir_name;
 require_once("$file_dir_name/../ria/student.php"); 
 
 
-if(!$uri_module) $uri_module = AfwUrlManager::currentURIModule();
+if(!$uri_module) $uri_module = UfwUrlManager::currentURIModule();
 
 if(!$uri_module) die("site code not defined !!!");
 else

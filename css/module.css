@@ -1335,7 +1335,7 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
 }
 
 .hzm_small_calendar > label {
-    display: revert;
+    display: inline;
     background-color: #e6ffc1a8;
     color: #289d0c;
     border: 1px solid #289d0c;
@@ -1345,6 +1345,8 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
     padding: 2px 10px;
     font-size: 14px;
     margin-right: 10px;
+    white-space: nowrap;
+    margin-top: 4px !important;
 }
 
 .hzm-quick-view {
@@ -1757,7 +1759,7 @@ a.btnbtsp.btn_link:hover {
     width: 80%;
     margin-right: 10%;
     margin-left: 10%;
-    background-image: url(../pic/bg_1002.png);
+    background-image: url(../pic/bg_1003.png);
     background-repeat:no-repeat;
     /* background-size: contain;*/
     background-size: 100%;
@@ -1878,7 +1880,7 @@ a.btnbtsp.btn_link:hover {
   padding: 8px;
   background-color: #fff1f2cc;
   color: #dd0a31;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .crm-title.hzm-info {
@@ -1887,7 +1889,7 @@ a.btnbtsp.btn_link:hover {
     padding: 8px;
     background-color: #dbf7facc;
     color: #047e7a;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .crm-title.hzm-warning {
@@ -1896,7 +1898,7 @@ a.btnbtsp.btn_link:hover {
     padding: 15px;
     background-color: #faefdb4f;
     color: #ad5b09;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .crm-title.hzm-warning.note {
@@ -1905,6 +1907,11 @@ a.btnbtsp.btn_link:hover {
   color: #6e2907;
   border: 3px double #c7490c;
   white-space: pre;
+}
+
+.note.statusY1 {
+    visibility: hidden;
+    display: none;
 }
 
 .hzm_data.hzm_data_response_type_id {
@@ -1926,7 +1933,7 @@ input.respbtn {
 
 .cms_bg {
     width: 100%;
-    background-color: transparent;
+    background-color: #84dfde4d;
     min-height: 850px;
     float: right;
     padding-bottom: 40px;
@@ -2456,7 +2463,7 @@ div#div_data_request_code {
 
 
 a.crm.complaint {
-    background-color: #8c8c8c;
+    background-color: #cb7b09;
     color: white;
     margin-left: 10px;
 }
