@@ -77,5 +77,11 @@ $messages = [
 
     "Your account has been frozen" => "تم تجميد حسابك",
 
+    "No available Investigator in this orgunit" => "لا يوجد منسق متاح في هذه الجهة",
+
+    "The request was assigned to the employee" => "تم اسناد الطلب  للموظف(ة)",
+
+    "The request is waiting assignment" => "الطلب في انتظار الاسناد",
+
 ];
      

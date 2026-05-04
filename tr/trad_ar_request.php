@@ -6,9 +6,9 @@ class RequestArTranslator
 	{
 		$trad = [];
 
-		$trad['request']['request.single'] = 'طلب الكتروني';
+		$trad['request']['request.single'] = 'تذكرة طلب';
 		$trad['request']['request.new'] = 'جديد';
-		$trad['request']['request'] = 'الطلبات الالكترونية';
+		$trad['request']['request'] = 'تذاكر الطلبات';
 		
 
 		$trad['request']['request_subject'] = "أصناف الطلبات";

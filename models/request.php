@@ -2416,12 +2416,12 @@ class Request extends CrmObject
         $this->set("assign_time", date("H:i:s"));
         $this->commit();
         if ($employeeId > 0) {
-            $status_comment = date("H:i:s") . ": تم اسناد الطلب [" . $this->id . "] للموظف(ة) $employeeId " . $this->showAttribute("employee_id");
+            $status_comment = $this->tm("The request was assigned to the employee",$lang) . " : " . $this->showAttribute("employee_id",null,true,$lang);
             // if($employeeId == 1790) AfwRunHelper::unSafeDie("case of employeeId = $employeeId");
             $this->changeStatus("assignRequest-" . $caller, self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("assignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         } else {
             // should never happen as above we test  if (!$employeeId) return ....
-            $status_comment = "الطلب في انتظار الاسناد ";
+            $status_comment = $this->tm("The request is waiting assignment",$lang);
             $this->changeStatus("un-assignRequest-" . $caller, self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("unAssignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         }
         // AfwRunHelper::safeDie($status_comment, "employee_id = ". $employeeId);
@@ -3129,6 +3129,7 @@ class Request extends CrmObject
             }
         } else $html .= "<!-- request not yet done : status_reel_id = $status_reel_id -->";
 
+        
 
         if ($this->isClosed()) {
             $my_survey_url = $this->mySurveyUrl();
@@ -3677,7 +3678,8 @@ class Request extends CrmObject
                     if (!$invest) {
                         $orgObj = $this->het("orgunit_id");
                         $this->setForce("employee_id", 0);
-                        $status_comment = "no available Investigator in this orgunitID=" . $orgObj->id;
+                        $status_comment = $this->tm("No available Investigator in this orgunit", $lang) . 
+                                          " : " . $orgObj->getDisplay($lang);
                         $this->setForce("status_comment", $status_comment);
                         $this->commit();
                         if ($objme and ($orgObj->id != CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEPARTMENT_ID)) {
@@ -4675,5 +4677,10 @@ class Request extends CrmObject
         }
 
         return ["", "$diffH hours calculated"];
+    }
+
+    public function getMyCode()
+    {
+        return $this->getVal("request_code");
     }
 }
