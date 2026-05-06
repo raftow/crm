@@ -148,12 +148,15 @@ class CrmRequestAfwStructure
 			'READONLY' => true,
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => true,
+			'MANDATORY' => true,
+			'AUDIT' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
 
 		'status_time' => array(
-			'FGROUP' => 'status',  'STEP' => 'all',
+			'FGROUP' => 'status',  
+			'STEP' => 'all',
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -163,6 +166,7 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_12',
 			'SIZE' => 8,
 			'MANDATORY' => true,
+			'AUDIT' => true,
 			'UTF8' => false,
 			'TYPE' => 'TIME',
 			'READONLY' => true,
@@ -174,7 +178,9 @@ class CrmRequestAfwStructure
 		),
 
 		'supervisor_id' => array(
-			'FGROUP' => 'assignment',  'STEP' => 1,
+			'FGROUP' => 'assignment',  
+			'AGROUP' => 'status',  
+			'STEP' => 1,
 			'SHORTNAME' => 'supervisor',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -199,7 +205,8 @@ class CrmRequestAfwStructure
 		),
 
 		'orgunit_id' => array(
-			'FGROUP' => 'assignment',  'STEP' => 1,
+			'FGROUP' => 'assignment',  
+			'STEP' => 1,
 			'SHORTNAME' => 'orgunit',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -233,7 +240,9 @@ class CrmRequestAfwStructure
 		),
 
 		'employee_id' => array(
-			'FGROUP' => 'assignment', 'STEP' => 1,
+			'FGROUP' => 'assignment', 
+			'AGROUP' => 'status',  
+			'STEP' => 1,
 			'SHORTNAME' => 'employee',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -264,6 +273,7 @@ class CrmRequestAfwStructure
 
 		'assign_date' => array(
 			'FGROUP' => 'assignment',  'STEP' => 1,
+			'AGROUP' => 'status',  
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -287,6 +297,7 @@ class CrmRequestAfwStructure
 
 		'assign_time' => array(
 			'FGROUP' => 'assignment',  'STEP' => 1,
+			'AGROUP' => 'status',  
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,

@@ -4,6 +4,9 @@
 
 class Request extends CrmObject
 {
+    /**
+     * @var Response
+     */
     private $theLastResponse = null;
     public $itemsMethodExec = [];
 
@@ -1902,6 +1905,7 @@ class Request extends CrmObject
          */
         $objEmployee = null;
         $objOrgunit = null;
+        $resoObj = null;
 
         if ($fromCustomer) {
             $objEmployee = Employee::getCustomerEmployee();
@@ -1943,7 +1947,7 @@ class Request extends CrmObject
             } else {
                 $response_type = ResponseType::$RESPONSE_TYPE_STATUS_CHANGE;
             }
-            $resoObj = null;
+            
             if ((!$silent) and (!$silent_force) and (!$fromCustomer)) {
                 // AfwSession::pushInformation("rafik-debugg : creating new response"); 
                 $resoObj = Response::createNewResponse(
@@ -2212,7 +2216,7 @@ class Request extends CrmObject
         $lang = AfwLanguageHelper::getGlobalLanguage();
         if (!$lang) $lang = "ar";
         $objme = AfwSession::getUserConnected();
-        $my_survey_url = null;
+        $survey_url = null;
         if ($new_status_id == self::$REQUEST_STATUS_CLOSED) {
             // AfwSession::pushInformation("rafik-debugg : creating survey token"); 
             list($error, $sucess) = CrmCustomerSurvey::surveyClosedTicket($this, $lang, false);
@@ -2975,11 +2979,12 @@ class Request extends CrmObject
             $empl_id = $objme ? $objme->getEmployeeId() : 0;
             $cust_id = $custme ? $custme->getId() : 0;
 
+            $iam_general_supervisor = 0;
+            $iam_supervisor = 0;
             if ($empl_id) $iam_general_supervisor = CrmObject::userIsGeneralSupervisor();
             if ($empl_id) $iam_supervisor = CrmObject::userIsSupervisor();
 
-            if (!$iam_general_supervisor) $iam_general_supervisor = 0;
-            if (!$iam_supervisor) $iam_supervisor = 0;
+            
 
             // if the user is an employee 
             // he is allowed to see request if :
@@ -3598,19 +3603,23 @@ class Request extends CrmObject
         $lang = AfwLanguageHelper::getGlobalLanguage();
         $objme = AfwSession::getUserConnected();
         // send mail to investigator if is there
+        $request_id =  $this->id;
+        $title = $this->getVal("request_title");
+        $body = $this->getVal("request_text");
+        $subject = "";
+        $res = [];
         $old_request_priority = 0; // no way to get here in after maj (seems working only in before Maj)
         if (($fields_updated["employee_id"] or $fields_updated["request_priority"]) and $this->becomePrio($old_request_priority, $this->getVal("request_priority"))) {
             $employeeInvestigObj = $this->het("employee_id");
             if ($employeeInvestigObj) {
                 $employeeInvestigEmail = $employeeInvestigObj->getVal("email");
                 if ($employeeInvestigEmail) {
+                    
+                        
                     try {
                         $to_email_arr = array();
                         $to_email_arr[] = $employeeInvestigEmail;
 
-                        $request_id =  $this->id;
-                        $title = $this->getVal("request_title");
-                        $body = $this->getVal("request_text");
                         $subject = AfwLanguageHelper::tt("urgent : High priority ticket has been assigned to you, titled", $lang) . " [" . AfwStringHelper::truncateArabicJomla($title, 20) . "]";
 
                         $bodyHtml = "";
