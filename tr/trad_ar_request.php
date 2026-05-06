@@ -25,6 +25,7 @@ class RequestArTranslator
 		$trad['request']['request_time'] = 'وقت الطلب';
 		$trad['request']['request_type_id'] = 'نوع  الطلب';
 		$trad['request']['related_request_code'] = 'رمز طلب سابق';
+		$trad['request']['related_request_id'] = 'الطلب السابق';
 		$trad['request']['request_link'] = 'رابط متعلق بالطلب';
 		$trad['request']['service_category_id'] = 'صنف الخدمة';
 		$trad['request']['service_id'] = 'الخدمة';

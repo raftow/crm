@@ -904,7 +904,7 @@ class Request extends CrmObject
     public function calcRelated_request_id($what = "value")
     {
         $rrObj = $this->getRelatedTicket();
-        return ($what == "value") ? $rrObj->id : $rrObj;
+        return AfwLoadHelper::giveWhat($rrObj, $what);
     }
 
 
