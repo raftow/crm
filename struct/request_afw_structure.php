@@ -9,6 +9,7 @@ class CrmRequestAfwStructure
 			// $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
 			$obj->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
 			$obj->AUDIT_DATA = true;
+			$obj->DEFAULT_AGROUP = "status";
 
 			$obj->STATS_DEFAULT_CODE = "gs001";
 
