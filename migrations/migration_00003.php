@@ -134,9 +134,9 @@ try {
         'sci_id' => '2',
         'concerned_orgunit_id' => NULL,
         'days_investigator' => '0',
-        'days_delay' => '0',
+        'days_retard' => '0',
     ), true);
     
 } catch (Exception $e) {
-    $migration_info .= " " . $e->getMessage();
+    $migration_info = " " . $e->getMessage();
 }

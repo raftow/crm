@@ -138,8 +138,8 @@ class RequestArTranslator
 
 		$trad['request']['hours_investigator_work'] = 'عدد ساعات عمل المنسق';
 		$trad['request']['days_investigator'] = 'عدد أيام عمل المنسق';
-		$trad['request']['days_delay'] = 'عدد أيام العمل على التذكرة';
-		$trad['request']['days_delay.short'] = 'أيام التأخير';
+		$trad['request']['days_retard'] = 'عدد أيام التأخير على التذكرة';
+		$trad['request']['days_retard.short'] = 'أيام التأخير';
 		$trad['request']['status_action_enum'] = 'آخر اجراء على الطلب';
 
 		

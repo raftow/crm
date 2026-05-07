@@ -2665,18 +2665,18 @@ div.body_nav_hzm>p {
 
 .hzm_panel_link_bar {
     float: right;
-    padding: 8px 8px 8px 8px;
-    margin-left: 5%;
-    margin-right: 5%;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
     border: none;
     background-color: #f9f9f900;
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     /* margin-top: 140px; */
 }
 
 .hzm_panel_link_bar.header {
-    margin-top: 140px;
+    margin-top: 0px; /* was 140px I don't know why */
 }
 
 

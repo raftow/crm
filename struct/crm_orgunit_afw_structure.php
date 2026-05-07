@@ -133,7 +133,7 @@
 							'TYPE' => 'FK',  'ANSWER' => 'request',  'ANSMODULE' => 'crm',  
 							'CATEGORY' => 'ITEMS',  'ITEM' => '', 
 							'DO-NOT-RETRIEVE-COLS' => ['man','service_satisfied','supervisor_id'],
-							'FORCE-RETRIEVE-COLS' => ['days_delay'],
+							'FORCE-RETRIEVE-COLS' => ['days_retard'],
 							'WHERE' => "request_date >= §archive_date§ 
 							        and orgunit_id = §orgunit_id§ 
 									",   // and status_id in (2, 4, 201)

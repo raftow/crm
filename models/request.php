@@ -1369,9 +1369,11 @@ class Request extends CrmObject
 
     public function timingStatsExists()
     {
-        return (($this->getVal("hours_investigator_work") > 0) and
-            ($this->calc("days_investigator") > 0) and
-            ($this->calc("days_delay") > 0));
+        // hours_investigator_work عدد ساعات عمل المنسق';
+        // days_investigator عدد أيام عمل المنسق';
+        // days_retard عدد أيام التأخير على التذكرة';
+
+        return ($this->getVal("hours_investigator_work") > 0);
     }
 
 
@@ -1387,9 +1389,13 @@ class Request extends CrmObject
             return ($this->calc("ul_cl_files") != "");
         }
 
+
+        // hours_investigator_work عدد ساعات عمل المنسق';
+        // days_investigator عدد أيام عمل المنسق';
+        // days_retard عدد أيام التأخير على التذكرة';
         if (($attribute == "hours_investigator_work") or
             ($attribute == "days_investigator") or
-            ($attribute == "days_delay")
+            ($attribute == "days_retard")
         ) {
             return ($this->timingStatsExists());
         }
@@ -1891,18 +1897,26 @@ class Request extends CrmObject
     }
 
 
+    /**
+     * @param string $caller "customer" or "investigator" or "supervisor" or "job" or "system"
+     * @param int $new_status_id
+     * @param string $status_comment
+     * @param int $status_action_enum
+     * @param string $internal "Y" or "N"
+     * @param bool $silent if true no response will be created and no status_changed process will be triggered, just the request status will be updated (used when we need to update status without triggering any action like when we remove last response)
+     * @param int $question_id if this status change is related to a question answer we can pass here the question id to be able to link this status change to the question answer in the response comment for example, this will be useful when we will need to remove this status change later by removing the response related to this question answer and then we can know from the response comment which status change we need to roll-back to which status
+     * @param Orgunit|null $objOrgunit if the status change is related to an orgunit action we can pass here the orgunit object to be able to link this status change to the orgunit in the response comment for example, this will be useful when we will need to remove this status change later by removing the response related to this orgunit action and then we can know from the response comment which status change we need to roll-back to which status
+     * @param Employee|null $objEmployee if the status change is related to an employee action
+     */
     public function changeStatus($caller, $new_status_id, $status_comment, $status_action_enum, $internal = "N", $silent = false, $question_id = 0, $objOrgunit = null, $objEmployee = null, $fromCustomer = false, $fromJob = false)
     {
-        $lang = AfwSession::getSessionVar("current_lang");
-        if (!$lang) $lang = "ar";
+        // $lang = AfwLanguageHelper::getGlobalLanguage();
+        UfwWorkContext::setSubContext($caller);
         $silent_force = false;
         $errors = "";
         $warnings = "";
         $infos = "";
         $technicals = "";
-        /**
-         * @var Employee $objEmployee
-         */
         $objEmployee = null;
         $objOrgunit = null;
         $resoObj = null;
@@ -1997,12 +2011,16 @@ class Request extends CrmObject
             ($new_status_id==self::$REQUEST_STATUS_REJECTED) or
             ($new_status_id==self::$REQUEST_STATUS_IGNORED))
             {
-                $this->calculateHoursInvestigatorWork(false);
+                $this->updateHoursInvestigatorWork(false);
             }
             
 
             $this->set("status_id", $new_status_id);
             $this->set("status_action_enum", $status_action_enum);
+            if($new_status_id==self::$REQUEST_STATUS_SENT) {
+                $this->set("request_date", AfwDateHelper::currentHijriDate());
+                $this->set("request_time", date("H:i:s"));
+            }
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", $status_comment);
@@ -3380,7 +3398,12 @@ class Request extends CrmObject
         return $this->isExecuted() ? 1 : 0;
     }
 
-    public function executionDelay($round = true)
+    /**
+     * @return int total work period for this ticket in days 
+     *             calculated between assign date and now if assigned or 
+     *             calculated between request date and now if not yet assigned
+     */
+    public function totalWorkPeriodInDays($round = true)
     {
         if (
             $this->getVal("orgunit_id")
@@ -3406,7 +3429,7 @@ class Request extends CrmObject
 
     public static function lateRequestsCount() {
         $date_start_stats = self::calc_date_start_stats();
-        $late_days = self::getLatePeriod();
+        $late_days = self::maxResponsePeriod();
 
         $obj = new Request();
         // for request date we accept 4 times late period because we consider redirections, customer data incomplete, etc...
@@ -3420,8 +3443,12 @@ class Request extends CrmObject
     }
 
 
-    public static function getLatePeriod()
-    {
+    /**
+     * عدد الأيام الأقصى للرد على العميل قبل أن يعتبر الطلب متأخرا
+     * القيمة تأخذ من إعدادات مركز الاتصال CRM Center في الحقل "late_days"
+     **/ 
+    public static function maxResponsePeriod()
+    {        
         return CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
     }
 
@@ -3429,21 +3456,24 @@ class Request extends CrmObject
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         if ($this->isExecuted()) $return = 0;
-        else $return = ($this->executionDelay() > self::getLatePeriod()) ? 1 : 0;
+        else $return = ($this->totalWorkPeriodInDays() > self::maxResponsePeriod()) ? 1 : 0;
 
         return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
     }
 
-    public function calcDays_delay()
+    /**
+     * days_retard : عدد أيام التأخير على التذكرة
+     **/ 
+    public function calcDays_retard()
     {
-        $return = $this->executionDelay();
-        if ($return <= self::getLatePeriod()) return 0;
+        $return = $this->totalWorkPeriodInDays()-self::maxResponsePeriod();
+        if ($return <= 0) return 0;
         else return $return;
     }
 
     public function calcDays_investigator()
     {
-        return "...";
+        return $this->getVal("hours_investigator_work") / 8; // Assuming 8 hours per day
     }
 
 
@@ -4654,6 +4684,83 @@ class Request extends CrmObject
             }
     }
 
+    public function updateHoursInvestigatorWork($commit=true)
+    {
+        if(false and $this->dataAuditIsSufficient()) {
+            // if we have sufficient audit data we can calculate the hours of work of the investigator 
+            // on this request by calculating sum of periods where the request was in "assigned" or "ongoing" 
+            // status and assigned to the investigator (employee_id > 0) 
+            // and not compute "(redirected", "data to complete", "files to upload" and similar statuses         
+            
+            // $diffH = $this->calculateHoursInvestigatorWorkFromAUDIT();
+        }       
+        else {
+            // otherwise for old tickets before implemeting audit system 
+            // we don't have sufficient audit data we can calculate the hours of work of the investigator 
+            // we are obliged to make estimation by removing weekends and estimation of periods of non working statuses
+            // we can estimated this from the responses given to the customer (each response contain the new status)
+
+            $diffH = $this->estimateHoursInvestigatorWorkFromResponses();
+        }        
+        $this->set("hours_investigator_work", $diffH);
+        if($commit) $this->commit();
+
+        return $diffH;
+    }
+
+    public function calcEstimatedHoursReport($what = "value")
+    {
+        return $this->estimateHoursInvestigatorWorkFromResponses(true);
+    }
+    public function estimateHoursInvestigatorWorkFromResponses($returnReport=false) {
+        $report_arr = [];
+        $struct = $this->getMyDbStructure('structure', 'responseList');
+        $struct['ORDER_BY'] = 'request_id, response_date asc, response_time asc';
+        $responseList = AfwFormatHelper::formatITEMS($this, "responseList", $struct, $this->getMyTable(), "", 100, false);
+        $diffH = 0;
+        // $lang = AfwLanguageHelper::getGlobalLanguage();
+        $report_arr[] = "H = 0 at the beginning";
+        $old_status_id = self::$REQUEST_STATUS_SENT;
+        $old_status = RequestStatus::loadById($old_status_id)->getDisplay("en");
+        $old_response_date = $this->getVal("request_date");
+        $old_response_time = $this->getVal("request_time");
+        if(!$old_response_time) $old_response_time = "14:00:00";
+        /**
+         * @var Response $responseObj
+         */
+        foreach($responseList as $responseObj) {
+            $new_status_id = $responseObj->getVal("new_status_id");
+            if($new_status_id>0) $new_status = RequestStatus::loadById($new_status_id)->getDisplay("en"); //$responseObj->decode("new_status_id",'',false, "en");
+            else $new_status = "empty";
+            $response_date = $responseObj->getVal("response_date");
+            if(!$response_date) $response_date = $old_response_date;
+            $response_time = $responseObj->getVal("response_time");
+            if(!$response_time) $response_time = "14:00:00";
+
+            // if the status is in ongoing investigator status we consider that the investigator is working on the request
+            // $request_statuses_ongoing_investigator_arr = explode(",", self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR);
+            $request_statuses_waiting_customer_arr = explode(",", self::$REQUEST_STATUSES_WAITING_CUSTOMER);
+            if (!in_array($old_status_id, $request_statuses_waiting_customer_arr)) {
+                // so we start counting hours from this previous response until this response 
+                // if we are at a response with ongoing investigator status and we have a last date it means that we are in a period of work of the investigator so we calculate the hours between the last date and the current response date and add it to the diffH                    
+                $newDiff = AfwDateHelper::timeDiffInHours("$response_date $response_time", "$old_response_date $old_response_time", true);
+                $diffH += $newDiff;
+                $report_arr[] = "H += $newDiff [$old_response_date $old_response_time to $response_date $response_time] in status : $old_status => $new_status";
+                // then we update the last date to be the current response date
+            }
+            $old_status_id = $new_status_id;
+            $old_response_date = $response_date;
+            $old_response_time = $response_time;
+            $old_status = $new_status;
+        }
+
+        if($returnReport) {
+            return implode("\n<br>",$report_arr);
+        }
+        return $diffH;
+    }
+
+    /*
     public function calculateHoursInvestigatorWork($commit=true)
     {
             $status_date = $this->getVal("status_date");
@@ -4670,19 +4777,21 @@ class Request extends CrmObject
 
             if($diffH<0) $diffH = 0;
 
-            $this->set("hours_investigator_work", $diffH);
-            if($commit) $this->commit();
+            
 
             return $diffH;
-    }
+    }*/
 
-    public static function calculateEmployeeTimeWork($limit=1000, $lang="ar") {
+    public static function calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit=1000, $forceAll=false) {
         $requestObj = new Request();
-        $requestObj->where("hours_investigator_work is null");
+        if(!$forceAll) $requestObj->where("hours_investigator_work is null or hours_investigator_work <= 0");
         $requestList = $requestObj->loadMany($limit, "request_date desc");
         $diffH = 0;
+        /**
+         * @var Request $requestItem
+         */
         foreach($requestList as $requestItem) {
-            $diffH += $requestItem->calculateHoursInvestigatorWork();
+            $diffH += $requestItem->updateHoursInvestigatorWork();
         }
 
         return ["", "$diffH hours calculated"];

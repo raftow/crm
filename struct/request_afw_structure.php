@@ -63,6 +63,8 @@ class CrmRequestAfwStructure
 					'ERROR-CHECK' => true,
 				),
 
+				
+
 		'request_code' => array(
 			'FGROUP' => 'status',  
 			'STEP' => 'all',  
@@ -447,7 +449,7 @@ class CrmRequestAfwStructure
 			'MIN-SIZE' => 5,
 			'FGROUP' => 'tech_data',
 			'CHAR_TEMPLATE' => 'ARABIC-CHARS,SPACE',
-			'MANDATORY' => true,
+			'MANDATORY' => false,
 			'UTF8' => false,
 			'TYPE' => 'FK',
 			'ANSWER' => 'request',
@@ -1039,6 +1041,8 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_50',
 		),
 
+		
+
 		'days_investigator' => array(
 			'FGROUP' => 'status',  'STEP' => 1,
 			'SEARCH' => false,
@@ -1065,7 +1069,7 @@ class CrmRequestAfwStructure
 
 		
 
-		'days_delay' => array(
+		'days_retard' => array(
 			'FGROUP' => 'status',  'STEP' => 1, 
 			'SEARCH' => false,
 			'QSEARCH' => false,
@@ -1087,6 +1091,26 @@ class CrmRequestAfwStructure
 			'ERROR-CHECK' => true,
 			'CSS' => 'width_pct_50',
 		),
+
+		'estimatedHoursReport' => array(
+					'FGROUP' => 'status',  'STEP' => 1,
+					'SHOW-ADMIN' => true,
+					'NEVER-TOKEN' => true,
+					'READONLY' => true,
+					'EDIT-ADMIN' => true,
+					'NO-LABEL' => true,
+					'SIZE' => 'AREA',
+					'ROWS' => 16,
+					'UTF8' => true,
+					'TYPE' => 'TEXT',
+					'FORMAT' => 'HTML',
+					'CATEGORY' => 'FORMULA',
+					'DISPLAY' => true,
+					'DISPLAY-UGROUPS' => '',
+					'EDIT-UGROUPS' => '',
+					'ERROR-CHECK' => true,
+					'CSS' => 'width_pct_100',
+				),
 
 
 		'tip_of_day' => array(
