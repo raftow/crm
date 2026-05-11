@@ -2011,7 +2011,7 @@ class Request extends CrmObject
             ($new_status_id==self::$REQUEST_STATUS_REJECTED) or
             ($new_status_id==self::$REQUEST_STATUS_IGNORED))
             {
-                $this->updateHoursInvestigatorWork(false);
+                $this->updateHoursInvestigatorWork('ar', false);
             }
             
 
@@ -3403,8 +3403,10 @@ class Request extends CrmObject
      *             calculated between assign date and now if assigned or 
      *             calculated between request date and now if not yet assigned
      */
-    public function totalWorkPeriodInDays($round = true)
-    {
+    public function totalWorkPeriodInDays($round = true, $report=false)
+    {        
+        $status_hdate = $this->getVal("assign_date");
+        $status_time = $this->getVal("assign_time");
         if (
             $this->getVal("orgunit_id")
             and $this->getVal("employee_id")
@@ -3414,14 +3416,20 @@ class Request extends CrmObject
         ) {
             $assign_hdate = $this->getVal("assign_date");
             $assign_time = $this->getVal("assign_time");
-            $return = AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $assign_hdate, $assign_time, $round);
-            // return "$return = h-now() - (assign = $assign_hdate $assign_time)";
+            $return = AfwDateHelper::hijriDateTimeDiff($status_hdate, $status_time, $assign_hdate, $assign_time, $round);
+            if($report) {
+                $status_en = $this->decode("status_id",'',false,'en');
+                return "$return = (status[$status_en] = $status_hdate $status_time) - (assign = $assign_hdate $assign_time)";
+            }
             return $return;
         } else {
             $request_hdate = $this->getVal("request_date");
             $request_time = $this->getVal("request_time");
-            $return = AfwDateHelper::hijriDateTimeDiff($hdate2 = "", $time2 = "", $request_hdate, $request_time, $round);
-            // return "$return = h-now() - (requestdatetime = $request_hdate $request_time)";
+            $return = AfwDateHelper::hijriDateTimeDiff($status_hdate, $status_time, $request_hdate, $request_time, $round);
+            if($report) {
+                $status_en = $this->decode("status_id",'',false,'en');
+                return "$return = (status[$status_en] = $status_hdate $status_time) - (request = $request_hdate $request_time)";
+            }
             return $return;
         }
     }
@@ -3473,7 +3481,7 @@ class Request extends CrmObject
 
     public function calcDays_investigator()
     {
-        return $this->getVal("hours_investigator_work") / 8; // Assuming 8 hours per day
+        return round($this->getVal("hours_investigator_work") / 24); 
     }
 
 
@@ -4308,6 +4316,11 @@ class Request extends CrmObject
         return $html;
     }
 
+    /**
+     * return the sql condition to get the inbox of the user with this role and this employee_id
+     * @param string $role : "supervisor" or "investigator"
+     * @param int $employee_id
+     */
 
     public static function inboxSqlCond($role, $employee_id, $prefix = "me.")
     {
@@ -4684,7 +4697,7 @@ class Request extends CrmObject
             }
     }
 
-    public function updateHoursInvestigatorWork($commit=true)
+    public function updateHoursInvestigatorWork($lang='ar',$commit=true, $pbm=true)
     {
         if(false and $this->dataAuditIsSufficient()) {
             // if we have sufficient audit data we can calculate the hours of work of the investigator 
@@ -4705,6 +4718,9 @@ class Request extends CrmObject
         $this->set("hours_investigator_work", $diffH);
         if($commit) $this->commit();
 
+        if($pbm) {
+            return ["", $this->tm("hours of work of the investigator has been updated to") . " : $diffH hours"];
+        }
         return $diffH;
     }
 
@@ -4722,7 +4738,7 @@ class Request extends CrmObject
         $report_arr[] = "H = 0 at the beginning";
         $old_status_id = self::$REQUEST_STATUS_SENT;
         $old_status = RequestStatus::loadById($old_status_id)->getDisplay("en");
-        $old_response_date = $this->getVal("request_date");
+        $old_response_date = AfwDateHelper::hijriToGreg($this->getVal("request_date"));
         $old_response_time = $this->getVal("request_time");
         if(!$old_response_time) $old_response_time = "14:00:00";
         /**
@@ -4732,7 +4748,7 @@ class Request extends CrmObject
             $new_status_id = $responseObj->getVal("new_status_id");
             if($new_status_id>0) $new_status = RequestStatus::loadById($new_status_id)->getDisplay("en"); //$responseObj->decode("new_status_id",'',false, "en");
             else $new_status = "empty";
-            $response_date = $responseObj->getVal("response_date");
+            $response_date = AfwDateHelper::hijriToGreg($responseObj->getVal("response_date"));
             if(!$response_date) $response_date = $old_response_date;
             $response_time = $responseObj->getVal("response_time");
             if(!$response_time) $response_time = "14:00:00";
@@ -4753,6 +4769,14 @@ class Request extends CrmObject
             $old_response_time = $response_time;
             $old_status = $new_status;
         }
+
+        $report_arr[] = "  ---- about retard ----";        
+        $totalWorkPeriodInDays = $this->totalWorkPeriodInDays();
+        $totalWorkPeriodInDaysReport = $this->totalWorkPeriodInDays(true, true);
+        $maxResponsePeriod = self::maxResponsePeriod();
+        $return = $totalWorkPeriodInDays - $maxResponsePeriod;
+        $report_arr[] = "totalWorkPeriodInDays Report:".$totalWorkPeriodInDaysReport;
+        $report_arr[] = "Retard: $return days (totalWorkPeriodInDays:$totalWorkPeriodInDays - maxResponsePeriod:$maxResponsePeriod)";
 
         if($returnReport) {
             return implode("\n<br>",$report_arr);
@@ -4791,7 +4815,7 @@ class Request extends CrmObject
          * @var Request $requestItem
          */
         foreach($requestList as $requestItem) {
-            $diffH += $requestItem->updateHoursInvestigatorWork();
+            $diffH += $requestItem->updateHoursInvestigatorWork('ar', true, false);
         }
 
         return ["", "$diffH hours calculated"];

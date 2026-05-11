@@ -3,10 +3,8 @@
 $file_dir_name = dirname(__FILE__);
 
 require_once("$file_dir_name/../config/global_config.php");
-// old include of afw.php
-require_once("$file_dir_name/../lib/afw/modes/afw_config.php");
-require_once("$file_dir_name/../lib/afw/afw_displayer_factory.php");
-
+if(isset($lang)) $lang = AfwLanguageHelper::getGlobalLanguage();
+$server_db_prefix = AfwSession::config("server_db_prefix", "hzm_");
 $datatable_on=1;
 $cl = "Request";
 $currmod = "crm";
@@ -44,7 +42,12 @@ $tit_qedit_ppp_fixm = "عرض التذكرة";
 $actions_tpl_arr = array();
 
 $actions_tpl_arr["view"] = true;
-                          
+
+/**
+ * @var int $data_count
+ * @var string $search_result_html
+ */
+
 if($datatable_on) {
 	include "$file_dir_name/../lib/afw/modes/afw_handle_default_search.php";
         $collapse_in = "";
@@ -55,6 +58,8 @@ else $collapse_in = "in";
 $wb_prefix = AfwLanguageHelper::tt("صندوق الجاري لـ");
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix$employee_title</div>";
+
+
 
 if($datatable_on) 
 {
