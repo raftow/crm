@@ -83,5 +83,8 @@ $messages = [
 
     "The request is waiting assignment" => "الطلب في انتظار الاسناد",
 
+    "We encourage you to evaluate our platform to help us improve our service. This evaluation focuses on the user experience and technical quality of the online platform." => 
+        "نأمل منكم تقييم منصة تواصل معنا لتحسين الخدمة. يركّز هذا التقييم على تجربة استخدام المنصة الإلكترونية وجودتها التقنية.",
+
 ];
      

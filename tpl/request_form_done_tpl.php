@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var string $main_module_home_page
+ * @var string $img_company_path
+ * @var string $customer_module_banner
+ * @var bool $customer_connected
+ * @var Request $ticketObj
+ */
+?>
 <div class="cms_bg_pic">    
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
@@ -24,8 +33,9 @@ $my_survey2_url = $ticketObj->mySurvey2Url();
 ?>
       <hr class="separator">
       <br>
-      كما نأمل منكم تقديم ملاحظاتكم على منصة تواصل معنا، فإن ذلك يساعدنا على تقديم أفضل الخدمات لكم.<br>
-      علما وأن هذا التقييم ليس له علاقة برضاكم عن ردود الموظفين وانما هو فقط لأجل تحسين هذه المنصة الالكترونية من قبل فريق تقنية المعلومات
+      <?php
+          include("eval_crm_phrase.php");
+      ?>
             <div class='hzm_xgreen hzm_blink hzm_print'>
                   <a href='<?php echo $my_survey2_url ?>'>
                   تقييم المنصة
