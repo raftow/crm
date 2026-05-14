@@ -1,3 +1,13 @@
+<?php
+/**
+ * @var string  $main_module_home_page
+ * @var string  $customer_connected
+ * @var string  $customer_module_banner
+ * @var string  $img_company_path
+ * @var string  $xxxx
+ * 
+ */
+?>
 <div class="cms_bg_pic">    
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
@@ -5,7 +15,7 @@
 <div class="content_form_bg">
 
 <div class="success_hzm">
-      <div class="register_success_message">تم حفظ البيانات المستكملة على طلبكم بنجاح. <br><br>
+      <div class="crm_success_message">تم حفظ البيانات المستكملة على طلبكم بنجاح. <br><br>
 <?php
       if($customer_connected)
       {

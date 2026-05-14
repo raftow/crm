@@ -14,7 +14,7 @@
 <div class="content_form_bg survey">
 
 <div class="success_hzm">
-      <div class="register_success_message">تم تسجيل طلبكم بنجاح. <br><br>
+      <div class="crm_success_message">تم تسجيل طلبكم بنجاح. <br><br>
 <?php
 $my_survey2_url = $ticketObj->mySurvey2Url();
       if($customer_connected)

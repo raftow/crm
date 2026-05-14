@@ -228,25 +228,29 @@ div#fg-warn {
     background-repeat: no-repeat;
 }
 
-.register_success_message {
+.crm_success_message {
     float: left;
     width: 100%;
     min-height: 150px;
     font-size: 24px;
     padding: 25px;
     border: none;
-    background-color: #ffffff47;
+    background-color: #ffffffba;
     color: #4e7274;
+    margin-top: 28px;
 }
 
 
-div.register_success_message > a {
-    border: solid 1px #6ea5b0;
-    color: #248da2;
+div.crm_success_message > a {
+    border: solid 1px #5bb354;
+    color: white;
     font-size: 75%;
-    padding: 2px 15px;
-    background-color: #ffffff6e;
+    font-weight: normal;
+    padding: 4px 15px 8px;
+    background-color: #3fbf2ed6;
     font-family: menu;
+    line-height: 60px;
+    margin-right: 70px;
 }  
 
 @media (max-width: 1177px) {
@@ -257,7 +261,7 @@ div.register_success_message > a {
             display: none;
     }
 
-    .register_success_message {
+    .crm_success_message {
             width: 100%;   
     }
 }

@@ -1,5 +1,11 @@
 <?php
-        $company = AfwSession::currentCompany();
+/**
+ * @var string  $edit_survey_responses
+ * @var SurveyToken  $objSurveyToken
+ * 
+ */
+
+      $company = AfwSession::currentCompany();
 ?>
 <div class="survey-header">
       <div class="survey logo_company">
@@ -14,7 +20,7 @@
         <div class="content_big_title survey">استبانة تحسين جودة خدمة العملاء</div>
 
 <div class="success_hzm">
-      <div class="register_success_message">تم تسجيل مشاركتكم بنجاح. <br><br>
+      <div class="crm_success_message">تم تسجيل مشاركتكم بنجاح. <br><br>
       نشكر لكم مساهمتكم <br>في تحسين جودة خدماتنا
       </div>
       <div class="signature">

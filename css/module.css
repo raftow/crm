@@ -1762,7 +1762,7 @@ a.btnbtsp.btn_link:hover {
     background-image: url(../pic/bg_1003.png);
     background-repeat:no-repeat;
     /* background-size: contain;*/
-    background-size: 100%;
+    background-size: 250%;
     background-position-y: 25px;
     border: none; /* 1px solid #70acb3;*/
 }
