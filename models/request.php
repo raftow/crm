@@ -482,7 +482,7 @@ class Request extends CrmObject
             "OPTIONS" => array(
                 "perf" => array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf' => true),
                 "MAX_MEMORY_BY_REQUEST" => 400000000,
-                "MODE_BATCH_LOURD" => true,
+                "processLourd" => true,
             ),
             // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
             //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
@@ -729,7 +729,7 @@ class Request extends CrmObject
             "OPTIONS" => array(
                 "perf" => array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf' => true),
                 "MAX_MEMORY_BY_REQUEST" => 400000000,
-                "MODE_BATCH_LOURD" => true,
+                "processLourd" => true,
             ),
             // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
             //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
@@ -765,7 +765,7 @@ class Request extends CrmObject
             "OPTIONS" => array(
                 "perf" => array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf' => true),
                 "MAX_MEMORY_BY_REQUEST" => 400000000,
-                "MODE_BATCH_LOURD" => true,
+                "processLourd" => true,
             ),
             // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
             //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
@@ -4824,5 +4824,9 @@ class Request extends CrmObject
     public function getMyCode()
     {
         return $this->getVal("request_code");
+    }
+
+    public function estimatedTotalRows() {
+        return 100000;
     }
 }

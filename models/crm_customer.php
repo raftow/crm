@@ -932,4 +932,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 }
                 else return $html;
         }
+
+        public function estimatedTotalRows() {
+                return 2500;
+        }
 }

@@ -136,7 +136,8 @@
 							'FORCE-RETRIEVE-COLS' => ['days_retard'],
 							'WHERE' => "request_date >= §archive_date§ 
 							        and orgunit_id = §orgunit_id§ 
-									",   // and status_id in (2, 4, 201)
+									and status_id in (2, 4, 201)
+									",   // we should add [and status_id in (2, 4, 201) ] sql condition otherwise too much rceords to show
 							'FORMAT' => 'retrieve',  'SHOW' => true,  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 							),

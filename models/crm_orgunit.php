@@ -486,6 +486,9 @@ class CrmOrgunit extends CrmObject{
                 return false;
         }
 
+        public function estimatedTotalRows() {
+                return 2500;
+        }
 
 }
 ?>

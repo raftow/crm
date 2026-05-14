@@ -8,7 +8,7 @@ echo "to be calculated dates from $date_start to $date_end<br>";
 list($date_start,) = explode(" ",$date_start);
 list($date_end,) = explode(" ",$date_end);
 
-$MODE_BATCH_LOURD = true;
+UfwQueryAnalyzer::startProcessLourdMode();
 
 // genere matrixes
 $hijri_to_greg_matrix = array();
@@ -55,4 +55,6 @@ foreach($greg_to_hijri_matrix as $gyear => $greg_to_hijri_arr)
 
     echo "generate : $dir_fileName <br>";
 }
+
+UfwQueryAnalyzer::stopProcessLourdMode();
 
