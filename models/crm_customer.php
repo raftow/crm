@@ -20,7 +20,6 @@ ALTER TABLE `crm_customer` CHANGE `ref_num` `ref_num` VARCHAR(32) CHARACTER SET 
 */
 
 
-include_once("$file_dir_name/../../lib/afw/interfaces/afw_front_end_user.php");
 
 class CrmCustomer extends CrmObject implements AfwFrontEndUser
 {
@@ -419,7 +418,23 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         }
         */
 
+        public static function calc_date_start_stats($period=30)
+        {
+                /*
+                $period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"));
+                if (is_integer($period) and ($period > 0)) return AfwDateHelper::shiftGregDate("", -$period);
+                else */ 
+                return AfwDateHelper::shiftGregDate("", -$period);
+        }
 
+        public static function newCustomersCount($period=30) {
+                $date_start_stats = self::calc_date_start_stats($period);
+                
+
+                $obj = new CrmCustomer();
+                $obj->where("active = 'Y' and created_at >= '$date_start_stats'");
+                return $obj->count();
+        }
 
         public function beforeDelete($id, $id_replace)
         {

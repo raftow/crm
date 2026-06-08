@@ -1,9 +1,54 @@
+<?php
+/**
+ * @var Request $ticketObj
+ * @var string $main_module_home_page
+ * @var string $customer_module_banner
+ * @var string $img_company_path
+ * @var string $ds
+ * @var string $lang
+ * @var string $your_full_name
+ * @var string $customer_mobile
+ * @var string $customer_idn
+ * @var string $org_name
+ * @var string $ref_num
+ * @var string $region
+ * @var string $request_type
+ * @var string $request_subject
+ * @var string $request_body
+ * @var string $web_site
+ * @var string $old_ticket
+ * @var string $request_priority
+ * @var string $request_prio_phrase
+ * @var string $related_object_id
+ * @var string $web_site_readonly
+ * @var string $old_ticket_ro
+ * 
+ * @var array $data
+ * @var array $regionList
+ * @var array $requestTypeList
+ * @var array $roList
+ * 
+ * 
+ * @var int $customer_type_id
+ * 
+ * @var bool $request_type_readonly
+ * @var bool $request_subject_readonly
+ * @var bool $request_body_readonly
+ * @var bool $region_readonly
+ * @var bool $org_name_required
+ * @var bool $ref_num_required
+ * 
+ * 
+ * 
+ * 
+ */
+?>
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
 </div>    
 <div class="content_form_bg">
-<div class="content_big_title registration">تقديم طلب إلى <?php echo AfwSession::config("crm_responder", "مكتب خدمة العملاء"); ?></div>
+<div class="content_big_title registration">تقديم طلب جديد</div>
 <div id="container_div" class="table_div">
 <div id="container_right_div" class="table_cell_div content_form">
 <form id="crm_form" method="POST" enctype="multipart/form-data" action="i.php">

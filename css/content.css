@@ -177,7 +177,7 @@ div.content_form>form>.in-group-customer_data {
     padding: 0;
     background-color: #fff;
     float: right;
-    background-image: url(../pic/crm-welcome.png);
+    background-image: url(../pic/crm-welcome-2.png);
     background-size: 100%;
     background-repeat: no-repeat;
     background-position-x: right;
@@ -350,17 +350,20 @@ div.cms_center>div.modal-dialog.popup-content {
     width: 100% !important;
     max-width: none !important;
     min-width: 0px !important;
-    margin: 0 !important;
+    margin-top: 20px !important;
+    margin: 0;
     overflow: hidden;
+    background-color: transparent !important;
 }
 
 div.cms_center>div.modal-dialog.popup-content>div.modal-content {
     width: 60% !important;
-    margin: 0;
+    margin-top: 25px;
     margin-right: 20%;
     margin-left: 20%;
     max-width: none;
 }
+
 
 @media (max-width: 960px) {
     div.cms_center>div.modal-dialog.popup-content>div.modal-content {

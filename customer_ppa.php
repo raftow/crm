@@ -1,4 +1,33 @@
 <?php
+/**
+ * Copyright (c) 2026. Rafik BOUBAKER - All rights reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Rafik BOUBAKER <
+ * @var string $lang
+ * @var string $front_header_page
+ * @var string $front_footer
+ * @var string $customer_mobile_or_email the email or mobile entered by customer
+ * @var string $customer_idn the idn entered by customer
+ * @var string $customer_msg the message to show to customer in case of error or any
+ * @var string $customer_login_message the message to show to customer in case of error or any 
+ *             after login form (used to show error message in case of error in login form filling)
+ * 
+ * @var string $customer_login_welcome the welcome message to show in login form header
+ * @var string $customer_login_by_sentence the sentence to show in login form header when login
+ * @var string $customer_id the customer id (used in case of login by email or mobile without idn, then we get the idn by customer id and we put it in hidden field to be able to use it in next step which is verification code sending)
+ * @var string $new_customer_managed if true show the new customer registration link in login page, otherwise hide it
+ * @var string $front_header_page the header page to include in login page
+ * @var string $front_footer the footer page to include in login page
+ * @var string $main_company_domain the main company domain (used in email sending)
+ * @var array $NOM_SITE the site name in different languages
+ * @var array $DESC_SITE the site description in different languages
+ * @var array $WELCOME_SITE the welcome message in different languages
+ * @var string $login_employee_phrase the sentence to show in login form header when login for
+ *              the employee login link 
+ * @var array $customer_login_errors the array of errors in login form filling (used to show all errors at once to customer)
+ * @var array $config_arr
+ */
 // die("rafik debugging : please try later");
 $file_dir_name = dirname(__FILE__);
 set_time_limit(8400);

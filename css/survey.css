@@ -5,7 +5,22 @@
     margin-right: 0;
     margin-left: 0;
     background-color: #bcdeec;
-    background-image: url(../pic/bgsurvey.png);
+    background-image: url(../pic/bgsurvey1.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-y: bottom;
+    border: none;
+    padding-bottom: 55%;
+}
+
+.survey_bg.survey1 {
+    width: 100%;
+    height: fit-content;
+    float: right;
+    margin-right: 0;
+    margin-left: 0;
+    background-color: #bcdeec;
+    background-image: url(../pic/bgsurvey1.png);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position-y: bottom;
@@ -21,6 +36,36 @@
     margin-left: 0;
     background-color: #bcdeec;
     background-image: url(../pic/bgsurvey2.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-y: bottom;
+    border: none;
+    padding-bottom: 55%;
+}
+
+.survey_bg.survey3 {
+    width: 100%;
+    height: fit-content;
+    float: right;
+    margin-right: 0;
+    margin-left: 0;
+    background-color: #bcdeec;
+    background-image: url(../pic/bgsurvey3.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-y: bottom;
+    border: none;
+    padding-bottom: 55%;
+}
+
+.survey_bg.survey4 {
+    width: 100%;
+    height: fit-content;
+    float: right;
+    margin-right: 0;
+    margin-left: 0;
+    background-color: #bcdeec;
+    background-image: url(../pic/bgsurvey4.png);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position-y: bottom;

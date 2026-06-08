@@ -751,7 +751,7 @@ class CrmController extends AfwController
                         $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
 
                         $data["requestList"] = $theCustomer->get("requestList");
-                        $data["title"] = "طلباتي القائمة";
+                        $data["title"] = "طلباتي الحالية";
                 } else {
                         //$login_module = AfwSession::config("login_module","crm"); $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
                         $data = null;

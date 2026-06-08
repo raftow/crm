@@ -1,9 +1,27 @@
 <?php
+/**
+ * @var string  $edit_survey_responses
+ * @var SurveyToken  $objSurveyToken
+ * @var int  $survey_id
+ * @var string  $lang
+ * @var string  $hide_intro0
+ * @var string  $hide_intro1
+ * @var string  $hide_intro2
+ * @var string  $hide_warning
+ * @var string  $hide_submit
+ * @var string  $tkn
+ * @var array  $question_list
+ * @var array  $data
+ * @var array  $files_list
+ * 
+ * 
+ */
         $company = AfwSession::currentCompany();
         if(!$survey_id) $survey_id = $objSurveyToken->getVal("survey_id");
         if(!$survey_id) $survey_id = 1;
         if(!$lang) $lang = "ar";
         $surveyObject = Survey::loadById($survey_id);
+        $survey_rand_num = rand(1,4);
 ?>
 <div class="survey-header">
       <div class="survey logo_company">
@@ -13,7 +31,7 @@
             <img src="../client-<?php echo $company ?>/pic/title-company-<?php echo $company ?>.png" alt="" style="margin-top: 0px;width: 206px !important;height: 43px;border-radius: 0;margin-right: auto;margin-left: auto;"> 
       </div>
 </div>
-<div class="survey_bg survey survey<?php echo $survey_id ?>">
+<div class="survey_bg survey survey<?php echo $survey_rand_num ?>">
 <div class="content_form_bg survey">
         <div class="content_big_title survey"><?php echo $surveyObject->getDisplay($lang); ?></div>
 <div id="container_div" class="table_div">

@@ -1,3 +1,15 @@
+<?php
+
+/**
+ * @var array<Request> $requestList 
+ * @var string $title
+ * @var string $main_module_home_page
+ * @var string $customer_module_banner
+ * @var string $img_company_path
+ * @var string $ds
+ * 
+ */
+?>
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
@@ -8,7 +20,7 @@ if(!$requestList) $requestList = [];
 if(count($requestList)>0)
 {
 ?>
-<div class="content_big_title registration">قائمة <?php echo $title; ?></div>    
+<div class="content_big_title registration"><?php echo $title; ?></div>    
 <?php
 }
 ?>
@@ -19,9 +31,9 @@ foreach($requestList as $ticketObj)
         $my_status = $ticketObj->getVal("status_id");
         $my_status_decoded = $ticketObj->getCustomerStatus("ar");
         $request_type_decoded = $ticketObj->decode("request_type_id");
-        $confidential_class = $ticketObj->sureIs("confidential") ? "confidential" : "";
+        $confidential_class = ""; // $ticketObj->sureIs("confidential") ? "confidential" : "";
         $this_id = $ticketObj->id;
-        $confidential_button = $ticketObj->sureIs("confidential") ? "<button id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
+        $confidential_button = "";//$ticketObj->sureIs("confi dential") ? "<button id='confid entialbtn-$this_id' name='confide ntialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
 
         $full_request_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("request_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("request_date")));
         $full_status_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("status_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("status_date")));

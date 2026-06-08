@@ -1,6 +1,6 @@
 <?php
 return [
-        'myrequests' => ['methodName' => 'myrequests', 'controller'=>'crm', 'icon'=>'list', 'methodTitle'=>"طلباتي القائمة", 'guest'=>false, ],
+        'myrequests' => ['methodName' => 'myrequests', 'controller'=>'crm', 'icon'=>'list', 'methodTitle'=>"طلباتي الحالية", 'guest'=>false, ],
         'newrequest' => ['methodName' => 'newrequest', 'controller'=>'crm', 'icon'=>'star', 'methodTitle'=>"طلب جديد", 'guest'=>false,],
         'oldrequests' => ['methodName' => 'oldrequests', 'controller'=>'crm', 'icon'=>'check', 'methodTitle'=>"طلباتي المنتهية", 'guest'=>false],
         'account' => ['methodName' => 'account', 'controller'=>'customer', 'icon'=>'user', 'methodTitle'=>"الملف الشخصي", 'guest'=>false],

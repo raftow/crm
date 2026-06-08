@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var Request $ticketObj
+ * @var string $main_module_home_page
+ * @var string $customer_module_banner
+ * @var string $img_company_path
+ * @var string $ds
+ */
+?>
 <div class="cms_bg_pic contact">    
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
@@ -8,9 +17,9 @@
         //if(!$ticketObj) die("this ticket is lost");
         $my_status = $ticketObj->getVal("status_id");
         $my_status_decoded = $ticketObj->getCustomerStatus("ar");
-        $confidential_class = $ticketObj->sureIs("confidential") ? "confidential" : "non-confidential";
+        $confidential_class = ""; //$ticketObj->sureIs("confidential") ? "confidential" : "non-confidential";
         $this_id = $ticketObj->id;
-        $confidential_button = $ticketObj->sureIs("confidential") ? "<button id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
+        $confidential_button = "";// $ticketObj->sureIs("confidential") ? "<button id='confide ntialbtn-$this_id' name='confident ialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
         // test of ->showAttribute(..) after ->set(..)
         // $ticketObj->set("status_id", Request::$REQUEST_STATUS_REDIRECT);
         // $my_status_show = $ticketObj->showAttribute("status_id");

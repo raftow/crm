@@ -1,4 +1,35 @@
 <?php
+
+/**
+ * Copyright (c) 2026. Rafik BOUBAKER - All rights reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Rafik BOUBAKER <
+ * @var string $lang
+ * @var string $front_header_page
+ * @var string $front_footer
+ * @var string $customer_mobile_or_email the email or mobile entered by customer
+ * @var string $customer_idn the idn entered by customer
+ * @var string $customer_msg the message to show to customer in case of error or any
+ * @var string $customer_login_message the message to show to customer in case of error or any 
+ *             after login form (used to show error message in case of error in login form filling)
+ * 
+ * @var string $customer_login_welcome the welcome message to show in login form header
+ * @var string $customer_login_by_sentence the sentence to show in login form header when login
+ * @var string $customer_id the customer id (used in case of login by email or mobile without idn, then we get the idn by customer id and we put it in hidden field to be able to use it in next step which is verification code sending)
+ * @var string $new_customer_managed if true show the new customer registration link in login page, otherwise hide it
+ * @var string $front_header_page the header page to include in login page
+ * @var string $front_footer the footer page to include in login page
+ * @var string $main_company_domain the main company domain (used in email sending)
+ * @var array $NOM_SITE the site name in different languages
+ * @var array $DESC_SITE the site description in different languages
+ * @var array $WELCOME_SITE the welcome message in different languages
+ * @var string $login_employee_phrase the sentence to show in login form header when login for
+ *              the employee login link 
+ * @var array $customer_login_errors the array of errors in login form filling (used to show all errors at once to customer)
+ * @var array $config_arr
+ */
+
 $file_dir_name = dirname(__FILE__);
 set_time_limit(8400);
 ini_set('error_reporting', E_ERROR | E_PARSE | E_RECOVERABLE_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
@@ -45,11 +76,20 @@ $customer_msg = "";
 $gender_id = 1;
 $gender_id_selected_2 = "";
 $gender_id_selected_1 = "selected";
+
+$customer_mobile = "";
+$customer_email = "";
+$org_name  = "";
+$ref_num  = "";
+$first_name_ar = "";
+$last_name_ar = "";
+              
         
 require_once("$file_dir_name/../config/global_config.php");
 // 
 $sessionVarUser_avail = AfwSession::getSessionVar("user_avail"); 
 $sessionVarUser_firstname = AfwSession::getSessionVar("user_firstname"); 
+$customer_register_errors = array();
 if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) 
 {
 	//die("rafik 2019-007 sess = ".var_export($_SESSION,true));
@@ -88,7 +128,7 @@ elseif($_POST["crm_new_go"])
                 $gender_id_selected_1 = "selected";
               }  
               
-              $customer_register_errors = array();
+              
               
               list($customer_idn_correct, $customer_idn_type_id) = AfwFormatHelper::getIdnTypeId($customer_idn);
               if((!$customer_idn_correct) or (!$customer_idn_type_id))
@@ -180,7 +220,7 @@ else
 
 ?>
 <div class="home_banner login_banner">
-<div class="modal-dialog popup-register">
+<div class="modal-dialog popup-login-customer popup-register">
         <div class="modal-content">
                 <div class="modal-header">
                         <div>
@@ -428,7 +468,7 @@ echo $js_for_cust_type;
                                 </script>
                                 <br>
                                 <!-- logreg:<?php echo $logbl?> -->
-                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_new_go" disabled>&nbsp;
+                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_new_go" id="crm_new_go" disabled>&nbsp;
                                 
                                 
                         </form>
@@ -436,9 +476,14 @@ echo $js_for_cust_type;
         </div>
        
 </div>
-<?
+<?php
+        $bcounter = random_int(1, 3);
+?>
+<div class="modal-dialog popup-company banner<?php echo $bcounter; ?>">
+<?php
         include("version_2_desc.php");
 ?>
+</div>
 </div>
 
 

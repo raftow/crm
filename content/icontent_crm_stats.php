@@ -8,6 +8,14 @@ $tokens["monitoring"] = Request::t('monitoring', $lang);
 $tokens["period"] = "(".$r->translate("period", $lang) . " " . CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"). " ".$r->translate("day(s)", $lang).")";
 $tokens["customer_nb"] = CrmCustomer::aggreg("count(*)");
 $tokens["customers_title"] = CrmCustomer::t('crm_customer', $lang);
+$tokens["new_customers_nb"] = CrmCustomer::newCustomersCount();
+$tokens["new_customers_title"] = CrmCustomer::t('new_customers_title', $lang);
+$nb_new_customers_error_limit = 1;
+$nb_new_customers_warning_limit = 3;
+if($tokens["new_customers_nb"]<$nb_new_customers_error_limit) $tokens["new_customers_nb_status"] = "error";
+elseif($tokens["new_customers_nb"]<($nb_new_customers_warning_limit)) $tokens["new_customers_nb_status"] = "warning";
+else $tokens["new_customers_nb_status"] = "ok";
+
 $tokens["orgunit_nb"] = CrmOrgunit::aggreg("count(*)");
 $tokens["orgunits_title"] = CrmOrgunit::t('crm_orgunit', $lang);
 $tokens["subject_nb"] = 139; //RequestSubject::aggreg("count(*)");
@@ -83,9 +91,9 @@ $tokens["responses_title"] = Response::t('response', $lang);
 $tokens["response_nb_period"] = Response::aggreg("count(*)","active='Y' and internal='N' and response_date >= '$date_start_stats'");
 $tokens["responses_period_title"] = Response::t('recent-responses', $lang);
 
-$nb_responses_warning_limit = round($nb_responses_warning_limit * 0.7);
+$nb_responses_error_limit = round($nb_responses_warning_limit * 0.7);
 
-if($tokens["response_nb_period"]<$nb_responses_error_limit) $tokens["response_nb_period_status"] = "error";
+if($tokens["response_nb_period"] < $nb_responses_error_limit) $tokens["response_nb_period_status"] = "error";
 elseif($tokens["response_nb_period"]<($nb_responses_warning_limit)) $tokens["response_nb_period_status"] = "warning";
 else $tokens["response_nb_period_status"] = "ok";
 

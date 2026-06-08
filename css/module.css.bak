@@ -1,21 +1,24 @@
-img.hlc {
-    height: 180px;
-    margin-right: calc(50% - 140px);
+.popup-sms-verify .modal-header {
+    background-color: #3d5e7c;
+    padding: 5px;
+    border: none !important;
+    margin: 0;
+}
+
+.popup-sms-verify .modal-header > div {
+    width: 100%;
 }
 
 .modal-header {
-    background-color: transparent;
-    border: none;
-    max-width: none !important;  /* for mobile screen mode */
+    background-color: white;
 }
-
 .popup-login-customer>.modal-header {
     background-color: transparent;
     padding: 0 !important;
     border-bottom: none !important;
     padding-bottom: 0 !important;
-    max-width: none !important;
-    margin-bottom: 0px !important;
+    max-width: 480px !important;
+    margin-bottom: 15px !important;
 }
 
 .popup-login-customer>.modal-content>.modal-header {
@@ -26,49 +29,38 @@ div.home_banner>.modal-dialog.popup-login {
     margin-right: 30%;
     max-width: 950px !important;
 }
-/*
+
 div.home_banner>.modal-dialog.popup-login-customer {
     max-width: 500px !important;
-}*/
+}
 
 div.modal-dialog>.modal-content {
     border: none !important;
     animation: none !important;
 }
 
-div.modal-dialog.verify>.modal-content {
-    background-color: #9bddf7a6 !important;
-    width: 80%;
-    margin-right: 10%;
-    margin-left: 10%;
-    margin-top: 25px;
-    padding-bottom: 0px !important;
-    border-radius: 0;
-    border-top: 4px solid #0f4f6d !important;
-
-}
-
-div.modal-dialog>.modal-content.otp-popup {
-    width: 500px;
-    margin-right: calc(50% - 250px);
-    display: block;
-    float: right;
-    background-color: #c5e5f075 !important;
-    padding: 2px 20px;
-    margin-top: 20px;
-    border-radius: 0;
-    border-top: 6px solid #0e76a9 !important;
-}
 
 h1.modal-title {
     background-color: #3d99c2 !important;
 }
 
-
+.home_banner{
+    background-image: url(../pic/home_login_bg.jpg) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    min-height:550px;
+    float: right;
+}
 
 .home_banner {
-    background-image: none !important;
-    background-color: #def4ff !important;
+    background-image: url(../pic/home_banner_003.jpg) !important;
+    background-color: #c6c6c64a;
+    /* background-size: 100% 110% !important; */
+    background-position-x: center !important;
+    background-position-y: 0px !important;
+    background-repeat: repeat-y;
     width: 100%;
     min-height: 1150px !important;
     float: right;
@@ -77,14 +69,14 @@ h1.modal-title {
 
 .modal-body {
     position: relative;
-    padding: 15px 0 10px;
-    background-color: transparent !important;
-    /* border-top: 6px solid #0096ff; */ 
+    padding: 15px;
+    background-color: #9de0ffbf !important;
+    border-top: 6px solid #0096ff;
 }
 
 .container.crm {
-    background-color: #768c99;
-    max-width: 2000px;
+    background-color: white;
+    max-width: 1720px;
 }
 
 li.hzm_login {
@@ -382,21 +374,19 @@ h2.crm_question {
 
 
 .modal-dialog.popup-login-customer {
-    background: #c2ecff;
+    background: transparent;
     padding-left: 0px !important;
     padding-right: 0px !important;
     padding-bottom: 30px;
     float: right;
-    min-height: 870px;
+    min-height: 700px;
     min-width: 300px !important;
-    max-width: 500px !important;
-    width: 500px !important;
-    margin-right: 0px !important;
-    margin-left: 0px !important;
-    margin-top: 0px !important;
-    border-left: 8px solid #576063;
-    margin-bottom: 0px !important;
-}
+    width: 80% !important;
+    max-width: 350px;
+    margin-right: 10% !important;
+    margin-left: 30px !important;
+    margin-top: 50px !important;
+} 
 
 .modal-dialog.popup-login {
     background: transparent;
@@ -418,47 +408,13 @@ h2.crm_question {
     padding-bottom: 180px;
     float: right;
     min-height: 1190px;
-    margin-right: 2% !important;
+    margin-right: 10% !important;
     margin-left: 0% !important;
-    width: 96% !important;
+    width: 80% !important;
     min-width: 0px !important;
     max-width: 430px !important;
     
 }   
-
-.modal-dialog.popup-login-customer.popup-register {
-    padding-left: 15px !important;
-    padding-right: 0px !important;
-}
-
-.modal-dialog.verify.popup-company {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
-.modal-dialog.popup-company {
-    float: right;
-    min-height: 870px;
-    min-width: 300px !important;
-    width: calc(100% - 500px) !important;
-    max-width: calc(100% - 500px);
-    background-size: cover;
-    background-position: right;
-    background-repeat: no-repeat;
-    margin: 0px !important;
-}
-
-.modal-dialog.popup-company.banner1 {
-    background-image: url(../pic/home-welcome-banner-1.jpg);
-}
-
-.modal-dialog.popup-company.banner2 {
-    background-image: url(../pic/home-welcome-banner-2.jpg);
-}
-
-.modal-dialog.popup-company.banner3 {
-    background-image: url(../pic/home-welcome-banner-3.jpg);
-}
 
 @media (min-width:840px)
 {
@@ -475,18 +431,6 @@ h2.crm_question {
         padding-right: 30px;
     }
 }
-
-.popup-sms-verify .modal-header {
-    background-color: transparent;
-    padding: 5px;
-    border: none !important;
-    margin: 0;
-}
-
-/*
-.popup-sms-verify .modal-header > div {
-    width: 100%;
-}*/
 
 @media (min-width:740px)
 {
@@ -524,18 +468,18 @@ div.popup-sms-verify>.modal-content {
 }
 
 .modal-dialog.popup-content {
-    background-color: #e7d7a9de !important;
-    border-top: 6px solid #42525b;
+    background-color: #b8e5f9bf !important;
+    border-top: 6px solid #276989;
     padding-left: 0px !important;
     padding-right: 0px !important;
     padding-bottom: 10px;
-    float: left;
+    float: right;
     min-height: 370px;
     min-width: 360px !important;
     width: 400px !important;
     max-width: none;
     margin-right: 0 !important;
-    margin-left: 50px !important;
+    margin-left: 0 !important;
     margin-top: 50px !important;
 }
 
@@ -554,24 +498,7 @@ div.popup-sms-verify>.modal-content {
         margin-bottom: 10px !important;
     }
 
-    .modal-dialog.popup-login-customer {    
-        min-width: 200px !important;
-        max-width: 400px !important;
-        width: 400px !important;
-    }
-
-    .modal-dialog.popup-company {
-        min-width: 200px !important;
-        width: calc(100% - 400px) !important;
-        max-width: calc(100% - 400px);
-    }
-
-    .modal-dialog.verify.popup-company {
-        width: 100% !important;
-    }
-
-
-    /* .modal-dialog.popup-login-customer{
+    .modal-dialog.popup-login-customer{
         float: right;
         min-height: 350px;
         min-width: 0 !important;
@@ -581,16 +508,16 @@ div.popup-sms-verify>.modal-content {
         margin-left: 20% !important;
         margin-top: 20px !important;
 
-    }*/
+    }
     
     .modal-dialog.popup-content {
         float: right;
         min-height: 350px;
         min-width: 0 !important;
         max-width: none !important;
-        width: 90% !important;
-        margin-right: 5% !important;
-        margin-left: 5% !important;
+        width: 60% !important;
+        margin-right: 20% !important;
+        margin-left: 20% !important;
         margin-top: 20px !important;
     }    
 }
@@ -609,26 +536,14 @@ div.popup-sms-verify>.modal-content {
         margin-bottom: 10px !important;
     }
 
-    .modal-dialog.popup-company {
-        min-width: 200px !important;
-        max-width: 1000px !important;
-        width: 100% !important;
-    }
-
-    .modal-dialog.verify.popup-company {
-        width: 100% !important;
-        background-position: top;
-    }
-
-
     .modal-dialog.popup-login-customer {
         float: right;
         min-height: 350px;
-        /* min-width: 0 !important; */
-        max-width: 1000px !important;
-        width: 100% !important;
-        margin-right: 0 !important;
-        margin-left: 0 !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 70% !important;
+        margin-right: 15% !important;
+        margin-left: 15% !important;
         margin-top: 20px !important;
     }
     
@@ -637,50 +552,82 @@ div.popup-sms-verify>.modal-content {
         min-height: 350px;
         min-width: 0 !important;
         max-width: none !important;
-        width: 98% !important;
-        margin-right: 1% !important;
-        margin-left: 1% !important;
-        margin-top: 520px !important;
+        width: 70% !important;
+        margin-right: 15% !important;
+        margin-left: 15% !important;
+        margin-top: 20px !important;
     }    
+}
 
-    .modal-dialog.popup-company.banner1 {
-        background-image: url(../pic/home-welcome-banner-mobile-1.jpg);
-    }
-
-    .modal-dialog.popup-company.banner2 {
-        background-image: url(../pic/home-welcome-banner-mobile-2.jpg);
-    }
-
-    .modal-dialog.popup-company.banner3 {
-        background-image: url(../pic/home-welcome-banner-mobile-3.jpg);
+@media (max-width:542px)
+{
+    .modal-dialog.popup-register.popup-sms-verify {
+        float: right;
+        min-height: 210px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 80% !important;
+        margin-right: 10% !important;
+        margin-left: 10% !important;
+        margin-top: 130px !important;
+        margin-bottom: 10px !important;
     }
 
     .modal-dialog.popup-login-customer {
-        border-left: none;
+        float: right;
+        min-height: 350px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 80% !important;
+        margin-right: 10% !important;
+        margin-left: 10% !important;
+        margin-top: 20px !important;
     }
-
-
-    .modal-dialog.verify.popup-company.banner1 {
-        background-image: url(../pic/home-welcome-banner-mobile-verify-1.jpg);
-    }
-
-    .modal-dialog.verify.popup-company.banner2 {
-        background-image: url(../pic/home-welcome-banner-mobile-verify-2.jpg);
-    }
-
-    .modal-dialog.verify.popup-company.banner3 {
-        background-image: url(../pic/home-welcome-banner-mobile-verify-3.jpg);
-    }
+    
+    .modal-dialog.popup-content {
+        float: right;
+        min-height: 350px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 80% !important;
+        margin-right: 10% !important;
+        margin-left: 10% !important;
+        margin-top: 20px !important;
+    }    
 }
 
-
+@media (max-width:442px)
+{
+    .modal-dialog.popup-register.popup-sms-verify {
+        float: right;
+        min-height: 210px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 90% !important;
+        margin-right: 5% !important;
+        margin-left: 5% !important;
+        margin-top: 130px !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .modal-dialog.popup-content {
+        float: right;
+        min-height: 350px;
+        min-width: 0 !important;
+        max-width: none !important;
+        width: 90% !important;
+        margin-right: 5% !important;
+        margin-left: 5% !important;
+        margin-top: 20px !important;
+    }    
+}
 
 h2.title_register {
     float: right;
     font-weight: normal;
     font-family: title !important;
     font-size: 20px;
-    color: #001423;
+    color: #b0d9f7;
     text-align: center;
     width: 100%;
 }
@@ -688,32 +635,24 @@ h2.title_register {
 div.btnbtsp.btn-success.btnregister {
     font-family: menu;
     margin-top: 9px;
-    font-size: 80%;
+    font-size: 110%;
     font-weight: normal;
     background-color: #5478af;
     color: white;
     border-color: #5478af;
     border-width: 1px;
-    /* width: 60%; */
-    /* margin-right: 20%; */
+    width: 60%;
+    margin-right: 20%;
     float: right;
     margin-bottom: 25px;
-    width: 40%;
-    margin-left: 30%;
-    margin-right: 30%;
-    border-radius: 0;
-    height: 34px;
-    vertical-align: middle;
-    padding-top: 6px;
 }
-
 
 .q_new_customer {
     border-radius: 0px;
-    padding: 16px 0px 0px 0px;
+    padding: 6px 0px 0px 0px;
     border: none;
-    background-color: transparent !important;
-    border-top: 2px solid #5478af;
+    background-color: #9de0ffbf !important;
+    border-top: 4px solid #5478af;
     width: 100%;
 }
 
@@ -1063,11 +1002,11 @@ span.prog-name.prog-archive {
 .crm_ticket_num {
     display: inline;
     padding: 2px 5px;
-    background-color: transparent;
+    background-color: #047e7a;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     font-family: system-ui;
-    color: black;
+    color: white;
     margin-left: 9px;
     margin-right: 9px;
 }
@@ -1324,16 +1263,10 @@ div.crm_calendar {
     -webkit-box-shadow: 0px 8px 20px rgb(160 209 213);
     box-shadow: 0px 8px 20px rgb(160 209 213);
     border: 1px solid rgb(133 192 200);
-    max-width: none;
+    max-width: 480px;
 }
 
 @media screen and (max-width: 767px) {
-    .modal-dialog.popup-register {
-        padding-top: 15px !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-        padding-bottom: 15px !important;
-    }
         .crm_data_props, .my_crm_dates{
                 width: 100% !important;
                 margin-left: 0 !important;
@@ -1386,7 +1319,9 @@ div.crm_calendar {
 
 
 .hzm_body.no_spaces {
-    background-image: none !important;
+    background-image: url(../../crm/pic/home_banner_002.jpg) !important;
+    background-size: 100% 110% !important;
+    background-color: transparent !important;
     background-position: left top !important;
 }
 
@@ -1406,13 +1341,13 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
 
 .hzm_small_calendar > label {
     display: inline;
-    background-color: transparent;
-    color: #0c6b63;
-    border: none;
+    background-color: #e6ffc1a8;
+    color: #289d0c;
+    border: 1px solid #289d0c;
     font-weight: normal !important;
     line-height: 20px;
     min-height: 20px;
-    padding: 2px 0px;
+    padding: 2px 10px;
     font-size: 14px;
     margin-right: 10px;
     white-space: nowrap;
@@ -1436,11 +1371,6 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
     background-color: #ffffff00 !important;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #26b8ac;
-    border-color: #26b8ac !important;
-}
 
 input.btnbtsp.btn-primary.btnregister {
     width: 80%;
@@ -1464,7 +1394,6 @@ input.btnbtsp.btn-primary.btncheck {
     padding: 0px;
     font-weight: normal;
     background-color: #57b0ed;
-    border: 1px solid white !important;
 }
 
 
@@ -1625,10 +1554,9 @@ span.hzm_time {
     width: 20%;
     max-width: 70px;
     text-align: center;
-    background-color: transparent;
-    border: none;
+    background-color: #e0fbba85;
+    border: 1px solid #3ecd3e;
 }
-
 
 span.hzm_time.hzm_small_time {
     font-weight: normal;
@@ -1657,7 +1585,7 @@ span.hzm_time.hzm_small_time {
 }
 
 .row.s-crm.even.crm_data.crm_response {
-    background-color: #e1fbfb9e;
+    background-color: #FCFFE9;
 }
 
 .row.odd.crm_data.crm_response.type1 {
@@ -1818,21 +1746,17 @@ table.dataTable thead th.stats_orgunit_id, td.stats_orgunit_id {
 
 
 
-a.btnbtsp.btn_link {
-    color: white;
-    font-size: 80%;
-    padding: 8px 0px;
+a.btnbtsp.btn_link{
+    color: #ffffff;
+    font-size: 100%;
+    padding: 15px 25px;
     border: none;
     border-radius: 0;
-    background-color: #2168ffe8 !important;
-    width: 40%;
-    margin-left: 0;
-    margin-right: 0;
-    text-align: center;
+    background-color: #4d30f9 !important;
 }
 
 a.btnbtsp.btn_link:hover {
-    background-color: #10324aa3 !important;
+    background-color: #2a12b6 !important;
     color: white;
     font-weight: normal;
 }
@@ -2015,7 +1939,7 @@ input.respbtn {
 
 .cms_bg {
     width: 100%;
-    /* background-color: #84dfde4d; */
+    /* background-color: #84dfde4d;*/
     min-height: 850px;
     float: right;
     padding-bottom: 40px;
@@ -2443,6 +2367,12 @@ div#div_data_request_code {
 
 
 @media screen and (max-width: 1100px) {
+    .home_banner.login_banner{
+        background-image: url(../pic/home_banner_003.jpg) !important;
+        background-size: 200% !important;
+        min-height: 380px !important;
+    }
+
     .modal-dialog.popup-login {
         width: 94% !important;
         margin-right: 3% !important;
@@ -2452,8 +2382,7 @@ div#div_data_request_code {
 
 @media screen and (max-width: 730px) {
     .home_banner.login_banner{
-        background-image: none !important;
-        background-color: #def4ff !important;
+        background-image: url(../pic/home_banner_003.jpg) !important;
         background-size: 300% !important;
         min-height: 380px !important;
     }
@@ -2473,7 +2402,11 @@ div#div_data_request_code {
 
 @media screen and (max-width: 510px)
 {
-    
+    .home_banner.login_banner {
+        background-image: url(../pic/home_banner_003.jpg) !important;
+        background-size: 400% !important;
+        min-height: 380px !important;
+    }
 
     .modal_login.modal-content{
         width: 98% !important;
@@ -2490,7 +2423,11 @@ div#div_data_request_code {
 
 @media screen and (max-width: 460px)
 {
-    
+    .home_banner.login_banner {
+        background-image: url(../pic/home_banner_003.jpg) !important;
+        background-size: 500% !important;
+        min-height: 380px !important;
+    }
 
     .modal_login.modal-content{
         width: 98% !important;
@@ -2505,13 +2442,21 @@ div#div_data_request_code {
     }
 }
 
+@media screen and (max-width: 410px)
+{
+    .home_banner.login_banner {
+        background-image: url(../pic/home_banner_003.jpg) !important;
+        background-size: 600% !important;
+        min-height: 340px !important;
+    }
+}
 
 .modal-content.content-annonce {
     margin-top: 20px;
     border: none !important;
     border: 1px solid #85c0c8 !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
+    -webkit-box-shadow: 0px 8px 20px rgb(155 219 225) !important;
+    box-shadow: 0px 8px 20px #4696cacf !important;
     background-color: #d2ecfdcf;
     padding: 15px;
     font-size: 18px;
@@ -3000,13 +2945,14 @@ a.crm.thin-btn {
 
 .hzm_data_prop.request_text {
     overflow: hidden;
-    background-color: transparent;
+    background-color: #83e2e21f;
     padding: 12px;
     font-size: 14px;
     width: 100%;
     min-height: 100px;
-    border: none;
+    border: 1px solid #1e90903d;
 }
+
 
 div.qfilter>h2 {
     font-size: 130%;
@@ -3112,8 +3058,8 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li.navbar-header>a {
     border: 3px solid #308cb5 !important;
     border-radius: 6px;
     outline: 0;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
 }
 
 label.light_label {
@@ -3121,7 +3067,7 @@ label.light_label {
     margin-bottom: 10px;
     font-size: 20px;
     text-align: center;
-    color: #001423;
+    color: #0a3f55;
 }
 
 #formlogin1>.form-group>input.form-control, 
@@ -3130,15 +3076,14 @@ label.light_label {
     border: none;
     border-bottom: 1px solid #45a7d7;
     font-size: 32px !important;
-    color: #0e8b81 !important;
+    color: #145ea1;
 }
 
 
 #formlogin1>.form-group>input.form-control::placeholder, 
 #formlogin0>.form-group>input.form-control::placeholder {
-    font-size: 18px !important;
-    padding-top: 8px;
-    color: #3e688d;
+    font-size: 20px !important;
+    color: #4396e1;
 }
 
 
@@ -3150,13 +3095,13 @@ label.light_label {
 }
 
 .modal-footer {
-    padding: 20px 0px;
-    border-top: 2px solid #2168ffe8 !important;
+    padding: 28px;
+    border-top: 3px solid #4d30f9 !important;
     /* padding-top: 5px; */
-    background-color: transparent !important;
-    margin-top: 0px;
-    max-width: none;
+    background-color: #70d1ff87 !important;
+    margin-top: 25px;
 }
+
 
 ul.hzm_front_menu_bar>li {
     border: 1px #518ea8 solid;
@@ -3174,11 +3119,12 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav>li>a {
     color: #005e84;
 }
 
+h1 {
+    color: #035c83;
+}
+
 .modal-body>h1 {
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
-    color: #022a3c;
 }
 
 .container {
@@ -3505,7 +3451,7 @@ div#div_data_tip_of_day {
     padding-right: 90px !important;
     border-right: none !important;
     padding-left: 80px !important;
-    background-color: #aee4fd87 !important;
+    background-color: #70d1ff87 !important;
 }
 
 #signin {
@@ -3845,27 +3791,21 @@ a.stats-cell {
 }
 
 input#customer_verify_code {
-    background-color: transparent;
+    background-color: #6cbafb78;
     font-size: 54px !important;
     font-family: DIGI;
     color: #0c5893;
     padding: 7px !important;
     height: 50px !important;
-    text-align: left;
+    text-align: center;
     border: none !important;
 }
 
 .otp-digits-input {
-    background-color:transparent !important;
+    background-color: #9ad2fc !important;
     padding: 9px !important;
-    width: 176px;
-    margin-left: calc(50% - 78px);
-    margin-right: calc(50% - 78px);
-    background-image: url(../../lib/images/otpbg-3.png);
-    background-position-y: bottom;
-    background-position-x: 13px;
-    background-repeat: no-repeat;
-    background-size: 66% 90%;
+    width: 50%;
+    margin: auto;
 }
 
 .form-control.form-ckbox.confidential {

@@ -6,6 +6,7 @@
  */
 
       $company = AfwSession::currentCompany();
+      $survey_rand_num = rand(1,4);
 ?>
 <div class="survey-header">
       <div class="survey logo_company">
@@ -15,7 +16,7 @@
             <img src="../client-<?php echo $company ?>/pic/title-company-<?php echo $company ?>.png" alt="" style="margin-top: 0px;width: 206px !important;height: 43px;border-radius: 0;margin-right: auto;margin-left: auto;"> 
       </div>
 </div>
-<div class="survey_bg survey">
+<div class="survey_bg survey survey<?php echo $survey_rand_num ?>">
 <div class="content_form_bg survey">
         <div class="content_big_title survey">استبانة تحسين جودة خدمة العملاء</div>
 

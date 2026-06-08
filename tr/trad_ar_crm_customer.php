@@ -2,6 +2,8 @@
 	$trad["crm_customer"]["crmcustomer.single"] = "عميل";
 	$trad["crm_customer"]["crmcustomer.new"] = "جديد(ة)";
 	$trad["crm_customer"]["crm_customer"] = "العملاء";
+
+	$trad["crm_customer"]["new_customers_title"] = "العملاء الجدد";
 	$trad["crm_customer"]["mobile"] = "الجوال";
 	$trad["crm_customer"]["email"] = "البريد الالكتروني";
 	$trad["crm_customer"]["idn_type_id"] = "نوع الهوية";
