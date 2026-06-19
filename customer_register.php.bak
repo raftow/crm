@@ -203,8 +203,6 @@ else
        $customer_mobile = AfwStringHelper::hardSecureCleanString(trim($_GET["mb"]),true);
        $customer_email = AfwStringHelper::hardSecureCleanString(trim($_GET["em"]),true);
        $customer_idn = AfwStringHelper::hardSecureCleanString(trim($_GET["id"]),true);
-
-       // die("customer_idn=$customer_idn em=$customer_email mb=$customer_mobile");
 }
 
 if(!$customer_type_id) $customer_type_id = 1;
