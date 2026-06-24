@@ -3,35 +3,35 @@ class CrmCrmCustomerAfwStructure
 {
 	public static function initInstance(&$obj)
 	{
-			if ($obj instanceof CrmCustomer) {
-					$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-					
-					$arrDisp = [];
-					$arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar", "mobile", "idn"];
-					$arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en", "mobile", "idn"];
+		if ($obj instanceof CrmCustomer) {
+			$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
 
-					$obj->DISPLAY_FIELD_BY_LANG = $arrDisp;
-					$obj->DISPLAY_SEPARATOR = " ";
-					$obj->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn");
-					$obj->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
-					
-					$obj->FORMULA_DISPLAY_FIELD  = "concat(IF(ISNULL(first_name_ar), '', first_name_ar) , ' ' , IF(ISNULL(father_name_ar), '', father_name_ar) , ' ' , IF(ISNULL(last_name_ar), '', last_name_ar), ' ' , IF(ISNULL(mobile), '', mobile), ' ' , IF(ISNULL(idn), '', idn))";
+			$arrDisp = [];
+			$arrDisp["ar"] = ["first_name_ar", "father_name_ar", "last_name_ar", "mobile", "idn"];
+			$arrDisp["en"] = ["first_name_en", "father_name_en", "last_name_en", "mobile", "idn"];
 
-					$obj->UNIQUE_KEY = array('mobile', 'email', 'idn_type_id', 'idn');
-					$obj->migrationExport = true;
-					$obj->editByStep = true;
-					$obj->editNbSteps = 4;
-					$obj->showQeditErrors = true;
-					$obj->showRetrieveErrors = true;
-					$obj->STATS_DEFAULT_CODE = "gs001";
+			$obj->DISPLAY_FIELD_BY_LANG = $arrDisp;
+			$obj->DISPLAY_SEPARATOR = " ";
+			$obj->AUTOCOMPLETE_FIELD = array("mobile", "email", "idn");
+			$obj->ORDER_BY_FIELDS = "mobile, email, idn_type_id, idn";
 
-					
-					
-					// $obj->after_save_edit = array("class"=>'aconditionOriginType',"attribute"=>'ccccc', "currmod"=>'xxxx',"currstep"=>1);
-			} else {
-				// CrmCustomerArTranslator::initData();
-				// CrmCustomerEnTranslator::initData();
-			}
+			$obj->FORMULA_DISPLAY_FIELD  = "concat(IF(ISNULL(first_name_ar), '', first_name_ar) , ' ' , IF(ISNULL(father_name_ar), '', father_name_ar) , ' ' , IF(ISNULL(last_name_ar), '', last_name_ar), ' ' , IF(ISNULL(mobile), '', mobile), ' ' , IF(ISNULL(idn), '', idn))";
+
+			$obj->UNIQUE_KEY = array('mobile', 'email', 'idn_type_id', 'idn');
+			$obj->migrationExport = true;
+			$obj->editByStep = true;
+			$obj->editNbSteps = 4;
+			$obj->showQeditErrors = true;
+			$obj->showRetrieveErrors = true;
+			$obj->STATS_DEFAULT_CODE = "gs001";
+
+
+
+			// $obj->after_save_edit = array("class"=>'aconditionOriginType',"attribute"=>'ccccc', "currmod"=>'xxxx',"currstep"=>1);
+		} else {
+			// CrmCustomerArTranslator::initData();
+			// CrmCustomerEnTranslator::initData();
+		}
 	}
 
 	public static $DB_STRUCTURE = array(
@@ -380,7 +380,7 @@ class CrmCrmCustomerAfwStructure
 			'CSS' => 'width_pct_25',
 		),
 
-		
+
 
 		'ref_num' => array(
 			'STEP' => 2,
@@ -403,7 +403,7 @@ class CrmCrmCustomerAfwStructure
 			'EDIT-UGROUPS' => '',
 			'CSS' => 'width_pct_25',
 		),
-		
+
 		'org_name' => array(
 			'STEP' => 2,
 			'SEARCH' => true,
@@ -620,7 +620,7 @@ class CrmCrmCustomerAfwStructure
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-			'READONLY' => true,
+
 		),
 
 		'last_login_date' => array(
@@ -744,23 +744,23 @@ class CrmCrmCustomerAfwStructure
 		),
 
 		'oinfo_html' => array(
-					'STEP' => 4,
-					'SHOW' => true,
-					'NEVER-TOKEN' => true,
-					'READONLY' => true,
-					'EDIT' => true,
-					'NO-LABEL' => true,
-					'SIZE' => 'AREA',
-					'ROWS' => 16,
-					'UTF8' => true,
-					'TYPE' => 'TEXT',
-					'FORMAT' => 'HTML',
-					'CATEGORY' => 'FORMULA',
-					'DISPLAY' => true,
-					'DISPLAY-UGROUPS' => '',
-					'EDIT-UGROUPS' => '',
-					'ERROR-CHECK' => true,
-				),
+			'STEP' => 4,
+			'SHOW' => true,
+			'NEVER-TOKEN' => true,
+			'READONLY' => true,
+			'EDIT' => true,
+			'NO-LABEL' => true,
+			'SIZE' => 'AREA',
+			'ROWS' => 16,
+			'UTF8' => true,
+			'TYPE' => 'TEXT',
+			'FORMAT' => 'HTML',
+			'CATEGORY' => 'FORMULA',
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
 
 
 		'this_month' => array(
@@ -809,9 +809,9 @@ class CrmCrmCustomerAfwStructure
 		),
 
 
-		
 
-		
+
+
 
 		'created_by'         => array(
 			'STEP' => 99,
