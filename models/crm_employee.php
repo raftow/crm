@@ -59,6 +59,8 @@ class CrmEmployee extends CrmObject
         public function select_visibilite_horizontale($dropdown = false)
         {
                 $objme = AfwSession::getUserConnected();
+                $iam_general_supervisor = 0;
+                $iam_supervisor = 0;
 
                 if ($objme and $objme->isSuperAdmin()) {
                         // no VH for system admin
@@ -836,13 +838,14 @@ class CrmEmployee extends CrmObject
         public function getMyPerf($lang = "ar") {
 
                 $obj = new Request();
-                $date_start_perf = $obj->calcDate_start_perf();
+                // $date_start_perf = $obj->calcDate_start_perf();
+                // 
                 $me_id = $this->getVal("employee_id");
                 $me_org_id = $this->getVal("orgunit_id");
 
 
-                $obj->where("active = 'Y' and request_date >= '$date_start_perf'");
-                $obj->where("(employee_id = $me_id and orgunit_id = $me_org_id)");
+                // $obj->where("request_date >= '$date_start_perf'");
+                $obj->where("active = 'Y' and (employee_id = $me_id and orgunit_id = $me_org_id)");
                 $reqList = $obj->loadMany();
                 $rowPerf = [];
                 $count_request = 0;

@@ -1917,9 +1917,6 @@ class Request extends CrmObject
         $warnings = "";
         $infos = "";
         $technicals = "";
-        /**
-         * @var Employee $objEmployee
-         */
         $objEmployee = null;
         $objOrgunit = null;
         $resoObj = null;
@@ -2757,6 +2754,22 @@ class Request extends CrmObject
                 'CONFIRMATION_QUESTION' => array('ar' => $methodConfirmationQuestion, 'en' => $methodConfirmationQuestionEn),
             );
 
+            if ($objme->isSuperAdmin()) {
+                /*
+                $color = "red";
+                $title_ar = "التحديث من منصة تواصل معنا القديمة";
+                $pbms["xcc13B"] = array(
+                    "METHOD" => "updateFromNartaqi",
+                    "COLOR" => $color,
+                    "LABEL_AR" => $title_ar,
+                    "PUBLIC" => true,
+                    "BF-ID" => "",
+                    "HZM-SIZE" => 12,
+                );*/
+
+
+                
+                
 
                 if ((!$this->id) or ($this->isClosed())) {
                     $color = "red";
@@ -2800,7 +2813,7 @@ class Request extends CrmObject
                     );
                 }
             }
-        
+        }
 
         // $color = "green";
         // $title_ar = "xxxxxxxxxxxxxxxxxxxx"; 
