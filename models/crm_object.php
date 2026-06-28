@@ -41,7 +41,7 @@ class CrmObject extends AfwMomkenObject
                 $employee_id = $auser->getEmployeeId();
                 if (!$employee_id) return 0;
 
-                return CrmEmployee::isAdmin($employee_id);
+                return CrmEmployee::isAdmin($employee_id) ? 1 : 0;
         }
 
         public static function userIsGeneralSupervisor($auser = null)
@@ -52,14 +52,14 @@ class CrmObject extends AfwMomkenObject
                 $employee_id = $auser->getEmployeeId();
                 if (!$employee_id) return 0;
 
-                return CrmEmployee::isGeneralAdmin($employee_id);
+                return CrmEmployee::isGeneralAdmin($employee_id) ? 1 : 0;
         }
 
         public static function userIsSuperAdmin($auser = null)
         {
                 if (!$auser) $auser = AfwSession::getUserConnected();
                 if (!$auser) return false;
-                return $auser->isSuperAdmin();
+                return $auser->isSuperAdmin() ? 1 : 0;
         }
 
 

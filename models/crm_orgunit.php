@@ -229,7 +229,8 @@ class CrmOrgunit extends CrmObject{
                                 $methodName = "resetSupervisorAssignement";
                                 $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
-                                "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("currentRequests"),
+                                "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 
+                                'STEP'=>$this->stepOfAttribute("allEmployeeList"),
                                 
                                 /* CONFIRMATION_NEEDED=>true,
                                 'CONFIRMATION_WARNING' =>array('ar' => "xxxxxx", 
@@ -246,8 +247,8 @@ class CrmOrgunit extends CrmObject{
                                 $methodName = "supervisorAssignement";
                                 $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                 "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
-                                "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("currentRequests"),
-                                
+                                "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 
+                                'STEP'=>$this->stepOfAttribute("allEmployeeList"),
                                 /* CONFIRMATION_NEEDED=>true,
                                 'CONFIRMATION_WARNING' =>array('ar' => "xxxxxx", 
                                                                 'en' => "@todo"),
@@ -257,7 +258,7 @@ class CrmOrgunit extends CrmObject{
                                 */
                                 );
 
-
+                                // 
                                 
                         }
 
@@ -289,12 +290,12 @@ class CrmOrgunit extends CrmObject{
 
         public function resetSupervisorAssignement($lang="ar")
         {
-                Request::resetAssignSupervisors($lang="ar");
+                return Request::resetAssignSupervisors($lang="ar");
         }
 
         public function supervisorAssignement($lang="ar")
         {
-                Request::silentAssignSupervisorForNonAssigned($lang="ar");
+                return Request::silentAssignSupervisorForNonAssigned($lang="ar");
         }
 
         public function resetRequestAssignement($lang="ar")

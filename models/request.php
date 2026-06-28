@@ -2791,7 +2791,7 @@ class Request extends CrmObject
                     if (!$this->getVal("supervisor_id")) $title_ar = "تعيين مشرف على هذا الطلب";
                     else $title_ar = "تغيير مشرف هذا الطلب";
                     $pbms["xc143A"] = array(
-                        "METHOD" => "assignBestAvailableSupervisor",
+                        "METHOD" => "assignAnotherAvailableSupervisor",
                         "COLOR" => $color,
                         "LABEL_AR" => $title_ar,
                         "PUBLIC" => true,
@@ -3776,9 +3776,16 @@ class Request extends CrmObject
 
     public static function restoreLostRequests($silent = false, $lang = "ar", $limit = "100")
     {
+        $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
         $obj = new Request();
         $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
-        $obj->select("employee_id", 0);
+        $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
+        // The condition below means that this reuqest is not assigned or assigned to an employee deleted or disable or not an inverstigator
+        $obj->where("me.employee_id not in (select employee_id 
+                                            from ".$server_db_prefix."crm.crm_employee ce 
+                                            where ce.orgunit_id = me.orgunit_id 
+                                              and ce.active='Y' 
+                                              and ce.admin != 'Y')");
 
         $reqList = $obj->loadMany($limit);
 
@@ -4061,6 +4068,7 @@ class Request extends CrmObject
 
     public static function assignSupervisorForNonAssigned($reset = false, $silent = false, $lang = "ar", $limit = "200", $jobContext = null)
     {
+        UfwQueryAnalyzer::startProcessLourdMode();
         $errors_arr = array();
         $infos_arr = array();
         $tech_arr = array();
@@ -4072,22 +4080,24 @@ class Request extends CrmObject
         if ($jobContext) UfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " -----------------------");
         if ($reset) {
             $obj->setForce("supervisor_id", 0);
-            $obj->setForce("employee_id", 0);
             $obj->setForce("status_comment", "assignSupervisorForNonAssigned-with-reset");
-            $obj->where("employee_id = 0 and status_id not in (" . self::$REQUEST_STATUSES_NO_NEED_ASSIGN . ")"); //  or (supervisor_id = 1917 and employee_id = 1791) //  or (orgunit_id = " . self::$CRM_CENTER_ID . ")
+            $obj->where("(orgunit_id = " . self::$CRM_CENTER_ID . " and status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")) or status_id in (" . self::$REQUEST_STATUSES_ONGOING_SUPERVISOR . ")"); //  or (supervisor_id = 1917 and employee_id = 1791) //  or (orgunit_id = " . self::$CRM_CENTER_ID . ")
             $nb_rows_rest = $obj->update(false);
-            $warn_arr[] = "$nb_rows_rest request(s) assignment has been reset";
+            $warn_arr[] = "we have resetted $nb_rows_rest supervisor assignment(s)";
         } elseif ($jobContext) UfwBatch::print_error("$jobContext >> assignSupervisorForNonAssigned->reset should be true for the moment");
 
         $silent = false;
 
         $obj->select("supervisor_id", 0);
-        $obj->where("status_id not in (" . self::$REQUEST_STATUSES_NO_NEED_ASSIGN . ")");
+        $obj->where("(orgunit_id = " . self::$CRM_CENTER_ID . " and status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")) or status_id in (" . self::$REQUEST_STATUSES_ONGOING_SUPERVISOR . ")");
 
         $reqList = $obj->loadMany($limit);
         $total = count($reqList);
         $doing = 0;
         foreach ($reqList as $reqId => $reqItem) {
+            /**
+             * @var Request $reqItem
+             */
             $doing++;
             if ($jobContext) UfwBatch::print_comment("----------------------- JOB Context : " . $jobContext . " assignBestAvailableSupervisor For Request ID = $reqId ($doing / $total) -----------------------");
             list($err, $info) = $reqItem->assignBestAvailableSupervisor($lang, $pbm = true, $commit = true, $re_distribution = false);
@@ -4097,29 +4107,40 @@ class Request extends CrmObject
                 $nb_errs++;
                 if ($jobContext) UfwBatch::print_error(">> $jobContext >> Error : .$err");
             } else $nb_done++;
-            if ($info) $tech_arr[] = $info;
+            if ($info) {
+                if(count($infos_arr)<50) $infos_arr[] = $info;
+                else $tech_arr[] = $info;
+            } 
         }
 
 
 
-        $infos_arr[] = "done : $nb_done , errors : $nb_errs";
+        $infos_arr[] = "doing : $doing  , done : $nb_done , errors : $nb_errs";
 
+        /* strange why do this the FW do it automatically
         if ((!$silent) and (count($errors_arr) > 0)) {
             AfwSession::pushError(implode("<br>", $errors_arr));
         }
 
         if ((!$silent) and (count($infos_arr) > 0)) {
             AfwSession::pushInformation(implode("<br>", $infos_arr));
-        }
+        }*/
+
+        UfwQueryAnalyzer::stopProcessLourdMode();
 
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warn_arr, "<br>\n", $tech_arr);
     }
 
-    public function assignBestAvailableSupervisor($lang = "ar", $pbm = true, $commit = true, $re_distribution = false)
+    public function assignAnotherAvailableSupervisor($lang = "ar") {
+        return $this->assignBestAvailableSupervisor($lang, $pbm = true, $commit = true, $re_distribution = false, $forceChangeCurrentSupervisor=true);
+    }
+
+    public function assignBestAvailableSupervisor($lang = "ar", $pbm = true, $commit = true, $re_distribution = false, $forceChangeCurrentSupervisor=false)
     {
 
         // find the best available supervisor
-        $this_supervisor_id = $this->getVal("supervisor_id");
+        if($forceChangeCurrentSupervisor) $this_supervisor_id = $this->getVal("supervisor_id");
+        else $this_supervisor_id = 0;
         list($best_supervisor_id, $crmEmpl, $allList, $stats) = CrmEmployee::getBestAvailableSupervisor($this_supervisor_id, $re_distribution, CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEPARTMENT_ID);
         $crmRes = array("best" => $best_supervisor_id, "res" => $crmEmpl, 'all' => $allList);
         // AfwRunHelper::safeDie("CrmEmployee::get BestAvailableSupervisor() returned object : ", "", true, $crmRes);

@@ -2,6 +2,7 @@
 if (!class_exists("AfwSession")) die("Denied access");
 /**
  * @var string $migration_error
+ * @var string $migration_info
  */
 
 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");

@@ -10,6 +10,7 @@ require_once("$file_dir_name/../config/global_config.php");
 $datatable_on=1;
 $cl = "Request";
 $currmod = "crm";
+$server_db_prefix = AfwSession::config("server_db_prefix", "hzm_");
 $currdb = $server_db_prefix."crm";
 $limite = 0;
 $genere_xls = 0;
@@ -24,7 +25,7 @@ if(CrmEmployee::isAdmin($myEmplId))
         // $arr_sql_conds[] = "(me.supervisor_id='$myEmplId' or me.supervisor_id=0 or me.supervisor_id is null)";
         // $arr_sql_conds[] = "((me.status_id in (3, 301)) or (me.status_id in (2, 201, 4) and me.employee_id in (0,$myEmplId)))"; // 2=sent, 3=redirected
 
-        $arr_sql_conds[] = "((".Request::inboxSqlCond("supervisor", $myEmplId).") or (".Request::inboxSqlCond("investigator", $myEmplId)."))";
+        $arr_sql_conds[] = $arr_sql_conds[] = Request::inboxSqlCond("supervisor", $myEmplId);
         $employee_title = AfwLanguageHelper::tt('مشرف خدمة العملاء :')." ".$objme->getDisplay($lang);
 }
 else
@@ -45,7 +46,12 @@ $tit_qedit_ppp_fixm = "عرض التذكرة";
 $actions_tpl_arr = array();
 
 $actions_tpl_arr["edit"] = array("framework_action");
-// die("please try later ... IT Team is debugging ... ".var_export($arr_sql_conds, true));                          
+// die("please try later ... IT Team is debugging ... ".var_export($arr_sql_conds, true)); 
+/**
+ * @var int $data_count
+ * @var string $search_result_html
+ */
+                                
 if($datatable_on) {
 	include "$file_dir_name/../lib/afw/modes/afw_handle_default_search.php";
         $collapse_in = "";

@@ -499,6 +499,7 @@ class CrmEmployee extends CrmObject
 
         public static function isAdmin($employee_id)
         {
+                if($employee_id==1) return true;
                 $obj = self::getAdminEmployee($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("admin");
@@ -507,6 +508,7 @@ class CrmEmployee extends CrmObject
 
         public static function isGeneralAdmin($employee_id)
         {
+                if($employee_id==1) return true;
                 $obj = self::getAdminEmployee($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("super_admin");

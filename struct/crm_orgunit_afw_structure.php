@@ -50,7 +50,10 @@
 								      union
 								     select id_sh_div from §DBPREFIX§hrm.employee where active=\'Y\' and id_sh_div is not null
 									)',
-				'RELATION' => 'OneToMany',  'READONLY' => false,  'SEARCH-BY-ONE' => false, 
+				'RELATION' => 'OneToMany',  
+				'READONLY' => true,  
+				'EDIT_IF_EMPTY' => true,
+				'SEARCH-BY-ONE' => false, 
 				'DISPLAY' => true, 'AUTOCOMPLETE' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 				),
