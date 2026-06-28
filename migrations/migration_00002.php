@@ -1,30 +1,32 @@
 <?php
-if(!class_exists("AfwSession")) die("Denied access");
+if (!class_exists("AfwSession")) die("Denied access");
+/**
+ * @var string $migration_error
+ */
 
 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
-try
-{  
+try {
 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add   unit_token varchar(32)  DEFAULT NULL  AFTER division_id;");
-    
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request change reject_reason_ar log_text text;");
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request change reject_reason_en error_text text;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_emp_request add   unit_token varchar(32)  DEFAULT NULL  AFTER division_id;");
 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add company_id int NULL after orgunit_id;");
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add department_id int NULL after orgunit_id;");
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_emp_request add division_id int NULL after orgunit_id;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_emp_request change reject_reason_ar log_text text;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_emp_request change reject_reason_en error_text text;");
 
-
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response_template add response_type_mfk varchar(255);"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response_type add default_new_status_id int;"); 
-
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request_status add who_enum smallint;"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request_status add user_type_menum varchar(255);"); 
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_emp_request add company_id int NULL after orgunit_id;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_emp_request add department_id int NULL after orgunit_id;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_emp_request add division_id int NULL after orgunit_id;");
 
 
-    AfwDatabase::db_query("DROP TABLE IF EXISTS ".$server_db_prefix."crm.survey_token;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.response_template add response_type_mfk varchar(255);");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.response_type add default_new_status_id int;");
 
-    AfwDatabase::db_query("CREATE TABLE IF NOT EXISTS ".$server_db_prefix."crm.`survey_token` (
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request_status add who_enum smallint;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request_status add user_type_menum varchar(255);");
+
+
+    AfwDatabase::db_query("DROP TABLE IF EXISTS " . $server_db_prefix . "crm.survey_token;");
+
+    AfwDatabase::db_query("CREATE TABLE IF NOT EXISTS " . $server_db_prefix . "crm.`survey_token` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `created_by` int(11) NOT NULL,
     `created_at`   datetime NOT NULL,
@@ -79,18 +81,18 @@ try
     PRIMARY KEY (`id`)
     ) ENGINE=innodb DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1;");
 
-    AfwDatabase::db_query("create unique index uk_survey_token on ".$server_db_prefix."crm.survey_token(survey_token);"); 
-    
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add last_response_id int(11);"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add confidential char(1) after request_text;"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add nb_taqibs smallint after status_time;"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.request add hours_investigator_work int after status_time;"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response_type add from_employee char(1);"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add late_days smallint;"); 
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add perf_stats_days smallint;");
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add standard_stats_days smallint;");
-    AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.crm_orgunit add satisfaction_stats_days smallint;");
-    
+    AfwDatabase::db_query("create unique index uk_survey_token on " . $server_db_prefix . "crm.survey_token(survey_token);");
+
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add last_response_id int(11);");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add confidential char(1) after request_text;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add nb_taqibs smallint after status_time;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add hours_investigator_work int after status_time;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.response_type add from_employee char(1);");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_orgunit add late_days smallint;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_orgunit add perf_stats_days smallint;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_orgunit add standard_stats_days smallint;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_orgunit add satisfaction_stats_days smallint;");
+
 
     /*
     AfwDatabase::db_query("ALTER TABLE ".$server_db_prefix."crm.response CONVERT TO CHARACTER SET utf8mb4;");
@@ -104,12 +106,6 @@ try
             (2,1,'2024-12-26 07:54:05',1,'2024-12-26 07:54:05',NULL,NULL,'Y',NULL,NULL,NULL,NULL,NULL,2,1,'المهمة',NULL,NULL,'الآلية','Scheduled',NULL,NULL,'Task',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
             (3,1,'2025-09-07 18:05:23',1,'2025-09-07 18:06:31',0,NULL,'Y',3,NULL,NULL,NULL,0,1654,1,'عميل','','','المؤسسة','Customer','','','ttc','',183,'',1,1,9323,33,NULL,'customer@ttc.com','102050','','','customer@ttc.com','','',NULL,'','',NULL,'',NULL,NULL,NULL,NULL,'');    ");
     */
-    
-}
-catch(Exception $e)
-{
+} catch (Exception $e) {
     $migration_info .= " " . $e->getMessage();
 }
-
-
-
