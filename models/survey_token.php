@@ -409,7 +409,10 @@ class SurveyToken extends CrmObject
         return parent::attributeIsApplicable($attribute);
     }
 
-    public function getAttributeLabel($attribute, $lang = 'ar', $short = false)
+    /**
+     * @param string $attribute
+     */
+    public function getAttributeLabel($attribute, $lang = 'ar', $short = false, $AIT = true)
     {
         $surveyId = $this->getVal("survey_id");
         if(!$surveyId) $surveyId = 1;
