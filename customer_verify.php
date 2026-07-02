@@ -35,7 +35,7 @@ ini_set('error_reporting', E_ERROR | E_PARSE | E_RECOVERABLE_ERROR | E_CORE_ERRO
 
  
 
-$logbl = substr(md5($_SERVER["HTTP_USER_AGENT"] . "-" . date("Y-m-d")),0,10);
+// $logbl = substr(md5($_SERVER["HTTP_USER_AGENT"] . "-" . date("Y-m-d")),0,10);
 
 if(!$lang) $lang = "ar";
 $module_dir_name = $file_dir_name;
