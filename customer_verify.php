@@ -278,7 +278,7 @@ if($sms_ok)
                                 
                                 <div class="form-group center-me">
                                         <?php
-                                        if($sms_mobile) $sms_mobile_3dig = "XXXXXXX".substr($sms_mobile,7,3);
+                                        if($sms_mobile) $sms_mobile_3dig = UfwSmsSender::partialShowMobile($sms_mobile);
                                         else $sms_mobile_3dig = "";
                                         ?>
                                         <label class='light_label'>أدخل الرمز المرسل على جوالك <?php echo $sms_mobile_3dig  .  " <!-- [sms_i:$sms_info_export , simulate_sms_to_mobile=$simulate_sms_to_mobile,cd=$cdifdev] -->"; ?>
