@@ -162,15 +162,16 @@ class CrmEmployee extends CrmObject
                 return implode(" - ", $data);
         }
 
-        
-        public function getShortDisplay($lang="ar")
+
+        public function getShortDisplay($lang = "ar")
         {
-               return $this->showAttribute("employee_id",null,true,$lang);
+                return $this->showAttribute("employee_id", null, true, $lang);
         }
 
 
 
-        public function pctWithoutTaqib() {
+        public function pctWithoutTaqib()
+        {
                 $employee_id = $this->getVal("employee_id");
                 return Request::pctClosedTicketsWithoutTaqib($employee_id);
         }
@@ -275,7 +276,7 @@ class CrmEmployee extends CrmObject
                         $empl = $this->het("employee_id");
                         if ($empl) {
                                 $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
-                                $empl->updateMyUserInformation();
+                                $empl->updateMyUserInformationAndRoles();
                         }
                 }
         }
@@ -293,25 +294,25 @@ class CrmEmployee extends CrmObject
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
-                                        $empl->updateMyUserInformation();
+                                        $empl->updateMyUserInformationAndRoles();
                                 } elseif ($this->sureIs("admin")) {
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
                                         $empl->removeMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
-                                        $empl->updateMyUserInformation();
+                                        $empl->updateMyUserInformationAndRoles();
                                 } else {
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
                                         $empl->removeMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                         $empl->removeMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
                                         $empl->removeMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
-                                        $empl->updateMyUserInformation();
+                                        $empl->updateMyUserInformationAndRoles();
                                 }
                         } else {
                                 $empl->removeMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                 $empl->removeMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
                                 $empl->removeMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
-                                $empl->updateMyUserInformation();
+                                $empl->updateMyUserInformationAndRoles();
                                 // has been disabled so remove all ongoing assigned tickets   
                                 $this->removeMeAllAssigned();
                         }
@@ -499,7 +500,7 @@ class CrmEmployee extends CrmObject
 
         public static function isAdmin($employee_id)
         {
-                if($employee_id==1) return true;
+                if ($employee_id == 1) return true;
                 $obj = self::getAdminEmployee($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("admin");
@@ -508,7 +509,7 @@ class CrmEmployee extends CrmObject
 
         public static function isGeneralAdmin($employee_id)
         {
-                if($employee_id==1) return true;
+                if ($employee_id == 1) return true;
                 $obj = self::getAdminEmployee($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("super_admin");
@@ -771,16 +772,14 @@ class CrmEmployee extends CrmObject
                         if ($inbox_row["orgunit_id"] and $inbox_row["employee_id"]) {
                                 // $token_arr["[waiting]"] = $inbox_row["waiting"];                                
                                 $crmEmployeeObj = CrmEmployee::loadByMainIndex($inbox_row["orgunit_id"], $inbox_row["employee_id"]);
-                                if($crmEmployeeObj and $crmEmployeeObj->sureIs("approved"))
-                                {
+                                if ($crmEmployeeObj and $crmEmployeeObj->sureIs("approved")) {
                                         $pctWithoutTaqib = $crmEmployeeObj->pctWithoutTaqib();
-                                        if(($pctWithoutTaqib!="N/A") and $pctWithoutTaqib<90) {
+                                        if (($pctWithoutTaqib != "N/A") and $pctWithoutTaqib < 90) {
                                                 $crmEmployeeObj->set("approved", "W");
-                                                $crmEmployeeObj->commit();                                
-                                                $nb_disapproved++;                                                
+                                                $crmEmployeeObj->commit();
+                                                $nb_disapproved++;
                                         }
                                 }
-                                
                         }
                 }
 
@@ -798,11 +797,11 @@ class CrmEmployee extends CrmObject
                 return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
 
-        public static function notifyCrmEmployees($silent = false, $lang = "ar", $simul=false)
+        public static function notifyCrmEmployees($silent = false, $lang = "ar", $simul = false)
         {
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
                 $sql_inbox = "select orgunit_id, employee_id, count(*) as waiting from $server_db_prefix" . "crm.request where status_id in (201,4) group by orgunit_id, employee_id order by count(*) desc";
-                if($simul) $sql_inbox .= " limit 30";
+                if ($simul) $sql_inbox .= " limit 30";
 
                 $inbox_data = AfwDatabase::db_recup_rows($sql_inbox);
 
@@ -837,7 +836,8 @@ class CrmEmployee extends CrmObject
                 return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
 
-        public function getMyPerf($lang = "ar") {
+        public function getMyPerf($lang = "ar")
+        {
 
                 $obj = new Request();
                 // $date_start_perf = $obj->calcDate_start_perf();
@@ -853,9 +853,9 @@ class CrmEmployee extends CrmObject
                 $count_request = 0;
                 $request_done = 0;
                 $request_late = 0;
-                foreach($reqList as $reqItem) {
+                foreach ($reqList as $reqItem) {
                         /** @var Request $reqItem */
-                        $count_request ++;
+                        $count_request++;
                         $request_done += $reqItem->calcRequest_done();
                         $request_late += $reqItem->calcRequest_late();
                 }
@@ -884,7 +884,7 @@ class CrmEmployee extends CrmObject
                         $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tv" . "tc.gov.sa");
                 }
 
-                list($token_arr["[nb_lates]"],$token_arr["[perf_status]"]) = $this->getMyPerf($lang);
+                list($token_arr["[nb_lates]"], $token_arr["[perf_status]"]) = $this->getMyPerf($lang);
 
                 $token_arr["[the_orgunit]"] = $this->showAttribute("orgunit_id", null, true, $lang);
 
@@ -898,20 +898,19 @@ class CrmEmployee extends CrmObject
 
                 $receiver["mobile"] = $employeeObj->getVal("mobile");
                 $receiver["email"] = $employeeObj->getVal("email");
-                if($simul) {
+                if ($simul) {
                         $receiver["mobile"] = "0598988330";
-                        $receiver["email"] = "rboubaker@tv"."tc.gov.sa";
+                        $receiver["email"] = "rboubaker@tv" . "tc.gov.sa";
                 }
 
-                
+
 
                 // $cc_to = "rboubaker@tv.tc.gov.sa";
-                if(!$simul and (date("w") == 3)) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
+                if (!$simul and (date("w") == 3)) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
                 {
                         $cc_to = $employeeObj->getManagerEmail();
-                }
-                else
-                $cc_to = null;
+                } else
+                        $cc_to = null;
 
                 $file_dir_name = dirname(__FILE__);
 
