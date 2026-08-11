@@ -303,7 +303,7 @@ class CrmEmpRequest extends CrmObject
                 $approved = $this->sureIs("approved");
                 $auto_approve = (($orgunit_id==$company_id) or ($orgunit_id==$department_id) or ($orgunit_id==$division_id));
                 
-                if ($fields_updated["email"] and $email and ($auto_approve or !$employee_id)) {
+                if (($fields_updated["email"] or !$employee_id) and $email and ($auto_approve or !$employee_id)) {
                         $this->approveAndUpdateDataAndRoles($lang, $pbm = true, $commit = false);
                         
                 }
