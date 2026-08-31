@@ -4567,7 +4567,7 @@ class Request extends CrmObject
         return $arr_list_of_status_action;
     }
 
-    public function getAttributeLabel($attribute, $lang = "ar", $short = false)
+    public function getAttributeLabel($attribute, $lang = 'ar', $short = false, $AIT = true)
     {
         if ($attribute == "ref_num") {
             // $customerTypeObj = $this->hetType();

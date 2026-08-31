@@ -563,7 +563,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 return CustomerType::loadById($this->getVal("customer_type_id"));
         }
 
-        public function getAttributeLabel($attribute, $lang = "ar", $short = false)
+        public function getAttributeLabel($attribute, $lang = 'ar', $short = false, $AIT = true)
         {
                 /*
                 if ($attribute == "customer_orgunit_id") {

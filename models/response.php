@@ -632,7 +632,7 @@ class Response extends CrmObject
         }
 
 
-        public function getAttributeLabel($attribute, $lang = "ar", $short = false)
+        public function getAttributeLabel($attribute, $lang = 'ar', $short = false, $AIT = true)
         {
                 if ($attribute == "response_text") {
                         $rtObj = $this->het("response_type_id");
