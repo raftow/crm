@@ -20,7 +20,7 @@ ALTER TABLE `crm_customer` CHANGE `ref_num` `ref_num` VARCHAR(32) CHARACTER SET 
 */
 
 
-
+include_once("$file_dir_name/../../lib/afw/interfaces/afw_front_end_user.php");
 class CrmCustomer extends CrmObject implements AfwFrontEndUser
 {
 
