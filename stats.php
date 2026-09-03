@@ -1,5 +1,5 @@
 <?php
-
+/* copy past from workbox to be reviewed
 $file_dir_name = dirname(__FILE__);
 
 require_once("$file_dir_name/../config/global_config.php");
@@ -30,10 +30,10 @@ else
 } 
 
                           
-/**
+///**
  * @var int $data_count
  * @var string $search_result_html
- */
+///
 
 // $my_class = new $cl();
 $result_page_title = "صندوق الوارد";
@@ -56,6 +56,6 @@ if($datatable_on)
         لا يوجد طلبات في صندوق الوارد
         </div>";
 }        
-
+*/
                              
 ?>

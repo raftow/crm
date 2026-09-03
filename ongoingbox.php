@@ -47,7 +47,7 @@ $actions_tpl_arr["view"] = true;
  * @var int $data_count
  * @var string $search_result_html
  */
-
+$criteria_is_static = true;
 if($datatable_on) {
 	include "$file_dir_name/../lib/afw/modes/afw_handle_default_search.php";
         $collapse_in = "";

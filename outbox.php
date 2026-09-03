@@ -18,6 +18,7 @@ $arr_sql_conds[] = "me.active='Y'";
 $objme = AfwSession::getUserConnected();
 $myEmplId = $objme->getEmployeeId();
 
+
 if(CrmEmployee::isAdmin($myEmplId)) 
 {
         $arr_sql_conds[] = "(me.supervisor_id='$myEmplId' or me.supervisor_id=0 or me.supervisor_id is null)";
@@ -48,7 +49,7 @@ $actions_tpl_arr["view"] = true;
  * @var int $data_count
  * @var string $search_result_html
  */
-
+$criteria_is_static = true;
 if($datatable_on) {
 	include "$file_dir_name/../lib/afw/modes/afw_handle_default_search.php";
         $collapse_in = "";
