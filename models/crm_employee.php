@@ -801,7 +801,7 @@ class CrmEmployee extends CrmObject
         {
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
                 $sql_inbox = "select orgunit_id, employee_id, count(*) as waiting from $server_db_prefix" . "crm.request where status_id in (201,4) group by orgunit_id, employee_id order by count(*) desc";
-                if ($simul) $sql_inbox .= " limit 30";
+                if ($simul) $sql_inbox .= " limit 5";
 
                 $inbox_data = AfwDatabase::db_recup_rows($sql_inbox);
 
