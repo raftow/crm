@@ -312,7 +312,7 @@ class Response extends CrmObject
                 $this->set("response_time", date("H:i:s"));
                 $reqObj = $this->hetRequest();
                 if ($reqObj) $this->set("orgunit_id", $reqObj->getVal("orgunit_id"));
-                if ($objme) {
+                if ($objme and (!$objme->isVirtual())) {
                         $empl_id = $objme->getEmployeeId();
                         $org_id = CrmEmployee::orgOfEmployee($empl_id);
                         if (!$this->getVal("orgunit_id")) {
