@@ -50,6 +50,7 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["step2"] = "الطلبات المسندة";
         $trad["crm_employee"]["step3"] = "وحدات المتابعة";
         $trad["crm_employee"]["step4"] = "الملاحظات";
+        $trad["crm_employee"]["step5"] = "الإشعارات";
     
         return $trad;
     }

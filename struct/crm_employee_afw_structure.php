@@ -24,7 +24,7 @@ class CrmCrmEmployeeAfwStructure
 
 			$obj->OwnedBy = array('module' => "crm", 'afw' => "CrmOrgunit");
 			$obj->editByStep = true;
-			$obj->editNbSteps = 4;
+			$obj->editNbSteps = 5;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 			$obj->general_check_errors = true;
@@ -474,6 +474,27 @@ class CrmCrmEmployeeAfwStructure
 			'CATEGORY' => 'ITEMS',
 			'ITEM' => '',
 			'WHERE' => "(orgunit_id = §orgunit_id§ and employee_id = §employee_id§) and noted='Y'",
+			'FORMAT' => 'retrieve',
+			'SHOW' => true,
+			'EDIT' => false,
+			'ICONS' => true,
+			'DELETE-ICON' => false,
+			'BUTTONS' => true,
+			'NO-LABEL' => false,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'notifications' => array(
+			'STEP' => 5,
+			'TYPE' => 'FK',
+			'ANSWER' => 'notification',
+			'ANSMODULE' => 'workflow',
+			'CATEGORY' => 'ITEMS',
+			'ITEM' => '',
+			'WHERE' => "destination_id = 'employee-§employee_id§'",
 			'FORMAT' => 'retrieve',
 			'SHOW' => true,
 			'EDIT' => false,

@@ -26,9 +26,11 @@ class CrmEmployeeEnTranslator{
 		$trad["crm_employee"]["finishedRequests"] = "finished Requests";
 		$trad["crm_employee"]["allOrgunitList"] = "allOrgunitList";
         // steps
-		$trad["crm_employee"]["step1"] = "البيانات العامة";
-		$trad["crm_employee"]["step2"] = "الطلبات المسندة";
-		$trad["crm_employee"]["step3"] = "وحدات المتابعة";
+		$trad["crm_employee"]["step1"] = "General data";
+		$trad["crm_employee"]["step2"] = "Assigned Requests";
+		$trad["crm_employee"]["step3"] = "Follow-up Units";
+		$trad["crm_employee"]["step4"] = "Notes";
+		$trad["crm_employee"]["step5"] = "Notifications";
         return $trad;
     }
 
