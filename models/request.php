@@ -3392,8 +3392,8 @@ class Request extends CrmObject
      */
     public function totalWorkPeriodInDays($round = true, $report=false)
     {        
-        $status_hdate = $this->getVal("assign_date");
-        $status_time = $this->getVal("assign_time");
+        $status_hdate =  AfwDateHelper::currentHijriDate();
+        $status_time = date("H:i:s");
         if (
             $this->getVal("orgunit_id")
             and $this->getVal("employee_id")
