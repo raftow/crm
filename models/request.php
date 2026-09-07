@@ -447,7 +447,10 @@ class Request extends CrmObject
             "FOOTER_SUM" => true,
             "GROUP_SEP" => ".",
             "GROUP_COLS" => array(
-                0 => array("COLUMN" => "orgunit_id", "DISPLAY-FORMAT" => "decode", "FOOTER_SUM_TITLE" => "الإجمــالـي"),
+                0 => array("COLUMN" => "orgunit_id", 
+                           "DISPLAY-FORMAT" => "decode", 
+                           "FOOTER_SUM_TITLE" => "الإجمــالـي",
+                           "URL" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"),
             ),
             "DISPLAY_COLS" => array(
                 1 => array("COLUMN" => "is_request", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_request", "FOOTER_SUM" => true),
@@ -456,7 +459,13 @@ class Request extends CrmObject
                 4 => array("COLUMN" => "is_suggestion", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_suggestion", "FOOTER_SUM" => true),
                 5 => array("COLUMN" => "is_support", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_support", "FOOTER_SUM" => true),
                 6 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_request", "FOOTER_SUM" => true),
-                7 => array("COLUMN" => "request_done", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "request_done", "FOOTER_SUM" => true),
+                7 => array(
+                    "COLUMN" => "request_done",
+                    "COLUMN_IS_FORMULA" => true,
+                    "GROUP-FUNCTION" => "sum",
+                    "SHOW-NAME" => "request_done",
+                    "FOOTER_SUM" => true
+                ),
                 8 => array(
                     "COLUMN" => "request_late",
                     "COLUMN_IS_FORMULA" => true,
@@ -645,7 +654,7 @@ class Request extends CrmObject
 
         ),
 
-        
+
         "os005" => array(
             "STATS_WHERE" => "active = 'Y' and status_id = 7 and request_date >= '14470101'", // 
             "DISABLE-VH" => true,
@@ -965,7 +974,7 @@ class Request extends CrmObject
         list($status_comment, $link[0]) = $this->displayAttribute("status_comment", false, $lang);
         list($data_status, $link[1]) = $this->displayAttribute("status_id", false, $lang);
         $status_date = $this->showAttribute("status_date");
-        if(!$status_date) $status_date = $this->showAttribute("request_date"); 
+        if (!$status_date) $status_date = $this->showAttribute("request_date");
         list($status_time, $link[3]) = $this->displayAttribute("status_time", false, $lang);
 
         return "<span class='crm_status_comment'>$status_comment</span> <span class='crm_status'>$data_status</span> <br><span class='status_date'>$status_date</span>&nbsp;&nbsp;<span class='status_time'>$status_time</span>";
@@ -1280,26 +1289,29 @@ class Request extends CrmObject
     }
 
 
-    public function surveyHasBeenSent() {
-        if($this->sureIs("survey_sent") or $this->sureIs("survey_opened")) return $this->loadMyToken();
+    public function surveyHasBeenSent()
+    {
+        if ($this->sureIs("survey_sent") or $this->sureIs("survey_opened")) return $this->loadMyToken();
         return false;
     }
 
-    public function customerHasSurveyed() {
+    public function customerHasSurveyed()
+    {
         /**
          * @var SurveyToken $surveySent
          */
         $surveySent = $this->surveyHasBeenSent();
-        if(!$surveySent) return false;
+        if (!$surveySent) return false;
         return $this->sureIs("survey_opened") and $surveySent->sureIs("attribute_yn_1");
     }
 
     public function customerCanSurvey()
     {
         $status_reel_id = self::statusFather(intval($this->getVal("status_id")));
-        if (($status_reel_id == self::$REQUEST_STATUS_CLOSED) and 
-            ($this->surveyHasBeenSent()) and 
-            (!$this->customerHasSurveyed())) return true;
+        if (($status_reel_id == self::$REQUEST_STATUS_CLOSED) and
+            ($this->surveyHasBeenSent()) and
+            (!$this->customerHasSurveyed())
+        ) return true;
 
         return false;
     }
@@ -1466,11 +1478,11 @@ class Request extends CrmObject
             return $this->estOpened();
         }
 
-        if (($attribute == "tokenList")) {            
+        if (($attribute == "tokenList")) {
             return ($this->customerHasSurveyed());    // count($this->get($attribute))>0
         }
 
-        
+
 
         return parent::attributeIsApplicable($attribute);
     }
@@ -1661,7 +1673,8 @@ class Request extends CrmObject
     }
 
 
-    private function retrieveLastResponse(){
+    private function retrieveLastResponse()
+    {
         $resp = new Response();
         $resp->select("request_id", $this->id);
         $resp->select("active", "Y");
@@ -1676,16 +1689,15 @@ class Request extends CrmObject
 
     public function getLastResponse()
     {
-        if(!$this->theLastResponse)
-        {
+        if (!$this->theLastResponse) {
             $this->theLastResponse = $this->retrieveLastResponse();
         }
-        
+
         return $this->theLastResponse;
     }
 
 
-    
+
 
     public function removeLastResponse($lang = "ar")
     {
@@ -1708,34 +1720,33 @@ class Request extends CrmObject
         }
     }
 
-    public function updateRequestAsPerLastResponse($lang = "ar", $commit=true) {
+    public function updateRequestAsPerLastResponse($lang = "ar", $commit = true)
+    {
         $respObj = $this->getLastResponse();
         $info = "لا يوجد تغييرات";
         $error = "";
         if ($respObj) {
             $status_id = $respObj->getVal("new_status_id");
             $status_comment = "-- FROM LASTRESPONSE --";
-             $info = "تم";
+            $info = "تم";
         } else {
             $status_id = 0;
             $status_comment = "-- NO-LAST-RESPONSE-SO-TAKE-DEFAULT --";
             $error = "لا يوجد ردود على هذا الطلب";
         }
 
-        if(!$status_id) {
+        if (!$status_id) {
             $status_id = self::$REQUEST_STATUS_SENT;
-            if($status_comment == "-- FROM LASTRESPONSE --") $status_comment = "-- NO-LAST-RESPONSE-NEW-STATUS-SO-TAKE-DEFAULT --";
+            if ($status_comment == "-- FROM LASTRESPONSE --") $status_comment = "-- NO-LAST-RESPONSE-NEW-STATUS-SO-TAKE-DEFAULT --";
         }
-        
-        if($this->getVal("status_id") != $status_id)
-        {
+
+        if ($this->getVal("status_id") != $status_id) {
             $this->set("status_id", $status_id);
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", $status_comment);
-            if($commit) $this->commit();
-        }    
-        else {
+            if ($commit) $this->commit();
+        } else {
             $info = "لا يوجد تغييرات";
             $error = "";
         }
@@ -1871,7 +1882,7 @@ class Request extends CrmObject
         );
 
 
-        
+
 
         AfwSession::pushSuccess($this->tm("Thanks, Your comment is saved.", $lang));
     }
@@ -1966,7 +1977,7 @@ class Request extends CrmObject
             } else {
                 $response_type = ResponseType::$RESPONSE_TYPE_STATUS_CHANGE;
             }
-            
+
             if ((!$silent) and (!$silent_force) and (!$fromCustomer)) {
                 // AfwSession::pushInformation("rafik-debugg : creating new response"); 
                 $resoObj = Response::createNewResponse(
@@ -1993,36 +2004,34 @@ class Request extends CrmObject
             }
             // AfwSession::pushInformation("rafik-debugg : updating status of request to $new_status_id"); 
 
-            if($resoObj) $this->theLastResponse = $resoObj;
+            if ($resoObj) $this->theLastResponse = $resoObj;
 
             $filesUploaded_action_enum = Request::status_action_by_code("filesUploaded");
             $dataCompleted_action_enum = Request::status_action_by_code("dataCompleted");
 
-            if(($status_action_enum==$filesUploaded_action_enum) or
-                ($status_action_enum==$dataCompleted_action_enum)
-            )
-            {
-                $this->set("request_priority", 2);    
+            if (($status_action_enum == $filesUploaded_action_enum) or
+                ($status_action_enum == $dataCompleted_action_enum)
+            ) {
+                $this->set("request_priority", 2);
             }
 
-            if($this->calcRequest_late())
-            {
-                $this->set("request_priority", 1);    
+            if ($this->calcRequest_late()) {
+                $this->set("request_priority", 1);
             }
 
-            if(($new_status_id==self::$REQUEST_STATUS_DONE) or
-            ($new_status_id==self::$REQUEST_STATUS_CANCELED) or
-            ($new_status_id==self::$REQUEST_STATUS_CLOSED) or
-            ($new_status_id==self::$REQUEST_STATUS_REJECTED) or
-            ($new_status_id==self::$REQUEST_STATUS_IGNORED))
-            {
+            if (($new_status_id == self::$REQUEST_STATUS_DONE) or
+                ($new_status_id == self::$REQUEST_STATUS_CANCELED) or
+                ($new_status_id == self::$REQUEST_STATUS_CLOSED) or
+                ($new_status_id == self::$REQUEST_STATUS_REJECTED) or
+                ($new_status_id == self::$REQUEST_STATUS_IGNORED)
+            ) {
                 $this->updateHoursInvestigatorWork('ar', false);
             }
-            
+
 
             $this->set("status_id", $new_status_id);
             $this->set("status_action_enum", $status_action_enum);
-            if($new_status_id==self::$REQUEST_STATUS_SENT) {
+            if ($new_status_id == self::$REQUEST_STATUS_SENT) {
                 $this->set("request_date", AfwDateHelper::currentHijriDate());
                 $this->set("request_time", date("H:i:s"));
             }
@@ -2099,10 +2108,11 @@ class Request extends CrmObject
         return "##";
     }
 
-    public function getPlateformEvalToken() {
+    public function getPlateformEvalToken()
+    {
         $mpid_value = 987 + $this->id;
-        $token = substr(md5("mp".$mpid_value."rd".$this->getVal("request_date")), 0, 11);
-        return "s2".$token."2s";
+        $token = substr(md5("mp" . $mpid_value . "rd" . $this->getVal("request_date")), 0, 11);
+        return "s2" . $token . "2s";
     }
 
     public function resetSurveyForMe($lang = "ar")
@@ -2117,7 +2127,7 @@ class Request extends CrmObject
         return ['', 'survey data has been reset : tkn = ' . $token];
     }
 
-    
+
 
     public function createTokenForMe($token, $forceUpdateData = false)
     {
@@ -2179,7 +2189,7 @@ class Request extends CrmObject
 
     public function mySurvey2Url()
     {
-        list($token2, ) = $this->createSurvey2TokenForMe();
+        list($token2,) = $this->createSurvey2TokenForMe();
         return SurveyToken::getTokenUrl($token2);
     }
 
@@ -2415,7 +2425,7 @@ class Request extends CrmObject
             else*/
         $status_comment = "يمكن للعميل اجراء التعديلات على طلبه الآن";
 
-        $this->changeStatus("resetRequestNew-by-customer", self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"), "N", false, 0, null, $employeeObj, ($employeeObj==null));
+        $this->changeStatus("resetRequestNew-by-customer", self::$REQUEST_STATUS_DRAFT, $status_comment, self::status_action_by_code("resetRequestNew"), "N", false, 0, null, $employeeObj, ($employeeObj == null));
         return array("", $status_comment);
     }
 
@@ -2443,12 +2453,12 @@ class Request extends CrmObject
         $this->set("assign_time", date("H:i:s"));
         $this->commit();
         if ($employeeId > 0) {
-            $status_comment = $this->tm("The request was assigned to the employee",$lang) . " : " . $this->showAttribute("employee_id",null,true,$lang);
+            $status_comment = $this->tm("The request was assigned to the employee", $lang) . " : " . $this->showAttribute("employee_id", null, true, $lang);
             // if($employeeId == 1790) AfwRunHelper::unSafeDie("case of employeeId = $employeeId");
             $this->changeStatus("assignRequest-" . $caller, self::$REQUEST_STATUS_ASSIGNED, $status_comment, self::status_action_by_code("assignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         } else {
             // should never happen as above we test  if (!$employeeId) return ....
-            $status_comment = $this->tm("The request is waiting assignment",$lang);
+            $status_comment = $this->tm("The request is waiting assignment", $lang);
             $this->changeStatus("un-assignRequest-" . $caller, self::$REQUEST_STATUS_SENT, $status_comment, self::status_action_by_code("unAssignRequest"), $internal, false, 0, $objOrgunit, $objEmployee);
         }
         // AfwRunHelper::safeDie($status_comment, "employee_id = ". $employeeId);
@@ -2623,9 +2633,9 @@ class Request extends CrmObject
         return false;
     }
 
-    public static function nbDaysReactionByTicketAverage($nbDaysWorkByTicketAverage=0)
+    public static function nbDaysReactionByTicketAverage($nbDaysWorkByTicketAverage = 0)
     {
-        if(!$nbDaysWorkByTicketAverage) $nbDaysWorkByTicketAverage = self::nbDaysWorkByTicketAverage();
+        if (!$nbDaysWorkByTicketAverage) $nbDaysWorkByTicketAverage = self::nbDaysWorkByTicketAverage();
         // average work of customer to complete ticket data
         $avg_customer_work = round((5 + sin(date("m"))) * 10) / 10;
         $return = $nbDaysWorkByTicketAverage - $avg_customer_work;
@@ -2634,7 +2644,7 @@ class Request extends CrmObject
         return $return;
     }
 
-    public static function nbClosedTickets($employee_id=0)
+    public static function nbClosedTickets($employee_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
@@ -2642,7 +2652,7 @@ class Request extends CrmObject
     }
 
 
-    public static function nbRespondedTicketsWithoutTaqib($employee_id=0)
+    public static function nbRespondedTicketsWithoutTaqib($employee_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
@@ -2650,7 +2660,7 @@ class Request extends CrmObject
         return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null)");
     }
 
-    public static function nbRespondedTicketsWithTaqib($employee_id=0)
+    public static function nbRespondedTicketsWithTaqib($employee_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
@@ -2658,22 +2668,21 @@ class Request extends CrmObject
         return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0)");
     }
 
-    public static function pctClosedTicketsWithoutTaqib($employee_id=0)
+    public static function pctClosedTicketsWithoutTaqib($employee_id = 0)
     {
         // $date_start_stats = self::calc_date_start_stats();
         $without = self::nbRespondedTicketsWithoutTaqib($employee_id);
         $with = self::nbRespondedTicketsWithTaqib($employee_id);
 
         return self::calcPctRespondedTicketsWithoutTaqib($without, $with);
-
     }
 
 
     public static function calcPctRespondedTicketsWithoutTaqib($without, $with)
-    {        
+    {
         $total = $without + $with;
 
-        if($total>0) return round($without * 100 / ($total));
+        if ($total > 0) return round($without * 100 / ($total));
         else return "N/A";
     }
 
@@ -2687,7 +2696,7 @@ class Request extends CrmObject
         $server_db_prefix = AfwSession::currentDBPrefix();
         $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg from $server_db_prefix" . "crm.request where status_id in (5,6,7,8,9) and request_date > '$date_start_stats'");
 
-        return round($return*10)/10;
+        return round($return * 10) / 10;
     }
     public static function satisfactionPct()
     {
@@ -2696,7 +2705,7 @@ class Request extends CrmObject
         $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N' and request_date >= '$date_start_stats'");
         // $neutral = Request::aggreg("count(*)", "service_satisfied = 'W' and request_date >= '$date_start_stats'");
         $total = $satisfied + $not_satisfied; //  + $neutral
-        if($total>0) $pct = round($satisfied * 100 / $total);
+        if ($total > 0) $pct = round($satisfied * 100 / $total);
         else $pct = 0;
 
         return $pct;
@@ -2721,15 +2730,16 @@ class Request extends CrmObject
     }
 
 
-    public static function getQsearchDefaultOptions() {
+    public static function getQsearchDefaultOptions()
+    {
         $options = [];
         $options["records-in-page"] = 500;
         $all = AfwLanguageHelper::translateKeyword("ALL");
-        $options["lengthMenu"] = '[[50, 100, 200, 300, 400, 500, -1], [50, 100, 200, 300, 400, 500, "'.$all.'"]]';
-    
+        $options["lengthMenu"] = '[[50, 100, 200, 300, 400, 500, -1], [50, 100, 200, 300, 400, 500, "' . $all . '"]]';
+
         return $options;
     }
-   
+
 
     protected function getPublicMethods()
     {
@@ -2760,49 +2770,49 @@ class Request extends CrmObject
             );
 
 
-                if ((!$this->id) or ($this->isClosed())) {
-                    $color = "red";
-                    $title_ar = "تجهيز وارسال الاستبيان";
-                    $pbms["xcc13A"] = array(
-                        "METHOD" => "linkWithSurveyPlateform",
-                        "COLOR" => $color,
-                        "EXECUTE-IN-RETRIEVE-MODE" => true,
-                        "LABEL_AR" => $title_ar,
-                        "PUBLIC" => true,
-                        "BF-ID" => "",
-                        "HZM-SIZE" => 12,
-                    );
+            if ((!$this->id) or ($this->isClosed())) {
+                $color = "red";
+                $title_ar = "تجهيز وارسال الاستبيان";
+                $pbms["xcc13A"] = array(
+                    "METHOD" => "linkWithSurveyPlateform",
+                    "COLOR" => $color,
+                    "EXECUTE-IN-RETRIEVE-MODE" => true,
+                    "LABEL_AR" => $title_ar,
+                    "PUBLIC" => true,
+                    "BF-ID" => "",
+                    "HZM-SIZE" => 12,
+                );
 
-                    $color = "orange";
-                    $title_ar = "تصفير الاستبانة";
-                    $pbms["xhab0A"] = array(
-                        "METHOD" => "resetSurveyForMe",
-                        "COLOR" => $color,
-                        "LABEL_AR" => $title_ar,
-                        "PUBLIC" => true,
-                        "BF-ID" => "",
-                        "HZM-SIZE" => 12,
-                    );
-                }
+                $color = "orange";
+                $title_ar = "تصفير الاستبانة";
+                $pbms["xhab0A"] = array(
+                    "METHOD" => "resetSurveyForMe",
+                    "COLOR" => $color,
+                    "LABEL_AR" => $title_ar,
+                    "PUBLIC" => true,
+                    "BF-ID" => "",
+                    "HZM-SIZE" => 12,
+                );
             }
+        }
 
 
-            if ($objme->isAdmin()) {
-                if ((!$this->getVal("supervisor_id")) or $objme->isSuperAdmin()) {
-                    $color = "yellow";
-                    if (!$this->getVal("supervisor_id")) $title_ar = "تعيين مشرف على هذا الطلب";
-                    else $title_ar = "تغيير مشرف هذا الطلب";
-                    $pbms["xc143A"] = array(
-                        "METHOD" => "assignAnotherAvailableSupervisor",
-                        "COLOR" => $color,
-                        "LABEL_AR" => $title_ar,
-                        "PUBLIC" => true,
-                        "BF-ID" => "",
-                        "HZM-SIZE" => 12,
-                    );
-                }
+        if ($objme->isAdmin()) {
+            if ((!$this->getVal("supervisor_id")) or $objme->isSuperAdmin()) {
+                $color = "yellow";
+                if (!$this->getVal("supervisor_id")) $title_ar = "تعيين مشرف على هذا الطلب";
+                else $title_ar = "تغيير مشرف هذا الطلب";
+                $pbms["xc143A"] = array(
+                    "METHOD" => "assignAnotherAvailableSupervisor",
+                    "COLOR" => $color,
+                    "LABEL_AR" => $title_ar,
+                    "PUBLIC" => true,
+                    "BF-ID" => "",
+                    "HZM-SIZE" => 12,
+                );
             }
-        
+        }
+
 
         // $color = "green";
         // $title_ar = "xxxxxxxxxxxxxxxxxxxx"; 
@@ -2832,7 +2842,7 @@ class Request extends CrmObject
 
             $log_arr[] = $log;
         }
-        
+
         // if($objme->id==1) 
         //    die("We are upgrading the system for you ..., please wait.<br>\nSTATUS_MAP LOG".var_export($log_arr,true)." pbms=".var_export($pbms,true));
 
@@ -2991,7 +3001,7 @@ class Request extends CrmObject
             if ($empl_id) $iam_general_supervisor = CrmObject::userIsGeneralSupervisor();
             if ($empl_id) $iam_supervisor = CrmObject::userIsSupervisor();
 
-            
+
 
             // if the user is an employee 
             // he is allowed to see request if :
@@ -3141,7 +3151,7 @@ class Request extends CrmObject
             }
         } else $html .= "<!-- request not yet done : status_reel_id = $status_reel_id -->";
 
-        
+
 
         if ($this->isClosed()) {
             $my_survey_url = $this->mySurveyUrl();
@@ -3219,10 +3229,10 @@ class Request extends CrmObject
             } else {
                 $label = "تم فقط ارسال الاستبانة";
                 $icon = "survey-not-opened";
-            }            
+            }
         } else {
             $label = "لم يتم بعد ارسال الاستبانة";
-                $icon = "survey-not-sent";
+            $icon = "survey-not-sent";
         }
 
         return "<a target='_crm_survey' href='$url'><img lbl='no-ajax' src='../lib/images/$icon.png' width='24' heigth='24' data-toggle='tooltip' data-placement='bottom' title='$label' data-original-title='$label' class='red-tooltip'></a>";
@@ -3350,7 +3360,8 @@ class Request extends CrmObject
     }
 
 
-    public function calcDate_start_stats() {
+    public function calcDate_start_stats()
+    {
         return self::calc_date_start_stats();
     }
 
@@ -3358,7 +3369,7 @@ class Request extends CrmObject
     public static function calc_date_start_stats()
     {
         $period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"));
-        
+
         if (is_integer($period) and ($period > 0)) return AfwDateHelper::shiftHijriDate("", -$period);
         else return AfwDateHelper::shiftHijriDate("", -90); // die(" CrmOrgunit::getGlobalCRMCenter()->getVal(standard_stats_days) = [$period]"); // 
     }
@@ -3392,8 +3403,8 @@ class Request extends CrmObject
      *             calculated between assign date and now if assigned or 
      *             calculated between request date and now if not yet assigned
      */
-    public function totalWorkPeriodInDays($round = true, $report=false)
-    {        
+    public function totalWorkPeriodInDays($round = true, $report = false)
+    {
         $status_hdate =  AfwDateHelper::currentHijriDate();
         $status_time = date("H:i:s");
         if (
@@ -3406,8 +3417,8 @@ class Request extends CrmObject
             $assign_hdate = $this->getVal("assign_date");
             $assign_time = $this->getVal("assign_time");
             $return = AfwDateHelper::hijriDateTimeDiff($status_hdate, $status_time, $assign_hdate, $assign_time, $round);
-            if($report) {
-                $status_en = $this->decode("status_id",'',false,'en');
+            if ($report) {
+                $status_en = $this->decode("status_id", '', false, 'en');
                 return "$return = (status[$status_en] = $status_hdate $status_time) - (assign = $assign_hdate $assign_time)";
             }
             return $return;
@@ -3415,8 +3426,8 @@ class Request extends CrmObject
             $request_hdate = $this->getVal("request_date");
             $request_time = $this->getVal("request_time");
             $return = AfwDateHelper::hijriDateTimeDiff($status_hdate, $status_time, $request_hdate, $request_time, $round);
-            if($report) {
-                $status_en = $this->decode("status_id",'',false,'en');
+            if ($report) {
+                $status_en = $this->decode("status_id", '', false, 'en');
                 return "$return = (status[$status_en] = $status_hdate $status_time) - (request = $request_hdate $request_time)";
             }
             return $return;
@@ -3424,15 +3435,16 @@ class Request extends CrmObject
     }
 
 
-    public static function lateRequestsCount() {
+    public static function lateRequestsCount()
+    {
         $date_start_stats = self::calc_date_start_stats();
         $late_days = self::maxResponsePeriod();
 
         $obj = new Request();
         // for request date we accept 4 times late period because we consider redirections, customer data incomplete, etc...
-        $request_date_limit_late = AfwDateHelper::shiftHijriDate('',-4*$late_days); 
+        $request_date_limit_late = AfwDateHelper::shiftHijriDate('', -4 * $late_days);
         // but for status date should be only one period date because it change at any action taken on status
-        $status_date_limit_late = AfwDateHelper::shiftHijriDate('',-$late_days);
+        $status_date_limit_late = AfwDateHelper::shiftHijriDate('', -$late_days);
         $obj->where("request_date >= '$date_start_stats' and (request_date < '$request_date_limit_late' or status_date < '$status_date_limit_late')");
         $obj->where("(employee_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")) 
                          or (supervisor_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_SUPERVISOR . "))");
@@ -3443,9 +3455,9 @@ class Request extends CrmObject
     /**
      * عدد الأيام الأقصى للرد على العميل قبل أن يعتبر الطلب متأخرا
      * القيمة تأخذ من إعدادات مركز الاتصال CRM Center في الحقل "late_days"
-     **/ 
+     **/
     public static function maxResponsePeriod()
-    {        
+    {
         return CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
     }
 
@@ -3460,17 +3472,17 @@ class Request extends CrmObject
 
     /**
      * days_retard : عدد أيام التأخير على التذكرة
-     **/ 
+     **/
     public function calcDays_retard()
     {
-        $return = $this->totalWorkPeriodInDays()-self::maxResponsePeriod();
+        $return = $this->totalWorkPeriodInDays() - self::maxResponsePeriod();
         if ($return <= 0) return 0;
         else return $return;
     }
 
     public function calcDays_investigator()
     {
-        return round($this->getVal("hours_investigator_work") / 24); 
+        return round($this->getVal("hours_investigator_work") / 24);
     }
 
 
@@ -3641,8 +3653,8 @@ class Request extends CrmObject
             if ($employeeInvestigObj) {
                 $employeeInvestigEmail = $employeeInvestigObj->getVal("email");
                 if ($employeeInvestigEmail) {
-                    
-                        
+
+
                     try {
                         $to_email_arr = array();
                         $to_email_arr[] = $employeeInvestigEmail;
@@ -3714,8 +3726,8 @@ class Request extends CrmObject
                     if (!$invest) {
                         $orgObj = $this->het("orgunit_id");
                         $this->setForce("employee_id", 0);
-                        $status_comment = $this->tm("No available Investigator in this orgunit", $lang) . 
-                                          " : " . $orgObj->getDisplay($lang);
+                        $status_comment = $this->tm("No available Investigator in this orgunit", $lang) .
+                            " : " . $orgObj->getDisplay($lang);
                         $this->setForce("status_comment", $status_comment);
                         $this->commit();
                         if ($objme and ($orgObj->id != CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEPARTMENT_ID)) {
@@ -3784,7 +3796,7 @@ class Request extends CrmObject
         $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
         // The condition below means that this reuqest is not assigned or assigned to an employee deleted or disable or not an inverstigator
         $obj->where("me.employee_id not in (select employee_id 
-                                            from ".$server_db_prefix."crm.crm_employee ce 
+                                            from " . $server_db_prefix . "crm.crm_employee ce 
                                             where ce.orgunit_id = me.orgunit_id 
                                               and ce.active='Y' 
                                               and ce.admin != 'Y')");
@@ -3824,7 +3836,7 @@ class Request extends CrmObject
     {
         $errors_arr = array();
         $infos_arr = array();
-        $before_3_months_hdate = AfwDateHelper::addHijriPeriodToHijriDate('',-3);
+        $before_3_months_hdate = AfwDateHelper::addHijriPeriodToHijriDate('', -3);
         $obj = new Request();
         $obj->where("employee_id > 0");
         $obj->where("status_date > '$before_3_months_hdate'");
@@ -3836,7 +3848,7 @@ class Request extends CrmObject
          * @var Request $requestItem
          */
         foreach ($requestList as $requestItem) {
-            list($err, $info) = $requestItem->updateRequestAsPerLastResponse($lang,true);
+            list($err, $info) = $requestItem->updateRequestAsPerLastResponse($lang, true);
 
             if ($err) $errors_arr[] = $err;
             if ($info) $infos_arr[] = $info;
@@ -3974,7 +3986,7 @@ class Request extends CrmObject
     }
 
 
-    public static function closeOldDoneRequests($silent = false, $lang = "ar", $limit = "1000", $log_details=false)
+    public static function closeOldDoneRequests($silent = false, $lang = "ar", $limit = "1000", $log_details = false)
     {
         $obj = new Request();
 
@@ -3995,8 +4007,7 @@ class Request extends CrmObject
                 list($err, $info) = $reqItem->closeRequest($lang, $caller = "closeOldDoneRequests");
                 if ($err) $errors_arr[] = $err;
                 if ($info and $log_details) $infos_arr[] = $info;
-            }
-            catch (Exception $e) {
+            } catch (Exception $e) {
                 $err = "Exception caught for request (Id=$reqId) : " . $e->getMessage();
             }
         }
@@ -4110,9 +4121,9 @@ class Request extends CrmObject
                 if ($jobContext) UfwBatch::print_error(">> $jobContext >> Error : .$err");
             } else $nb_done++;
             if ($info) {
-                if(count($infos_arr)<50) $infos_arr[] = $info;
+                if (count($infos_arr) < 50) $infos_arr[] = $info;
                 else $tech_arr[] = $info;
-            } 
+            }
         }
 
 
@@ -4133,15 +4144,16 @@ class Request extends CrmObject
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warn_arr, "<br>\n", $tech_arr);
     }
 
-    public function assignAnotherAvailableSupervisor($lang = "ar") {
-        return $this->assignBestAvailableSupervisor($lang, $pbm = true, $commit = true, $re_distribution = false, $forceChangeCurrentSupervisor=true);
+    public function assignAnotherAvailableSupervisor($lang = "ar")
+    {
+        return $this->assignBestAvailableSupervisor($lang, $pbm = true, $commit = true, $re_distribution = false, $forceChangeCurrentSupervisor = true);
     }
 
-    public function assignBestAvailableSupervisor($lang = "ar", $pbm = true, $commit = true, $re_distribution = false, $forceChangeCurrentSupervisor=false)
+    public function assignBestAvailableSupervisor($lang = "ar", $pbm = true, $commit = true, $re_distribution = false, $forceChangeCurrentSupervisor = false)
     {
 
         // find the best available supervisor
-        if($forceChangeCurrentSupervisor) $this_supervisor_id = $this->getVal("supervisor_id");
+        if ($forceChangeCurrentSupervisor) $this_supervisor_id = $this->getVal("supervisor_id");
         else $this_supervisor_id = 0;
         list($best_supervisor_id, $crmEmpl, $allList, $stats) = CrmEmployee::getBestAvailableSupervisor($this_supervisor_id, $re_distribution, CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEPARTMENT_ID);
         $crmRes = array("best" => $best_supervisor_id, "res" => $crmEmpl, 'all' => $allList);
@@ -4242,19 +4254,20 @@ class Request extends CrmObject
         else  return true;
     }
 
-    public static function inboxDailyCapacityForMe(){
+    public static function inboxDailyCapacityForMe()
+    {
         $objme = AfwSession::getUserConnected();
         if ($objme and $objme->isAdmin()) {
-                $employee_id = 0;
+            $employee_id = 0;
         } else {
-                $employee_id = $objme ? $objme->getEmployeeId() : 0;
+            $employee_id = $objme ? $objme->getEmployeeId() : 0;
         }
 
-        if(!$employee_id) return 0;
+        if (!$employee_id) return 0;
 
         $crmEmplObj = CrmEmployee::findCrmEmployee($employee_id);
 
-        if(!$crmEmplObj) return 0;
+        if (!$crmEmplObj) return 0;
 
         $requests_nb = $crmEmplObj->getVal("requests_nb");
 
@@ -4265,12 +4278,12 @@ class Request extends CrmObject
     {
         $objme = AfwSession::getUserConnected();
         if ($objme and $objme->isAdmin()) {
-                $employee_id = 0;
+            $employee_id = 0;
         } else {
-                $employee_id = $objme ? $objme->getEmployeeId() : 0;
+            $employee_id = $objme ? $objme->getEmployeeId() : 0;
         }
 
-        if(!$employee_id) return 0;
+        if (!$employee_id) return 0;
 
         return self::inboxCountFor($employee_id);
     }
@@ -4657,16 +4670,14 @@ class Request extends CrmObject
     }
 
 
-    public function rowCategoryAttribute($mode="retrieve")
+    public function rowCategoryAttribute($mode = "retrieve")
     {
 
-        if(($mode=="retrieve") or ($this->calcRequest_late()>0)) {
+        if (($mode == "retrieve") or ($this->calcRequest_late() > 0)) {
             return "request_late:FORMULA";
-        }
-        else {
+        } else {
             return "status_action_enum";
         }
-        
     }
 
 
@@ -4697,38 +4708,37 @@ class Request extends CrmObject
 
     public function isMine()
     {
-            $objme = AfwSession::getUserConnected();
+        $objme = AfwSession::getUserConnected();
 
-            if ($objme and $objme->isAdmin()) {
-                    return true;
-            } else {
-                    $employee_id = $objme ? $objme->getEmployeeId() : 0;
-                    return ($employee_id and (($employee_id == $this->getVal("employee_id")) or ($employee_id == $this->getVal("supervisor_id"))));
-            }
+        if ($objme and $objme->isAdmin()) {
+            return true;
+        } else {
+            $employee_id = $objme ? $objme->getEmployeeId() : 0;
+            return ($employee_id and (($employee_id == $this->getVal("employee_id")) or ($employee_id == $this->getVal("supervisor_id"))));
+        }
     }
 
-    public function updateHoursInvestigatorWork($lang='ar',$commit=true, $pbm=true)
+    public function updateHoursInvestigatorWork($lang = 'ar', $commit = true, $pbm = true)
     {
-        if(false and $this->dataAuditIsSufficient()) {
+        if (false and $this->dataAuditIsSufficient()) {
             // if we have sufficient audit data we can calculate the hours of work of the investigator 
             // on this request by calculating sum of periods where the request was in "assigned" or "ongoing" 
             // status and assigned to the investigator (employee_id > 0) 
             // and not compute "(redirected", "data to complete", "files to upload" and similar statuses         
-            
+
             // $diffH = $this->calculateHoursInvestigatorWorkFromAUDIT();
-        }       
-        else {
+        } else {
             // otherwise for old tickets before implemeting audit system 
             // we don't have sufficient audit data we can calculate the hours of work of the investigator 
             // we are obliged to make estimation by removing weekends and estimation of periods of non working statuses
             // we can estimated this from the responses given to the customer (each response contain the new status)
 
             $diffH = $this->estimateHoursInvestigatorWorkFromResponses();
-        }        
+        }
         $this->set("hours_investigator_work", $diffH);
-        if($commit) $this->commit();
+        if ($commit) $this->commit();
 
-        if($pbm) {
+        if ($pbm) {
             return ["", $this->tm("hours of work of the investigator has been updated to") . " : $diffH hours"];
         }
         return $diffH;
@@ -4738,7 +4748,8 @@ class Request extends CrmObject
     {
         return $this->estimateHoursInvestigatorWorkFromResponses(true);
     }
-    public function estimateHoursInvestigatorWorkFromResponses($returnReport=false) {
+    public function estimateHoursInvestigatorWorkFromResponses($returnReport = false)
+    {
         $report_arr = [];
         $struct = $this->getMyDbStructure('structure', 'responseList');
         $struct['ORDER_BY'] = 'request_id, response_date asc, response_time asc';
@@ -4750,18 +4761,18 @@ class Request extends CrmObject
         $old_status = RequestStatus::loadById($old_status_id)->getDisplay("en");
         $old_response_date = AfwDateHelper::hijriToGreg($this->getVal("request_date"));
         $old_response_time = $this->getVal("request_time");
-        if(!$old_response_time) $old_response_time = "14:00:00";
+        if (!$old_response_time) $old_response_time = "14:00:00";
         /**
          * @var Response $responseObj
          */
-        foreach($responseList as $responseObj) {
+        foreach ($responseList as $responseObj) {
             $new_status_id = $responseObj->getVal("new_status_id");
-            if($new_status_id>0) $new_status = RequestStatus::loadById($new_status_id)->getDisplay("en"); //$responseObj->decode("new_status_id",'',false, "en");
+            if ($new_status_id > 0) $new_status = RequestStatus::loadById($new_status_id)->getDisplay("en"); //$responseObj->decode("new_status_id",'',false, "en");
             else $new_status = "empty";
             $response_date = AfwDateHelper::hijriToGreg($responseObj->getVal("response_date"));
-            if(!$response_date) $response_date = $old_response_date;
+            if (!$response_date) $response_date = $old_response_date;
             $response_time = $responseObj->getVal("response_time");
-            if(!$response_time) $response_time = "14:00:00";
+            if (!$response_time) $response_time = "14:00:00";
 
             // if the status is in ongoing investigator status we consider that the investigator is working on the request
             // $request_statuses_ongoing_investigator_arr = explode(",", self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR);
@@ -4780,16 +4791,16 @@ class Request extends CrmObject
             $old_status = $new_status;
         }
 
-        $report_arr[] = "  ---- about retard ----";        
+        $report_arr[] = "  ---- about retard ----";
         $totalWorkPeriodInDays = $this->totalWorkPeriodInDays();
         $totalWorkPeriodInDaysReport = $this->totalWorkPeriodInDays(true, true);
         $maxResponsePeriod = self::maxResponsePeriod();
         $return = $totalWorkPeriodInDays - $maxResponsePeriod;
-        $report_arr[] = "totalWorkPeriodInDays Report:".$totalWorkPeriodInDaysReport;
+        $report_arr[] = "totalWorkPeriodInDays Report:" . $totalWorkPeriodInDaysReport;
         $report_arr[] = "Retard: $return days (totalWorkPeriodInDays:$totalWorkPeriodInDays - maxResponsePeriod:$maxResponsePeriod)";
 
-        if($returnReport) {
-            return implode("\n<br>",$report_arr);
+        if ($returnReport) {
+            return implode("\n<br>", $report_arr);
         }
         return $diffH;
     }
@@ -4816,15 +4827,16 @@ class Request extends CrmObject
             return $diffH;
     }*/
 
-    public static function calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit=1000, $forceAll=false) {
+    public static function calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit = 1000, $forceAll = false)
+    {
         $requestObj = new Request();
-        if(!$forceAll) $requestObj->where("hours_investigator_work is null or hours_investigator_work <= 0");
+        if (!$forceAll) $requestObj->where("hours_investigator_work is null or hours_investigator_work <= 0");
         $requestList = $requestObj->loadMany($limit, "request_date desc");
         $diffH = 0;
         /**
          * @var Request $requestItem
          */
-        foreach($requestList as $requestItem) {
+        foreach ($requestList as $requestItem) {
             $diffH += $requestItem->updateHoursInvestigatorWork('ar', true, false);
         }
 
@@ -4836,7 +4848,8 @@ class Request extends CrmObject
         return $this->getVal("request_code");
     }
 
-    public function estimatedTotalRows() {
+    public function estimatedTotalRows()
+    {
         return 100000;
     }
 }
