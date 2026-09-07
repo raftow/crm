@@ -90,7 +90,7 @@ $config_arr = array(
 
         /*'simulate_sms_to_mobile' => "0598988330",*/
 
-        'notify_customer' => array("new_request" => array("sms"=>['send'=>true, 'store' => 'workflow'], "email" => false, "web" => false, "whatsup" => false),
+        'notify_customer' => array("new_request" => array("sms"=>['send'=>true, 'store' => 'workflow', 'event_id'=>2], "email" => false, "web" => false, "whatsup" => false),
         
                                 ),
 
@@ -100,7 +100,7 @@ $config_arr = array(
 
         'notify_employee' => array(
                         "new_request" => array("sms"=>false, "email" => false, "web" => false, "whatsup" => false),
-                        "daily_waiting_requests" => array("sms"=>false, "email" => ['send'=>true, 'store' => 'workflow'], "web" => false, "whatsup" => false),
+                        "daily_waiting_requests" => array("sms"=>false, "email" => ['send'=>true, 'store' => 'workflow', 'event_id'=>1], "web" => false, "whatsup" => false),
                 ),
 
 
