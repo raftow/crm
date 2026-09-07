@@ -118,6 +118,7 @@ class CrmCrmEmployeeAfwStructure
 			'DEPENDENCY' => 'orgunit_id',
 			'RELATION' => 'ManyToOne',
 			'READONLY' => true,
+			'NO-COTE' => true,
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => true,
 			'STEP' => 1,
