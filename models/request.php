@@ -1366,7 +1366,7 @@ class Request extends CrmObject
     }
 
 
-
+    /*            
     public function timingStatsExists()
     {
         // hours_investigator_work عدد ساعات عمل المنسق';
@@ -1374,7 +1374,7 @@ class Request extends CrmObject
         // days_retard عدد أيام التأخير على التذكرة';
 
         return ($this->getVal("hours_investigator_work") > 0);
-    }
+    }*/
 
 
     public function attributeIsApplicable($attribute)
@@ -1393,12 +1393,14 @@ class Request extends CrmObject
         // hours_investigator_work عدد ساعات عمل المنسق';
         // days_investigator عدد أيام عمل المنسق';
         // days_retard عدد أيام التأخير على التذكرة';
+        /* It have no sens that we consider no retard when investigator has not worked yet This encourages the lazy investigators in their laziness.
+           لا منطق في اعتبار عدم وجود أي تأخير في حين أن المحقق لم يبدأ عمله بعد؛ فهذا يشجع المحققين المتكاسلين على التمادي في كسلهم.
         if (($attribute == "hours_investigator_work") or
             ($attribute == "days_investigator") or
             ($attribute == "days_retard")
         ) {
             return ($this->timingStatsExists());
-        }
+        }*/
 
 
         if (($attribute == "service_category_id") or
