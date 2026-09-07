@@ -898,6 +898,8 @@ class CrmEmployee extends CrmObject
 
                 $receiver["mobile"] = $employeeObj->getVal("mobile");
                 $receiver["email"] = $employeeObj->getVal("email");
+                $receiver["id"] = "employee-".$employeeObj->id;
+
                 if ($simul) {
                         $receiver["mobile"] = "0598988330";
                         $receiver["email"] = "rboubaker@tv" . "tc.gov.sa";
