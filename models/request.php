@@ -3482,7 +3482,9 @@ class Request extends CrmObject
 
     public function calcDays_investigator()
     {
-        return round($this->getVal("hours_investigator_work") / 24);
+        $hours_investigator_work =$this->getVal("hours_investigator_work");
+        if(!$hours_investigator_work or !is_numeric($hours_investigator_work)) $hours_investigator_work = 0;
+        return round($hours_investigator_work / 24);
     }
 
 
