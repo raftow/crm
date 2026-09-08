@@ -15,10 +15,12 @@ if ($objme) {
                                         $warning = implode("<br>\n", $res['warnings']);
                                         $error = implode("<br>\n", $res['errors']);
                                         $info = implode("<br>\n", $res['log']);
+                                        $matrix = $res['matrix'];
 
                                         if ($info) AfwSession::pushInformation($info);
                                         if ($error) AfwSession::pushError($error);
                                         if ($warning) AfwSession::pushWarning($warning);
+                                        if ($matrix) AfwSession::pushSuccess($matrix);
                                 }
                         }
                 }
