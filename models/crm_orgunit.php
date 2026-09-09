@@ -491,5 +491,23 @@ class CrmOrgunit extends CrmObject{
                 return 2500;
         }
 
+
+        public function beforeMaj($id, $fields_updated)
+        {
+                
+                if ($fields_updated["orgunit_id"]) {
+                        $orgObj = $this->het("orgunit_id");
+                        if ($orgObj and $orgObj->getVal("id_responsible") and !$this->getVal("id_responsible")) {
+                                $this->set("id_responsible", $orgObj->getVal("id_responsible"));
+                        }
+                        
+                }
+
+
+
+                return true;
+        }
+        
+
 }
 ?>
