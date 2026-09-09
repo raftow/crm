@@ -13,6 +13,7 @@
  * @var string $ref_num
  * @var string $region
  * @var string $request_type
+ * @var string $request_category
  * @var string $request_subject
  * @var string $request_body
  * @var string $web_site
@@ -26,6 +27,7 @@
  * @var array $data
  * @var array $regionList
  * @var array $requestTypeList
+ * @var array $requestCategoryList
  * @var array $roList
  * 
  * 
@@ -42,6 +44,8 @@
  * 
  * 
  */
+
+$request_type_readonly = true;
 ?>
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
@@ -238,6 +242,22 @@ echo $js_for_cust_type;
                                                                         ); ?>        
                 </div>
                 <!-- fg-request_type -->
+
+                                <!-- fg-request_category -->
+                <div id="fg-request_category" class="attrib-request_category form-group width_pct_100 ">
+                        <label for="request_category" class="hzm_label hzm_data_request_category label_required">تصنيف الطلب</label>                  
+                        <?php echo AfwInputHelper::picture_dropdown($requestCategoryList, "request_category", $selected=array($request_category), 
+                                                                        "request_category",
+                                                                        $data_images=false, // no drop dwon pictures
+                                                                        $select_width=0, // means auto
+                                                                        $select_css="form-control",
+                                                                        $sort_order = "", 
+                                                                        $empty_option = false,  // no empty option (so required)
+                                                                        $lang,null,
+                                                                        ); ?>        
+                </div>
+                <!-- fg-request_category --> 
+ 
 
                 <!-- fg-request_subject -->
                 <div id="fg-request_subject" class="attrib-request_subject form-group width_pct_100 ">
