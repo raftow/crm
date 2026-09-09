@@ -7,5 +7,6 @@ $migrations = [
     '00001' => ['by'=>'rafik', 'title' => 'reports role'],
     '00002' => ['by'=>'rafik', 'title' => 'crm v3'],
     '00003' => ['by'=>'rafik', 'title' => 'crm data test migrations'],
+    '00004' => ['by'=>'rafik', 'title' => 'crm orgunit responsible'],
 ];
 

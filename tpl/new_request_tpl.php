@@ -33,6 +33,12 @@
                                         <a class='crm request' href='/crm/i.php?cn=crm&mt=request&rt=1'>تقديم طلب إداري</a>
                                 <?php
                                 }
+
+                                if (in_array(18, AfwSession::config("crm_rt_list", array()))) {
+                                ?>
+                                        <a class='crm balagh' href='/crm/i.php?cn=crm&mt=request&rt=18'>بلاغ</a>
+                                <?php
+                                }
                                 ?>
 
                         </div>
