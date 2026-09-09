@@ -2466,6 +2466,12 @@ a.crm.request {
   margin-left: 10px;
 }
 
+a.crm.balagh {
+    background-color: #db920c;
+    color: white;
+    margin-left: 10px;
+}
+
 .content_big_title {
   margin-top: 15px !important;
   color: #404040 !important;
