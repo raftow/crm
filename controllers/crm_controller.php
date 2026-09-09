@@ -943,6 +943,7 @@ class CrmController extends AfwController
 
 
                         $data["request_type"] = $data["obj"]->getVal("request_type_id");
+                        $data["request_category"] = $data["obj"]->getVal("request_category_id");
                         $data["request_status_id"] = $data["obj"]->getVal("status_id");
                         $data["request_status"] = $data["obj"]->decode("status_id");
                         list($data["request_instructions"], $data["files_list"]) = $data["obj"]->getLastInstructionDetailsOnRequest();
@@ -957,6 +958,7 @@ class CrmController extends AfwController
                         if ($related_object_id) $data["related_object_id"] = $related_object_id;
                         else $data["related_object_id"] = $data["obj"]->getVal("request_for");
                         $data["requestTypeList"] = RequestType::loadAll();
+                        $data["requestCategoryList"] = RequestCategory::loadAllRelatedTo($data["request_type"]);
                         $roClassName = AfwSession::config("roClassName", "");
                         if ($roClassName) $data["roList"] = $roClassName::loadAllMyObjects();
 

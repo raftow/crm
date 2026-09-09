@@ -92,7 +92,7 @@
                                                                         $select_width=0, // means auto
                                                                         $select_css="form-control",
                                                                         $sort_order = "", 
-                                                                        $empty_option = false,  // no empty option (so required)
+                                                                        $empty_option = true, 
                                                                         $lang,null,
                                                                         ); ?>        
                 </div>
