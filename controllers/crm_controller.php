@@ -825,7 +825,11 @@ class CrmController extends AfwController
                 $data = $request;
                 // echo("request = ".var_export($request,true)."<br><br>");
 
-                if (!$data["request_type"] and $rt) $data["request_type"] = $rt;
+                if (!$data["request_type"] and $rt) {
+                        $data["request_type"] = $rt;
+                        if($rt != Request::$REQUEST_TYPE_BALAGH) $data["request_category"] = $rt;
+                        else $data["request_category"] = 0;
+                }
 
                 if ((!$data["customer_id"]) and $cusid) {
                         $theUser = AfwSession::getUserConnected();

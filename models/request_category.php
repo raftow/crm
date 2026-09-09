@@ -59,7 +59,7 @@ class RequestCategory extends CrmObject
                $obj->mfkContain("request_type_mfk", $request_type_id);
           }
 
-          $objList = $obj->loadMany();
+          $objList = $obj->loadMany('','id asc');
 
           return $objList;
      }

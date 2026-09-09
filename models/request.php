@@ -41,6 +41,9 @@ class Request extends CrmObject
 
 
 
+    // BALAGH - بلاغ
+    public static $REQUEST_TYPE_BALAGH = 18;
+
 
     // COMPLAINT - شكوى  
     public static $REQUEST_TYPE_COMPLAINT = 3;
