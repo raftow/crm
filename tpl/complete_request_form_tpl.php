@@ -1,3 +1,12 @@
+<?php
+        /**
+         * @var array $data_here
+         */
+        foreach($data_here as $key=>$val)
+        {
+                $$key = $val;
+        }
+?>
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>

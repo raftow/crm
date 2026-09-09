@@ -1,3 +1,12 @@
+<?php
+        /**
+         * @var array $data_here
+         */
+        foreach($data_here as $key=>$val)
+        {
+                $$key = $val;
+        }
+?>
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
@@ -69,10 +78,25 @@
                                                                         $select_css="form-control",
                                                                         $sort_order = "", 
                                                                         $empty_option = false,  // no empty option (so required)
-                                                                        $lang
+                                                                        $lang,null,['readonly'=>true]
                                                                         ); ?>        
                 </div>
                 <!-- fg-request_type -->
+
+                <!-- fg-request_category -->
+                <div id="fg-request_category" class="attrib-request_category form-group width_pct_100 ">
+                        <label for="request_category" class="hzm_label hzm_data_request_category label_required">تصنيف الطلب</label>                  
+                        <?php echo AfwInputHelper::picture_dropdown($requestCategoryList, "request_category", $selected=array($request_category), 
+                                                                        "request_category",
+                                                                        $data_images=false, // no drop dwon pictures
+                                                                        $select_width=0, // means auto
+                                                                        $select_css="form-control",
+                                                                        $sort_order = "", 
+                                                                        $empty_option = false,  // no empty option (so required)
+                                                                        $lang,null,
+                                                                        ); ?>        
+                </div>
+                <!-- fg-request_category --> 
 
                 <!-- fg-request_subject -->
                 <div id="fg-request_subject" class="attrib-request_subject form-group width_pct_100 ">

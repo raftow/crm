@@ -46,10 +46,18 @@ class RequestCategory extends CrmObject
           } else return null;
      }
 
-     public static function loadAll()
+     /**
+      * Load all request categories related to a specific request type.
+      * @param int $request_type_id The ID of the request type.
+      * @return RequestCategory[]
+      */
+     public static function loadAllRelatedTo($request_type_id)
      {
           $obj = new RequestCategory();
           $obj->select("active", 'Y');
+          if($request_type_id) {
+               $obj->mfkContain("request_type_mfk", $request_type_id);
+          }
 
           $objList = $obj->loadMany();
 

@@ -88,6 +88,7 @@ class CrmRequestCategoryAfwStructure
                         'TYPE' => 'MFK',
                         'ANSWER' => 'request_type',
                         'ANSMODULE' => 'crm',
+                        'WHERE' => "active='Y' and is_public='Y'",
                         'READONLY' => false,
                         'SEARCH-BY-ONE' => true,
                         'DISPLAY' => true,

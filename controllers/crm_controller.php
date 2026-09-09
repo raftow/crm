@@ -838,6 +838,7 @@ class CrmController extends AfwController
 
 
                 $data["requestTypeList"] = RequestType::loadAll();
+                $data["requestCategoryList"] = RequestCategory::loadAllRelatedTo($data["request_type"]);
                 $data["regionList"] = Region::loadAll();
                 
                 $roClassName = AfwSession::config("roClassName", "");
