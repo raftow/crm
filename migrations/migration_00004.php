@@ -49,6 +49,13 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 (9999,1,'2026-09-09 14:08:05',0,'0000-00-00 00:00:00',NULL,NULL,'Y','Y',0,NULL,NULL,NULL,NULL,'other','أخرى','other',',2,3,12,13,18,');
 ");
 
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_category_id int(11) NOT NULL DEFAULT 0  AFTER request_type_id;");
+    AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.request SET request_category_id = request_type_id");
+
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request_braudit add   request_category_id int(11) NOT NULL DEFAULT 0  AFTER request_type_id;");
+    AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.request_braudit SET request_category_id = request_type_id");
+
+
 } catch (Exception $e) {
     $migration_error = " " . $e->getMessage();
 }

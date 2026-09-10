@@ -19,6 +19,7 @@ class CrmOrgunitArTranslator{
 		$trad["crm_orgunit"]["allEmployeeList"] = "الموظفين المنسقين لدى مركز خدمة العملاء";
 		$trad["crm_orgunit"]["unAssignedRequests"] = "طلبات يجب العمل عليها واسنادها";
 		$trad["crm_orgunit"]["currentRequests"] = "الطلبات الجارية";
+		$trad["crm_orgunit"]["id_responsible"] = "المسؤول الأول";
 		
 
 
