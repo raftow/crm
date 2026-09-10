@@ -3983,3 +3983,12 @@ p.special-link.todo.register {
     height: 360px !important;
     background-size: 60% !important;
 }*/
+
+.manager {
+    border-radius: 50%;
+}
+
+.htmly-matrix>div.manager.not-defined {
+    border-color: red !important;
+    border-width: 2px !important;
+}
