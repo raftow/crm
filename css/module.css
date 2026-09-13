@@ -3989,6 +3989,32 @@ p.special-link.todo.register {
 }
 
 .htmly-matrix>div.manager.not-defined {
-    border-color: red !important;
+    border-color: #292323 !important;
     border-width: 2px !important;
+    width: 14px;
+    margin: 0;
+    height: 25px;
+}
+
+.htmly-matrix-success.orgunit.unit-disabled {
+    border-color: #858585 !important;
+    border-width: 2px !important;
+    width: 14px;
+    margin: 0;
+    height: 25px;
+    background-color: #dce9e1;
+}
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.newresponsible {
+    background-color: #4ac7ff;
+    color: white !important;
+    border: 2px solid #ffffff !important;
+    float: right;
+}
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.not-defined.newresponsible {
+    background-color: #1c7da9;
+    color: white !important;
+    border: 2px solid #ffffff !important;
+    float: right;
 }
