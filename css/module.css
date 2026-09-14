@@ -4018,3 +4018,17 @@ p.special-link.todo.register {
     border: 2px solid #ffffff !important;
     float: right;
 }
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.codechanged {
+    background-color: #ae1ec1;
+    color: white !important;
+    border: 2px solid #ffffff !important;
+    float: right;
+}
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.titlechanged {
+    background-color: #98921c;
+    color: white !important;
+    border: 2px solid #ffffff !important;
+    float: right;
+}
