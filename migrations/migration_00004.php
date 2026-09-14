@@ -5,8 +5,9 @@ if (!class_exists("AfwSession")) die("Denied access");
  */
 $server_db_prefix = AfwSession::currentDBPrefix();
 try {
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   log text  DEFAULT NULL;");
+    /*@todo : remove comment when going to prod
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   id_responsible int(11) DEFAULT NULL;");
-    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   log text  DEFAULT NULL  AFTER id_responsible;");
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_orgunit add   id_responsible int(11) DEFAULT NULL  AFTER orgunit_id;");    
     AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.crm_orgunit co set co.id_responsible = (select id_responsible from " . $server_db_prefix . "hrm.orgunit where id = co.orgunit_id)");
 
@@ -56,7 +57,7 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request_braudit add   request_category_id int(11) NOT NULL DEFAULT 0  AFTER request_type_id;");
     AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.request_braudit SET request_category_id = request_type_id");
-
+    */
 
 } catch (Exception $e) {
     $migration_error = " " . $e->getMessage();
