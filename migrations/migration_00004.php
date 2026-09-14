@@ -5,9 +5,9 @@ if (!class_exists("AfwSession")) die("Denied access");
  */
 $server_db_prefix = AfwSession::currentDBPrefix();
 try {
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   log text  DEFAULT NULL;");
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.crm_orgunit add   id_responsible int(11) DEFAULT NULL  AFTER orgunit_id;");    
     AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.crm_orgunit co set co.id_responsible = (select id_responsible from " . $server_db_prefix . "hrm.orgunit where id = co.orgunit_id)");
-    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   log text  DEFAULT NULL;");
     /*@todo : remove comment when going to prod
     
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   id_responsible int(11) DEFAULT NULL;");
