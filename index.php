@@ -12,9 +12,9 @@ if ($objme) {
                                 require_once(dirname(__FILE__)."/../client-$company/organization_business.php");
                                 if (class_exists('OrganizationBusiness')) {
                                         $res = OrganizationBusiness::update_all_organizations(true, $_GET["case"], $_GET["stpdbg"]);
-                                        $warning = implode("<br>\n", $res['warnings']);
+                                        $warning = implode("<br>\n", $res['log']);
                                         $error = implode("<br>\n", $res['errors']);
-                                        $info = implode("<br>\n", $res['log']);
+                                        $info = implode("<br>\n", $res['infos']);
                                         $matrix = $res['matrix'];
 
                                         if ($info) AfwSession::pushInformation($info);
