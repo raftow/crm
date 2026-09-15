@@ -3982,14 +3982,19 @@ p.special-link.todo.register {
     background-image: url(../../lib/images/loader_horse.gif) !important;
     height: 360px !important;
     background-size: 60% !important;
-}*/
+}
 
 .manager {
     border-radius: 50%;
 }
 
+*/
+
+
+
 .htmly-matrix>div.manager.not-defined {
-    border-color: #292323 !important;
+    border-color: white !important;
+    background-color: #fae2a1;
     border-width: 2px !important;
     width: 14px;
     margin: 0;
@@ -4002,11 +4007,11 @@ p.special-link.todo.register {
     width: 14px;
     margin: 0;
     height: 25px;
-    background-color: #dce9e1;
+    background-color: #75323d;
 }
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.newresponsible {
-    background-color: #4ac7ff;
+    background-color: #a1ddf7;
     color: white !important;
     border: 2px solid #ffffff !important;
     float: right;
@@ -4019,6 +4024,13 @@ p.special-link.todo.register {
     float: right;
 }
 
+.htmly-matrix>div.htmly-matrix-success.orgunit.titlechanged {
+    background-color: #645f08;
+    color: white !important;
+    border: 2px solid #ffffff !important;
+    float: right;
+}
+
 .htmly-matrix>div.htmly-matrix-success.orgunit.codechanged {
     background-color: #ae1ec1;
     color: white !important;
@@ -4026,8 +4038,16 @@ p.special-link.todo.register {
     float: right;
 }
 
-.htmly-matrix>div.htmly-matrix-success.orgunit.titlechanged {
-    background-color: #98921c;
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.newcreated {
+    background-color: #340a87;
+    color: white !important;
+    border: 2px solid #ffffff !important;
+    float: right;
+}
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.error {
+    background-color: #c20824;
     color: white !important;
     border: 2px solid #ffffff !important;
     float: right;
