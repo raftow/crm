@@ -29,5 +29,5 @@ $(document).ready(function() {
             console.log("div-request-body-"+idreq+" should be now confidential");
         }    
     
-});
+    });
 });
