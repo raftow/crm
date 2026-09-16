@@ -4047,7 +4047,14 @@ p.special-link.todo.register {
 }
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.error {
-    background-color: #c20824;
+    background-color: red;
+    color: white !important;
+    border: 2px solid #ffffff !important;
+    float: right;
+}
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.failed {
+    background-color: red;
     color: white !important;
     border: 2px solid #ffffff !important;
     float: right;
