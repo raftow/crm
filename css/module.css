@@ -3992,7 +3992,7 @@ p.special-link.todo.register {
 
 
 .htmly-matrix>div.manager.manager-not-defined {
-    background-color: #fae2a1;
+    background-color: #f7a049;
     border-width: 2px !important;
     margin: 0;
 }
@@ -4029,22 +4029,15 @@ p.special-link.todo.register {
 }
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.loaded.titlechanged {
-    background-color: #645f08;
-    color: white !important;
-    
+    background-color: #9d9622;
+    color: yellow !important;
 }
 
-.htmly-matrix>div.htmly-matrix-success.orgunit.loaded.titlechanged {
-    background-color: #645f08;
-    color: white !important;
-    
-    
-}
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.loaded.unit-disabled,
 .htmly-matrix>div.htmly-matrix-success.orgunit.loaded.disabled
  {
-    background-color: #727271;
+    background-color: #edede5;
     color: black !important;
     
     
@@ -4052,9 +4045,9 @@ p.special-link.todo.register {
 
 
 
-.htmly-matrix>div.htmly-matrix-success.orgunit.codechanged {
-    background-color: #ae1ec1;
-    color: white !important;
+.htmly-matrix>div.htmly-matrix-success.orgunit.loaded.codechanged {
+    background-color: #a6700d;
+    color: yellow !important;
     
     
 }
