@@ -331,17 +331,18 @@ class CrmOrgunit extends CrmObject{
                 $war_arr = [];
                 $inf_arr = [];
                 $new_hrm_code = $this->getVal("new_hrm_code");
-                $id = $this->id;
+                $id = $this->getVal("orgunit_id");
                 $newOrg = Orgunit::loadByHRMCode($new_hrm_code);
                 if($newOrg) {
                         $id_replace = $newOrg->id;
-                        list($total_affected_row_count, $nb_crm_customers, $nb_crm_emp_notes, $nb_crm_emp_requests, $nb_crm_employees, $nb_crm_orgunits, $nb_requests, $nb_responses) = self::replaceOrgunitBy($id, $id_replace);
+                        list($total_affected_row_count, $nb_crm_customers, $nb_crm_emp_notes, $nb_crm_emp_requests, $nb_crm_employees, $nb_crm_orgunits, $nb_requests, $nb_responses, $nb_deleted_crm_orgunits) = self::replaceOrgunitBy($id, $id_replace);
                         if($total_affected_row_count>0) $inf_arr[] = "We migrated successfully from unit [ID=$id] to new unit [ID=$id_replace], <br>
                         $nb_crm_customers customers impacted, <br>
                         $nb_crm_emp_notes crm emp notes impacted, <br>
                         $nb_crm_emp_requests crm emp requests impacted, <br>
                         $nb_crm_employees crm employees impacted, <br>
                         $nb_crm_orgunits crm units impacted, <br>
+                        $nb_deleted_crm_orgunits crm units deleted, <br>
                         $nb_requests requests impacted, <br>
                         $nb_responses responses impacted, <br>
                         totally $total_affected_row_count record(s) have been impacted";
@@ -351,7 +352,11 @@ class CrmOrgunit extends CrmObject{
                         $err_arr[] = "HR code $new_hrm_code not found !";
                 }
 
-                $this->set("new_hrm_code","--done--");
+                if(!$nb_deleted_crm_orgunits) {
+                        $this->set("new_hrm_code","--done--");
+                        $this->update();
+                }
+                
 
                 
                 return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr);
@@ -364,6 +369,8 @@ class CrmOrgunit extends CrmObject{
          * 
          */
         public static function replaceOrgunitBy($id, $id_replace) {
+                if(!$id_replace) return [0];
+                if(!$id) return [0];
                 $server_db_prefix = AfwSession::config('db_prefix', 'default_db_');
                 $total_affected_row_count = 0;
                 
@@ -377,10 +384,22 @@ class CrmOrgunit extends CrmObject{
                 $total_affected_row_count += $affected_row_count;
                 $nb_responses = $affected_row_count;
                 
-                // crm.crm_orgunit-الجهة المكلفة بالرد	orgunit_id  جزء مني ولا يعمل إلا بي-OneToOneBidirectional
-                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_orgunit set orgunit_id='$id_replace' where orgunit_id='$id' ");
-                $total_affected_row_count += $affected_row_count;
-                $nb_crm_orgunits = $affected_row_count;
+                $crmObjNew = CrmOrgunit::loadByMainIndex($id_replace);
+                if($crmObjNew) {
+                        // 
+                        list(,,, $affected_row_count) = AfwDatabase::db_query("delete from " . $server_db_prefix . "crm.crm_orgunit where orgunit_id='$id' ");
+                        $total_affected_row_count += $affected_row_count;
+                        $nb_deleted_crm_orgunits = $affected_row_count;
+                        $nb_crm_orgunits = 0;
+                }
+                else {
+                        // 
+                        list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_orgunit set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                        $total_affected_row_count += $affected_row_count;
+                        $nb_crm_orgunits = $affected_row_count;
+                        $nb_deleted_crm_orgunits = 0;
+                }
+                
                 
                 // الموظف في خدمة العملاء
                 list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_employee set orgunit_id='$id_replace' where orgunit_id='$id' ");
@@ -411,7 +430,7 @@ class CrmOrgunit extends CrmObject{
                 $total_affected_row_count += $affected_row_count;
                 $nb_crm_customers = $affected_row_count;
 
-                return [$total_affected_row_count, $nb_crm_customers, $nb_crm_emp_notes, $nb_crm_emp_requests, $nb_crm_employees, $nb_crm_orgunits, $nb_requests, $nb_responses];
+                return [$total_affected_row_count, $nb_crm_customers, $nb_crm_emp_notes, $nb_crm_emp_requests, $nb_crm_employees, $nb_crm_orgunits, $nb_requests, $nb_responses, $nb_deleted_crm_orgunits];
 
         }
 
