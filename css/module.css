@@ -3991,28 +3991,26 @@ p.special-link.todo.register {
 */
 
 
-
-.htmly-matrix>div.manager.not-defined {
-    border-color: white !important;
+.htmly-matrix>div.manager.manager-not-defined {
     background-color: #fae2a1;
     border-width: 2px !important;
-    width: 14px;
     margin: 0;
-    height: 25px;
 }
 
-.htmly-matrix-success.orgunit.unit-disabled {
-    border-color: #858585 !important;
+.htmly-matrix>div.htmly-matrix-success.htmly-cell.orgunit.crmcreated {
+    background-color: #b539b5 !important;
+    color: white !important;
+}
+
+.htmly-matrix>div.htmly-matrix-success.htmly-cell.orgunit.unit-disabled {
     border-width: 2px !important;
-    width: 14px;
     margin: 0;
-    height: 25px;
-    background-color: #75323d;
+    background-color: #3c3536;
 }
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.newresponsible {
     background-color: #a1ddf7;
-    color: white !important;
+    color: #2485a3 !important;
     border: 2px solid #ffffff !important;
     float: right;
 }
