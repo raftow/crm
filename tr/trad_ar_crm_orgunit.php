@@ -28,6 +28,8 @@ class CrmOrgunitArTranslator{
 		$trad["crm_orgunit"]["step3"] = "الطلبات المسندة";
 		$trad["crm_orgunit"]["step4"] = "تعيين الموظفين";
 		$trad["crm_orgunit"]["step5"] = "إعدادات الاحصائيات";
+		$trad["crm_orgunit"]["step6"] = "هجرة البيانات";
+		
 
 		$trad["crm_orgunit"]["tempEmployeeList"] = "طلبات تعيين موظف";
 
@@ -38,6 +40,8 @@ class CrmOrgunitArTranslator{
 		$trad["crm_orgunit"]["late_days.tooltip"] = "بعدها يحسب الطلب متأخرا في التقارير";
 
 		$trad["crm_orgunit"]["hrm_code"] = "الرمز عند شؤون الموظفين"; 
+		$trad["crm_orgunit"]["new_hrm_code"] = "رمز الوحدة الجديدة"; 
+		
 		$trad["crm_orgunit"]["crm_code"] = "الرمز عند خدمة العملاء"; 
 		$trad["crm_orgunit"]["unit_token"] = "الرمز السري للوحدة"; 
 		

@@ -39,6 +39,8 @@ class CrmOrgunit extends CrmObject{
                 {
                         $empl_id = $objme ? $objme->getEmployeeId() : 0;
                         
+                        $iam_general_supervisor = 0;
+                        $iam_supervisor = 0;
                         if($empl_id) $iam_general_supervisor = CrmObject::userIsGeneralSupervisor();
                         if($empl_id) $iam_supervisor = CrmObject::userIsSupervisor();
                         
@@ -183,6 +185,27 @@ class CrmOrgunit extends CrmObject{
         {
                 $pbms = array();
                 $iam_general_supervisor = CrmObject::userIsGeneralSupervisor();
+                $userIsSuperAdmin = CrmObject::userIsSuperAdmin();
+
+                if($userIsSuperAdmin) {
+                        $color = "red";
+                        $title_ar = "نقل البيانات إلى وحدة جديدة"; 
+                        $methodName = "migrateToNewHrmUnit";
+                        $pbms[AfwStringHelper::hzmEncode($methodName)] = array(
+                                "METHOD"=>$methodName,
+                                "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
+                                "HZM-SIZE" =>12, 
+                                'STEP'=>$this->stepOfAttribute("new_hrm_code"),
+                        
+                                'CONFIRMATION_NEEDED'=>true,
+                                'CONFIRMATION_WARNING' =>array('ar' => "سجل رمز الوحدة القديم لديك قبل تنفيذ العملية  سوف تحتاجه في حال التراجع", 
+                                                                'en' => "Note down your old HR unit code before performing the operation; you will need it if you need to revert the changes."),
+                                'CONFIRMATION_QUESTION' =>array('ar' => "هل أنت متأكد من تنفيذ عملية الهجرة", 
+                                                        'en' => "Are you sure you want to proceed with the migration process?"),
+                        
+                        );
+                }
+
                 if($iam_general_supervisor)
                 {
                         
@@ -190,9 +213,13 @@ class CrmOrgunit extends CrmObject{
                         $color = "green";
                         $title_ar = "اسناد الطلبات إلى المنسقبن"; 
                         $methodName = "requestAssignement";
-                        $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
-                        "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
-                        "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12, 'STEP'=>$this->stepOfAttribute("currentRequests"),
+                        $pbms[AfwStringHelper::hzmEncode($methodName)] = array(
+                                "METHOD"=>$methodName,
+                                "COLOR"=>$color, "LABEL_AR"=>$title_ar, 
+                                "PUBLIC"=>true, 
+                                "BF-ID"=>"", 
+                                "HZM-SIZE" =>12, 
+                                'STEP'=>$this->stepOfAttribute("currentRequests"),
                         
                         /* CONFIRMATION_NEEDED=>true,
                         'CONFIRMATION_WARNING' =>array('ar' => "xxxxxx", 
@@ -296,6 +323,78 @@ class CrmOrgunit extends CrmObject{
         public function supervisorAssignement($lang="ar")
         {
                 return Request::silentAssignSupervisorForNonAssigned($lang="ar");
+        }
+
+
+        public function migrateToNewHrmUnit($lang="ar") {
+                $err_arr = [];
+                $war_arr = [];
+                $inf_arr = [];
+                $new_hrm_code = $this->getVal("new_hrm_code");
+                $id = $this->id;
+                $newOrg = Orgunit::loadByHRMCode($new_hrm_code);
+                if($newOrg) {
+                        $id_replace = $newOrg->id;
+                        $nb_records = self::replaceOrgunitBy($id, $id_replace);
+                        if($nb_records>0) $inf_arr[] = "We migrated successfully from unit [ID=$id] to new unit [ID=$id_replace], $nb_records record(s) have been impacted";
+                        else $war_arr[] = "Nothing todo when migrating from unit [ID=$id] to new unit [ID=$id_replace]";
+                }
+                else {
+                        $err_arr[] = "HR code $new_hrm_code not found !";
+                }
+                
+                return AfwFormatHelper::pbm_result($err_arr, $war_arr, $inf_arr);
+        }
+
+
+        /**
+         * @param int $id_replace
+         * @param int $id
+         * 
+         */
+        public static function replaceOrgunitBy($id, $id_replace) {
+                $server_db_prefix = AfwSession::config('db_prefix', 'default_db_');
+                $total_affected_row_count = 0;
+                
+                // crm.request-الإدارة المكلفة بالإجابة	orgunit_id  أنا تفاصيل لها-OneToMany
+                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.request set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                $total_affected_row_count += $affected_row_count;
+                
+                // crm.response-الجهة المكلفة بالرد	orgunit_id  أنا تفاصيل لها-OneToMany
+                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.response set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                $total_affected_row_count += $affected_row_count;
+                
+                // crm.crm_orgunit-الجهة المكلفة بالرد	orgunit_id  جزء مني ولا يعمل إلا بي-OneToOneBidirectional
+                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_orgunit set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                $total_affected_row_count += $affected_row_count;
+                
+                // الموظف في خدمة العملاء
+                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_employee set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                $total_affected_row_count += $affected_row_count;
+                
+                // طلب اضافة موظف في خدمة العملاء
+                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_emp_request set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                $total_affected_row_count += $affected_row_count;
+                
+                // ملاحظات على موظف في خدمة العملاء
+                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_emp_note set orgunit_id='$id_replace' where orgunit_id='$id' ");                
+                $total_affected_row_count += $affected_row_count;
+                
+                // المسارات
+                // not used
+                // AfwDatabase::db_query("update " . $server_db_prefix . "crm.request_path set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                
+
+                // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany
+                // not used
+                // AfwDatabase::db_query("update " . $server_db_prefix . "crm.request set concerned_orgunit_id='$id_replace' where concerned_orgunit_id='$id' ");
+                
+                // crm.crm_customer-جهة العميل	customer_orgunit_id  حقل يفلتر به-ManyToOne
+                list(,,, $affected_row_count) = AfwDatabase::db_query("update " . $server_db_prefix . "crm.crm_customer set customer_orgunit_id='$id_replace' where customer_orgunit_id='$id' ");
+                $total_affected_row_count += $affected_row_count;
+
+                return $total_affected_row_count;
+
         }
 
         public function resetRequestAssignement($lang="ar")

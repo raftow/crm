@@ -13,7 +13,7 @@
 						
 						$obj->UNIQUE_KEY = array('orgunit_id');
 						$obj->editByStep = true;
-						$obj->editNbSteps = 5;
+						$obj->editNbSteps = 6;
 
 						$obj->excelExport = true;
 						
@@ -224,6 +224,13 @@
 							'TYPE' => 'INT',  'READONLY' => false,  'SEARCH-BY-ONE' => false,  'DISPLAY' => true,  'STEP' => 5,  
 							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, 
 							),
+
+						'new_hrm_code' => array('STEP' => 6,  
+							'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  
+							'SIZE' => 16,  'MIN-SIZE' => 3,  'CHAR_TEMPLATE' => 'ALPHABETIC,NUMERIC,UNDERSCORE',  'UTF8' => true,  
+							'TYPE' => 'TEXT',  'READONLY' => true, 'DISPLAY' => true, 'DISABLE-READONLY-ADMIN' => true, 
+							'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+							),	
 
 
                         'created_by'         => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'TECH_FIELDS-RETRIEVE' => true, 'RETRIEVE' => false, 
