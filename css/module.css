@@ -4002,6 +4002,12 @@ p.special-link.todo.register {
     color: white !important;
 }
 
+.htmly-matrix>div.htmly-matrix-success.htmly-cell.orgunit.crmupdated {
+    background-color: #125dad !important;
+    color: white !important;
+}
+
+
 .htmly-matrix>div.htmly-matrix-success.htmly-cell.orgunit.unit-disabled {
     border-width: 2px !important;
     margin: 0;
@@ -4011,49 +4017,66 @@ p.special-link.todo.register {
 .htmly-matrix>div.htmly-matrix-success.orgunit.newresponsible {
     background-color: #a1ddf7;
     color: #2485a3 !important;
-    border: 2px solid #ffffff !important;
-    float: right;
+    
+    
 }
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.not-defined.newresponsible {
     background-color: #1c7da9;
     color: white !important;
-    border: 2px solid #ffffff !important;
-    float: right;
+    
+    
 }
 
-.htmly-matrix>div.htmly-matrix-success.orgunit.titlechanged {
+.htmly-matrix>div.htmly-matrix-success.orgunit.loaded.titlechanged {
     background-color: #645f08;
     color: white !important;
-    border: 2px solid #ffffff !important;
-    float: right;
+    
 }
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.loaded.titlechanged {
+    background-color: #645f08;
+    color: white !important;
+    
+    
+}
+
+.htmly-matrix>div.htmly-matrix-success.orgunit.loaded.unit-disabled,
+.htmly-matrix>div.htmly-matrix-success.orgunit.loaded.disabled
+ {
+    background-color: #727271;
+    color: black !important;
+    
+    
+}
+
+
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.codechanged {
     background-color: #ae1ec1;
     color: white !important;
-    border: 2px solid #ffffff !important;
-    float: right;
+    
+    
 }
 
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.newcreated {
     background-color: #340a87;
     color: white !important;
-    border: 2px solid #ffffff !important;
-    float: right;
+    
+    
 }
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.error {
     background-color: red;
     color: white !important;
-    border: 2px solid #ffffff !important;
-    float: right;
+    
+    
 }
 
 .htmly-matrix>div.htmly-matrix-success.orgunit.failed {
     background-color: red;
     color: white !important;
-    border: 2px solid #ffffff !important;
-    float: right;
+    
+    
 }
