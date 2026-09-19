@@ -6,7 +6,7 @@ $tokens = [];
 $tokens["general_stats"] = Request::t('general_stats', $lang);
 $tokens["monitoring"] = Request::t('monitoring', $lang);
 $tokens["period"] = "(".$r->translate("period", $lang) . " " . CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"). " ".$r->translate("day(s)", $lang).")";
-$tokens["customer_nb"] = CrmCustomer::aggreg("count(*)");
+$tokens["customer_nb"] = CrmCustomer::aggreg("count(*)"); // all active or no
 $tokens["customers_title"] = CrmCustomer::t('crm_customer', $lang);
 $tokens["new_customers_nb"] = CrmCustomer::newCustomersCount();
 $tokens["new_customers_title"] = CrmCustomer::t('new_customers_title', $lang);
@@ -16,7 +16,7 @@ if($tokens["new_customers_nb"]<$nb_new_customers_error_limit) $tokens["new_custo
 elseif($tokens["new_customers_nb"]<($nb_new_customers_warning_limit)) $tokens["new_customers_nb_status"] = "warning";
 else $tokens["new_customers_nb_status"] = "ok";
 
-$tokens["orgunit_nb"] = CrmOrgunit::aggreg("count(*)");
+$tokens["orgunit_nb"] = CrmOrgunit::aggreg("count(*)","active='Y'");
 $tokens["orgunits_title"] = CrmOrgunit::t('crm_orgunit', $lang);
 $tokens["subject_nb"] = 139; //RequestSubject::aggreg("count(*)");
 $tokens["subjects_title"] = Request::t('request_subject', $lang);

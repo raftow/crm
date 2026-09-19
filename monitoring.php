@@ -7,7 +7,7 @@ require_once("$file_dir_name/../config/global_config.php");
 $datatable_on=1;
 $cl = "Request";
 $currmod = "crm";
-$currdb = $server_db_prefix."crm";
+// $currdb = $server_db_prefix."crm";
 $limite = 0;
 $genere_xls = 0;
 

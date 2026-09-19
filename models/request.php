@@ -4479,7 +4479,7 @@ class Request extends CrmObject
         return $this->calcMan("value", true);
     }
 
-    public function list_of_status_action_enum()
+    public static function list_of_status_action_enum()
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         return self::status_action()[$lang];
