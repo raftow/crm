@@ -984,7 +984,7 @@ class Request extends CrmObject
     }
 
 
-    public function list_of_request_priority()
+    public static function list_of_request_priority()
     {
         $list_of_items = array();
         $list_of_items[4] = "أولوية منخفضة";  //     code : LOW_PRIO 
