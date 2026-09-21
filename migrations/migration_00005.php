@@ -45,10 +45,10 @@ try {
 
 
     AfwDatabase::db_query("insert into " . $server_db_prefix . "crm.request_category
-VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,NULL,NULL,NULL,NULL,'fraud','الاحتيال','fraud',',18,'),
-(19,1,'2026-09-09 14:12:55',1,'2026-09-09 14:12:55',0,NULL,'Y','Y',1,',',',',',',NULL,'corruption','الفساد','corruption',',18,'),
-(20,1,'2026-09-09 14:12:55',1,'2026-09-09 14:12:55',0,NULL,'Y','Y',1,',',',',',',NULL,'violations','المخالفات المالية','financial violations',',18,'),
-(9999,1,'2026-09-09 14:08:05',0,'0000-00-00 00:00:00',NULL,NULL,'Y','Y',0,NULL,NULL,NULL,NULL,'other','أخرى','other',',2,3,12,13,18,');
+VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,NULL,NULL,NULL,NULL,'fraud',_utf8'الاحتيال','fraud',',18,'),
+(19,1,'2026-09-09 14:12:55',1,'2026-09-09 14:12:55',0,NULL,'Y','Y',1,',',',',',',NULL,'corruption',_utf8'الفساد','corruption',',18,'),
+(20,1,'2026-09-09 14:12:55',1,'2026-09-09 14:12:55',0,NULL,'Y','Y',1,',',',',',',NULL,'violations',_utf8'المخالفات المالية','financial violations',',18,'),
+(9999,1,'2026-09-09 14:08:05',0,'0000-00-00 00:00:00',NULL,NULL,'Y','Y',0,NULL,NULL,NULL,NULL,'other',_utf8'أخرى','other',',2,3,12,13,18,');
 ");
 
     */

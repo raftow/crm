@@ -135,6 +135,8 @@ class CrmEmployee extends CrmObject
         }
 
         /**
+         * @param int $orgunit_id
+         * @param int $employee_id
          * @return CrmEmployee
          */
 

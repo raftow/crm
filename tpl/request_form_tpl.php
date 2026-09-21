@@ -8,6 +8,7 @@
  * @var string $lang
  * @var string $your_full_name
  * @var string $customer_mobile
+ * @var string $customer_email
  * @var string $customer_idn
  * @var string $org_name
  * @var string $ref_num
@@ -58,6 +59,7 @@ $request_type_readonly = true;
 <form id="crm_form" method="POST" enctype="multipart/form-data" action="i.php">
 <?php
         $customer_mobile_readonly = "readonly";
+        $customer_email_readonly = "readonly";
         $customer_idn_readonly = "readonly";
         $customer_fullname_readonly = "readonly";
 ?>
@@ -83,14 +85,6 @@ $request_type_readonly = true;
                         <?php echo AfwInputHelper::inputErrorsInRequest("your_full_name", $data); ?>
                 </div>
                 <!-- fg-your_full_name -->
-                <!-- fg-customer_mobile -->
-                <div id="fg-customer_mobile" class="attrib-customer_mobile form-group width_pct_100 ">
-                        <label for="customer_mobile" class="hzm_label hzm_data_customer_mobile label_required">رقم جوالك 
-                        </label>                    				
-                        <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_mobile" id="customer_mobile" dir="rtl" value="<?php echo $customer_mobile ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_mobile_readonly ?>>	
-                        <?php echo AfwInputHelper::inputErrorsInRequest("customer_mobile", $data); ?>
-                </div>
-                <!-- fg-customer_mobile -->
                 <!-- fg-customer_idn -->
                 <div id="fg-customer_idn" class="attrib-customer_idn form-group width_pct_100 ">
                         <label for="customer_idn" class="hzm_label hzm_data_customer_idn label_required">رقم الهوية 
@@ -99,6 +93,23 @@ $request_type_readonly = true;
                         <?php echo AfwInputHelper::inputErrorsInRequest("customer_idn", $data); ?>
                 </div>
                 <!-- fg-customer_idn -->
+                <!-- fg-customer_mobile -->
+                <div id="fg-customer_mobile" class="attrib-customer_mobile form-group width_pct_100 ">
+                        <label for="customer_mobile" class="hzm_label hzm_data_customer_mobile label_required">رقم جوالك 
+                        </label>                    				
+                        <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_mobile" id="customer_mobile" dir="rtl" value="<?php echo $customer_mobile ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_mobile_readonly ?>>	
+                        <?php echo AfwInputHelper::inputErrorsInRequest("customer_mobile", $data); ?>
+                </div>
+                <!-- fg-customer_mobile -->
+                <!-- fg-customer_email -->
+                <div id="fg-customer_email" class="attrib-customer_email form-group width_pct_100 ">
+                        <label for="customer_email" class="hzm_label hzm_data_customer_email label_required">رقم جوالك 
+                        </label>                    				
+                        <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_email" id="customer_email" dir="rtl" value="<?php echo $customer_email ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_email_readonly ?>>	
+                        <?php echo AfwInputHelper::inputErrorsInRequest("customer_email", $data); ?>
+                </div>
+                <!-- fg-customer_email -->
+                
         </div> 
              
         <div class="">

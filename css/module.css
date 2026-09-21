@@ -74,7 +74,7 @@ h1.modal-title {
 
 .modal-body {
   position: relative;
-  padding: 15px 0 10px;
+  padding: 0 0 10px;
   background-color: transparent !important;
   /* border-top: 6px solid #0096ff; */
 }

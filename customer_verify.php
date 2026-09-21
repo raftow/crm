@@ -261,6 +261,9 @@ if($sms_ok)
                 <div class="modal-header">
                         <h2 class='title_register'>التحقق من صحة رقم الجوال</h2>        
                 </div>
+                <div class="modal-header">
+                        <h2 class="title_register"> أدخل الرمز المرسل على جوالك</h2>        
+                </div>
                     <?
                        if($customer_verify_msg)
                        {
@@ -281,8 +284,11 @@ if($sms_ok)
                                         if($sms_mobile) $sms_mobile_3dig = UfwSmsSender::partialShowMobile($sms_mobile);
                                         else $sms_mobile_3dig = "";
                                         ?>
-                                        <label class='light_label'>أدخل الرمز المرسل على جوالك <?php echo $sms_mobile_3dig  .  " <!-- [sms_i:$sms_info_export , simulate_sms_to_mobile=$simulate_sms_to_mobile,cd=$cdifdev] -->"; ?>
-                                        </label> 
+                                        
+                                        <label class="light_label">
+                                                <span class="mobile-num ltr"> <?php echo $sms_mobile_3dig; ?> </span>
+                                                <?php echo " <!-- [sms_i:$sms_info_export , simulate_sms_to_mobile=$simulate_sms_to_mobile,cd=$cdifdev] -->"; ?>
+                                        </label>
                                         <form id="form_register" name="form_register" method="post" class="digit-group" direction="ltr" action="customer_verify.php" data-group-name="digits" data-autosubmit="true" autocomplete="off" onSubmit="return customer_verify_before_submit();" dir="rtl" enctype="multipart/form-data">                                       
                                         <?php                                                
                                         if(AfwSession::config("MODE_OTP_SEPARAED_DIGITS", false))

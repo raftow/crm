@@ -819,6 +819,9 @@ class CrmController extends AfwController
                 return $custom_scripts;
         }
 
+        /**
+         * @param array $request
+         */
         public function request($request)
         {
                 foreach ($request as $key => $value) $$key = $value;
@@ -893,6 +896,7 @@ class CrmController extends AfwController
                         $data["city_id"] = $theCustomer->getVal("city_id");
                         $data["your_full_name"] = $theCustomer->calc("full_name");
                         $data["customer_mobile"] = $theCustomer->getVal("mobile");
+                        $data["customer_email"] = $theCustomer->getVal("email");
                         $data["customer_idn"] = $theCustomer->getVal("idn");
                 }
 
@@ -981,6 +985,7 @@ class CrmController extends AfwController
                         $data["city_id"] = $theCustomer->getVal("city_id");
                         $data["your_full_name"] = $theCustomer->calc("full_name");
                         $data["customer_mobile"] = $theCustomer->getVal("mobile");
+                        $data["customer_email"] = $theCustomer->getVal("email");
                         $data["customer_idn"] = $theCustomer->getVal("idn");
 
                         if (!$data["city_id"]) $data["city_id"] = 301; //RIYADH
@@ -1084,6 +1089,7 @@ class CrmController extends AfwController
                         $data["request_status"] = $data["obj"]->decode("status_id");
                         $data["your_full_name"] = $theCustomer->calc("full_name");
                         $data["customer_mobile"] = $theCustomer->getVal("mobile");
+                        $data["customer_email"] = $theCustomer->getVal("email");
                         $data["customer_idn"] = $theCustomer->getVal("idn");
                         $data["customer_type"] = $theCustomer->decode("customer_type_id");
                         $data["request_code"] = $data["obj"]->getVal("request_code");
@@ -1266,6 +1272,7 @@ class CrmController extends AfwController
                         list($data["request_instructions"], $data["files_list"]) = $data["obj"]->getLastInstructionDetailsOnRequest();
                         $data["your_full_name"] = $theCustomer->calc("full_name");
                         $data["customer_mobile"] = $theCustomer->getVal("mobile");
+                        $data["customer_email"] = $theCustomer->getVal("email");
                         $data["customer_idn"] = $theCustomer->getVal("idn");
                         $data["customer_type"] = $theCustomer->decode("customer_type_id");
                         $data["request_code"] = $data["obj"]->getVal("request_code");

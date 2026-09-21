@@ -6,21 +6,23 @@
         {
                 $$key = $val;
         }
+    
+    $request_type_readonly = true;
 ?>
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
             <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
 </div>    
 <div class="content_form_bg">
-<div class="content_big_title registration">تقديم طلب إلى <?php echo AfwSession::config("crm_responder", "مكتب خدمة العملاء"); ?></div>
+<div class="content_big_title registration">تعديل طلب</div>
 <div id="container_div" class="table_div">
 <div id="container_right_div" class="table_cell_div content_form">
 <form id="crm_form" method="POST" enctype="multipart/form-data" action="i.php">
 <?php
         $customer_mobile_readonly = "readonly";
+        $customer_email_readonly = "readonly";
         $customer_idn_readonly = "readonly";
         $customer_fullname_readonly = "readonly";
-
 ?>
 <input type="hidden" name="request_id" id="request_id" value="<?php echo $id ?>">
 <input type="hidden" name="cn" id="cn" value="crm">
@@ -45,14 +47,6 @@
                         <?php echo AfwInputHelper::inputErrorsInRequest("your_full_name", $data); ?>
                 </div>
                 <!-- fg-your_full_name -->
-                <!-- fg-customer_mobile -->
-                <div id="fg-customer_mobile" class="attrib-customer_mobile form-group width_pct_100 ">
-                        <label for="customer_mobile" class="hzm_label hzm_data_customer_mobile label_required">رقم جوالك 
-                        </label>                    				
-                        <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_mobile" id="customer_mobile" dir="rtl" value="<?php echo $customer_mobile ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_mobile_readonly ?>>	
-                        <?php echo AfwInputHelper::inputErrorsInRequest("customer_mobile", $data); ?>
-                </div>
-                <!-- fg-customer_mobile -->
                 <!-- fg-customer_idn -->
                 <div id="fg-customer_idn" class="attrib-customer_idn form-group width_pct_100 ">
                         <label for="customer_idn" class="hzm_label hzm_data_customer_idn label_required">رقم الهوية 
@@ -61,6 +55,23 @@
                         <?php echo AfwInputHelper::inputErrorsInRequest("customer_idn", $data); ?>
                 </div>
                 <!-- fg-customer_idn -->
+                <!-- fg-customer_mobile -->
+                <div id="fg-customer_mobile" class="attrib-customer_mobile form-group width_pct_100 ">
+                        <label for="customer_mobile" class="hzm_label hzm_data_customer_mobile label_required">رقم جوالك 
+                        </label>                    				
+                        <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_mobile" id="customer_mobile" dir="rtl" value="<?php echo $customer_mobile ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_mobile_readonly ?>>	
+                        <?php echo AfwInputHelper::inputErrorsInRequest("customer_mobile", $data); ?>
+                </div>
+                <!-- fg-customer_mobile -->
+                <!-- fg-customer_email -->
+                <div id="fg-customer_email" class="attrib-customer_email form-group width_pct_100 ">
+                        <label for="customer_email" class="hzm_label hzm_data_customer_email label_required">رقم جوالك 
+                        </label>                    				
+                        <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_email" id="customer_email" dir="rtl" value="<?php echo $customer_email ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_email_readonly ?>>	
+                        <?php echo AfwInputHelper::inputErrorsInRequest("customer_email", $data); ?>
+                </div>
+                <!-- fg-customer_email -->
+                
         </div> 
              
         <div class="">
