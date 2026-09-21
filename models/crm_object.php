@@ -155,15 +155,19 @@ class CrmObject extends AfwMomkenObject
         public static function calcCrmDate_start_satisfaction_greg()
         {
                 $period = CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_stats_days");
-                return AfwDateHelper::shiftGregDate(self::calcCrmDate_end_satisfaction_greg(), -$period);
+                $return = AfwDateHelper::shiftGregDate(self::calcCrmDate_end_satisfaction_greg(), -$period);
+                list($return_date, $return_time) = explode(" ", $return);
+
+                return $return_date;
         }
 
         public static function calcCrmDate_end_satisfaction_greg()
         {
                 $return =  CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_report_end_date");
                 if($return=="0000-00-00" or $return=="0000-00-00 00:00:00") $return="";
+                list($return_date, $return_time) = explode(" ", $return);
 
-                return $return;
+                return $return_date;
         }
 
         public static function calcCrmDate_end_satisfaction()

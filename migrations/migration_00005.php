@@ -6,7 +6,7 @@ if (!class_exists("AfwSession")) die("Denied access");
 $server_db_prefix = AfwSession::currentDBPrefix();
 try {
 
-   /*@todo : remove comment when going to prod
+   /*@todo : remove comment when going to prod*/
     
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   id_responsible int(11) DEFAULT NULL;");
 
@@ -51,7 +51,7 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 (9999,1,'2026-09-09 14:08:05',0,'0000-00-00 00:00:00',NULL,NULL,'Y','Y',0,NULL,NULL,NULL,NULL,'other',_utf8'أخرى','other',',2,3,12,13,18,');
 ");
 
-    */
+    
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_category_id int(11) NOT NULL DEFAULT 0  AFTER request_type_id;");
     AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.request SET request_category_id = request_type_id");
 
