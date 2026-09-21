@@ -447,7 +447,6 @@ class CrmCrmOrgunitAfwStructure
 			'TYPE' => 'GDAT',
 			'FORMAT' => 'CONVERT_NASRANI_VERY_SIMPLE',
 			'RETRIEVE-VALUE' => false,
-			'READONLY' => true,
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
@@ -488,7 +487,7 @@ class CrmCrmOrgunitAfwStructure
 			'TYPE' => 'TEXT',
 			'READONLY' => true,
 			'DISPLAY' => true,
-			'DISABLE-READONLY-ADMIN' => true,
+			
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
