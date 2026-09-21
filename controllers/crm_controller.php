@@ -967,6 +967,9 @@ class CrmController extends AfwController
                         else $data["related_object_id"] = $data["obj"]->getVal("request_for");
                         $data["requestTypeList"] = RequestType::loadAll();
                         $data["requestCategoryList"] = RequestCategory::loadAllRelatedTo($data["request_type"]);
+
+                        $data["region"] = $data["obj"]->getVal("region_id");
+                        $data["regionList"] = Region::loadAll();
                         $roClassName = AfwSession::config("roClassName", "");
                         if ($roClassName) $data["roList"] = $roClassName::loadAllMyObjects();
 

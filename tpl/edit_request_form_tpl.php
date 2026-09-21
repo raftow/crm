@@ -1,11 +1,14 @@
 <?php
         /**
          * @var array $data_here
+         * @var Request $obj
          */
         foreach($data_here as $key=>$val)
         {
                 $$key = $val;
         }
+
+        $request_type_decoded = $obj->decode("request_type_id",'',false, $lang);
     
     $request_type_readonly = true;
 ?>
@@ -23,6 +26,7 @@
         $customer_email_readonly = "readonly";
         $customer_idn_readonly = "readonly";
         $customer_fullname_readonly = "readonly";
+        $region_readonly = "";
 ?>
 <input type="hidden" name="request_id" id="request_id" value="<?php echo $id ?>">
 <input type="hidden" name="cn" id="cn" value="crm">
@@ -36,7 +40,7 @@
         الرجاء ادخال بيانات مكتملة وصحيحة حتى يتم اعتماد طلبكم والرد عليكم. سيتم آليا اهمال أي طلب يحتوي على بيانات غير صحيحة
         </div>
         <div class="">
-                <h5 class="greentitle"><i></i>بيانات صاحب الطلب : <?php echo $request_code ?></h5>
+                <h5 class="greentitle"><i></i>بيانات صاحب <?php echo $request_type_decoded ?> : <?php echo $request_code ?></h5>
         </div>        
         <div id="group_customer_data" class="" aria-expanded="true">
                 <!-- fg-your_full_name -->
@@ -75,9 +79,25 @@
         </div> 
              
         <div class="">
-                <h5 class="greentitle"><i></i>بيانات الطلب </h5>
+                <h5 class="greentitle"><i></i>بيانات <?php echo $request_type_decoded ?> </h5>
         </div>        
         <div id="group_company_data" class="" aria-expanded="true">        
+
+                <!-- fg-region -->
+                <div id="fg-region" class="attrib-region form-group width_pct_100 ">
+                        <label for="region" class="hzm_label hzm_data_region label_required">المنطقة التي يقع فيها موضوع <?php echo $request_type_decoded ?></label>                  
+                        <?php echo AfwInputHelper::picture_dropdown($regionList, "region", $selected=array($region), 
+                                                                        "region",
+                                                                        $data_images=false, // no drop dwon pictures
+                                                                        $select_width=0, // means auto
+                                                                        $select_css="form-control",
+                                                                        $sort_order = "", 
+                                                                        $empty_option = true, 
+                                                                        $lang,
+                                                                        null,null,["readonly"=>$region_readonly]
+                                                                        ); ?>        
+                </div>
+                <!-- fg-region --> 
                 
                 <!-- fg-request_type -->
                 <div id="fg-request_type" class="attrib-request_type form-group width_pct_100 ">
@@ -96,7 +116,7 @@
 
                 <!-- fg-request_category -->
                 <div id="fg-request_category" class="attrib-request_category form-group width_pct_100 ">
-                        <label for="request_category" class="hzm_label hzm_data_request_category label_required">تصنيف الطلب</label>                  
+                        <label for="request_category" class="hzm_label hzm_data_request_category label_required">تصنيف <?php echo $request_type_decoded ?></label>                  
                         <?php echo AfwInputHelper::picture_dropdown($requestCategoryList, "request_category", $selected=array($request_category), 
                                                                         "request_category",
                                                                         $data_images=false, // no drop dwon pictures
@@ -111,7 +131,7 @@
 
                 <!-- fg-request_subject -->
                 <div id="fg-request_subject" class="attrib-request_subject form-group width_pct_100 ">
-                        <label for="request_subject" class="hzm_label hzm_data_request_subject label_required">موضوع الطلب :  
+                        <label for="request_subject" class="hzm_label hzm_data_request_subject label_required">موضوع <?php echo $request_type_decoded ?> :  
                         </label>        				
                         <input placeholder="" type="text" tabindex="0" class="form-control valid" name="request_subject" id="request_subject" dir="rtl" value="<?php echo $request_subject ?>" size="24" maxlength="32" onchange="" required="true" aria-invalid="false">	
                         <?php echo AfwInputHelper::inputErrorsInRequest("request_subject", $data); ?>
@@ -119,12 +139,12 @@
                 <!-- fg-request_subject --> 
 
                 <div id="fg-body" class="attrib-warn form-group width_pct_100 ">
-                        تنبيه مهم : كلما كانت المعلومات مكتملة ودقيقة وكلما كان الوصف في نص الطلب مكتمل الصورة كلما جاء الرد بشكل أسرع
+                        تنبيه مهم : كلما كانت المعلومات مكتملة ودقيقة وكلما كان الوصف في نص <?php echo $request_type_decoded ?> مكتمل الصورة كلما جاء الرد بشكل أسرع
                 </div>
 
                 <!-- fg-request_body -->
                 <div id="fg-request_body" class="attrib-request_body form-group width_pct_100 ">
-                        <label for="request_body" class="hzm_label hzm_data_request_body label_required">نص الطلب
+                        <label for="request_body" class="hzm_label hzm_data_request_body label_required">نص <?php echo $request_type_decoded ?>
                         </label>                    				
                         <textarea tabindex="0" class="form-control" name="request_body" id="request_body" dir="rtl" rows="8" cols="55" required="true" aria-invalid="false" <?php echo $request_body_readonly ?>><?php echo $request_body ?></textarea>	
                         <?php echo AfwInputHelper::inputErrorsInRequest("request_body", $data); ?>
@@ -134,7 +154,7 @@
                 <!-- fg-confidential -->
                 <div id="fg-confidential" class="attrib-confidential form-group width_pct_100 ">
                         <div class="form-control form-ckbox confidential"><input type="checkbox" value="1" id="confidential" name="confidential" class="echeckbox "></div>        
-                        <label for="confidential" class="hzm_label hzm_data_confidential">البيانات التي يشتمل عليها هذا الطلب سرية للغاية أطلب المحافظة على تشفيرها إلا على المسؤولين المعنيين بمعالجة هذا الطلب
+                        <label for="confidential" class="hzm_label hzm_data_confidential">البيانات التي يشتمل عليها هذا <?php echo $request_type_decoded ?> سرية للغاية أطلب المحافظة على تشفيرها إلا على المسؤولين المعنيين بمعالجة هذا <?php echo $request_type_decoded ?>
                         </label>                    				
                         <?php echo AfwInputHelper::inputErrorsInRequest("confidential", $data); ?>
                 </div>
@@ -167,7 +187,7 @@
                 
                 <!-- fg-web_site -->
                 <div id="fg-web_site" class="attrib-web_site form-group width_pct_100 ">
-                        <label for="web_site" class="hzm_label hzm_data_web_site">رابط متعلق بالطلب (إختياري)
+                        <label for="web_site" class="hzm_label hzm_data_web_site">رابط متعلق ب<?php echo $request_type_decoded ?> (إختياري)
                         </label>                    				
                         <input placeholder="" type="text" tabindex="0" class="form-control" name="web_site" id="web_site" dir="rtl" value="<?php echo $web_site ?>" size="255" maxlength="255" aria-invalid="false" <?php echo $web_site_readonly ?>>	
                         <?php echo AfwInputHelper::inputErrorsInRequest("web_site", $data); ?>
@@ -187,7 +207,7 @@
 
                 
         </div>
-        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال الطلب", $lang)?>&nbsp;"       style="margin-right: 5px;" >
+        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال <?php echo $request_type_decoded ?>", $lang)?>&nbsp;"       style="margin-right: 5px;" >
 </div>
 </form>
 </div>
@@ -196,7 +216,7 @@
         <div id="fg-warn" class="attrib-warn form-group width_pct_100 ">
         
                 <div id="fg-reqstatus" class="attrib-warn form-group width_pct_100 ">
-                       حالة الطلب : <? echo $request_status;?>
+                       حالة <?php echo $request_type_decoded ?> : <? echo $request_status;?>
                 </div>
                 <? echo $request_instructions;?>
 
