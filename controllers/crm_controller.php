@@ -845,6 +845,9 @@ class CrmController extends AfwController
 
 
                 $data["requestTypeList"] = RequestType::loadAll();
+                $requestTypeObj = null;
+                if($data["request_type"]>0) $requestTypeObj = $data["requestTypeList"][$data["request_type"]];
+                $data["request_type_decoded"] = $requestTypeObj ? "الــ(".$requestTypeObj->getDisplay("ar").")" : "الطلب";
                 $data["requestCategoryList"] = RequestCategory::loadAllRelatedTo($data["request_type"]);
                 $data["regionList"] = Region::loadAll();
                 
@@ -951,6 +954,8 @@ class CrmController extends AfwController
 
 
                         $data["request_type"] = $data["obj"]->getVal("request_type_id");
+                        $requestTypeObj = $data["obj"]->het("request_type_id");
+                        $data["request_type_decoded"] = $requestTypeObj ? "الــ(".$requestTypeObj->getDisplay("ar").")" : "الطلب";
                         $data["request_category"] = $data["obj"]->getVal("request_category_id");
                         $data["request_status_id"] = $data["obj"]->getVal("status_id");
                         $data["request_status"] = $data["obj"]->decode("status_id");

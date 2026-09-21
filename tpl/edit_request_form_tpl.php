@@ -8,7 +8,7 @@
                 $$key = $val;
         }
 
-        $request_type_decoded = $obj->decode("request_type_id",'',false, $lang);
+        // $request_type_decoded = $obj->decode("request_type_id",'',false, $lang);
     
     $request_type_readonly = true;
 ?>
