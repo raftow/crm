@@ -2703,9 +2703,10 @@ class Request extends CrmObject
     }
     public static function satisfactionPct()
     {
-        $date_start_stats = self::calc_date_start_stats();
-        $satisfied = Request::aggreg("count(*)", "service_satisfied = 'Y' and request_date >= '$date_start_stats'");
-        $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N' and request_date >= '$date_start_stats'");
+        $date_start_stats = self::calcCrmDate_start_satisfaction();
+        $date_end_stats = self::calcCrmDate_end_satisfaction();
+        $satisfied     = Request::aggreg("count(*)", "service_satisfied = 'Y' and request_date >= '$date_start_stats' and request_date <= '$date_end_stats'");
+        $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N' and request_date >= '$date_start_stats' and request_date <= '$date_end_stats'");
         // $neutral = Request::aggreg("count(*)", "service_satisfied = 'W' and request_date >= '$date_start_stats'");
         $total = $satisfied + $not_satisfied; //  + $neutral
         if ($total > 0) $pct = round($satisfied * 100 / $total);

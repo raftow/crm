@@ -20,6 +20,9 @@ class CrmOrgunitArTranslator{
 		$trad["crm_orgunit"]["unAssignedRequests"] = "طلبات يجب العمل عليها واسنادها";
 		$trad["crm_orgunit"]["currentRequests"] = "الطلبات الجارية";
 		$trad["crm_orgunit"]["id_responsible"] = "المسؤول الأول";
+		$trad["crm_orgunit"]["satisfaction_report_end_date"] = "تاريخ نهاية تقرير رضا العملاء";
+		$trad["crm_orgunit"]["satisfaction_report_end_date_tooltip"] = "إذا تركته فارغا فانه يأخذ قيمة تاريخ اليوم";
+		
 		
 
 

@@ -433,6 +433,27 @@ class CrmCrmOrgunitAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
+		'satisfaction_report_end_date' => array(
+			'STEP' => 5,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'QSEARCH_OPER' => 'between',
+			'QSIZE' => 6,
+			'CSS' => 'width_pct_25',
+			'SIZE' => 40,
+			'TYPE' => 'GDAT',
+			'FORMAT' => 'CONVERT_NASRANI_VERY_SIMPLE',
+			'RETRIEVE-VALUE' => false,
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
 		'late_days' => array(
 			'SEARCH' => false,
 			'QSEARCH' => false,

@@ -100,11 +100,11 @@ class Survey extends CrmObject{
                 $question_type = $question2_row["question_type"];
                 if($question_type=="enum")
                 {
-                    $question_order++;
-                    $question_title_arr[$question_order] = $question_title = $question2_row["question_title"];;
+                    $question2_order++;
+                    $question_title_arr[$question2_order] = $question_title = $question2_row["question_title"];;
                     
                     $question_type_order = $question2_row["question_type_order"];
-                    $sql_arr[] = "select $question_order as question,
+                    $sql_arr[] = "select $question2_order as question,
                     '$question_title' as question_title,
         sum(IF(attribute_enum_$question_type_order=5,1,0)) as verysatisfied,
         sum(IF(attribute_enum_$question_type_order=4,1,0)) as satisfied,

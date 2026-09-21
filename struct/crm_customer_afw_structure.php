@@ -642,7 +642,6 @@ class CrmCrmCustomerAfwStructure
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
-			'READONLY' => true,
 		),
 
 		'ppa' => array(

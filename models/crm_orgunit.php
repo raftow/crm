@@ -607,7 +607,10 @@ class CrmOrgunit extends CrmObject{
 
         public function attributeIsApplicable($attribute)
         {
-                if (($attribute == "perf_stats_days") or ($attribute == "standard_stats_days") or ($attribute == "satisfaction_stats_days")) {
+                if (($attribute == "perf_stats_days") or 
+                    ($attribute == "standard_stats_days") or 
+                    ($attribute == "satisfaction_report_end_date") or 
+                    ($attribute == "satisfaction_stats_days")) {
                         return ($this->getVal("orgunit_id") == self::$CRM_CENTER_ID);
                 }
 
