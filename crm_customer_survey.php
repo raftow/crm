@@ -70,9 +70,9 @@ class CrmCustomerSurvey
 
 
         $nb_survey_update_back = 0;
-        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='Y' where survey_token in (select st.survey_token from survey_token st where attribute_enum_4 >= 4);");
+        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='Y' where survey_token in (select st.survey_token from $server_db_prefix"."crm.survey_token st where attribute_enum_4 >= 4);");
         $nb_survey_update_back += $affected_row_count;
-        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='N' where survey_token in (select st.survey_token from survey_token st where attribute_enum_4 <= 2);");
+        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='N' where survey_token in (select st.survey_token from $server_db_prefix"."crm.survey_token st where attribute_enum_4 <= 2);");
         $nb_survey_update_back += $affected_row_count;
 
         return array('nb_survey_update_back' => $nb_survey_update_back, 'nb_bad_customer' => 0, 'nb_bad_request' => 0);
@@ -82,7 +82,7 @@ class CrmCustomerSurvey
     {
         $k=$start_num;
         $found = false;
-        while(!$found)
+        do
         {
             $token = substr(md5("mp".$k."his".date("His")), 0, $length);
             $server_db_prefix = AfwSession::currentDBPrefix();
@@ -92,7 +92,7 @@ class CrmCustomerSurvey
                 $found = true;
             }            
             else $k++;
-        }
+        } while(!$found);
 
         return $token;
         

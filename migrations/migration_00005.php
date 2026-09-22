@@ -8,16 +8,15 @@ try {
 
    /*@todo : remove comment when going to prod*/
     
-    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   id_responsible int(11) DEFAULT NULL;");
-
+    
     AfwDatabase::db_query("DROP TABLE IF EXISTS " . $server_db_prefix . "crm.request_category;");
 
     AfwDatabase::db_query("CREATE TABLE IF NOT EXISTS " . $server_db_prefix . "crm.`request_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_by` int(11) NOT NULL,
   `created_at`   datetime NOT NULL,
-  `updated_by` int(11) NOT NULL,
-  `updated_at` datetime NOT NULL,
+  `updated_by` int(11) NOT NULL DEFAULT 0,
+  `updated_at` datetime DEFAULT NULL,
   `validated_by` int(11) DEFAULT NULL,
   `validated_at` datetime DEFAULT NULL,
   `active` char(1) NOT NULL,
@@ -48,7 +47,7 @@ try {
 VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,NULL,NULL,NULL,NULL,'fraud',_utf8'الاحتيال','fraud',',18,'),
 (19,1,'2026-09-09 14:12:55',1,'2026-09-09 14:12:55',0,NULL,'Y','Y',1,',',',',',',NULL,'corruption',_utf8'الفساد','corruption',',18,'),
 (20,1,'2026-09-09 14:12:55',1,'2026-09-09 14:12:55',0,NULL,'Y','Y',1,',',',',',',NULL,'violations',_utf8'المخالفات المالية','financial violations',',18,'),
-(9999,1,'2026-09-09 14:08:05',0,'0000-00-00 00:00:00',NULL,NULL,'Y','Y',0,NULL,NULL,NULL,NULL,'other',_utf8'أخرى','other',',2,3,12,13,18,');
+(9999,1,'2026-09-09 14:08:05',0,'2026-09-09 00:00:00',NULL,NULL,'Y','Y',0,NULL,NULL,NULL,NULL,'other',_utf8'أخرى','other',',2,3,12,13,18,');
 ");
 
     
@@ -57,6 +56,8 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request_braudit add   request_category_id int(11) NOT NULL DEFAULT 0  AFTER request_type_id;");
     AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.request_braudit SET request_category_id = request_type_id");
+    
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   id_responsible int(11) DEFAULT NULL;");
 
 
 } catch (Exception $e) {

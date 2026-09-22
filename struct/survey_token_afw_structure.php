@@ -252,7 +252,7 @@ class CrmSurveyTokenAfwStructure
         'CSS' => 'width_pct_100', ),
 
         'attribute_string_1' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,
-        'RETRIEVE' => false, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
+        'RETRIEVE' => true, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
         'EDIT' => true,  'QEDIT' => true,
         'SIZE' => 128,  'MAXLENGTH' => '::additional',  'MIN-SIZE' => 5,  'CHAR_TEMPLATE' => 'ARABIC-CHARS,SPACE',  'UTF8' => true,
         'TYPE' => 'TEXT',  'READONLY' => false,
@@ -266,7 +266,7 @@ class CrmSurveyTokenAfwStructure
         'CSS' => 'width_pct_100', ),
 
         'attribute_string_3' => array( 'SEARCH' => true,  'QSEARCH' => true,  'SHOW' => true,  'AUDIT' => false,
-        'RETRIEVE' => false, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
+        'RETRIEVE' => true, 'OBSOLETE' => '::additional', 'MINIBOX'=>true,
         'EDIT' => true,  'QEDIT' => true,
         'SIZE' => 128,  'MAXLENGTH' => '::additional',  'MIN-SIZE' => 5,  'CHAR_TEMPLATE' => 'ARABIC-CHARS,SPACE',  'UTF8' => true,
         'TYPE' => 'TEXT',  'READONLY' => false,
