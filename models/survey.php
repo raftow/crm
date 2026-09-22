@@ -135,7 +135,7 @@ class Survey extends CrmObject{
         public static function getQuestionLabel($survey_id, $attribute, $lang='ar')
         {
             $question_list = self::getQuestionList($survey_id);
-
+            die("self::getQuestionList($survey_id) = ".var_export($question_list, true));
             foreach($question_list as $question_id => $question_row)
             {
                     
