@@ -162,7 +162,7 @@ class Survey extends CrmObject{
             $toRetrieve = [];
 
             if($survey_id==1) {
-                $toRetrieve['yn'][1] = true;
+                $toRetrieve['yn'][1] = false;
                 $toRetrieve['date'][1] = true;
             
                 $toRetrieve['enum'][1] = true;
