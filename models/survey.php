@@ -134,8 +134,8 @@ class Survey extends CrmObject{
 
         public static function getQuestionLabel($survey_id, $attribute, $lang='ar')
         {
-            $question_list = self::getQuestionList($survey_id);
-            die("self::getQuestionList($survey_id) = ".var_export($question_list, true));
+            $question_list = self::getQuestionList($survey_id,"all",false);
+            // die("self::getQuestionList($survey_id) = ".var_export($question_list, true));
             foreach($question_list as $question_id => $question_row)
             {
                     
@@ -177,7 +177,7 @@ class Survey extends CrmObject{
 
         }
 
-        public static function getQuestionList($survey_id, $question_num="all")
+        public static function getQuestionList($survey_id, $question_num="all", $only_questions=true)
         {
             $question_list = [];
             if($survey_id==1) {
@@ -218,6 +218,31 @@ class Survey extends CrmObject{
                         'question_type'=>'area',
                         'question_type_order'=>1,
                         'question_title'=>'يرجى ذكر أي ملاحظات أو اقتراحات لتحسين الخدمة:',
+                    ];
+
+
+                    if(($question_num==100) or ($question_num=="all")) $question_list[100] = [
+                        'question_type'=>'string',
+                        'question_type_order'=>1,
+                        'question_title'=>'رقم الطلب',
+                    ];
+
+                    if(($question_num==101) or ($question_num=="all")) $question_list[101] = [
+                        'question_type'=>'string',
+                        'question_type_order'=>2,
+                        'question_title'=>'عنوان الطلب',
+                    ];
+
+                    if(($question_num==102) or ($question_num=="all")) $question_list[102] = [
+                        'question_type'=>'string',
+                        'question_type_order'=>3,
+                        'question_title'=>'الإدارة المعالجة للطلب',
+                    ];
+
+                    if(($question_num==103) or ($question_num=="all")) $question_list[103] = [
+                        'question_type'=>'date',
+                        'question_type_order'=>1,
+                        'question_title'=>'تاريخ الطلب',
                     ];
 
                     
