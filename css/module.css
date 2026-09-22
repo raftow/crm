@@ -4091,6 +4091,8 @@ td.srch-result-col-attribute_enum_10>span {
   text-align: center;
   font-size: 10px;
   display: block;
+  min-height: 28px;
+  padding: 8px;
 }
 
 td.srch-result-col-attribute_enum_1.value-1>span,
