@@ -4073,6 +4073,8 @@ p.special-link.todo.register {
     
     
 }
+
+
 td.srch-result-col-attribute_enum_1>span,
 td.srch-result-col-attribute_enum_2>span,
 td.srch-result-col-attribute_enum_3>span,
@@ -4088,32 +4090,81 @@ td.srch-result-col-attribute_enum_10>span {
   margin-top: 4px;
   text-align: center;
   font-size: 10px;
+  display: block;
 }
 
-td.srch-result-col-attribute_enum_1.value-1>span {
+td.srch-result-col-attribute_enum_1.value-1>span,
+td.srch-result-col-attribute_enum_2.value-1>span,
+td.srch-result-col-attribute_enum_3.value-1>span,
+td.srch-result-col-attribute_enum_4.value-1>span,
+td.srch-result-col-attribute_enum_5.value-1>span,
+td.srch-result-col-attribute_enum_5.value-1>span,
+td.srch-result-col-attribute_enum_7.value-1>span,
+td.srch-result-col-attribute_enum_8.value-1>span,
+td.srch-result-col-attribute_enum_9.value-1>span,
+td.srch-result-col-attribute_enum_10.value-1>span {
   background-color: rgb(252,225,222);
   color:rgb(188,107,108);
 }
 
-td.srch-result-col-attribute_enum_1.value-2>span {
+td.srch-result-col-attribute_enum_1.value-2>span,
+td.srch-result-col-attribute_enum_2.value-2>span,
+td.srch-result-col-attribute_enum_3.value-2>span,
+td.srch-result-col-attribute_enum_4.value-2>span,
+td.srch-result-col-attribute_enum_5.value-2>span,
+td.srch-result-col-attribute_enum_5.value-2>span,
+td.srch-result-col-attribute_enum_7.value-2>span,
+td.srch-result-col-attribute_enum_8.value-2>span,
+td.srch-result-col-attribute_enum_9.value-2>span,
+td.srch-result-col-attribute_enum_10.value-2>span {
   background-color: rgb(252,225,222);
   color:rgb(188,107,108);
 }
 
-td.srch-result-col-attribute_enum_1.value-3>span {
+td.srch-result-col-attribute_enum_1.value-3>span,
+td.srch-result-col-attribute_enum_2.value-3>span,
+td.srch-result-col-attribute_enum_3.value-3>span,
+td.srch-result-col-attribute_enum_4.value-3>span,
+td.srch-result-col-attribute_enum_5.value-3>span,
+td.srch-result-col-attribute_enum_5.value-3>span,
+td.srch-result-col-attribute_enum_7.value-3>span,
+td.srch-result-col-attribute_enum_8.value-3>span,
+td.srch-result-col-attribute_enum_9.value-3>span,
+td.srch-result-col-attribute_enum_10.value-3>span {
   background-color: rgb(255,245,223);
   color:rgb(187,142,98);
 }
 
-td.srch-result-col-attribute_enum_1.value-4>span {
+td.srch-result-col-attribute_enum_1.value-4>span,
+td.srch-result-col-attribute_enum_2.value-4>span,
+td.srch-result-col-attribute_enum_3.value-4>span,
+td.srch-result-col-attribute_enum_4.value-4>span,
+td.srch-result-col-attribute_enum_5.value-4>span,
+td.srch-result-col-attribute_enum_5.value-4>span,
+td.srch-result-col-attribute_enum_7.value-4>span,
+td.srch-result-col-attribute_enum_8.value-4>span,
+td.srch-result-col-attribute_enum_9.value-4>span,
+td.srch-result-col-attribute_enum_10.value-4>span {
   background-color: rgb(230,242,252);
   color:rgb(49,139,202);
 }
 
-td.srch-result-col-attribute_enum_1.value-5>span {
+td.srch-result-col-attribute_enum_1.value-5>span,
+td.srch-result-col-attribute_enum_2.value-5>span,
+td.srch-result-col-attribute_enum_3.value-5>span,
+td.srch-result-col-attribute_enum_4.value-5>span,
+td.srch-result-col-attribute_enum_5.value-5>span,
+td.srch-result-col-attribute_enum_5.value-5>span,
+td.srch-result-col-attribute_enum_7.value-5>span,
+td.srch-result-col-attribute_enum_8.value-5>span,
+td.srch-result-col-attribute_enum_9.value-5>span,
+td.srch-result-col-attribute_enum_10.value-5>span {
   background-color: rgb(218,247,233);
   color:rgb(2,138,101);
 }
+
+
+
 
 
 
