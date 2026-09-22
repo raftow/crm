@@ -151,7 +151,7 @@ class SurveyToken extends CrmObject
             return (!Survey::isQuestionEnabled($survey_id, $field_type, $field_order));
         }
         if (($col_struct == "retrieve") or ($col_struct == "excel")) {
-            return (!Survey::isQuestionToRetrieve($survey_id, $field_type, $field_order));
+            return (Survey::isQuestionToRetrieve($survey_id, $field_type, $field_order));
         }
         if ($col_struct == "required") {
             return !$params["optional"];
