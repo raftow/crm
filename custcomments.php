@@ -8,7 +8,7 @@ try {
 
         $cl = 'SurveyToken';
         $currmod = 'crm';
-        $currdb = $server_db_prefix . 'crm';
+        // $currdb = $server_db_prefix . 'crm';
         $limite = 0;
 
         // Rafik !!!! HARD BUG WORKAROUND !!!!!! 
@@ -17,7 +17,7 @@ try {
         // [field_name] in (Array)
         // IMPORTANT WORKAROUND ^^^^^^^^^^^
         // VVVVVVV  *** DONT REMOVE BELOW *** VVVVVVVV         
-        $xls_on = $genere_xls = false;//(count($_POST) > 0);
+        $xls_on = $genere_xls = (count($_POST) > 0);
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
         $arr_sql_conds = array();
