@@ -154,6 +154,36 @@ class Survey extends CrmObject{
 
         }
 
+
+        
+
+        public static function isQuestionToRetrieve($survey_id, $question_type, $question_type_order)
+        {
+            $toRetrieve = [];
+
+            if($survey_id==1) {
+                $toRetrieve['yn'][1] = true;
+                $toRetrieve['date'][1] = true;
+            
+                $toRetrieve['enum'][1] = true;
+                $toRetrieve['enum'][2] = false;
+                $toRetrieve['enum'][3] = false;
+                $toRetrieve['enum'][4] = true;
+                $toRetrieve['string'][1] = true;
+                $toRetrieve['string'][2] = true;
+                $toRetrieve['string'][3] = true;
+
+                $toRetrieve['area'][1] = false;
+                $toRetrieve['area'][2] = false;
+                $toRetrieve['area'][3] = false;
+            }
+
+            
+
+            return $toRetrieve[$question_type][$question_type_order];
+
+        }
+
         public static function isQuestionEnabled($survey_id, $question_type, $question_type_order)
         {
             $enabled = [];
