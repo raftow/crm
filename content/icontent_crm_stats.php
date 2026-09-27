@@ -17,6 +17,34 @@ if ($tokens["new_customers_nb"] < $nb_new_customers_error_limit) $tokens["new_cu
 elseif ($tokens["new_customers_nb"] < ($nb_new_customers_warning_limit)) $tokens["new_customers_nb_status"] = "warning";
 else $tokens["new_customers_nb_status"] = "ok";
 
+
+$statsByType = CrmOrgunit::statsByType();
+
+$ot_stats = [];
+$ot_labels = [];
+foreach($statsByType as $statsByTypeRow) {
+    $ot_id = $statsByTypeRow["id"];
+    $ot_stats[$ot_id] = $statsByTypeRow["nb"];
+    $ot_labels[$ot_id] = $statsByTypeRow["orgunit_type"];
+}
+
+$ot_codes = [];
+$ot_codes[3] = "division";
+$ot_codes[4] = "department";
+$ot_codes[9] = "college";
+$ot_codes[10] = "institute";
+$ot_codes[13] = "general";
+$ot_codes[14] = "deputy";
+$ot_codes[15] = "training";
+$ot_codes[16] = "region";
+
+foreach($ot_codes as $ot_id => $ot_code) {
+    $tokens[$ot_code."_nb"] = $ot_stats[$ot_id];
+    $tokens[$ot_code."s_title"] = $ot_labels[$ot_id];
+}
+
+
+
 $tokens["orgunit_nb"] = CrmOrgunit::aggreg("count(*)", "active='Y'");
 $tokens["orgunits_title"] = CrmOrgunit::t('crm_orgunit', $lang);
 $tokens["subject_nb"] = 139; //RequestSubject::aggreg("count(*)");
@@ -176,3 +204,4 @@ else $tokens["satisfaction_pct_status"] = "ok";
 
 
 return $tokens;
+

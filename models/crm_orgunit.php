@@ -114,6 +114,16 @@ class CrmOrgunit extends CrmObject{
            
         }
 
+        public static function statsByType() {
+                $server_db_prefix = AfwSession::config('db_prefix', 'default_db_');
+                return AfwDatabase::db_recup_rows("select ot.id, ot.titre_short as orgunit_type, count(*) as nb 
+                        from $server_db_prefix"."hrm.orgunit o 
+                                inner join $server_db_prefix"."hrm.orgunit_type ot on o.id_sh_type = ot.id 
+                        where o.id in (select orgunit_id from $server_db_prefix"."crm.crm_orgunit where active='Y') 
+                        group by ot.id, ot.titre_short;");
+        }
+        
+
 
         public function getDisplay($lang="ar")
         {

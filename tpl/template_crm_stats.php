@@ -26,6 +26,87 @@
                                                 <p>[crm_stats_orgunits_title]</p>
                                             </div>
                                         </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/college.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_college_nb]</span> </h3>
+                                                <p>[crm_stats_colleges_title]</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/department.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_department_nb]</span> </h3>
+                                                <p>[crm_stats_departments_title]</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/division.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_division_nb]</span> </h3>
+                                                <p>[crm_stats_divisions_title]</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/institute.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_institute_nb]</span> </h3>
+                                                <p>[crm_stats_institutes_title]</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/general.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_general_nb]</span> </h3>
+                                                <p>[crm_stats_generals_title]</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/deputy.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_deputy_nb]</span> </h3>
+                                                <p>[crm_stats_deputys_title]</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/training.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_training_nb]</span> </h3>
+                                                <p>[crm_stats_trainings_title]</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/region.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_region_nb]</span> </h3>
+                                                <p>[crm_stats_regions_title]</p>
+                                            </div>
+                                        </div>
+
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/operator.svg" alt="">
