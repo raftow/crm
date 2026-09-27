@@ -192,7 +192,7 @@ class CrmCrmOrgunitAfwStructure
 
 		'requests_nb' => array(
 			'SEARCH' => true,
-			'QSEARCH' => true,
+			'QSEARCH' => false,
 			'SHOW' => true,
 			'RETRIEVE' => true,
 			'EDIT' => true,
@@ -439,7 +439,7 @@ class CrmCrmOrgunitAfwStructure
 			'RETRIEVE' => false,
 			'EDIT' => true,
 			'SEARCH' => true,
-			'QSEARCH' => true,
+			'QSEARCH' => false,
 			'QSEARCH_OPER' => 'between',
 			'QSIZE' => 6,
 			'CSS' => 'width_pct_25',

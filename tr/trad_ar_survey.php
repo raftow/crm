@@ -20,6 +20,7 @@ class SurveyArTranslator{
 		$trad["survey"]["unsatisfied"] = CrmObject::stars()['ar'][2];
 		$trad["survey"]["veryunsatisfied"] = CrmObject::stars()['ar'][1];
 		$trad["survey"]["noresponse"] = 'بدون إجابة';
+		$trad["survey"]["all_count"] = 'عدد الأجوبة';
 
         // steps
         return $trad;

@@ -3677,6 +3677,18 @@ table.dataTable.display.stats_table
 table.dataTable.display.stats_table
   > thead
   > tr
+  > th.xqe_hf_z.stats_all_count,
+table.dataTable.display.stats_table
+  > tfoot
+  > tr
+  > th.xqe_hf_z.stats_all_count {
+  background-color: rgb(146, 7, 104) !important;
+  font-size: 13px !important;
+}
+
+table.dataTable.display.stats_table
+  > thead
+  > tr
   > th.xqe_hf_x.stats_veryunsatisfied,
 table.dataTable.display.stats_table
   > tfoot
@@ -4165,14 +4177,11 @@ td.srch-result-col-attribute_enum_10.value-5>span {
   color:rgb(2,138,101);
 }
 
+.row.crm_data.title_crm.protest {
+    background-color: #f9b9c275;
+}
 
-
-
-
-
-
-
-
-
-
-
+.hzm_data_prop.hzm_recommendation.protest {
+    color: white;
+    background-color: #894848;
+}

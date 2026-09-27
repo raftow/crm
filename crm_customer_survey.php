@@ -2,6 +2,7 @@
 
 class CrmCustomerSurvey
 {
+    public static $CONSIDERABLE_COMMENT_MIN_LENGTH = 24;
     public static function surveyCustomerSatisfactionAndBackToCrm2($send_limit = 100)
     {
         /*
@@ -62,17 +63,72 @@ class CrmCustomerSurvey
         */
 
         $server_db_prefix = AfwSession::currentDBPrefix();
-        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 + (5-attribute_enum_4);");
-        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = 5 where attribute_enum_3 > 5;");
-        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 - 1 where id % 4 = 0;");
-        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 - 2 where id % 7 = 0;");
-        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_3 = attribute_enum_3 - 3 where id % 11 = 0;");
 
+        // who put unsatisfied about plateform should put considerable comment (>= 24 charachters)
+        // otherwise it is a negative participant so we consider he does not respond 
+        // as most case it is not satisfied about service not plateform
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_1 = 0 where survey_id = 2 and attribute_enum_1 <=2 and length(attribute_area_1) < ".self::$CONSIDERABLE_COMMENT_MIN_LENGTH);
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_1 = 0
+              where survey_id in (1,2) 
+                and attribute_enum_1 is null");
+
+        AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set attribute_enum_4 = 0
+              where survey_id in (1) 
+                and attribute_enum_4 is null");
+
+        $unwanted_related_service_words = [];
+        $unwanted_related_service_words[] = "لم يتم التجاوب";
+        $unwanted_related_service_words[] = "لم يتم حل";
+        $unwanted_related_service_words[] = "لم يتم خدمتي";
+        $unwanted_related_service_words[] = "لم يتم توجيهي";        
+        $unwanted_related_service_words[] = "لم يتم الرد";
+        $unwanted_related_service_words[] = "لم يتم التعاون";
+        
+        $unwanted_related_service_words[] = "تاخير بالرد";
+
+        $unwanted_related_service_words[] = "لا يوجد اي رد";
+        $unwanted_related_service_words[] = "لا يوجد رد";
+        $unwanted_related_service_words[] = "لا يوجد اي تجاوب";
+        $unwanted_related_service_words[] = "لا يوجد تجاوب";
+        $unwanted_related_service_words[] = "لا يوجد تعاون"; 
+
+        $unwanted_related_service_words[] = "خدمة غير";
+        $unwanted_related_service_words[] = "خدمة سيئة";
+        $unwanted_related_service_words[] = "خدمة سيئه";
+
+        $unwanted_related_service_words[] = "اسوء موسسة";
+        $unwanted_related_service_words[] = "اسوء مؤسسة";
+        $unwanted_related_service_words[] = "اسوء خدمة";
+
+        $unwanted_related_service_words[] = "ولافي رد";
+        $unwanted_related_service_words[] = "ولا في رد";
+        $unwanted_related_service_words[] = "ولافي تجاوب";
+        $unwanted_related_service_words[] = "ولا في تجاوب";
+
+        $unwanted_related_service_words[] = "صار له اكثر من";
+        $unwanted_related_service_words[] = "صار له أكثر من";
+
+        $unwanted_related_service_words[] = "لم تُحل مشكل";
+
+        $unwanted_related_service_words[] = "م رديتو"; 	
+        $unwanted_related_service_words[] = "ما رديتو";
+        $unwanted_related_service_words[] = "م رديتم"; 	
+        $unwanted_related_service_words[] = "ما رديتم";
+
+        foreach($unwanted_related_service_words as $unwanted_related_service_word) {
+            AfwDatabase::db_query("update $server_db_prefix"."crm.survey_token set survey_id = 1
+              where survey_id = 2 
+                and attribute_enum_1 <= 2
+                and attribute_area_1 like _utf8'%$unwanted_related_service_word%'");    
+        }
+        
 
         $nb_survey_update_back = 0;
         list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='Y' where survey_token in (select st.survey_token from $server_db_prefix"."crm.survey_token st where attribute_enum_4 >= 4);");
         $nb_survey_update_back += $affected_row_count;
-        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='N' where survey_token in (select st.survey_token from $server_db_prefix"."crm.survey_token st where attribute_enum_4 <= 2);");
+        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='N' where survey_token in (select st.survey_token from $server_db_prefix"."crm.survey_token st where attribute_enum_4 in (1,2));");
+        $nb_survey_update_back += $affected_row_count;
+        list($result, $project_link_name, $row_count, $affected_row_count) = AfwDatabase::db_query("update $server_db_prefix"."crm.request set service_satisfied='W' where survey_token in (select st.survey_token from $server_db_prefix"."crm.survey_token st where attribute_enum_4 in (0,3));");
         $nb_survey_update_back += $affected_row_count;
 
         return array('nb_survey_update_back' => $nb_survey_update_back, 'nb_bad_customer' => 0, 'nb_bad_request' => 0);

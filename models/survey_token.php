@@ -147,6 +147,11 @@ class SurveyToken extends CrmObject
         $field_order = $field_part_arr[2];
 
         $col_struct = strtolower($col_struct);
+
+        if ($col_struct == "mandatory") {
+            return (Survey::isQuestionMandatory($survey_id, $field_type, $field_order));
+        }
+
         if ($col_struct == "obsolete") {
             return (!Survey::isQuestionEnabled($survey_id, $field_type, $field_order));
         }
@@ -467,9 +472,110 @@ class SurveyToken extends CrmObject
         return [$class_hidden, $message_hidden];
     }
 
-    public function containComment() {
-        $this->where("length(attribute_area_1) > 7");
+    public function containImportantComment() {
+        $this->where("length(trim(attribute_area_1)) >= ".CrmCustomerSurvey::$CONSIDERABLE_COMMENT_MIN_LENGTH);
     }
+
+    public function serviceSurveyNotEmpty() {
+        $this->where("attribute_yn_1='Y'");
+        $this->where("attribute_enum_4 > 0");
+    } 
+
+    public function pateformSurveyNotEmpty() {
+        $this->where("attribute_enum_1 > 0");
+    }
+
+
+    public static function satisfactionPct()
+    {
+        $server_db_prefix = AfwSession::config("db_prefix","ttc_");
+        $date_start_stats = self::calcCrmDate_start_satisfaction();
+        $date_end_stats = self::calcCrmDate_end_satisfaction();
+        $date_start_stats_greg = self::calcCrmDate_start_satisfaction_greg();
+        $date_end_stats_greg = self::calcCrmDate_end_satisfaction_greg();
+        $survey_token_stats_row     = AfwDatabase::db_recup_row("select sum(IF(attribute_enum_4=5,1,0)) as verysatisfied,
+        sum(IF(attribute_enum_4=4,1,0)) as satisfied,
+        sum(IF(attribute_enum_4=3,1,0)) as indifferent,
+        sum(IF(attribute_enum_4=2,1,0)) as unsatisfied,
+        sum(IF(attribute_enum_4=1,1,0)) as veryunsatisfied,
+        sum(IF(attribute_enum_4=0,1,0)) as noresponse
+    from $server_db_prefix"."crm.survey_token
+    where survey_id=1 
+      and active = 'Y' 
+      and attribute_yn_1='Y' 
+      and attribute_gdate_1 between '$date_start_stats_greg' and '$date_end_stats_greg'");
+
+        $verysatisfied = $survey_token_stats_row["verysatisfied"];
+        $satisfied     = $survey_token_stats_row["satisfied"];
+        $indifferent = $survey_token_stats_row["indifferent"];
+        $unsatisfied = $survey_token_stats_row["unsatisfied"];
+        $veryunsatisfied = $survey_token_stats_row["veryunsatisfied"];
+        $noresponse = $survey_token_stats_row["noresponse"];
+        $total_participated = $verysatisfied + $satisfied + $indifferent + $unsatisfied + $veryunsatisfied;
+        $total_sent = $total_participated + $noresponse;
+        $is_satisfied = $verysatisfied + $satisfied;
+        if ($total_participated > 0) $pct = round($is_satisfied * 1000 / $total_participated)/10;
+        else $pct = 0;
+
+        
+        return [$pct, $date_start_stats, $date_end_stats, $date_start_stats_greg, $date_end_stats_greg, $total_sent, $total_participated];
+    }
+
+
+    public static function list_of_filter()
+    {
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        return self::filter()[$lang];
+    }
+
+    public static function filter()
+    {
+        $arr_list_of_filter = array();
+
+        $arr_list_of_filter['en'][1] = 'contain important comment';
+        $arr_list_of_filter['ar'][1] = 'يحتوي على ملاحظة معتبره';
+        $arr_list_of_filter['code'][1] = 'containImportantComment';
+
+        /*$arr_list_of_filter['en'][2] = 'XXXXXXXX';
+        $arr_list_of_filter['ar'][2] = 'ييييييي';
+        $arr_list_of_filter['code'][2] = 'xxxxxx';*/
+
+        return $arr_list_of_filter;
+    }
+
+    public static function filterCode($filter=null)
+    {
+        // $lang = AfwLanguageHelper::getGlobalLanguage();
+        if ($filter)
+            return self::filter()['code'][$filter];
+        else
+            return self::filter()['code'];
+    }
+
+    public function updateGregDate($lang="ar") {
+        $attribute_date_1 = $this->getVal("attribute_date_1");
+        $attribute_gdate_1 = AfwDateHelper::hijriToGreg($attribute_date_1);
+        if($attribute_gdate_1) {
+            $this->set("attribute_gdate_1", $attribute_gdate_1);
+            return $this->update();
+        }
+        else return 0;
+    }
+
+    public static function fillAllGregDates($lang="ar") {
+        $obj = new SurveyToken();
+        $obj->where("attribute_date_1 is not null and attribute_gdate_1 is null");
+        $nb_updated = 0;
+        $objList = $obj->loadMany(3000);
+        foreach($objList as $objItem) {
+            $nb_updated += $objItem->updateGregDate($lang);
+        }
+
+        return ["", "$nb_updated row(s) updated"];
+    }
+
+
+    
 }
 
 // errors

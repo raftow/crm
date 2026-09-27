@@ -190,6 +190,33 @@
                                             </div>
                                         </div>
 
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <span class='cms-title'>[crm_stats_satisfaction]  [crm_stats_satisfaction_period]</span>
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="single_element">
+                        <div class="quick_activity">
+                            <div class="row">                                 
+                                <div class="col-12">
+                                    <div class="quick_activity_wrap"> 
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/survey-ready.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter ok">[crm_stats_survey_ready_nb_period]</span> </h3>
+                                                <p>[crm_stats_survey_ready_period_title]</p>
+                                            </div>
+                                        </div>
+
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/survey-sent-[crm_stats_survey_sent_nb_period_status].svg" alt="">
@@ -219,11 +246,10 @@
                                                 <p>[crm_stats_satisfaction_title]</p>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    </div>
+            </div>

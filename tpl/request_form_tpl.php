@@ -367,7 +367,7 @@ echo $js_for_cust_type;
 
                 
         </div>
-        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال <?php echo $request_type_decoded ?>", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
+        <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال $request_type_decoded", $lang, "crm")?>&nbsp;"       style="margin-right: 5px;" >
 </div>
 </form>
 </div>

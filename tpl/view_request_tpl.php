@@ -85,6 +85,21 @@
 
                                         
                                 <?php 
+                                        list($recommendation, $class_recommendation) = $ticketObj->getCrmAIRecommendation($lang);
+                                        
+                                        if($recommendation) {
+                                ?>
+                                        <div class="row crm_data title_crm <?php echo $class_recommendation; ?>">
+                                                <label>توجيه مهم</label>
+                                        </div>
+                                        <div class="row crm_data">       
+                                                <div class='hzm_data_prop hzm_recommendation <?php echo $class_recommendation; ?>'>
+                                                        <?php echo $recommendation; ?> 
+                                                </div>
+                                        </div>
+                                
+                                <?php                
+                                        } 
                                         list($lastActionOnRequest, $LAResponseId)  = $ticketObj->getLastActionOnRequest($lang);
                                 ?>        
                                         <div class="row crm_data title_crm">
@@ -233,6 +248,14 @@
 </div>
 <?
 $my_survey2_url = $ticketObj->mySurvey2Url();
+if($ticketObj->calcRequest_very_late()) {
+        $ticketObj->resetSurveyForMe("ar");
+        $my_survey_url = $ticketObj->mySurveyUrl();
+}
+else {
+        $my_survey_url =  "";
+}
+
 $cr_prefix = "العودة إلى";
 include("back_to_my_requests_tpl.php");
 ?>

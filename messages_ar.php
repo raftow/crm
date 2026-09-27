@@ -86,5 +86,9 @@ $messages = [
     "We encourage you to evaluate our platform to help us improve our service. This evaluation focuses on the user experience and technical quality of the online platform." => 
         "نأمل منكم تقييم منصة تواصل معنا لتحسين الخدمة. يركّز هذا التقييم على تجربة استخدام المنصة الإلكترونية وجودتها التقنية.",
 
+    "There has been a significant delay in responding to this request; please be advised that the request is currently with" 
+       => "لقد طرأ تأخير ملحوظ في الرد على هذا الطلب؛ ونعتذر لكم بشدة على هذا الأمر ونسعى لحل المشكلة؛ يرجى العلم بأن الطلب قيد النظر حالياً لدى.",
+    "and is being investigated by" => "ويجري فحصه من قِبَل",
+
 ];
      

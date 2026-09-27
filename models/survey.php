@@ -64,10 +64,16 @@ class Survey extends CrmObject{
             $stat_trad["indifferent"] = AfwLanguageHelper::translateStatsColumn("indifferent", "Survey", null, $lang);
             $stat_trad["unsatisfied"] = AfwLanguageHelper::translateStatsColumn("unsatisfied", "Survey", null, $lang);
             $stat_trad["veryunsatisfied"] = AfwLanguageHelper::translateStatsColumn("veryunsatisfied", "Survey", null, $lang);
-            $stat_trad["noresponse"] = AfwLanguageHelper::translateStatsColumn("noresponse", "Survey", null, $lang);
-            // $stat_trad["all_count"] = AfwLanguageHelper::translateStatsColumn("all_count", "Survey", null, $lang);
+            // $stat_trad["noresponse"] = AfwLanguageHelper::translateStatsColumn("noresponse", "Survey", null, $lang);
+            // $hide_total = "--";
+            if(!$paramsArr["charts"]) {
+                // $hide_total = "";
+                $stat_trad["all_count"] = AfwLanguageHelper::translateStatsColumn("all_count", "Survey", null, $lang);
+            }
 
             $question_title_arr = [];
+
+            $question_order = 0;
 
             foreach($question_list as $question_order => $question_row)
             {
@@ -84,12 +90,13 @@ class Survey extends CrmObject{
         sum(IF(attribute_enum_$question_type_order=3,1,0)) as indifferent,
         sum(IF(attribute_enum_$question_type_order=2,1,0)) as unsatisfied,
         sum(IF(attribute_enum_$question_type_order=1,1,0)) as veryunsatisfied,
-        sum(IF(attribute_enum_$question_type_order=0,1,0)) as noresponse,
-        count(*) as all_count
+        -- sum(IF(attribute_enum_$question_type_order=0,1,0)) as noresponse,
+        sum(IF(attribute_enum_$question_type_order>0,1,0)) as all_count
     from $server_db_prefix"."crm.survey_token
     where survey_id=1 
     and active = 'Y' 
     and attribute_yn_1='Y' 
+    and attribute_enum_$question_type_order>0
     and attribute_date_1 between '$start_date' and '$end_date'";
                 }
             }
@@ -100,22 +107,23 @@ class Survey extends CrmObject{
                 $question_type = $question2_row["question_type"];
                 if($question_type=="enum")
                 {
-                    $question2_order++;
-                    $question_title_arr[$question2_order] = $question_title = $question2_row["question_title"];;
+                    $question_order++;
+                    $question_title_arr[$question_order] = $question_title = $question2_row["question_title"];;
                     
                     $question_type_order = $question2_row["question_type_order"];
-                    $sql_arr[] = "select $question2_order as question,
+                    $sql_arr[] = "select $question_order as question,
                     '$question_title' as question_title,
         sum(IF(attribute_enum_$question_type_order=5,1,0)) as verysatisfied,
         sum(IF(attribute_enum_$question_type_order=4,1,0)) as satisfied,
         sum(IF(attribute_enum_$question_type_order=3,1,0)) as indifferent,
         sum(IF(attribute_enum_$question_type_order=2,1,0)) as unsatisfied,
         sum(IF(attribute_enum_$question_type_order=1,1,0)) as veryunsatisfied,
-        sum(IF(attribute_enum_$question_type_order=0,1,0)) as noresponse,
-        count(*) as all_count
+        -- sum(IF(attribute_enum_$question_type_order=0,1,0)) as noresponse,
+        sum(IF(attribute_enum_$question_type_order>0,1,0)) as all_count
     from $server_db_prefix"."crm.survey_token
     where survey_id=2 
     and active = 'Y' 
+    and attribute_enum_$question_type_order>0
     and attribute_date_1 between '$start_date' and '$end_date'";
                 }
             }
@@ -163,7 +171,8 @@ class Survey extends CrmObject{
 
             if($survey_id==1) {
                 $toRetrieve['yn'][1] = false;
-                $toRetrieve['date'][1] = true;
+                $toRetrieve['date'][1] = false;
+                $toRetrieve['gdate'][1] = true;
             
                 $toRetrieve['enum'][1] = true;
                 $toRetrieve['enum'][2] = false;
@@ -184,12 +193,35 @@ class Survey extends CrmObject{
 
         }
 
+        public static function isQuestionMandatory($survey_id, $question_type, $question_type_order)
+        {
+            $mandatory = [];
+
+            $mandatory['yn'][1] = true;
+            $mandatory['gdate'][1] = true;
+            
+            $mandatory['enum'][1] = true;
+            $mandatory['enum'][2] = false;
+            $mandatory['enum'][3] = false;
+            $mandatory['enum'][4] = true;
+            $mandatory['string'][1] = true;
+            $mandatory['string'][2] = true;
+            $mandatory['string'][3] = true;
+
+            $mandatory['area'][1] = true;
+            $mandatory['area'][2] = false;
+            $mandatory['area'][3] = false;
+
+            return $mandatory[$question_type][$question_type_order];
+
+        }
+
         public static function isQuestionEnabled($survey_id, $question_type, $question_type_order)
         {
             $enabled = [];
 
             $enabled['yn'][1] = true;
-            $enabled['date'][1] = true;
+            $enabled['gdate'][1] = true;
             
             $enabled['enum'][1] = true;
             $enabled['enum'][2] = true;
@@ -250,31 +282,37 @@ class Survey extends CrmObject{
                         'question_title'=>'يرجى ذكر أي ملاحظات أو اقتراحات لتحسين الخدمة:',
                     ];
 
+                    if(!$only_questions) {
+                        if(($question_num==100) or ($question_num=="all")) $question_list[100] = [
+                            'question_type'=>'string',
+                            'question_type_order'=>1,
+                            'question_title'=>'رقم الطلب',
+                        ];
 
-                    if(($question_num==100) or ($question_num=="all")) $question_list[100] = [
-                        'question_type'=>'string',
-                        'question_type_order'=>1,
-                        'question_title'=>'رقم الطلب',
-                    ];
+                        if(($question_num==101) or ($question_num=="all")) $question_list[101] = [
+                            'question_type'=>'string',
+                            'question_type_order'=>2,
+                            'question_title'=>'عنوان الطلب',
+                        ];
 
-                    if(($question_num==101) or ($question_num=="all")) $question_list[101] = [
-                        'question_type'=>'string',
-                        'question_type_order'=>2,
-                        'question_title'=>'عنوان الطلب',
-                    ];
+                        if(($question_num==102) or ($question_num=="all")) $question_list[102] = [
+                            'question_type'=>'string',
+                            'question_type_order'=>3,
+                            'question_title'=>'الإدارة المعالجة للطلب',
+                        ];
 
-                    if(($question_num==102) or ($question_num=="all")) $question_list[102] = [
-                        'question_type'=>'string',
-                        'question_type_order'=>3,
-                        'question_title'=>'الإدارة المعالجة للطلب',
-                    ];
+                        if(($question_num==103) or ($question_num=="all")) $question_list[103] = [
+                            'question_type'=>'gdate',
+                            'question_type_order'=>1,
+                            'question_title'=>'تاريخ الطلب',
+                        ];
 
-                    if(($question_num==103) or ($question_num=="all")) $question_list[103] = [
-                        'question_type'=>'date',
-                        'question_type_order'=>1,
-                        'question_title'=>'تاريخ الطلب',
-                    ];
-
+                        if(($question_num==104) or ($question_num=="all")) $question_list[104] = [
+                            'question_type'=>'date',
+                            'question_type_order'=>1,
+                            'question_title'=>'تاريخ الطلب',
+                        ];
+                    }
                     
 
 

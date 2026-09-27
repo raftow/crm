@@ -846,8 +846,10 @@ class CrmController extends AfwController
 
                 $data["requestTypeList"] = RequestType::loadAll();
                 $requestTypeObj = null;
-                if($data["request_type"]>0) $requestTypeObj = $data["requestTypeList"][$data["request_type"]];
-                $data["request_type_decoded"] = $requestTypeObj ? "الــ(".$requestTypeObj->getDisplay("ar").")" : "الطلب";
+                if(($data["request_type"] > 0) and ($data["request_type"] != 1) and ($data["request_type"] != 12)) {
+                        $requestTypeObj = $data["requestTypeList"][$data["request_type"]];
+                } 
+                $data["request_type_decoded"] = $requestTypeObj ? "الــ".$requestTypeObj->getDisplay("ar") : "الطلب";
                 $data["requestCategoryList"] = RequestCategory::loadAllRelatedTo($data["request_type"]);
                 $data["regionList"] = Region::loadAll();
                 
@@ -954,8 +956,12 @@ class CrmController extends AfwController
 
 
                         $data["request_type"] = $data["obj"]->getVal("request_type_id");
-                        $requestTypeObj = $data["obj"]->het("request_type_id");
-                        $data["request_type_decoded"] = $requestTypeObj ? "الــ(".$requestTypeObj->getDisplay("ar").")" : "الطلب";
+                        $requestTypeObj = null;
+                        if(($data["request_type"] > 0) and ($data["request_type"] != 1) and ($data["request_type"] != 12)) {
+                                $requestTypeObj =  $data["obj"]->het("request_type_id");
+                        }
+                        
+                        $data["request_type_decoded"] = $requestTypeObj ? "الــ".$requestTypeObj->getDisplay("ar") : "الطلب";
                         $data["request_category"] = $data["obj"]->getVal("request_category_id");
                         $data["request_status_id"] = $data["obj"]->getVal("status_id");
                         $data["request_status"] = $data["obj"]->decode("status_id");
@@ -1554,6 +1560,7 @@ class CrmController extends AfwController
                         $reqObj->set("confidential", $confidentialYN);
                         $reqObj->set("request_title", $request_subject);
                         $reqObj->set("request_type_id", $request_type);
+                        $reqObj->set("request_category_id", $request_category);
                         $reqObj->set("region_id", $region);
                         $reqObj->set("active", "Y");
 

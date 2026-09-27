@@ -171,6 +171,7 @@ class RequestArTranslator
 
 		$trad['request']['general_stats'] = "إحصائيات عامة";
 		$trad['request']['monitoring'] = "المراقبة";
+		$trad['request']['satisfaction'] = "رضى العميل";
 		
 
 		
@@ -178,8 +179,9 @@ class RequestArTranslator
 		$trad['request']['tickets-total'] = 'عدد التذاكر الإجمالي';
 		$trad['request']['tickets'] = 'عدد التذاكر للفترة المحددة';
 
-		$trad['request']['survey-sent'] = 'استبانات مرسلة';
-		$trad['request']['survey-opened'] = 'مشاركة في الاستبانات';
+		$trad['request']['survey-ready-period-title'] = 'استبانة جاهزة';
+		$trad['request']['survey-sent'] = 'استبانة مرسلة';
+		$trad['request']['survey-opened'] = 'مشاركة في الاستبانة';
 
 		$trad['request']['period'] = 'فترة';
 		$trad['request']['day(s)'] = 'يوم';

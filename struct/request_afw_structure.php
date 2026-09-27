@@ -8,7 +8,13 @@ class CrmRequestAfwStructure
 			$obj->DISPLAY_FIELD = "request_title";
 			// $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
 			$obj->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
-			$obj->AUDIT_DATA = 'byrow_audit';
+			// $obj->AUDIT_DATA = false // disabled by rafik 23/9/2026 until 
+										// audit become very stable 
+										// for example : 
+										// 1) order of columns and count for table request and request_braudit 
+										// 2) when audit fail we don't know the error 
+										//    just we got message : Audit operation failed 
+										// 'byrow_audit';
 			$obj->DEFAULT_AGROUP = "status";
 
 			$obj->STATS_DEFAULT_CODE = "gs001";

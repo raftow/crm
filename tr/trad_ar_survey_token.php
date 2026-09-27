@@ -15,6 +15,8 @@ class SurveyTokenArTranslator{
 		$trad["survey_token"]["customer_id"] = "العميل";
 		$trad["survey_token"]["survey_id"] = "الاستبانة";
 		$trad["survey_token"]["attribute_date_1"] = "تاريخ الطلب";
+		$trad["survey_token"]["attribute_gdate_1"] = "تاريخ الطلب";
+		$trad["survey_token"]["filter"] = "فلترة خاصة";
 
 		$trad["survey_token"]["stats.st001"] = "تقرير رضا العملاء لفترة من <a target='_settings' href='[seturl]'>[date_start_satisfaction_greg]</a> إلى <a href='[seturl]'>[date_end_satisfaction_greg]</a>";
         // steps

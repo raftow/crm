@@ -29,6 +29,11 @@ if ($objme) {
                         if ($info) AfwSession::pushInformation($info);
                         if ($error) AfwSession::pushError($error);
                 }
+                elseif ($_GET["fsd"] == 1) {
+                        list($error, $info) = SurveyToken::fillAllGregDates("ar");
+                        if ($info) AfwSession::pushInformation($info);
+                        if ($error) AfwSession::pushError($error);
+                }
         }
 
         // اذا عند احدى هذه الصلاحيات يدخل كموظف 
@@ -44,7 +49,7 @@ if ($objme) {
                 );
 
 
-        if ($objme->isSuperAdmin() or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR)) {
+        if (($_GET["mpg"]=="monitoring") or $objme->isSuperAdmin() or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR)) {
                 // die("je suis ici 29040001");
                 $Main_Page = "monitoring.php";
                 $MODULE = $My_Module = "crm";

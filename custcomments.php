@@ -36,22 +36,28 @@ try {
 
 
         $current_page = "custcomments.php";
-        $special_filter = "containComment";
+        
         $option = $_REQUEST["option"];
         if (!$option) $option = "service";
+
+        
+        
+        
 
         $readOnlyColumns = [
                 'survey_id',
         ];
 
 
-
+        
 
         
         if ($option == "service") {
+                $special_filter = "serviceSurveyNotEmpty;";
                 $formColumns = [
                         'survey_id',
-                        'attribute_date_1',
+                        'filter',
+                        'attribute_gdate_1',
                         'attribute_enum_1',
                         'attribute_enum_4',
                 ];
@@ -75,9 +81,11 @@ try {
 
                 $qsearch_page_title = AfwLanguageHelper::tt('ملاحظات العملاء على الخدمة', $lang, $currmod);
         } else {
+                $special_filter = "pateformSurveyNotEmpty;";
                 $formColumns = [
                         'survey_id',
-                        'attribute_date_1',
+                        'filter',
+                        'attribute_gdate_1',
                         'attribute_enum_1',
                 ];
 
@@ -96,8 +104,12 @@ try {
                 ];
 
                 $specialStructure = [];
-                $qsearch_page_title = AfwLanguageHelper::tt('ملاحظات العملاء على المنصة', $lang, $currmod);
+                $qsearch_page_title = AfwLanguageHelper::tt('اقتراحات العملاء على المنصة وتقييمها', $lang, $currmod);
         }
+
+        $form_filter = $_REQUEST["filter"];
+        $form_filter_code = $form_filter ? SurveyToken::filterCode($form_filter) : "";
+        if($form_filter_code) $special_filter .= $form_filter_code.";";
 
         $fixed_criterea_arr =  array(
                 0 => array('col' => 'survey_id', 'oper' => '=', 'val' => $fixed_survey_id,),
@@ -106,7 +118,7 @@ try {
 
         $instanceOptions = [
                 'excelExport' => true,
-                'pdfExport' => true,
+                'pdfExport' => false,
         ];
 
 

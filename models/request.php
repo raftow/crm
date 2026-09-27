@@ -450,10 +450,12 @@ class Request extends CrmObject
             "FOOTER_SUM" => true,
             "GROUP_SEP" => ".",
             "GROUP_COLS" => array(
-                0 => array("COLUMN" => "orgunit_id", 
-                           "DISPLAY-FORMAT" => "decode", 
-                           "FOOTER_SUM_TITLE" => "الإجمــالـي",
-                           "URL" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"),
+                0 => array(
+                    "COLUMN" => "orgunit_id",
+                    "DISPLAY-FORMAT" => "decode",
+                    "FOOTER_SUM_TITLE" => "الإجمــالـي",
+                    "URL" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"
+                ),
             ),
             "DISPLAY_COLS" => array(
                 1 => array("COLUMN" => "is_request", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_request", "FOOTER_SUM" => true),
@@ -1777,6 +1779,25 @@ class Request extends CrmObject
     }
 
 
+    public function getCrmAIRecommendation($lang = "ar") {
+        if($this->calcRequest_very_late()>0) {
+                $message_prefix = $this->tm("There has been a significant delay in responding to this request; please be advised that the request is currently with", $lang);
+                $message_suffix = $this->tm("and is being investigated by", $lang);
+                $dep_name = $this->decode("orgunit_id",'',false, $lang);
+                $empl_name = $this->decode("employee_id",'',false, $lang);
+
+                if($dep_name and $empl_name) {
+                    $message = $message_prefix . " " . $dep_name . " " . $message_suffix. " " . $empl_name;
+                    return [$message, "protest"];
+                }
+                
+
+                
+        }
+
+        return ["", ""];
+    }
+
     public function getLastActionOnRequest($lang = "ar")
     {
         $resp = new Response();
@@ -1787,8 +1808,12 @@ class Request extends CrmObject
         $respActList = $resp->loadMany(1, "response_date desc, response_time desc");
 
         $lact = array();
+
         $respActItemId = null;
         foreach ($respActList as $respActItem) {
+            /**
+             * @var Response $respActItem
+             */
             $lact[] = $respActItem->getActionTitle($lang);
             $respActItemId = $respActItem->id;
         }
@@ -2155,7 +2180,11 @@ class Request extends CrmObject
                 $objToken->set("attribute_area_1", "");
             }
 
-            $objToken->set("attribute_date_1", $this->getVal("request_date"));
+            $request_date_val = $this->getVal("request_date");
+            $request_gdate_val = AfwDateHelper::hijriToGreg($request_date_val);
+
+            $objToken->set("attribute_date_1", $request_date_val);
+            $objToken->set("attribute_gdate_1", $request_gdate_val);
             // above field added and update like this :
             // ALTER TABLE xxx_crm.survey_token add   attribute_date_1 varchar(8) DEFAULT NULL  AFTER attribute_yn_10;
             // update xxx_crm.survey_token s set s.attribute_date_1=(select request_date from xxx_crm.request r where r.survey_token = s.survey_token);
@@ -2182,7 +2211,11 @@ class Request extends CrmObject
             $objToken->set("survey_id", 2);
             $objToken->set("customer_id", $this->getVal("customer_id"));
             $objToken->set("attribute_enum_1", 0);
-            $objToken->set("attribute_date_1", $this->getVal("request_date"));
+            $request_date_val = $this->getVal("request_date");
+            $request_gdate_val = AfwDateHelper::hijriToGreg($request_date_val);
+
+            $objToken->set("attribute_date_1", $request_date_val);
+            $objToken->set("attribute_gdate_1", $request_gdate_val);
             $objToken->set("attribute_string_1", $this->getVal("request_code"));
             $objToken->commit();
         }
@@ -2382,6 +2415,7 @@ class Request extends CrmObject
                 $receiver = array();
                 $receiver["mobile"] = $the_customer->getVal("mobile");
                 $receiver["email"] = $the_customer->getVal("email");
+                $receiver["id"] = "customeridn-" . $the_customer->getVal("idn");
                 $notification_sender_result_arr = UfwNotificationManager::sendNotification($notify_customer_new_request_settings, $receiver, "new_request", $this, $lang);
                 foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
                     $notification_sender_result_ok = $notification_sender_result_item[0];
@@ -2404,6 +2438,7 @@ class Request extends CrmObject
                 $receiver = array();
                 $receiver["mobile"] = $supervisorObj->getVal("mobile");
                 $receiver["email"] = $supervisorObj->getVal("email");
+                $receiver["id"] = "supervisor:" . $supervisorObj->getVal("email");
                 $notification_sender_result_arr = UfwNotificationManager::sendNotification($notify_supervisor_assign_settings, $receiver, "assign_request", $this, $lang);
                 foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
                     $notification_sender_result_ok = $notification_sender_result_item[0];
@@ -2647,6 +2682,17 @@ class Request extends CrmObject
         return $return;
     }
 
+    
+
+    public static function nbSurveyReadyTickets()
+    {
+        $date_start_stats = self::calcCrmDate_start_satisfaction();
+        $date_end_stats = self::calcCrmDate_end_satisfaction();
+
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id=7 and request_date between '$date_start_stats' and '$date_end_stats'");
+    }
+
     public static function nbClosedTickets($employee_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
@@ -2701,19 +2747,7 @@ class Request extends CrmObject
 
         return round($return * 10) / 10;
     }
-    public static function satisfactionPct()
-    {
-        $date_start_stats = self::calcCrmDate_start_satisfaction();
-        $date_end_stats = self::calcCrmDate_end_satisfaction();
-        $satisfied     = Request::aggreg("count(*)", "service_satisfied = 'Y' and request_date >= '$date_start_stats' and request_date <= '$date_end_stats'");
-        $not_satisfied = Request::aggreg("count(*)", "service_satisfied = 'N' and request_date >= '$date_start_stats' and request_date <= '$date_end_stats'");
-        // $neutral = Request::aggreg("count(*)", "service_satisfied = 'W' and request_date >= '$date_start_stats'");
-        $total = $satisfied + $not_satisfied; //  + $neutral
-        if ($total > 0) $pct = round($satisfied * 100 / $total);
-        else $pct = 0;
-
-        return $pct;
-    }
+    
 
     private static function statusFather($curr_status)
     {
@@ -3474,6 +3508,15 @@ class Request extends CrmObject
         return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
     }
 
+    public function calcRequest_very_late($what = "value")
+    {
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        if ($this->isExecuted()) $return = 0;
+        else $return = ($this->totalWorkPeriodInDays() > 2*self::maxResponsePeriod()) ? 1 : 0;
+
+        return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
+    }
+
     /**
      * days_retard : عدد أيام التأخير على التذكرة
      **/
@@ -3486,8 +3529,8 @@ class Request extends CrmObject
 
     public function calcDays_investigator()
     {
-        $hours_investigator_work =$this->getVal("hours_investigator_work");
-        if(!$hours_investigator_work or !is_numeric($hours_investigator_work)) $hours_investigator_work = 0;
+        $hours_investigator_work = $this->getVal("hours_investigator_work");
+        if (!$hours_investigator_work or !is_numeric($hours_investigator_work)) $hours_investigator_work = 0;
         return round($hours_investigator_work / 24);
     }
 
