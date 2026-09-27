@@ -46,7 +46,7 @@
                                                 <p>[crm_stats_departments_title]</p>
                                             </div>
                                         </div>
-
+                                        <!--
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/division.svg" alt="">
@@ -56,6 +56,7 @@
                                                 <p>[crm_stats_divisions_title]</p>
                                             </div>
                                         </div>
+                                        -->
 
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
