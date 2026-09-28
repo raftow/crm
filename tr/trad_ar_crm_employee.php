@@ -21,6 +21,7 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["ongoing_requests_count"] = "عدد الطلبات الجاري العمل عليها";
         $trad["crm_employee"]["done_requests_count"] = "عدد الطلبات التي تم التحقيق عليها";
         $trad["crm_employee"]["requests_count"] = "مجموع عدد الطلبات المسندة";
+        $trad["crm_employee"]["inbox_count"] = "عدد التذاكر";
         $trad["crm_employee"]["statif_pct"] = "نسبة رضا العميل";
 
 
