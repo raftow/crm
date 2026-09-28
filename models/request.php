@@ -4128,7 +4128,7 @@ class Request extends CrmObject
     }
 
 
-    public static function assignSupervisorForNonAssigned($reset = false, $silent = false, $lang = "ar", $limit = "200", $jobContext = null)
+    public static function assignSupervisorForNonAssigned($reset = false, $silent = false, $lang = "ar", $limit = "", $jobContext = null)
     {
         UfwQueryAnalyzer::startProcessLourdMode();
         $errors_arr = array();

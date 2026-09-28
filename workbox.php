@@ -22,6 +22,7 @@ $myEmplId = $objme->getEmployeeId();
 
 if(CrmEmployee::isAdmin($myEmplId)) 
 {
+        // supervisor will not be seen as investigator in version >= 3.0
         // $arr_sql_conds[] = "(me.supervisor_id='$myEmplId' or me.supervisor_id=0 or me.supervisor_id is null)";
         // $arr_sql_conds[] = "((me.status_id in (3, 301)) or (me.status_id in (2, 201, 4) and me.employee_id in (0,$myEmplId)))"; // 2=sent, 3=redirected
 

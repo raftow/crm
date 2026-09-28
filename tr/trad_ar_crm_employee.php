@@ -40,6 +40,7 @@ class CrmEmployeeArTranslator{
 
 
         $trad["crm_employee"]["active"] = "نشط";
+        $trad["crm_employee"]["manager"] = "مدير الجهة";
         $trad["crm_employee"]["admin"] = "مشرف تنسيق";
         $trad["crm_employee"]["super_admin"] = "مشرف عام";
         $trad["crm_employee"]["approved"] = "منسق معتمد"; 

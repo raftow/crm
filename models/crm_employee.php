@@ -38,14 +38,14 @@ class CrmEmployee extends CrmObject
         }
 
 
-
+        /* danger
         public static function resetAll()
         {
                 $obj = new CrmEmployee();
                 $obj->setForce("active", "N");
                 $obj->setForce("admin", "N");
                 return $obj->update(false);
-        }
+        }*/
 
         public static function loadById($id)
         {
@@ -90,11 +90,21 @@ class CrmEmployee extends CrmObject
         }
 
         /**
+         * @param int $orgunit_id, 
+         * @param int $employee_id
          * @return CrmEmployee
+         * 
          */
 
-        public static function loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found = false)
-        {
+        public static function loadByMainIndex(
+                $orgunit_id,
+                $employee_id,
+                $create_obj_if_not_found_update_if_found = false,
+                $manager = 'N',
+                $super_admin = 'N',
+                $admin = 'N',
+                $approved = 'N',
+        ) {
                 $obj = new CrmEmployee();
                 if (!$orgunit_id) throw new AfwRuntimeException("loadByMainIndex : orgunit_id is mandatory field");
                 if (!$employee_id) throw new AfwRuntimeException("loadByMainIndex : employee_id is mandatory field");
@@ -104,19 +114,30 @@ class CrmEmployee extends CrmObject
                 $obj->select("employee_id", $employee_id);
 
                 if ($obj->load()) {
-                        if (!$obj->getVal("service_category_mfk")) $obj->set("service_category_mfk", ",1,");
-                        if (!$obj->getVal("service_mfk")) $obj->set("service_mfk", ",1,");
-                        if (!$obj->getVal("requests_nb")) $obj->set("requests_nb", 15);
 
 
-                        if ($create_obj_if_not_found) $obj->activate();
+
+                        if ($create_obj_if_not_found_update_if_found) {
+                                if (!$obj->getVal("service_category_mfk")) $obj->set("service_category_mfk", ",1,");
+                                if (!$obj->getVal("service_mfk")) $obj->set("service_mfk", ",1,");
+                                if (!$obj->getVal("requests_nb")) $obj->set("requests_nb", 15);
+                                $obj->set("manager", $manager);
+                                $obj->set("super_admin", $super_admin);
+                                $obj->set("admin", $admin);
+                                $obj->set("approved", $approved);
+                                $obj->activate();
+                        }
                         return $obj;
-                } elseif ($create_obj_if_not_found) {
+                } elseif ($create_obj_if_not_found_update_if_found) {
                         $obj->set("orgunit_id", $orgunit_id);
                         $obj->set("employee_id", $employee_id);
                         $obj->set("service_category_mfk", ",1,");
                         $obj->set("service_mfk", ",1,");
                         $obj->set("requests_nb", 15);
+                        $obj->set("manager", $manager);
+                        $obj->set("super_admin", $super_admin);
+                        $obj->set("admin", $admin);
+                        $obj->set("approved", $approved);
 
                         $obj->insert();
                         $obj->is_new = true;
@@ -439,10 +460,15 @@ class CrmEmployee extends CrmObject
 
         public function calcInbox_count()
         {
+
                 if (!$this->getVal("employee_id")) return null;
                 $myEmplId = $this->getVal("employee_id");
                 if (CrmEmployee::isAdmin($myEmplId)) {
-                        $where_sql = "((" . Request::inboxSqlCond("supervisor", $myEmplId, "") . ") or (" . Request::inboxSqlCond("investigator", $myEmplId, "") . "))";
+
+                        // supervisor will not be seen as investigator in version >= 3.0
+                        // $where_sql = "((" . Request::inboxSqlCond("supervisor", $myEmplId, "") . ") or (" . Request::inboxSqlCond("investigator", $myEmplId, "") . "))";
+
+                        $where_sql = Request::inboxSqlCond("supervisor", $myEmplId, "");
                 } else {
                         $where_sql = Request::inboxSqlCond("investigator", $myEmplId, "");
                 }
@@ -515,6 +541,15 @@ class CrmEmployee extends CrmObject
                 $obj = self::getAdminEmployee($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("super_admin");
+        }
+
+
+        public static function isManager($employee_id)
+        {
+                if ($employee_id == 1) return true;
+                $obj = self::getAdminEmployee($employee_id);
+                if (!$obj) return false;
+                return $obj->sureIs("manager");
         }
 
         public static function getInvestigatorListOfIds($orgunit_id)
@@ -900,7 +935,7 @@ class CrmEmployee extends CrmObject
 
                 $receiver["mobile"] = $employeeObj->getVal("mobile");
                 $receiver["email"] = $employeeObj->getVal("email");
-                $receiver["id"] = "employee-".$employeeObj->id;
+                $receiver["id"] = "employee-" . $employeeObj->id;
 
                 if ($simul) {
                         $receiver["mobile"] = "0598988330";
