@@ -284,6 +284,31 @@ class CrmCrmOrgunitAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+		'disabledEmployeeList' => array(
+			'STEP' => 2,
+			'FGROUP' => 'allEmployeeList',
+			'TYPE' => 'FK',
+			'ANSWER' => 'crm_employee',
+			'ANSMODULE' => 'crm',
+			'CATEGORY' => 'ITEMS',
+			'ITEM' => '',
+			'WHERE' => "orgunit_id = §orgunit_id§ and active='N'",
+			'HIDE_COLS' => ["orgunit_id"],
+			'FORCE_COLS' => ["inbox_count"],
+			'FORMAT' => 'retrieve',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => false,
+			'ICONS' => true,
+			'DELETE-ICON' => false,
+			'BUTTONS' => true,
+			'NO-LABEL' => false,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
 
 		'archive_date' => array('CATEGORY' => 'FORMULA', 'TYPE' => "DATE",),
 

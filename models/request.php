@@ -2435,6 +2435,7 @@ class Request extends CrmObject
 
             // notify the supervisor
             if ($supervisorObj) {
+                $status_comment .= " وتم تعيين مشرف على هذا الطلب";
                 $receiver = array();
                 $receiver["mobile"] = $supervisorObj->getVal("mobile");
                 $receiver["email"] = $supervisorObj->getVal("email");
@@ -2450,6 +2451,8 @@ class Request extends CrmObject
                 }
             } elseif ($development_mode) AfwSession::pushWarning($this->tm("can't assign a supervisor to the request"));
         }
+
+        return ["", $status_comment];
     }
 
 
@@ -2473,15 +2476,19 @@ class Request extends CrmObject
     }
 
 
-    public function assignRequest($employeeId, $lang = "ar", $internal = "Y", $caller = "???")
+    public function unAssignRequest($lang = "ar", $caller = "???") {
+        return $this->assignRequest(0, $lang, "Y", $caller, "atuar");
+    }
+
+    public function assignRequest($employeeId, $lang = "ar", $internal = "Y", $caller = "???", $special_authorization="")
     {
         /*
         if ($this->getVal("employee_id") == $employeeId) {
             return array("الطلب مسند من قبل لهذا الموظف", "");
         }*/
 
-        if ((!$employeeId) and $this->getVal("employee_id") > 0) throw new AfwRuntimeException("strange attempt to unassign the request ID=" . $this->id);
-        if (!$employeeId) return array("", "attempt to unassign the request nothing-done");
+        if ((!$employeeId) and ($this->getVal("employee_id") > 0) and ($special_authorization != "atuar")) throw new AfwRuntimeException("strange attempt to unassign the request ID=" . $this->id);
+        if (!$employeeId) return array("", "failed attempt to unassign a request already not assigned nothing-done");
 
         $this->set("employee_id", $employeeId);
 
@@ -3842,9 +3849,9 @@ class Request extends CrmObject
         $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
         $obj = new Request();
         $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
-        $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
+        // $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
         // The condition below means that this reuqest is not assigned or assigned to an employee deleted or disable or not an inverstigator
-        $obj->where("me.employee_id not in (select employee_id 
+        $obj->where("me.employee_id is null or me.employee_id = 0 or me.employee_id not in (select employee_id 
                                             from " . $server_db_prefix . "crm.crm_employee ce 
                                             where ce.orgunit_id = me.orgunit_id 
                                               and ce.active='Y' 
@@ -3860,6 +3867,12 @@ class Request extends CrmObject
          */
 
         foreach ($reqList as $reqItem) {
+
+            list($err, $info) = $reqItem->unAssignRequest($lang, "restoreLostRequests");
+
+            if ($err) $errors_arr[] = $err;
+            if ($info) $infos_arr[] = $info;
+
             list($err, $info) = $reqItem->sendRequest($lang, "restoreLostRequests");
 
             if ($err) $errors_arr[] = $err;
