@@ -83,10 +83,12 @@ class CrmEmployee extends CrmObject
                                 "($iam_general_supervisor>0 or $iam_supervisor>0)";
 
                         $this->where("($empl_id>0 and $employee_allowed_to_see_crm_employee_cond)");
+
+                        $selects = array();
+                        $this->select_visibilite_horizontale_default($dropdown, $selects);
                 }
 
-                $selects = array();
-                $this->select_visibilite_horizontale_default($dropdown, $selects);
+                
         }
 
         /**
