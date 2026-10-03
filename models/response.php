@@ -126,10 +126,10 @@ class Response extends CrmObject
                         $obj->set("response_time", $response_time);
                         $obj->set("response_text", $response_text);
 
-                        if ($print_debugg and $print_sql) echo "\n <br> inserting response ... : $obj \n <br>";
+                        if ($print_debugg and $print_sql) echo "\n <br> inserting response ... : $response_text \n <br>";
                         $obj->insert();
                         $obj->is_new = true;
-                        if ($print_debugg and $print_sql) echo "\n <br> inserted response *** : $obj\n <br>";
+                        if ($print_debugg and $print_sql) echo "\n <br> inserted response *** : $response_text\n <br>";
 
                         return $obj;
                 } else return null;

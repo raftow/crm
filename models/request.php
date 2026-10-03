@@ -1313,10 +1313,9 @@ class Request extends CrmObject
     public function customerCanSurvey()
     {
         $status_reel_id = self::statusFather(intval($this->getVal("status_id")));
-        if (($status_reel_id == self::$REQUEST_STATUS_CLOSED) and
-            ($this->surveyHasBeenSent()) and
-            (!$this->customerHasSurveyed())
-        ) return true;
+        if (($status_reel_id == self::$REQUEST_STATUS_CLOSED) and ($this->surveyHasBeenSent()) 
+             or $this->calcRequest_very_late())
+        return true;
 
         return false;
     }
