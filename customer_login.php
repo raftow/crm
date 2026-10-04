@@ -285,7 +285,7 @@ if ($desc_site) {
 
         </div>
         <?php
-        $bcounter = random_int(1, 3);
+        $bcounter = 4; // random_int(1, 3);
         ?>
         <div class="modal-dialog popup-company banner<?php echo $bcounter; ?>">
         <?php

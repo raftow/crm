@@ -447,6 +447,10 @@ h2.crm_question {
   background-image: url(../pic/home-welcome-banner-3.jpg);
 }
 
+.modal-dialog.popup-company.banner4 {
+  background-image: url(../pic/home-welcome-banner-4.jpg);
+}
+
 @media (min-width: 840px) {
   .modal-dialog.popup-register {
     padding-left: 80px;
@@ -504,19 +508,20 @@ div.popup-sms-verify > .modal-content {
 }
 
 .modal-dialog.popup-content {
-  background-color: #e7d7a9de !important;
-  border-top: 6px solid #42525b;
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-  padding-bottom: 10px;
-  float: left;
-  min-height: 370px;
-  min-width: 360px !important;
-  width: 400px !important;
-  max-width: none;
-  margin-right: 0 !important;
-  margin-left: 50px !important;
-  margin-top: 50px !important;
+    background-color: #e7d7a9de !important;
+    border-top: 6px solid #42525b;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 10px;
+    float: right;
+    min-height: 370px;
+    min-width: 360px !important;
+    width: 500px !important;
+    max-width: none;
+    margin-right: 50px !important;
+    margin-left: 50px !important;
+    margin-top: 20px !important;
+    /* font-size: 10px !important; */
 }
 
 @media (max-width: 1042px) {
@@ -2416,18 +2421,23 @@ div#div_data_request_code {
 }
 
 .modal-content.content-annonce {
-  margin-top: 20px;
-  border: none !important;
-  border: 1px solid #85c0c8 !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-  background-color: #d2ecfdcf;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px !important;
+    border: none !important;
+    border: 1px solid #85c0c8 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    background-color: #d2ecfdcf;
+    padding: 5px 15px 5px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 0px;
+    line-height: 14px;
 }
 
+.modal-content.content-annonce>ul>li {
+    min-height: 20px !important;
+}
 /* ======================================================== */
 
 a.crm.complaint {
