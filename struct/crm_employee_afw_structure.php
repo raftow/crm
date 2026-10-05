@@ -253,7 +253,7 @@ class CrmCrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'approved' => array(
+		'investigator' => array(
 			'SHOW' => true,
 			'RETRIEVE' => true,
 			'SEARCH' => true,
@@ -265,6 +265,22 @@ class CrmCrmEmployeeAfwStructure
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
 			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'approved' => array(
+			'SHOW' => true,
+			'RETRIEVE' => true,
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'DEFAUT' => 'N',
+			'TYPE' => 'YN',
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -316,6 +332,8 @@ class CrmCrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
+
+		
 
 
 		'requests_count' => array(

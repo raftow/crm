@@ -4137,6 +4137,10 @@ class Request extends CrmObject
         $errors_arr = array();
         $infos_arr = array();
 
+        /**
+         * @var Request $reqItem
+         */
+
         foreach ($reqList as $reqItem) {
             list($err, $info) = $reqItem->assignBestAvailableInvestigator($lang, $pbm = true);
 

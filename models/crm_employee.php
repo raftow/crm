@@ -589,7 +589,7 @@ class CrmEmployee extends CrmObject
                 // $obj->select_visibilite_horizontale();
                 $obj->select("orgunit_id", $orgunit_id);
                 $obj->select("active", 'Y');
-                $obj->where("admin = 'N' and super_admin = 'N' and employee_id != $except_investigator_id");
+                $obj->where("investigator = 'Y' and employee_id != $except_investigator_id");
 
                 $objList = $obj->loadMany();
 
@@ -977,4 +977,15 @@ class CrmEmployee extends CrmObject
 
                 return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
+
+         public function attributeIsApplicable($attribute)
+        {
+                if ($attribute == "approved") {
+                        return $this->sureIs("investigator");
+                }
+
+                return true;
+        }
+
+        
 }
