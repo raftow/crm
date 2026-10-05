@@ -185,7 +185,7 @@
                                         if($ticketObj->is("survey_sent") and $ticketObj->getVal("survey_token"))
                                         {
                                                 $survey_btn_title = "استبيان تقييم الخدمة";
-                                                if($ticketObj->is("survey_opened") or true)
+                                                if(false and $ticketObj->is("survey_opened")) // This an old obsolete view of survey 
                                                 {
                                         ?> 
                                         
@@ -211,18 +211,20 @@
                                                 </div>
                                         </div>
                                         <?php 
-                                                        if(($ticketObj->isNot("service_satisfied")) or ($ticketObj->isNot("pb_resolved")) or true)
-                                                        {
+                                                }
+                                                
+                                                if(($ticketObj->isNot("service_satisfied")) or ($ticketObj->isNot("pb_resolved")) or true)
+                                                {
                                                                 
                                         ?>
-                                                <div class="btn_container taqib">
-                                                        <div class='content_body contact'>   
-                                                                        <a class='crm question thin-btn' href='/crm/i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=<?php echo $ticketObj->getVal("request_type_id"); ?>&pt=<?php echo $ticketObj->id; ?>'>تقديم طلب تعقيب</a>                                                                
-                                                        </div>
+                                        <div class="btn_container taqib">
+                                                <div class='content_body contact'>   
+                                                                <a class='crm question thin-btn' href='/crm/i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=<?php echo $ticketObj->getVal("request_type_id"); ?>&pt=<?php echo $ticketObj->id; ?>'>تقديم طلب تعقيب</a>                                                                
                                                 </div>
+                                        </div>
                                         <?php 
-                                                        }                                                        
-                                                }
+                                                }                                                        
+                                                
 
                                                 if($ticketObj->customerCanSurvey())
                                                 {

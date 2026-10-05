@@ -25,6 +25,17 @@ class Response extends CrmObject
                 } else return null;
         }
 
+        /**
+         * @param int $request_id,
+         * @param int $orgunit_id,
+         * @param int $employee_id,
+         * @param int $new_status_id,
+         * @param int $response_type_id,
+         * @param int $module_id,
+         * @param string $response_date,
+         * @param string $response_time,
+         * @param string $response_text,
+         */
         public static function createNewResponse(
                 $request_id,
                 $response_date,
@@ -384,7 +395,7 @@ class Response extends CrmObject
                 if ($this->getVal("response_type_id") and ($this->getVal("response_type_id") == ResponseType::$RESPONSE_TYPE_RESPONSE)) {
                         $objRequest = $this->het("request_id");
                         $objRequest->set("last_response_id", $this->id);
-                        $objRequest->commit();
+                        $objRequest->update();
                 }
 
                 if (!$disableAfterCommitDBEvent) {
@@ -670,7 +681,7 @@ class Response extends CrmObject
                 $pfObj->set("doc_type_id", $doc_type_id);
                 $pfObj->set("response_id", $this->getId());
                 $pfObj->set("description", $af->getVal("afile_name") . " (" . $pfObj->showAttribute("doc_type_id") . ")");
-                $pfObj->commit();
+                $pfObj->update();
         }
 
         public function approveIfNotApproved($caller = "crm-employee")

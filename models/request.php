@@ -1677,11 +1677,12 @@ class Request extends CrmObject
     }
 
 
-    private function retrieveLastResponse()
+    private function retrieveLastResponse($only_real_response=false)
     {
         $resp = new Response();
         $resp->select("request_id", $this->id);
         $resp->select("active", "Y");
+        if($only_real_response) $resp->where("employee_id not in (0,2)"); // employee is defined and it is not one of the scheduled jobs
         $respActList = $resp->loadMany(1, "response_date desc, response_time desc");
 
         foreach ($respActList as $respActItem) {
@@ -1691,10 +1692,10 @@ class Request extends CrmObject
         return null;
     }
 
-    public function getLastResponse()
+    public function getLastResponse($only_real_response=false)
     {
         if (!$this->theLastResponse) {
-            $this->theLastResponse = $this->retrieveLastResponse();
+            $this->theLastResponse = $this->retrieveLastResponse($only_real_response);
         }
 
         return $this->theLastResponse;
@@ -1996,9 +1997,9 @@ class Request extends CrmObject
 
 
         $old_status = $this->getVal("status_id");
-        if (($new_status_id == Request::$REQUEST_STATUS_DRAFT) and (!$this->getVal("status_id"))) $silent_force = true;
+        if (($new_status_id == Request::$REQUEST_STATUS_DRAFT) and (!$old_status)) $silent_force = true;
 
-        if ($new_status_id != $this->getVal("status_id")) {
+        if ($new_status_id != $old_status) {
             if ($this->requestIsToComplete() and ($new_status_id == Request::$REQUEST_STATUS_ONGOING)) {
                 $response_type = ResponseType::$RESPONSE_TYPE_COMPLETE;
             } else {
@@ -2095,7 +2096,7 @@ class Request extends CrmObject
 
         if ($customer_id == 11772 and (($employee_id == 1) or (!$employee_id))) // testing rafik customer
         {
-            AfwSession::pushWarning($technicals);
+            AfwSession::pushWarning("debugging...with...rafik : ".$technicals);
         }
 
 
@@ -3897,6 +3898,29 @@ class Request extends CrmObject
     {
         $errors_arr = array();
         $infos_arr = array();
+
+         /**
+         * @var Request $requestItem
+         * @var Request $reqItem
+         */
+
+
+        /* to be reviewed create many strange responses like this :
+        الثلاثاء 29 سبتمبر 2026 المهمة الآلية غير حالة الطلب
+               تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة
+        الثلاثاء 29 سبتمبر 2026 المهمة الآلية غير حالة الطلب
+                لقد بدأ العمل على الطلب
+        الثلاثاء 29 سبتمبر 2026 المهمة الآلية غير حالة الطلب
+                تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة
+        الثلاثاء 29 سبتمبر 2026 المهمة الآلية غير حالة الطلب
+                تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة
+        الثلاثاء 29 سبتمبر 2026 المهمة الآلية غير حالة الطلب
+                لقد بدأ العمل على الطلب
+        الثلاثاء 29 سبتمبر 2026 المهمة الآلية غير حالة الطلب
+                تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة
+        الإربعاء 23 سبتمبر 2026 ---
+                تم إرسال الطلب إلى مشرف خدمة العملاء من أجل توجيهه للجهة المختصة
+
         $before_3_months_hdate = AfwDateHelper::addHijriPeriodToHijriDate('', -3);
         $obj = new Request();
         $obj->where("employee_id > 0");
@@ -3905,9 +3929,7 @@ class Request extends CrmObject
 
         $requestList = $obj->loadMany($limit);
 
-        /**
-         * @var Request $requestItem
-         */
+       
         foreach ($requestList as $requestItem) {
             list($err, $info) = $requestItem->updateRequestAsPerLastResponse($lang, true);
 
@@ -3924,9 +3946,7 @@ class Request extends CrmObject
         $reqList = $obj->loadMany($limit);
 
 
-        /**
-         * @var Request $reqItem
-         */
+        
         foreach ($reqList as $reqItem) {
             list($err, $info) = $reqItem->startRequest($lang, "bootstrapBlockedRequests");
 
@@ -3944,7 +3964,7 @@ class Request extends CrmObject
 
         if ((!$silent) and (count($infos_arr) > 0)) {
             AfwSession::pushInformation(implode("<br>", $infos_arr));
-        }
+        }*/
 
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
     }
