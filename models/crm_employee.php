@@ -545,13 +545,34 @@ class CrmEmployee extends CrmObject
                 return $obj->sureIs("super_admin");
         }
 
+        public static function getOrgunitId($employee_id)
+        {
+                $employeeObj = Employee::loadById($employee_id);
+                if(!$employeeObj) return 0;
+                return $employeeObj->getVal("orgunit_id");
+        }
+
+        public static function getDefaultCrmEmployeeId($employee_id)
+        {
+                $orgunit_id = self::getOrgunitId($employee_id);
+                if(!$orgunit_id) return null;
+                return self::loadByMainIndex($orgunit_id, $employee_id);
+        }
 
         public static function isManager($employee_id)
         {
-                if ($employee_id == 1) return true;
-                $obj = self::getAdminEmployee($employee_id);
+                if(!$employee_id) return null;
+                $obj = self::getDefaultCrmEmployeeId($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("manager");
+        }
+
+        public static function isInvestigator($employee_id)
+        {
+                if(!$employee_id) return null;
+                $obj = self::getDefaultCrmEmployeeId($employee_id);
+                if (!$obj) return [false, false];
+                return [$obj->sureIs("investigator"), $obj->sureIs("approved")];
         }
 
         public static function getInvestigatorListOfIds($orgunit_id)

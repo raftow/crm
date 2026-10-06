@@ -5,6 +5,7 @@ $file_dir_name = dirname(__FILE__);
 
 set_time_limit(8400);
 ini_set('error_reporting', E_ERROR | E_PARSE | E_RECOVERABLE_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
+ini_set('zend.exception_ignore_args', 0);
 
 require_once("$file_dir_name/../lib/afw/core/afw_autoloader.php");
 
@@ -19,7 +20,9 @@ AfwAutoLoader::addModule("workflow");
 include_once ("$file_dir_name/../crm/ini.php");
 include_once ("$file_dir_name/../crm/module_config.php");
 include_once ("$file_dir_name/../crm/application_config.php");
-
+/**
+ * @var array $config_arr
+ */
 include_once ("$file_dir_name/../lib/afw/utilities/ufw_error_handler.php");
 
 AfwSession::initConfig($config_arr, "system", "$file_dir_name/../crm/application_config.php");

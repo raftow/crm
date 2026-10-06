@@ -19,8 +19,22 @@ $arr_sql_conds = array();
 $arr_sql_conds[] = "me.active='Y'";
 $objme = AfwSession::getUserConnected();
 $myEmplId = $objme->getEmployeeId();
+$additional_welcome_html = ""; 
+$supervisor = CrmEmployee::isAdmin($myEmplId);
+$generalAdmin = CrmEmployee::isGeneralAdmin($myEmplId);
+$manager = CrmEmployee::isManager($myEmplId);
 
-if(CrmEmployee::isAdmin($myEmplId)) 
+list($investigator, $approved) = CrmEmployee::isInvestigator($myEmplId);
+if($generalAdmin) $additional_welcome_html .= "<span class='g-admin'>&nbsp;</span>"; 
+if($manager) $additional_welcome_html .= "<span class='manager'>&nbsp;</span>"; 
+if($investigator) {
+        if($approved) $additional_welcome_html .= "<span class='investigator-approved'>&nbsp;</span>"; 
+        else $additional_welcome_html .= "<span class='investigator'>&nbsp;</span>"; 
+}
+
+
+
+if($supervisor) 
 {
         // supervisor will not be seen as investigator in version >= 3.0
         // $arr_sql_conds[] = "(me.supervisor_id='$myEmplId' or me.supervisor_id=0 or me.supervisor_id is null)";
@@ -62,7 +76,7 @@ else $collapse_in = "in";
 
 $wb_prefix = AfwLanguageHelper::tt("صندوق الوارد لـ");
 
-$out_scr .= "<div class='crm-title hzm-info'>$wb_prefix$employee_title</div>";
+$out_scr .= "<div class='crm-title hzm-info'>$wb_prefix$employee_title $additional_welcome_html</div>";
 
 include("crm_employee_tipofday.php");
 
