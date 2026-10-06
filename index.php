@@ -11,7 +11,7 @@ if ($objme) {
                         if (file_exists(dirname(__FILE__)."/../client-$company/organization_business.php")) {
                                 require_once(dirname(__FILE__)."/../client-$company/organization_business.php");
                                 if (class_exists('OrganizationBusiness')) {
-                                        $res = OrganizationBusiness::update_all_organizations(true, $_GET["case"], $_GET["stpdbg"]);
+                                        $res = OrganizationBusiness::update_all_organizations(true, $_GET["case"], $_GET["stpdbg"], $_GET["fromapi"]);
                                         $warning = ""; // implode("<br>\n", $res['log']);
                                         $error = implode("<br>\n", $res['errors']);
                                         $info = implode("<br>\n", $res['infos']);

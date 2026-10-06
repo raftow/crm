@@ -4126,7 +4126,7 @@ class Request extends CrmObject
 
         $obj->setForce("employee_id", 0);
         $obj->setForce("status_comment", "assignInvestigatorForNonAssigned-doing-reset");
-        $obj->where("me.orgunit_id > 0 and ((me.employee_id > 0 and me.employee_id not in (select employee_id from " . $server_db_prefix . "crm.crm_employee ce where ce.orgunit_id = me.orgunit_id and ce.active='Y')) or me.employee_id is null) and status_id not in (" . self::$REQUEST_STATUSES_FINISHED . ")");
+        $obj->where("me.orgunit_id > 0 and ((me.employee_id > 0 and me.employee_id not in (select employee_id from " . $server_db_prefix . "crm.crm_employee ce where ce.orgunit_id = me.orgunit_id and ce.investigator='Y' and ce.active='Y')) or me.employee_id is null) and status_id not in (" . self::$REQUEST_STATUSES_FINISHED . ")");
         $obj->update(false);
 
 
