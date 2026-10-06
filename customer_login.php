@@ -110,13 +110,15 @@ if (AfwSession::customerIsConnected()) {
                         }
                 }
 
+                $crm_root_mobile = AfwSession::config("crm_root_mobile", "0598988330");
+
                 if (count($customer_login_errors) == 0) {
                         if (($customer_mobile or $customer_email) and $customer_idn) {
-                                if ($customer_id and ($customer_mobile == "0598988330")) {
+                                if ($customer_id and ($customer_mobile == $crm_root_mobile)) {
                                         $custObj = CrmCustomer::loadById($customer_id);
                                 } else $custObj = CrmCustomer::loadByLoginInfos($customer_mobile, $customer_email, $customer_idn);
                                 if (!$custObj) {
-                                        if ($customer_mobile == "0598988330") {
+                                        if ($customer_mobile == $crm_root_mobile) {
                                                 $custObj = CrmCustomer::loadByIdn($customer_idn);
                                         }
                                 }

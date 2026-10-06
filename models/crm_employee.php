@@ -803,7 +803,7 @@ class CrmEmployee extends CrmObject
                 $infos_arr = array();
                 // $token_arr = [];
                 // $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
-                // $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tv" . "tc.gov.sa");
+                // $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "");
                 $err = "";
                 $info = "";
                 $nb_disapproved = 0;
@@ -848,7 +848,7 @@ class CrmEmployee extends CrmObject
                 $infos_arr = array();
                 $token_arr = [];
                 $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
-                $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tv" . "tc.gov.sa");
+                $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", AfwSession::config("crm_root_email", ""));
                 foreach ($inbox_data as $inbox_row) {
                         if ($inbox_row["orgunit_id"] and $inbox_row["employee_id"]) {
                                 $token_arr["[waiting]"] = $inbox_row["waiting"];
@@ -879,14 +879,13 @@ class CrmEmployee extends CrmObject
         {
 
                 $obj = new Request();
-                // $date_start_perf = $obj->calcDate_start_perf();
+                $date_start_perf = $obj->calcDate_start_perf();
                 // 
                 $me_id = $this->getVal("employee_id");
                 $me_org_id = $this->getVal("orgunit_id");
 
-
-                // $obj->where("request_date >= '$date_start_perf'");
-                $obj->where("active = 'Y' and (employee_id = $me_id and orgunit_id = $me_org_id)");
+                $obj->where("request_date >= '$date_start_perf'");
+                $obj->where("active = 'Y' and employee_id = $me_id and orgunit_id = $me_org_id");
                 $reqList = $obj->loadMany();
                 $rowPerf = [];
                 $count_request = 0;
@@ -903,11 +902,25 @@ class CrmEmployee extends CrmObject
                 $rowPerf["request_done"] = $request_done;
                 $rowPerf["request_late"] = $request_late;
 
-                return [$request_late, Request::getPerf($rowPerf, true)];
+                $perf_status = Request::getPerf($rowPerf);
+                $perf_html = Request::getPerf($rowPerf, true);
+
+                return [$request_late, $perf_html, $perf_status];
+        }
+
+        public function getCrmManager() {
+                $manObj = $this->getManager();
+                if(!$manObj) return null;
+                $me_org_id = $this->getVal("orgunit_id");
+
+                return CrmEmployee::loadByMainIndex($me_org_id, $manObj->id);
         }
 
         public function notifyMe($lang = "ar", $token_arr = [], $simul = false)
         {
+                /**
+                 * @var Employee $employeeObj
+                 */
                 $employeeObj = $this->het("employee_id");
                 if (!$employeeObj) return ["This crm employee has no hrm employee defined : crm-employee-id=" . $this->id, ""];
 
@@ -920,10 +933,12 @@ class CrmEmployee extends CrmObject
                         $inbox_row = AfwDatabase::db_recup_row($sql_inbox);
                         $token_arr["[waiting]"] = $inbox_row["waiting"];
                         $token_arr["[crm_site_url]"] = AfwSession::config("crm_site_url", "[crm-site]");
-                        $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", "rboubaker@tv" . "tc.gov.sa");
+                        $token_arr["[crm_general_admin]"] = AfwSession::config("crm_general_admin", AfwSession::config("crm_root_email", ""));
                 }
 
-                list($token_arr["[nb_lates]"], $token_arr["[perf_status]"]) = $this->getMyPerf($lang);
+                list($token_arr["[nb_lates]"], $token_arr["[perf_status]"], $perf_status) = $this->getMyPerf($lang);
+
+                $bad_perf = (($perf_status == "poor") or ($perf_status == "very_poor"));
 
                 $token_arr["[the_orgunit]"] = $this->showAttribute("orgunit_id", null, true, $lang);
 
@@ -939,19 +954,29 @@ class CrmEmployee extends CrmObject
                 $receiver["email"] = $employeeObj->getVal("email");
                 $receiver["id"] = "employee-" . $employeeObj->id;
 
+                $crm_root_mobile = AfwSession::config("crm_root_mobile", "0598988330");
+                $crm_root_email = AfwSession::config("crm_root_email", "");
+                        
+
                 if ($simul) {
-                        $receiver["mobile"] = "0598988330";
-                        $receiver["email"] = "rboubaker@tv" . "tc.gov.sa";
+                        $receiver["mobile"] = $crm_root_mobile;
+                        $receiver["email"] = $crm_root_email;
                 }
 
+                $cc_to = null;
 
-
-                // $cc_to = "rboubaker@tv.tc.gov.sa";
+                // 
                 if (!$simul and (date("w") == 3)) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
                 {
-                        $cc_to = $employeeObj->getManagerEmail();
-                } else
-                        $cc_to = null;
+                        $crmManagerObj = $this->getCrmManager();                        
+                        if($crmManagerObj and ($crmManagerObj->sureIs("admin") or $crmManagerObj->sureIs("super_admin"))) {
+                                $cc_to = $employeeObj->getManagerEmail();
+                        }
+                        elseif($bad_perf) {
+                                $cc_to = $crm_root_email;
+                        }
+                        
+                }
 
                 $file_dir_name = dirname(__FILE__);
 

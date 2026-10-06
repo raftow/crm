@@ -214,7 +214,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, false, false);
 
                 $obj = new CrmCustomer();
-                $obj->where("idn='$idn' or (idn like 'NID-%' and mobile != '0598988330')");
+                $crm_root_mobile = AfwSession::config("crm_root_mobile", "0598988330");
+                $obj->where("idn='$idn' or (idn like 'NID-%' and mobile != '$crm_root_mobile')");
                 $obj->where("email='$email' or mobile='$mobile'");
 
 

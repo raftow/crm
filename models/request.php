@@ -3591,6 +3591,9 @@ class Request extends CrmObject
         return "????";
     }
 
+    /**
+     * @param array $rowPerf
+     */
 
     public static function getPerf($rowPerf, $formatted = false)
     {
@@ -3617,7 +3620,9 @@ class Request extends CrmObject
 
 
 
-        if (($request_late == 0) and (($request_done > 0) or ($count_request < 3))) {
+        if (($request_late == 0)) {   // @removed by rafik and (($request_done > 0) or ($count_request < 3))
+                                      // منسق جديد ليس عنده تأخير واسندت له 
+                                      // طلبات كثيرة لم يبدأ فيها بعد تم تقييمه غير مرضي !  ما يصلح
             if ($pct_level < 50) {
                 $pct_level = 50;
                 $pct_level_comment = "@doc : perf-rule 2 : no late MIN pct = 50";
@@ -3633,7 +3638,7 @@ class Request extends CrmObject
             }
         }
 
-        if (($request_late <= 1) and (($request_done > 0) or ($count_request < 5))) {
+        if (($request_late <= 2) and (($request_done > 0) or ($count_request < 5))) {
             if ($pct_level < 30) {
                 $pct_level = 30;
                 $pct_level_comment = "@doc : perf-rule 4 : no too much late MIN pct = 30";

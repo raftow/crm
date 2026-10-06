@@ -131,10 +131,12 @@ elseif($_POST["customer_verify_code"])
                                 //$customer_email = "";
                         }
                 }
+
+                $crm_root_mobile = AfwSession::config("crm_root_mobile", "0598988330");
                 
                 if((!is_array($customer_register_errors)) or (count($customer_register_errors)==0)) 
                 {
-                        if($customer_id and ($customer_mobile == "0598988330"))
+                        if($customer_id and ($customer_mobile == $crm_root_mobile))
                         {
                                 $custObj = CrmCustomer::loadById($customer_id);
                         }
@@ -142,7 +144,7 @@ elseif($_POST["customer_verify_code"])
                         if(!$custObj) 
                         {
                                 //die("CrmCustomer::loadByMainIndex($customer_mobile, $customer_idn_type_id, $customer_idn)");
-                                if($customer_mobile == "0598988330")
+                                if($customer_mobile == $crm_root_mobile)
                                 {
                                         $custObj = CrmCustomer::loadByIdn($customer_idn); 
                                 }

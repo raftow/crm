@@ -4,11 +4,11 @@ class CrmEmployeeArTranslator{
     public static function initData()
     {
         $trad = [];	
-        $trad["crm_employee"]["crmemployee.single"] = "منسق خدمة العملاء";
-        $trad["crm_employee"]["crmemployee.single.short"] = "منسق";
+        $trad["crm_employee"]["crmemployee.single"] = "موظف خدمة العملاء";
+        $trad["crm_employee"]["crmemployee.single.short"] = "موظف";
         $trad["crm_employee"]["crmemployee.new"] = "جديد";
-        $trad["crm_employee"]["crm_employee"] = "المنسقين لدى خدمة العملاء";
-        $trad["crm_employee"]["crm_employee.short"] = "المنسقين";
+        $trad["crm_employee"]["crm_employee"] = "الموظفين لدى خدمة العملاء";
+        $trad["crm_employee"]["crm_employee.short"] = "الموظفين";
         $trad["crm_employee"]["orgunit_id"] = "الوحدة المتابعة";
         $trad["crm_employee"]["crm_orgunit_id"] = "الوحدة التابع لها";
         
