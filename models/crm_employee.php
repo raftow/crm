@@ -643,7 +643,7 @@ class CrmEmployee extends CrmObject
                                 else {
                                         $lang = AfwSession::getSessionVar("current_lang");
                                         if (!$lang) $lang = "ar";
-                                        return AfwLanguageHelper::tt("المنسق(ـة) في") . " " . $objItem->getDisplay($lang);
+                                        return $objItem->getMyJob($lang) . " " . $objItem->getDisplay($lang);
                                 }
                         }
                 } elseif ($objListCount > 1) {
@@ -1036,7 +1036,7 @@ class CrmEmployee extends CrmObject
                 return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
         }
 
-         public function attributeIsApplicable($attribute)
+        public function attributeIsApplicable($attribute)
         {
                 if ($attribute == "approved") {
                         return $this->sureIs("investigator");
@@ -1045,5 +1045,18 @@ class CrmEmployee extends CrmObject
                 return true;
         }
 
+
+        public function getMyJob($lang)
+        {
+               if($this->sureIs("investigator")) return AfwLanguageHelper::tt("المنسق في", $lang);
+               if($this->sureIs("approved")) return AfwLanguageHelper::tt("المنسق المعتمد في", $lang);
+               if($this->sureIs("admin")) return AfwLanguageHelper::tt("المشرف لدى", $lang);
+               if($this->sureIs("super_admin")) return AfwLanguageHelper::tt("المشرف العام لدى", $lang);
+               if($this->sureIs("manager")) return AfwLanguageHelper::tt("مدير ", $lang);
+
+               return AfwLanguageHelper::tt("موظف في", $lang);
+        }
+
         
 }
+
