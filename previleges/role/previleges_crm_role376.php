@@ -41,17 +41,7 @@
         'css' => 'bf',
         'icon' => 'bficon-103942 bfc-',
       ),
-      104359 => 
-      array (
-        'id' => '104359',
-        'code' => 'f1-a-tb3633/edit',
-        'level' => '999',
-        'menu_name_ar' => 'إنشاء منسق',
-        'menu_name_en' => 'create Crm employee',
-        'page' => 'main.php?Main_Page=afw_mode_edit.php&cl=CrmEmployee&currmod=crm',
-        'css' => 'bf',
-        'icon' => 'bficon-104359 bfc-',
-      ),
+      
       104364 => 
       array (
         'id' => '104364',

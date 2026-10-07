@@ -1,4 +1,5 @@
-<span class='cms-title global'>[crm_stats_title]</span>
+            <span class='cms-title global'>[crm_stats_title]</span>
+            [crm_stats_general_stats_s]
             <span class='cms-title'>[crm_stats_general_stats]</span>
             <div class="row justify-content-center">    
                 <div class="col-lg-12">
@@ -46,17 +47,7 @@
                                                 <p>[crm_stats_departments_title]</p>
                                             </div>
                                         </div>
-                                        <!--
-                                        <div class="single_quick_activity d-flex">
-                                            <div class="icon">
-                                                <img src="pic/division.svg" alt="">
-                                            </div>
-                                            <div class="count_content">
-                                                <h3><span class="counter">[crm_stats_division_nb]</span> </h3>
-                                                <p>[crm_stats_divisions_title]</p>
-                                            </div>
-                                        </div>
-                                        -->
+                                        
 
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
@@ -164,6 +155,7 @@
                     </div>    
                 </div>
             </div>
+            [crm_stats_general_stats_e]
             <span class='cms-title'>[crm_stats_monitoring]  [crm_stats_period]</span>    
             <div class="row justify-content-center">    
                 <div class="col-lg-12">

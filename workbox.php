@@ -19,12 +19,13 @@ $arr_sql_conds = array();
 $arr_sql_conds[] = "me.active='Y'";
 $objme = AfwSession::getUserConnected();
 $myEmplId = $objme->getEmployeeId();
-$additional_welcome_html = ""; 
+$additional_welcome_html = "<span class='employee'>&nbsp;</span>"; 
 $supervisor = CrmEmployee::isAdmin($myEmplId);
 $generalAdmin = CrmEmployee::isGeneralAdmin($myEmplId);
 $manager = CrmEmployee::isManager($myEmplId);
 
 list($investigator, $approved) = CrmEmployee::isInvestigator($myEmplId);
+if($supervisor) $additional_welcome_html .= "<span class='supervisor'>&nbsp;</span>"; 
 if($generalAdmin) $additional_welcome_html .= "<span class='g-admin'>&nbsp;</span>"; 
 if($manager) $additional_welcome_html .= "<span class='manager'>&nbsp;</span>"; 
 if($investigator) {

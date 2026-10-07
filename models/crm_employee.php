@@ -552,7 +552,7 @@ class CrmEmployee extends CrmObject
                 return $employeeObj->getVal("orgunit_id");
         }
 
-        public static function getDefaultCrmEmployeeId($employee_id)
+        public static function getDefaultCrmEmployee($employee_id)
         {
                 $orgunit_id = self::getOrgunitId($employee_id);
                 if(!$orgunit_id) return null;
@@ -562,7 +562,7 @@ class CrmEmployee extends CrmObject
         public static function isManager($employee_id)
         {
                 if(!$employee_id) return null;
-                $obj = self::getDefaultCrmEmployeeId($employee_id);
+                $obj = self::getDefaultCrmEmployee($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("manager");
         }
@@ -570,7 +570,7 @@ class CrmEmployee extends CrmObject
         public static function isInvestigator($employee_id)
         {
                 if(!$employee_id) return null;
-                $obj = self::getDefaultCrmEmployeeId($employee_id);
+                $obj = self::getDefaultCrmEmployee($employee_id);
                 if (!$obj) return [false, false];
                 return [$obj->sureIs("investigator"), $obj->sureIs("approved")];
         }
@@ -635,8 +635,8 @@ class CrmEmployee extends CrmObject
                 }
 
                 $objList = self::$orgListOfEmployee[$employee_id];
-
-                if (count($objList) == 1) {
+                $objListCount = count($objList);
+                if ($objListCount == 1) {
                         foreach ($objList as $objItem) {
                                 if ($return_object) return  $objItem;
                                 elseif ($return_id) return $objItem->id;
@@ -646,13 +646,25 @@ class CrmEmployee extends CrmObject
                                         return AfwLanguageHelper::tt("المنسق(ـة) في") . " " . $objItem->getDisplay($lang);
                                 }
                         }
-                } elseif (count($objList) > 1) {
+                } elseif ($objListCount > 1) {
                         if ($return_object) return  null;
                         elseif ($return_id) return 0;
                         else {
+                                $many_org_details = "";
+                                if($objListCount<=3) {
+                                        foreach ($objList as $objItem) {
+                                                $many_org_details .= " / ". $objItem->getDisplay();
+                                        }
+
+                                        $many_org_details = trim($many_org_details, " /");
+                                }
+                                else {
+                                        $many_org_details = "$objListCount وحدة";
+                                }
+
                                 $lang = AfwSession::getSessionVar("lang");
                                 if (!$lang) $lang = "ar";
-                                return "<div class='crm-warning'>" . AfwLanguageHelper::tt("معين في أكثر من وحدة متابعة", $lang) . "</div>";
+                                return "<div class='crm-warning'>" . AfwLanguageHelper::tt("معين في أكثر من وحدة متابعة", $lang) . " ($many_org_details)</div>";
                         }
                 } else {
                         if ($return_object) return  null;

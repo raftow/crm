@@ -60,7 +60,6 @@ class CrmCrmEmployeeAfwStructure
 			'RETRIEVE' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
-			'EDIT_IF_EMPTY' => true,
 			'SIZE' => 40,
 			'MANDATORY' => true,
 			'UTF8' => false,

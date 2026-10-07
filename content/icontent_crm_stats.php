@@ -1,7 +1,17 @@
 <?php
+
+
+$objme = AfwSession::getUserConnected();
+if(!$objme) return [];
+// $myEmplObj = $objme->getEmployee();
+$myEmplId = $objme->getEmployeeId();
+$myCrmEmplObj = CrmEmployee::getDefaultCrmEmployee($myEmplId);
+
+
 $server_db_prefix = AfwSession::currentDBPrefix();
 $date_start_stats = Request::calc_date_start_stats();
 $r = new Request();
+
 $tokens = [];
 $tokens["general_stats"] = Request::t('general_stats', $lang);
 $tokens["monitoring"] = Request::t('monitoring', $lang);
@@ -44,6 +54,14 @@ foreach($ot_codes as $ot_id => $ot_code) {
 }
 
 
+if($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) {
+    $tokens["general_stats_s"] = "";
+    $tokens["general_stats_e"] = "";
+}
+else {
+    $tokens["general_stats_s"] = "<!-- ";
+    $tokens["general_stats_e"] = " -->";
+}
 
 $tokens["orgunit_nb"] = CrmOrgunit::aggreg("count(*)", "active='Y'");
 $tokens["orgunits_title"] = CrmOrgunit::t('crm_orgunit', $lang);
