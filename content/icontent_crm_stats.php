@@ -6,6 +6,10 @@ if(!$objme) return [];
 // $myEmplObj = $objme->getEmployee();
 $myEmplId = $objme->getEmployeeId();
 $myCrmEmplObj = CrmEmployee::getDefaultCrmEmployee($myEmplId);
+$orgunit_id = $myCrmEmplObj ? $myCrmEmplObj->getVal("orgunit_id") : 0;
+
+// The crm center should see all the stats of all departments, so we set orgunit_id to 0
+if($orgunit_id==CrmEmployee::$CRM_CENTER_ID) $orgunit_id = 0;
 
 $department_supervisor = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR));
 $from_crm_center = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->isFromCrmCenter()));
@@ -13,6 +17,7 @@ $general_supervisor = ($department_supervisor and $from_crm_center);
 
 
 $server_db_prefix = AfwSession::currentDBPrefix();
+$period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"));
 $date_start_stats = Request::calc_date_start_stats();
 $r = new Request();
 
@@ -20,10 +25,12 @@ $tokens = [];
 $tokens["general_stats"] = Request::t('general_stats', $lang);
 $tokens["monitoring"] = Request::t('monitoring', $lang);
 $tokens["satisfaction"] = Request::t('satisfaction', $lang);
-$tokens["period"] = "(" . $r->translate("period", $lang) . " " . CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days") . " " . $r->translate("day(s)", $lang) . ")";
+$tokens["period"] = "(" . $r->translate("period", $lang) . " " . $period . " " . $r->translate("day(s)", $lang) . ")";
 $tokens["customer_nb"] = CrmCustomer::aggreg("count(*)"); // all active or no
 $tokens["customers_title"] = CrmCustomer::t('crm_customer', $lang);
-$tokens["new_customers_nb"] = CrmCustomer::newCustomersCount();
+
+
+$tokens["new_customers_nb"] = CrmCustomer::newCustomersCount($period, $orgunit_id);
 $tokens["new_customers_title"] = CrmCustomer::t('new_customers_title', $lang);
 $nb_new_customers_error_limit = 1;
 $nb_new_customers_warning_limit = 3;
@@ -32,7 +39,7 @@ elseif ($tokens["new_customers_nb"] < ($nb_new_customers_warning_limit)) $tokens
 else $tokens["new_customers_nb_status"] = "ok";
 
 
-$statsByType = CrmOrgunit::statsByType();
+$statsByType = CrmOrgunit::statsByType(0);
 
 $ot_stats = [];
 $ot_labels = [];
@@ -71,8 +78,10 @@ $tokens["orgunit_nb"] = CrmOrgunit::aggreg("count(*)", "active='Y'");
 $tokens["orgunits_title"] = CrmOrgunit::t('crm_orgunit', $lang);
 $tokens["subject_nb"] = 139; //RequestSubject::aggreg("count(*)");
 $tokens["subjects_title"] = Request::t('request_subject', $lang);
-$tokens["operators_nb"] = CrmEmployee::aggreg("count(*)", "active='Y'");
-$tokens["operators_title"] = CrmEmployee::t('crm_employee.short', $lang);
+$tokens["crm_employees_nb"] = CrmEmployee::aggreg("count(*)", "active='Y'");
+$tokens["crm_employees_title"] = CrmEmployee::t('crm_employee.short', $lang);
+$tokens["operators_nb"] = CrmEmployee::aggreg("count(*)", "active='Y' and investigator='Y'");
+$tokens["operators_title"] = CrmEmployee::t('investigators', $lang);
 $dailyCapacity = Request::inboxDailyCapacityForMe();
 $tokens["mytasks_nb"] = Request::inboxCountForMe();
 if ($tokens["mytasks_nb"] > $dailyCapacity) $tokens["mytasks_nb_status"] = "error";

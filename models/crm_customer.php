@@ -428,12 +428,16 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 return AfwDateHelper::shiftGregDate("", -$period);
         }
 
-        public static function newCustomersCount($period=30) {
+        public static function newCustomersCount($period=30, $orgunit_id=0) {
                 $date_start_stats = self::calc_date_start_stats($period);
                 
 
                 $obj = new CrmCustomer();
                 $obj->where("active = 'Y' and created_at >= '$date_start_stats'");
+
+                if ($orgunit_id != 0) {
+                        $obj->where("customer_orgunit_id = '$orgunit_id'");
+                }
                 return $obj->count();
         }
 

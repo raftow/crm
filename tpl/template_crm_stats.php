@@ -110,6 +110,15 @@
                                         </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
+                                                <img src="pic/employees.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_crm_employees_nb]</span> </h3>
+                                                <p>[crm_stats_crm_employees_title]</p>
+                                            </div>
+                                        </div>
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
                                                 <img src="pic/category.svg" alt="">
                                             </div>
                                             <div class="count_content">
