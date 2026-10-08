@@ -51,6 +51,10 @@ if ($objme) {
         $myEmplId = $objme->getEmployeeId();
         $myCrmEmplObj = CrmEmployee::getDefaultCrmEmployee($myEmplId);
 
+        if($objme->id == 1272) {
+                AfwSession::pushInformation("myEmplId=$myEmplId myCrmEmplObj = " . var_export($myCrmEmplObj, true));
+        }
+
 
         $general_supervisor = $objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR);
 
