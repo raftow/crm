@@ -552,14 +552,26 @@ class CrmEmployee extends CrmObject
         {
                 $employeeObj = Employee::loadById($employee_id);
                 if(!$employeeObj) return 0;
-                return $employeeObj->getVal("orgunit_id");
+                return $employeeObj->getVal("id_sh_dep");
+        }
+
+        public static function getDivisionId($employee_id)
+        {
+                $employeeObj = Employee::loadById($employee_id);
+                if(!$employeeObj) return 0;
+                return $employeeObj->getVal("id_sh_div");
         }
 
         public static function getDefaultCrmEmployee($employee_id)
         {
                 $orgunit_id = self::getOrgunitId($employee_id);
-                if(!$orgunit_id) return null;
-                return self::loadByMainIndex($orgunit_id, $employee_id);
+                if($orgunit_id) {
+                        $return = self::loadByMainIndex($orgunit_id, $employee_id);
+                        if($return) return $return;
+                }
+                $division_id = self::getDivisionId($employee_id);
+                if(!$division_id) return null;
+                return self::loadByMainIndex($division_id, $employee_id);                
         }
 
         public static function isManager($employee_id)
