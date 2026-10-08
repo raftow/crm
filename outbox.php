@@ -39,7 +39,7 @@ else
 
 
 $my_class = new $cl();
-$result_page_title = "صندوق الصادر لـ " . $employee_title;
+$result_page_title = "صندوق التذاكر الصادرة لـ " . $employee_title;
 $tit_qedit_ppp_fixm = "عرض التذكرة";
 $actions_tpl_arr = array();
 
@@ -61,7 +61,7 @@ if($datatable_on)
 	if($data_count>0) $out_scr .= $search_result_html; // die("search_result_html=".$search_result_html); // 
         else $out_scr .= "<div class='crm-information hzm-info'>
         <i class=\"hzm-container-center hzm-vertical-align-middle hzm-icon-fm hzm-icon-inbox\"></i>
-        لا يوجد طلبات في صندوق الصادر
+        لا يوجد طلبات في صندوق التذاكر الصادرة
         </div>";
 }        
 

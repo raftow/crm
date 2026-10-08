@@ -113,7 +113,7 @@ if(false and count($reqList)>0)
 
 $out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'>
    <a href='main.php?Main_Page=fm.php&a=1073&r=317' class='btn btn-primary'>التقارير الأخرى</a>
-   <a href='main.php?Main_Page=workbox.php&r=323' class='btn btn-secondary'>صندوق الوارد</a>
+   <a href='main.php?Main_Page=workbox.php&r=323' class='btn btn-secondary'>صندوق التذاكر الواردة</a>
    </div>";
 
 $out_scr .= "</div>";

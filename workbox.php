@@ -57,7 +57,7 @@ else
 $sql_order_by = "request_priority asc, request_date asc, request_time asc, customer_id asc";                          
 
 // $my_class = new $cl();
-$result_page_title = "صندوق الوارد";
+$result_page_title = "صندوق التذاكر الواردة";
 $tit_qedit_ppp_fixm = "عرض التذكرة";
 $actions_tpl_arr = array();
 
@@ -75,7 +75,7 @@ if($datatable_on) {
 else $collapse_in = "in";
 
 
-$wb_prefix = AfwLanguageHelper::tt("صندوق الوارد لـ");
+$wb_prefix = AfwLanguageHelper::tt("صندوق التذاكر الواردة لـ");
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix$employee_title $additional_welcome_html</div>";
 
@@ -86,7 +86,7 @@ if($datatable_on)
 	if($data_count>0) $out_scr .= $search_result_html; // die("search_result_html=".$search_result_html); // 
         else $out_scr .= "<div class='crm-information hzm-info'>
         <i class=\"hzm-container-center hzm-vertical-align-middle hzm-icon-fm hzm-icon-inbox\"></i>
-        لا يوجد طلبات في صندوق الوارد
+        لا يوجد طلبات في صندوق التذاكر الواردة
         </div>";
 }        
 

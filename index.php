@@ -48,8 +48,13 @@ if ($objme) {
 
                 );
 
+        $myEmplId = $objme->getEmployeeId();
+        $myCrmEmplObj = CrmEmployee::getDefaultCrmEmployee($myEmplId);
 
-        if (($_GET["mpg"]=="monitoring") or $objme->isSuperAdmin() or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR)) {
+
+        $general_supervisor = $myCrmEmplObj->sureIs("super_admin") or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR);
+
+        if (($_GET["mpg"]=="monitoring") or $objme->isSuperAdmin() or $general_supervisor) {
                 // die("je suis ici 29040001");
                 $Main_Page = "monitoring.php";
                 $MODULE = $My_Module = "crm";

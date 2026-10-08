@@ -105,6 +105,7 @@ class CrmEmployee extends CrmObject
                 $manager = 'N',
                 $super_admin = 'N',
                 $admin = 'N',
+                $investigator = 'N',
                 $approved = 'N',
         ) {
                 $obj = new CrmEmployee();
@@ -127,6 +128,7 @@ class CrmEmployee extends CrmObject
                                 $obj->set("super_admin", $super_admin);
                                 $obj->set("admin", $admin);
                                 $obj->set("approved", $approved);
+                                $obj->set("investigator", $investigator);
                                 $obj->activate();
                         }
                         return $obj;
@@ -140,6 +142,7 @@ class CrmEmployee extends CrmObject
                         $obj->set("super_admin", $super_admin);
                         $obj->set("admin", $admin);
                         $obj->set("approved", $approved);
+                        $obj->set("investigator", $investigator);
 
                         $obj->insert();
                         $obj->is_new = true;
@@ -641,9 +644,11 @@ class CrmEmployee extends CrmObject
                                 if ($return_object) return  $objItem;
                                 elseif ($return_id) return $objItem->id;
                                 else {
+                                        $crmEmployeeObj = CrmEmployee::loadByMainIndex($objItem->id, $employee_id);
+                                        if(!$crmEmployeeObj) return "Empl $employee_id not found in CRM";
                                         $lang = AfwSession::getSessionVar("current_lang");
                                         if (!$lang) $lang = "ar";
-                                        return $objItem->getMyJob($lang) . " " . $objItem->getDisplay($lang);
+                                        return $crmEmployeeObj->getMyJob($lang) . " " . $objItem->getDisplay($lang);
                                 }
                         }
                 } elseif ($objListCount > 1) {
@@ -1002,7 +1007,7 @@ class CrmEmployee extends CrmObject
                 if (!$simul and (date("w") == 3)) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
                 {
                         $crmManagerObj = $this->getCrmManager();                        
-                        if($crmManagerObj and ($crmManagerObj->sureIs("admin") or $crmManagerObj->sureIs("super_admin"))) {
+                        if($crmManagerObj and $crmManagerObj->sureIs("admin")) {
                                 $cc_to = $employeeObj->getManagerEmail();
                         }
                         elseif($bad_perf) {
@@ -1048,12 +1053,13 @@ class CrmEmployee extends CrmObject
 
         public function getMyJob($lang)
         {
-               if($this->sureIs("investigator")) return AfwLanguageHelper::tt("المنسق في", $lang);
-               if($this->sureIs("approved")) return AfwLanguageHelper::tt("المنسق المعتمد في", $lang);
-               if($this->sureIs("admin")) return AfwLanguageHelper::tt("المشرف لدى", $lang);
-               if($this->sureIs("super_admin")) return AfwLanguageHelper::tt("المشرف العام لدى", $lang);
                if($this->sureIs("manager")) return AfwLanguageHelper::tt("مدير ", $lang);
-
+               if($this->sureIs("super_admin")) return AfwLanguageHelper::tt("المشرف العام لدى", $lang);
+               if($this->sureIs("admin")) return AfwLanguageHelper::tt("المشرف لدى", $lang);
+               if($this->sureIs("investigator") and $this->sureIs("approved")) return AfwLanguageHelper::tt("المنسق المعتمد في", $lang);
+               if($this->sureIs("investigator")) return AfwLanguageHelper::tt("المنسق في", $lang);
+               
+               
                return AfwLanguageHelper::tt("موظف في", $lang);
         }
 
