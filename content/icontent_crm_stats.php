@@ -7,6 +7,10 @@ if(!$objme) return [];
 $myEmplId = $objme->getEmployeeId();
 $myCrmEmplObj = CrmEmployee::getDefaultCrmEmployee($myEmplId);
 
+$department_supervisor = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR));
+$from_crm_center = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->isFromCrmCenter()));
+$general_supervisor = ($department_supervisor and $from_crm_center);
+
 
 $server_db_prefix = AfwSession::currentDBPrefix();
 $date_start_stats = Request::calc_date_start_stats();
@@ -54,7 +58,7 @@ foreach($ot_codes as $ot_id => $ot_code) {
 }
 
 
-if($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) {
+if($general_supervisor) {
     $tokens["general_stats_s"] = "";
     $tokens["general_stats_e"] = "";
 }

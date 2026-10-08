@@ -57,15 +57,16 @@ if ($objme) {
         }*/
 
 
-        $general_supervisor = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR));
+        $department_supervisor = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR));
 
-        if (($_GET["mpg"]=="monitoring") or $general_supervisor) {
+        if (($_GET["mpg"]=="monitoring") or $department_supervisor) {
                 // die("je suis ici 29040001");
                 $Main_Page = "monitoring.php";
                 $MODULE = $My_Module = "crm";
                 $options = [];
                 $options["dashboard-stats"] = true;
                 $options["chart-js"] = true;
+                $options["manager"] = ($myCrmEmplObj and $myCrmEmplObj->sureIs("manager"));
                 CmsMainPage::echoMainPage($My_Module, $Main_Page, dirname(__FILE__), $options);
         } elseif ($objme_has_crm_employee_role) {
                 $Main_Page = "workbox.php";

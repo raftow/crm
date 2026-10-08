@@ -519,6 +519,11 @@ class CrmEmployee extends CrmObject
                 return $supervList;
         }
 
+
+        public function isFromCrmCenter() {
+                return ($this->getVal("orgunit_id") == self::$CRM_CENTER_ID);
+        }
+
         public static function getAdminEmployee($employee_id)
         {
                 if (!self::$employeeAdmin[$employee_id]) {
