@@ -569,6 +569,9 @@ class CrmEmployee extends CrmObject
                         $return = self::loadByMainIndex($orgunit_id, $employee_id);
                         if($return) return $return;
                 }
+                // لأن كل مدير إدارة لا يكون في الموارد البشرية يباشر عمله في نفس هذه الإدارة
+                // بل يكون في الإدارة الأم غالبا
+                // لذلك وضعنا المدير في الإدارة الأصلية كقسم له لأجل غايات التنظيم في خدمة العملاء                        
                 $division_id = self::getDivisionId($employee_id);
                 if(!$division_id) return null;
                 return self::loadByMainIndex($division_id, $employee_id);                
