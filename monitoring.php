@@ -15,6 +15,11 @@ $arr_sql_conds = array();
 $arr_sql_conds[] = "me.active='Y'";
 $objme = AfwSession::getUserConnected();
 $myEmplId = $objme->getEmployeeId();
+$myCrmEmplObj = CrmEmployee::getDefaultCrmEmployee($myEmplId);
+$myOrgunitObj = $myCrmEmplObj ? $myCrmEmplObj->het("orgunit_id") : null;
+$department_supervisor = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR));
+$from_crm_center = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->isFromCrmCenter()));
+$general_supervisor = ($department_supervisor and $from_crm_center);
 
 $crm_active_period = AfwSession::config("crm_active_period", 365);
 
@@ -50,6 +55,7 @@ foreach($supList as $supItem)
 }
 */                          
 $employee_title = $objme->getDisplay($lang);
+$myOrgunitTitle = $myOrgunitObj ? $myOrgunitObj->getDisplay($lang) : "****";
 
 // 
 
@@ -58,9 +64,17 @@ if($objme->isSuperAdmin())
 {
     $wb_prefix = AfwLanguageHelper::tt("Welcome to the General Supervisor of the Customer Happiness and Comfort Platform",$lang);
 }
-else 
+elseif($general_supervisor) 
 {
     $wb_prefix = AfwLanguageHelper::tt("Welcome to the General Supervisor of the Customer Relations Office",$lang);
+}
+elseif($department_supervisor) 
+{
+    $wb_prefix = AfwLanguageHelper::tt("Welcome to the manager of",$lang) . " : " . $myOrgunitTitle;
+}
+else
+{
+    $wb_prefix = AfwLanguageHelper::tt("Welcome",$lang);
 }
 
 $out_scr .= "<div class='crm-title hzm-info'>$wb_prefix $employee_title</div>";

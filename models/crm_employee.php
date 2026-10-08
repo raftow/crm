@@ -553,11 +553,25 @@ class CrmEmployee extends CrmObject
                 return $obj->sureIs("super_admin");
         }
 
+        public static function getOrgunit($employee_id)
+        {
+                $employeeObj = Employee::loadById($employee_id);
+                if(!$employeeObj) return 0;
+                return $employeeObj->het("id_sh_dep");
+        }
+
         public static function getOrgunitId($employee_id)
         {
                 $employeeObj = Employee::loadById($employee_id);
                 if(!$employeeObj) return 0;
                 return $employeeObj->getVal("id_sh_dep");
+        }
+
+        public static function getDivision($employee_id)
+        {
+                $employeeObj = Employee::loadById($employee_id);
+                if(!$employeeObj) return 0;
+                return $employeeObj->het("id_sh_div");
         }
 
         public static function getDivisionId($employee_id)

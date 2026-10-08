@@ -35,15 +35,22 @@ $messages = [
     "This employee is not from" => "هذا الموظف ليس من",
     "but from" => "بل من",
     "Are you sure you want to approve this employee on this organization inspite of the aobove explanation ?" => "هل أنت متأكد من اعتماد هذا الموظف على هذه الجهة بعد علمك بالبيان أعلاه؟",
-    "We can not automatically approve that this employee is from this organization"=>"تنبيه : لم نتمكن من التأكد آليا من صحة نسبة هذا الموظف لهذه الجهة",
+    "We can not automatically approve that this employee is from this organization" => "تنبيه : لم نتمكن من التأكد آليا من صحة نسبة هذا الموظف لهذه الجهة",
     "customer" => "عميل",
     "Unfortunately, sending your response to the customer service office failed" => "مع الأسف فشلت عملية ارسال ردك إلى مكتب خدمة العملاء",
     "Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number" => "نرجوا اعادة المحاولة لاحقا أو ارسال طلب دعم فني يمكنك ارسال صورة الشاشة وطرح اشكالك على الواتساب على الرقم",
-    "Welcome to the General Supervisor of the Customer Relations Office"=>"مرحبا بالمشرف العام لمتابعة عمل مكتب العلاقات مع العملاء",
-    "Welcome to the General Supervisor of the Customer Happiness and Comfort Platform"=>"مرحباً بالمشرف العام لمنصة خدمة سعادة وراحة العميل",    
+    "Welcome to the General Supervisor of the Customer Relations Office" 
+        => "مرحبا بالمشرف العام لمتابعة عمل مكتب العلاقات مع العملاء",
+    "Welcome to the General Supervisor of the Customer Happiness and Comfort Platform" 
+        => "مرحباً بالمشرف العام لمنصة خدمة سعادة وراحة العميل",
+
+    "Welcome to the manager of" => "مرحباً بمدير ",
+
+    "Welcome" => "مرحباً",
+        
 
     "The supervisor has returnted the request to you with this comment" => "أعاد المشرف إليك الطلب مع هذا التعليق",
-    "The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text."=>"ظهور رمز [سري للغاية] يعني أن العميل لا يرغب بمشاركة معلومات طلبه مع أي شخص غير ذي صلة نظرًا لحساسية الأمر. بناءً على مدى أمان الوضع، وما إذا كان هناك أشخاص حولك لا ينبغي أن يطلعوا على هذه المعلومات، انقر على رمز العين لإظهار نص الطلب أو إخفائه.",
+    "The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text." => "ظهور رمز [سري للغاية] يعني أن العميل لا يرغب بمشاركة معلومات طلبه مع أي شخص غير ذي صلة نظرًا لحساسية الأمر. بناءً على مدى أمان الوضع، وما إذا كان هناك أشخاص حولك لا ينبغي أن يطلعوا على هذه المعلومات، انقر على رمز العين لإظهار نص الطلب أو إخفائه.",
 
     "You will update status of request depending on last response" => "ستقوم بتحديث حالة الطلب بناءً على آخر رد",
     "Are you sure ?" => "هل أنت متأكد؟",
@@ -51,10 +58,10 @@ $messages = [
     "You formally agree that this employee belongs to this organization" => "أنت توافق رسمياً على أن هذا الموظف ينتمي إلى هذه الجهة",
     "Are you sure you want to do this approve ?" => "هل أنت متأكد من رغبتك في الموافقة على هذا؟",
     "This employee is not from the main company" => "هذا الموظف ليس من الشركة الأم",
-    "This employee has no user name neither employee number, can't execute the retrieve of information from HR" => 
-        "لا يملك هذا الموظف اسم مستخدم ولا رقم موظف، وبالتالي لا يمكنه استرجاع المعلومات من قسم الموارد البشرية.",
+    "This employee has no user name neither employee number, can't execute the retrieve of information from HR" =>
+    "لا يملك هذا الموظف اسم مستخدم ولا رقم موظف، وبالتالي لا يمكنه استرجاع المعلومات من قسم الموارد البشرية.",
 
-    "Seems that survey token has been removed or the survey was an old version" => "يبدو أن رمز الاستبيان قد أُزيل أو أن الاستبيان كان إصدارًا قديمًا",   
+    "Seems that survey token has been removed or the survey was an old version" => "يبدو أن رمز الاستبيان قد أُزيل أو أن الاستبيان كان إصدارًا قديمًا",
 
     "customer advanced-information is confidential, please use an account with the same mobile number and email you used to register with your organization" =>
     "معلومات العميل المتقدمة سرية، يرجى استخدام حساب بنفس رقم الجوال والبريد الإلكتروني الذي استخدمته للتسجيل مع مؤسستك",
@@ -69,11 +76,11 @@ $messages = [
 
     "Nothing was updated in your account" => "لم يتم تحديث أي شيء في حسابك",
 
-    "SMS notification has been sent to customer's mobile number to inform him about the account update" 
-       => "تم إرسال رسالة قصيرة إلى رقم جوال العميل لإبلاغه بتحديث الحساب",
+    "SMS notification has been sent to customer's mobile number to inform him about the account update"
+    => "تم إرسال رسالة قصيرة إلى رقم جوال العميل لإبلاغه بتحديث الحساب",
 
-    "Failed to send SMS notification to customer's mobile number to inform him about the account update" 
-       => "فشلت عملية إرسال رسالة قصيرة إلى رقم جوال العميل لإبلاغه بتحديث الحساب",
+    "Failed to send SMS notification to customer's mobile number to inform him about the account update"
+    => "فشلت عملية إرسال رسالة قصيرة إلى رقم جوال العميل لإبلاغه بتحديث الحساب",
 
     "Your account has been frozen" => "تم تجميد حسابك",
 
@@ -83,12 +90,11 @@ $messages = [
 
     "The request is waiting assignment" => "الطلب في انتظار الاسناد",
 
-    "We encourage you to evaluate our platform to help us improve our service. This evaluation focuses on the user experience and technical quality of the online platform." => 
-        "نأمل منكم تقييم منصة تواصل معنا لتحسين الخدمة. يركّز هذا التقييم على تجربة استخدام المنصة الإلكترونية وجودتها التقنية.",
+    "We encourage you to evaluate our platform to help us improve our service. This evaluation focuses on the user experience and technical quality of the online platform." =>
+    "نأمل منكم تقييم منصة تواصل معنا لتحسين الخدمة. يركّز هذا التقييم على تجربة استخدام المنصة الإلكترونية وجودتها التقنية.",
 
-    "There has been a significant delay in responding to this request; please be advised that the request is currently with" 
-       => "لقد طرأ تأخير ملحوظ في الرد على هذا الطلب؛ ونعتذر لكم بشدة على هذا الأمر ونسعى لحل المشكلة؛ يرجى العلم بأن الطلب قيد النظر حالياً لدى.",
+    "There has been a significant delay in responding to this request; please be advised that the request is currently with"
+    => "لقد طرأ تأخير ملحوظ في الرد على هذا الطلب؛ ونعتذر لكم بشدة على هذا الأمر ونسعى لحل المشكلة؛ يرجى العلم بأن الطلب قيد النظر حالياً لدى.",
     "and is being investigated by" => "ويجري فحصه من قِبَل",
 
 ];
-     
