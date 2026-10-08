@@ -15,9 +15,11 @@ $department_supervisor = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmp
 $from_crm_center = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->isFromCrmCenter()));
 $general_supervisor = ($department_supervisor and $from_crm_center);
 
+$coef_period = ($department_supervisor) ? 6 : 1;
+
 
 $server_db_prefix = AfwSession::currentDBPrefix();
-$period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days"));
+$period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days")) * $coef_period;
 $date_start_stats = Request::calc_date_start_stats();
 $r = new Request();
 
