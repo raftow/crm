@@ -486,7 +486,7 @@ class SurveyToken extends CrmObject
     }
 
 
-    public static function satisfactionPct()
+    public static function satisfactionPct($orgunit_id = 0)
     {
         $server_db_prefix = AfwSession::config("db_prefix","ttc_");
         $date_start_stats = self::calcCrmDate_start_satisfaction();
@@ -503,7 +503,8 @@ class SurveyToken extends CrmObject
     where survey_id=1 
       and active = 'Y' 
       and attribute_yn_1='Y' 
-      and attribute_gdate_1 between '$date_start_stats_greg' and '$date_end_stats_greg'");
+      and attribute_gdate_1 between '$date_start_stats_greg' and '$date_end_stats_greg'
+      and ($orgunit_id=0 or orgunit_id=$orgunit_id)");
 
         $verysatisfied = $survey_token_stats_row["verysatisfied"];
         $satisfied     = $survey_token_stats_row["satisfied"];

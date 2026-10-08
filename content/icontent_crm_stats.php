@@ -89,31 +89,34 @@ elseif ($tokens["mytasks_nb"] > (0.7 * $dailyCapacity)) $tokens["mytasks_nb_stat
 else $tokens["mytasks_nb_status"] = "ok";
 
 $tokens["mytasks_title"] = Request::t('tasks', $lang);
-$tokens["days_avg"] = $days_avg = Request::nbDaysWorkByTicketAverage();
+$tokens["days_avg"] = $days_avg = Request::nbDaysWorkByTicketAverage($orgunit_id);
 $tokens["days_avg_title"] = Request::t('days_avg', $lang);
 if ($tokens["days_avg"] > 7) $tokens["days_avg_status"] = "error";
 elseif ($tokens["days_avg"] > 5) $tokens["days_avg_status"] = "warning";
 else $tokens["days_avg_status"] = "ok";
-$tokens["response_avg"] = Request::nbDaysReactionByTicketAverage($days_avg);
+
+$tokens["response_avg"] = Request::nbDaysReactionByTicketAverage($days_avg, $orgunit_id);
 if ($tokens["response_avg"] > 2.5) $tokens["response_avg_status"] = "error";
 elseif ($tokens["response_avg"] > 1.5) $tokens["response_avg_status"] = "warning";
 else $tokens["response_avg_status"] = "ok";
 $tokens["response_avg_title"] = Request::t('response_avg', $lang);
-$tokens["nb_without"] = Request::nbRespondedTicketsWithoutTaqib();
+
+
+$tokens["nb_without"] = Request::nbRespondedTicketsWithoutTaqib(0, $orgunit_id);
 $tokens["nb_without_title"] = Request::t('nb_without', $lang);
-$tokens["nb_with"] = Request::nbRespondedTicketsWithTaqib();
+$tokens["nb_with"] = Request::nbRespondedTicketsWithTaqib(0, $orgunit_id);
 $tokens["nb_with_title"] = Request::t('nb_with', $lang);
 $tokens["nb_responded"] = $tokens["nb_without"] + $tokens["nb_with"];
 $tokens["nb_responded_title"] = Request::t('nb_responded', $lang);
 
-$tokens["nb_closed"] = Request::nbClosedTickets();
+$tokens["nb_closed"] = Request::nbClosedTickets(0, $orgunit_id);
 $tokens["nb_closed_title"] = Request::t('nb_closed', $lang);
 
 
 $tokens["request_nb"] = Request::aggreg("count(*)", "status_id not in (0,1,101,102)");
 $tokens["requests_title"] = Request::t('tickets-total', $lang);
 
-$nb_responses_warning_limit = $tokens["request_nb_period"] = Request::aggreg("count(*)", "status_id not in (0,1,101,102) and request_date >= '$date_start_stats'");
+$nb_responses_warning_limit = $tokens["request_nb_period"] = Request::aggreg("count(*)", "($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id not in (0,1,101,102) and request_date >= '$date_start_stats'");
 $tokens["requests_period_title"] = Request::t('tickets', $lang);
 
 
@@ -137,7 +140,7 @@ else $tokens["nb_responded_status"] = "ok";
 
 $late_request_error_limit = $tokens["orgunit_nb"] * 0.5;
 $late_request_warning_limit = $tokens["orgunit_nb"] * 0.3;
-$tokens["late_request_nb"] = Request::lateRequestsCount();
+$tokens["late_request_nb"] = Request::lateRequestsCount($orgunit_id);
 $tokens["late_requests_title"] = Request::t('tickets-late', $lang);
 
 if ($tokens["late_request_nb"] > $late_request_error_limit) $tokens["late_request_nb_status"] = "error";
@@ -148,7 +151,7 @@ else $tokens["late_request_nb_status"] = "ok";
 $tokens["response_nb"] = Response::aggreg("count(*)", "active='Y' and internal='N'");
 $tokens["responses_title"] = Response::t('response', $lang);
 
-$tokens["response_nb_period"] = Response::aggreg("count(*)", "active='Y' and internal='N' and response_date >= '$date_start_stats'");
+$tokens["response_nb_period"] = Response::aggreg("count(*)", "active='Y' and internal='N' and response_date >= '$date_start_stats' and ($orgunit_id=0 or orgunit_id=$orgunit_id)");
 $tokens["responses_period_title"] = Response::t('recent-responses', $lang);
 
 $nb_responses_error_limit = round($nb_responses_warning_limit * 0.7);
@@ -184,7 +187,7 @@ list(
     $date_end_stats_greg,
     $total_sent,
     $total_participated
-) = SurveyToken::satisfactionPct();
+) = SurveyToken::satisfactionPct($orgunit_id);
 
 $tokens["satisfaction_pct"] = $pct;
 $tokens["satisfaction_title"] = Request::t('satisfaction', $lang);
@@ -194,7 +197,7 @@ $tokens["satisfaction_period"] = "(" . $r->translate("from", $lang, true) . " $d
 $tokens["survey_sent_nb_period"] = $total_sent;
 $tokens["survey_sent_period_title"] = Request::t('survey-sent', $lang);
 
-$tokens["survey_ready_nb_period"] = Request::nbSurveyReadyTickets();
+$tokens["survey_ready_nb_period"] = Request::nbSurveyReadyTickets($orgunit_id);
 $tokens["survey_ready_period_title"] = Request::t('survey-ready-period-title', $lang);
 
 $nb_survey_sent_warning_limit = round($tokens["survey_ready_nb_period"] * 0.9);

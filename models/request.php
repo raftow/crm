@@ -2678,9 +2678,9 @@ class Request extends CrmObject
         return false;
     }
 
-    public static function nbDaysReactionByTicketAverage($nbDaysWorkByTicketAverage = 0)
+    public static function nbDaysReactionByTicketAverage($nbDaysWorkByTicketAverage = 0, $orgunit_id = 0)
     {
-        if (!$nbDaysWorkByTicketAverage) $nbDaysWorkByTicketAverage = self::nbDaysWorkByTicketAverage();
+        if (!$nbDaysWorkByTicketAverage) $nbDaysWorkByTicketAverage = self::nbDaysWorkByTicketAverage($orgunit_id);
         // average work of customer to complete ticket data
         $avg_customer_work = round((5 + sin(date("m"))) * 10) / 10;
         $return = $nbDaysWorkByTicketAverage - $avg_customer_work;
@@ -2691,44 +2691,44 @@ class Request extends CrmObject
 
     
 
-    public static function nbSurveyReadyTickets()
+    public static function nbSurveyReadyTickets($orgunit_id = 0)
     {
         $date_start_stats = self::calcCrmDate_start_satisfaction();
         $date_end_stats = self::calcCrmDate_end_satisfaction();
 
         $server_db_prefix = AfwSession::currentDBPrefix();
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where status_id=7 and request_date between '$date_start_stats' and '$date_end_stats'");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id=7 and request_date between '$date_start_stats' and '$date_end_stats'");
     }
 
-    public static function nbClosedTickets($employee_id = 0)
+    public static function nbClosedTickets($employee_id = 0, $orgunit_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id=7 and request_date >= '$date_start_stats'");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id=7 and request_date >= '$date_start_stats'");
     }
 
 
-    public static function nbRespondedTicketsWithoutTaqib($employee_id = 0)
+    public static function nbRespondedTicketsWithoutTaqib($employee_id = 0, $orgunit_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نستثني التعقيب نفسه كما نستثني الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null)");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null)");
     }
 
-    public static function nbRespondedTicketsWithTaqib($employee_id = 0)
+    public static function nbRespondedTicketsWithTaqib($employee_id = 0, $orgunit_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نحسب التعقيب نفسه كما نحسب الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0)");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0)");
     }
 
-    public static function pctClosedTicketsWithoutTaqib($employee_id = 0)
+    public static function pctClosedTicketsWithoutTaqib($employee_id = 0, $orgunit_id = 0)
     {
         // $date_start_stats = self::calc_date_start_stats();
-        $without = self::nbRespondedTicketsWithoutTaqib($employee_id);
-        $with = self::nbRespondedTicketsWithTaqib($employee_id);
+        $without = self::nbRespondedTicketsWithoutTaqib($employee_id, $orgunit_id);
+        $with = self::nbRespondedTicketsWithTaqib($employee_id, $orgunit_id);
 
         return self::calcPctRespondedTicketsWithoutTaqib($without, $with);
     }
@@ -2743,14 +2743,17 @@ class Request extends CrmObject
     }
 
 
-    public static function nbDaysWorkByTicketAverage()
+    public static function nbDaysWorkByTicketAverage($orgunit_id=0)
     {
         // nb hijri years
         /* $nb_hijri_years = 0.5;
         $date_start = AfwDateHelper::shiftHijriDate('', -round(354 * $nb_hijri_years)); */
         $date_start_stats = self::calc_date_start_stats();
         $server_db_prefix = AfwSession::currentDBPrefix();
-        $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg from $server_db_prefix" . "crm.request where status_id in (5,6,7,8,9) and request_date > '$date_start_stats'");
+        $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg 
+            from $server_db_prefix" . "crm.request 
+            where ($orgunit_id=0 or orgunit_id=$orgunit_id)
+              and status_id in (5,6,7,8,9) and request_date > '$date_start_stats'");
 
         return round($return * 10) / 10;
     }
@@ -3480,7 +3483,7 @@ class Request extends CrmObject
     }
 
 
-    public static function lateRequestsCount()
+    public static function lateRequestsCount($orgunit_id = 0)
     {
         $date_start_stats = self::calc_date_start_stats();
         $late_days = self::maxResponsePeriod();
@@ -3490,6 +3493,7 @@ class Request extends CrmObject
         $request_date_limit_late = AfwDateHelper::shiftHijriDate('', -4 * $late_days);
         // but for status date should be only one period date because it change at any action taken on status
         $status_date_limit_late = AfwDateHelper::shiftHijriDate('', -$late_days);
+        if($orgunit_id) $obj->where("orgunit_id = $orgunit_id");
         $obj->where("request_date >= '$date_start_stats' and (request_date < '$request_date_limit_late' or status_date < '$status_date_limit_late')");
         $obj->where("(employee_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")) 
                          or (supervisor_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_SUPERVISOR . "))");
