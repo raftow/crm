@@ -4966,11 +4966,11 @@ class Request extends CrmObject
             return $rows_updated;
     }
 
-    public static function updateDOL($lang = 'ar', $commit = true, $pbm = true)
+    public static function updateDOL($lang = 'ar', $commit = true, $pbm = true, $limit = 5000)
     {
         $requestObj = new Request();
         $requestObj->where("is_done = 0 and is_ongoing = 0 and is_late = 0");
-        $requestList = $requestObj->loadMany(1000, "request_date desc");
+        $requestList = $requestObj->loadMany($limit, "request_date desc");
         $records = 0;
         /**
          * @var Request $requestItem

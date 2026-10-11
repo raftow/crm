@@ -34,8 +34,9 @@ if ($objme) {
                         if ($info) AfwSession::pushInformation($info);
                         if ($error) AfwSession::pushError($error);
                 }
-                elseif ($_GET["udol"] == 1) {
-                        list($error, $info) = Request::updateDOL("ar", true, true);
+                elseif ($_GET["udol"] > 0) {
+                        $limit = $_GET["udol"] * 1000;;
+                        list($error, $info) = Request::updateDOL("ar", true, true, $limit);
                         if ($info) AfwSession::pushInformation($info);
                         if ($error) AfwSession::pushError($error);
                 }
