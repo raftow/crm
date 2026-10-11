@@ -3661,6 +3661,22 @@ tr.csr_request_late.hzm_row_1 > td > span {
 }
 /* late requests */
 
+@media screen and (max-width: 500px) {
+  th.stats_orgunit_id, td.stats_orgunit_id,
+  th.stats_is_request, td.stats_is_request,
+  th.stats_is_enquiry, td.stats_is_enquiry,
+  th.stats_is_complaint, td.stats_is_complaint,
+  th.stats_is_suggestion, td.stats_is_suggestion,
+  th.stats_is_support, td.stats_is_support
+  {
+    display: none;
+    visibility: hidden;
+    width: 0px !important;
+    height: 0px !important;
+  }
+}
+
+
 table.dataTable.display.stats_table > thead > tr > th.xqe_hf_z,
 table.dataTable.display.stats_table > tfoot > tr > th.xqe_hf_z {
   background-color: #53a5e1 !important;
