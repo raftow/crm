@@ -83,7 +83,7 @@ include("crm_employee_tipofday.php");
 
 $out_scr .= Page::showPage("crm", "main-page", $lang);
 
-$out_scr .= "<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>";
+
 
 
 
@@ -124,12 +124,15 @@ if(false and count($reqList)>0)
     $out_scr .= "</div>";
 }*/
 
+if($general_supervisor) {
+$out_scr .= "
+<div id='page-content-wrapper' class='qsearch_page'><div class='row row-filter-request'>
+    <div class='qfilter col-sm-10 col-md-10 pb10'>
+        <a href='main.php?Main_Page=fm.php&a=1073&r=317' class='btn btn-primary'>التقارير الأخرى</a>
+        <a href='main.php?Main_Page=workbox.php&r=323' class='btn btn-secondary'>صندوق التذاكر الواردة</a>
+    </div>
+</div>";
+}
 
-$out_scr .= "<div class='qfilter col-sm-10 col-md-10 pb10'>
-   <a href='main.php?Main_Page=fm.php&a=1073&r=317' class='btn btn-primary'>التقارير الأخرى</a>
-   <a href='main.php?Main_Page=workbox.php&r=323' class='btn btn-secondary'>صندوق التذاكر الواردة</a>
-   </div>";
-
-$out_scr .= "</div>";
 
 ?>

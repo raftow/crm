@@ -454,6 +454,7 @@ class CrmOrgunit extends CrmObject{
         {
                 // unassign request assigned to non active investigators
                 list($arrInv, $listInv) = CrmEmployee::getInvestigatorListOfIds($this->getVal("orgunit_id"));
+                $countInv = count($arrInv);
                 $arrInv[] = 0;
                 $arrInvTxt = implode(",",$arrInv);
                 $obj = new Request();
@@ -522,7 +523,7 @@ class CrmOrgunit extends CrmObject{
                         }
                 }
 
-                return array("",$nb_resetted." ".AfwLanguageHelper::tarjemMessage("request's reset","crm",$lang).", ".$nb_assigned." ".AfwLanguageHelper::tarjemMessage("request's assign","crm",$lang),"");
+                return array("",$nb_resetted." ".AfwLanguageHelper::tarjemMessage("request's reset","crm",$lang).", ".$nb_assigned." ".AfwLanguageHelper::tarjemMessage("request's assign","crm",$lang),"used $countInv investigator(s) for this orgunit");
         }
         
         

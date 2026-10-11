@@ -10,17 +10,19 @@ $orgunit_id = $myCrmEmplObj ? $myCrmEmplObj->getVal("orgunit_id") : 0;
 
 // The crm center should see all the stats of all departments, so we set orgunit_id to 0
 if($orgunit_id==CrmEmployee::$CRM_CENTER_ID) $orgunit_id = 0;
+if($objme->isSuperAdmin()) $orgunit_id = 0;
 
-$department_supervisor = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin")) or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR));
+$pure_department_supervisor = (($orgunit_id>0) and $myCrmEmplObj and $myCrmEmplObj->sureIs("super_admin"));
+$department_supervisor = ($objme->isSuperAdmin() or $pure_department_supervisor or $objme->hasRole("crm", CrmObject::$AROLE_OF_GENERAL_SUPERVISOR));
 $from_crm_center = ($objme->isSuperAdmin() or ($myCrmEmplObj and $myCrmEmplObj->isFromCrmCenter()));
 $general_supervisor = ($department_supervisor and $from_crm_center);
 
-$coef_period = ($department_supervisor) ? 6 : 1;
+$coef_period = $pure_department_supervisor ? 6 : 1;
 
 
 $server_db_prefix = AfwSession::currentDBPrefix();
 $period = intval(CrmOrgunit::getGlobalCRMCenter()->getVal("standard_stats_days")) * $coef_period;
-$date_start_stats = Request::calc_date_start_stats();
+$date_start_stats = Request::calc_special_period_date_start_stats($period);
 $r = new Request();
 
 $tokens = [];
@@ -91,7 +93,7 @@ elseif ($tokens["mytasks_nb"] > (0.7 * $dailyCapacity)) $tokens["mytasks_nb_stat
 else $tokens["mytasks_nb_status"] = "ok";
 
 $tokens["mytasks_title"] = Request::t('tasks', $lang);
-$tokens["days_avg"] = $days_avg = Request::nbDaysWorkByTicketAverage($orgunit_id);
+$tokens["days_avg"] = $days_avg = Request::nbDaysWorkByTicketAverage($orgunit_id, $period);
 $tokens["days_avg_title"] = Request::t('days_avg', $lang);
 if ($tokens["days_avg"] > 7) $tokens["days_avg_status"] = "error";
 elseif ($tokens["days_avg"] > 5) $tokens["days_avg_status"] = "warning";
@@ -104,14 +106,14 @@ else $tokens["response_avg_status"] = "ok";
 $tokens["response_avg_title"] = Request::t('response_avg', $lang);
 
 
-$tokens["nb_without"] = Request::nbRespondedTicketsWithoutTaqib(0, $orgunit_id);
+$tokens["nb_without"] = Request::nbRespondedTicketsWithoutTaqib(0, $orgunit_id, $period);
 $tokens["nb_without_title"] = Request::t('nb_without', $lang);
-$tokens["nb_with"] = Request::nbRespondedTicketsWithTaqib(0, $orgunit_id);
+$tokens["nb_with"] = Request::nbRespondedTicketsWithTaqib(0, $orgunit_id, $period);
 $tokens["nb_with_title"] = Request::t('nb_with', $lang);
 $tokens["nb_responded"] = $tokens["nb_without"] + $tokens["nb_with"];
 $tokens["nb_responded_title"] = Request::t('nb_responded', $lang);
 
-$tokens["nb_closed"] = Request::nbClosedTickets(0, $orgunit_id);
+$tokens["nb_closed"] = Request::nbClosedTickets(0, $orgunit_id, $period);
 $tokens["nb_closed_title"] = Request::t('nb_closed', $lang);
 
 
@@ -142,7 +144,7 @@ else $tokens["nb_responded_status"] = "ok";
 
 $late_request_error_limit = $tokens["orgunit_nb"] * 0.5;
 $late_request_warning_limit = $tokens["orgunit_nb"] * 0.3;
-$tokens["late_request_nb"] = Request::lateRequestsCount($orgunit_id);
+$tokens["late_request_nb"] = Request::lateRequestsCount($orgunit_id, $period);
 $tokens["late_requests_title"] = Request::t('tickets-late', $lang);
 
 if ($tokens["late_request_nb"] > $late_request_error_limit) $tokens["late_request_nb_status"] = "error";
@@ -183,17 +185,17 @@ $tokens["pct_without_title"] = Request::t('pct_without', $lang);
 // satisfaction survey
 list(
     $pct,
-    $date_start_stats,
-    $date_end_stats,
-    $date_start_stats_greg,
-    $date_end_stats_greg,
+    $date_start_satisfaction,
+    $date_end_satisfaction,
+    $date_start_satisfaction_greg,
+    $date_end_satisfaction_greg,
     $total_sent,
     $total_participated
 ) = SurveyToken::satisfactionPct($orgunit_id);
 
 $tokens["satisfaction_pct"] = $pct;
 $tokens["satisfaction_title"] = Request::t('satisfaction', $lang);
-$tokens["satisfaction_period"] = "(" . $r->translate("from", $lang, true) . " $date_start_stats_greg " . $r->translate("to", $lang, true) . " $date_end_stats_greg)";
+$tokens["satisfaction_period"] = "(" . $r->translate("from", $lang, true) . " $date_start_satisfaction_greg " . $r->translate("to", $lang, true) . " $date_end_satisfaction_greg)";
 
 
 $tokens["survey_sent_nb_period"] = $total_sent;

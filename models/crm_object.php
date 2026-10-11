@@ -272,4 +272,14 @@ class CrmObject extends AfwMomkenObject
                 return $arr_list_of_who;
 
         }
+
+        public static function calc_special_period_greg_date_start_stats($period=30)
+        {
+                return AfwDateHelper::shiftGregDate("", -$period);
+        }
+
+        public static function calc_special_period_date_start_stats($period=30)
+        {
+                return AfwDateHelper::shiftHijriDate("", -$period);
+        }
 }

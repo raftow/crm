@@ -2482,11 +2482,17 @@ class Request extends CrmObject
 
     public function assignRequest($employeeId, $lang = "ar", $internal = "Y", $caller = "???", $special_authorization="")
     {
-        /*
+        // rafik @important : DO NOT REMOVE BELOW
+        // if already assigned do nothing and return a message to caller
+        // otherwise we will update the assign_date and assign_time and 
+        // this will be a problem for reporting and time-work calculation
         if ($this->getVal("employee_id") == $employeeId) {
             return array("الطلب مسند من قبل لهذا الموظف", "");
-        }*/
+        }
 
+        // $employeeId is mandatory except if we want to unassign the request, 
+        // in this case we should pass 0 as employeeId and string `atuar` Authrorize The UnAssign Request
+        // as special_authorization to avoid exception
         if ((!$employeeId) and ($this->getVal("employee_id") > 0) and ($special_authorization != "atuar")) throw new AfwRuntimeException("strange attempt to unassign the request ID=" . $this->id);
         if (!$employeeId) return array("", "failed attempt to unassign a request already not assigned nothing-done");
 
@@ -2700,35 +2706,35 @@ class Request extends CrmObject
         return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id=7 and request_date between '$date_start_stats' and '$date_end_stats'");
     }
 
-    public static function nbClosedTickets($employee_id = 0, $orgunit_id = 0)
+    public static function nbClosedTickets($employee_id = 0, $orgunit_id = 0, $period = 30)
     {
-        $date_start_stats = self::calc_date_start_stats();
+        $date_start_stats = self::calc_special_period_date_start_stats($period);
         $server_db_prefix = AfwSession::currentDBPrefix();
         return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id=7 and request_date >= '$date_start_stats'");
     }
 
 
-    public static function nbRespondedTicketsWithoutTaqib($employee_id = 0, $orgunit_id = 0)
+    public static function nbRespondedTicketsWithoutTaqib($employee_id = 0, $orgunit_id = 0, $period = 30)
     {
-        $date_start_stats = self::calc_date_start_stats();
+        $date_start_stats = self::calc_special_period_date_start_stats($period);
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نستثني التعقيب نفسه كما نستثني الطلب المعقب عليه
         return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null)");
     }
 
-    public static function nbRespondedTicketsWithTaqib($employee_id = 0, $orgunit_id = 0)
+    public static function nbRespondedTicketsWithTaqib($employee_id = 0, $orgunit_id = 0, $period = 30)
     {
-        $date_start_stats = self::calc_date_start_stats();
+        $date_start_stats = self::calc_special_period_date_start_stats($period);
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نحسب التعقيب نفسه كما نحسب الطلب المعقب عليه
         return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0)");
     }
 
-    public static function pctClosedTicketsWithoutTaqib($employee_id = 0, $orgunit_id = 0)
+    public static function pctClosedTicketsWithoutTaqib($employee_id = 0, $orgunit_id = 0, $period = 30)
     {
         // $date_start_stats = self::calc_date_start_stats();
-        $without = self::nbRespondedTicketsWithoutTaqib($employee_id, $orgunit_id);
-        $with = self::nbRespondedTicketsWithTaqib($employee_id, $orgunit_id);
+        $without = self::nbRespondedTicketsWithoutTaqib($employee_id, $orgunit_id, $period);
+        $with = self::nbRespondedTicketsWithTaqib($employee_id, $orgunit_id, $period);
 
         return self::calcPctRespondedTicketsWithoutTaqib($without, $with);
     }
@@ -2743,12 +2749,12 @@ class Request extends CrmObject
     }
 
 
-    public static function nbDaysWorkByTicketAverage($orgunit_id=0)
+    public static function nbDaysWorkByTicketAverage($orgunit_id=0, $period = 30)
     {
         // nb hijri years
         /* $nb_hijri_years = 0.5;
         $date_start = AfwDateHelper::shiftHijriDate('', -round(354 * $nb_hijri_years)); */
-        $date_start_stats = self::calc_date_start_stats();
+        $date_start_stats = self::calc_special_period_date_start_stats($period);
         $server_db_prefix = AfwSession::currentDBPrefix();
         $return = AfwDatabase::db_recup_value("select avg(hours_investigator_work)/24 as avg 
             from $server_db_prefix" . "crm.request 
@@ -3483,9 +3489,10 @@ class Request extends CrmObject
     }
 
 
-    public static function lateRequestsCount($orgunit_id = 0)
+    public static function lateRequestsCount($orgunit_id = 0, $period = 30)
     {
-        $date_start_stats = self::calc_date_start_stats();
+        $date_start_stats = self::calc_special_period_date_start_stats($period);
+        
         $late_days = self::maxResponsePeriod();
 
         $obj = new Request();
@@ -4855,7 +4862,7 @@ class Request extends CrmObject
         $old_status = RequestStatus::loadById($old_status_id)->getDisplay("en");
         $old_response_date = AfwDateHelper::hijriToGreg($this->getVal("request_date"));
         $old_response_time = $this->getVal("request_time");
-        if (!$old_response_time) $old_response_time = "14:00:00";
+        if (!$old_response_time) $old_response_time = "14:00:00"; // وسط الدوام
         /**
          * @var Response $responseObj
          */
@@ -4866,7 +4873,7 @@ class Request extends CrmObject
             $response_date = AfwDateHelper::hijriToGreg($responseObj->getVal("response_date"));
             if (!$response_date) $response_date = $old_response_date;
             $response_time = $responseObj->getVal("response_time");
-            if (!$response_time) $response_time = "14:00:00";
+            if (!$response_time) $response_time = $old_response_time;
 
             // if the status is in ongoing investigator status we consider that the investigator is working on the request
             // $request_statuses_ongoing_investigator_arr = explode(",", self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR);

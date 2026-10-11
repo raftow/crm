@@ -110,6 +110,7 @@ class RequestArTranslator
 		$trad['request']['step2'] = 'الردود والتعليقات';
 		$trad['request']['step3'] = 'الاشعارات';
 		$trad['request']['step4'] = 'رضا العميل';
+		$trad['request']['step5'] = 'تطور حالة الطلب';
 
 		$trad['request']['perf'] = 'مؤشر الأداء';
 		$trad['request']['request_ongoing'] = 'جاري';

@@ -21,7 +21,7 @@ class CrmRequestAfwStructure
 
 			$obj->UNIQUE_KEY = array('request_code', 'customer_id');
 			$obj->editByStep = true;
-			$obj->editNbSteps = 4;
+			$obj->editNbSteps = 5;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 
@@ -291,7 +291,7 @@ class CrmRequestAfwStructure
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
-			'RETRIEVE' => false,
+			'RETRIEVE' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'CSS' => 'width_pct_25',
@@ -980,7 +980,7 @@ class CrmRequestAfwStructure
 
 		'status_comment' => array(
 			'FGROUP' => 'status',
-			'STEP' => 1,
+			'STEP' => 2,
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
@@ -1002,7 +1002,7 @@ class CrmRequestAfwStructure
 
 		'status_action_enum' => array(
 			'FGROUP' => 'status',
-			'STEP' => 1,
+			'STEP' => 2,
 			'SHORTNAME' => 'action',
 			'SEARCH' => true,
 			'QSEARCH' => true,
@@ -1030,11 +1030,26 @@ class CrmRequestAfwStructure
 			'SHOW' => true,
 			'AUDIT' => true,
 			'RETRIEVE' => false,
-			'EDIT' => false,
+			'EDIT' => true,
 			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'DISPLAY' => true,
-			'STEP' => 1,
+			'STEP' => 5,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'is_late' => array(
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
+			'DISPLAY' => true,
+			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1057,7 +1072,7 @@ class CrmRequestAfwStructure
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => true,
 			'AUDIT' => true,
-			'STEP' => 1,
+			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
@@ -1066,7 +1081,7 @@ class CrmRequestAfwStructure
 
 		'hours_investigator_work' => array(
 			'FGROUP' => 'status',
-			'STEP' => 1,
+			'STEP' => 2,
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -1092,7 +1107,7 @@ class CrmRequestAfwStructure
 
 		'days_investigator' => array(
 			'FGROUP' => 'status',
-			'STEP' => 1,
+			'STEP' => 5,
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -1119,7 +1134,7 @@ class CrmRequestAfwStructure
 
 		'days_retard' => array(
 			'FGROUP' => 'status',
-			'STEP' => 1,
+			'STEP' => 5,
 			'SEARCH' => false,
 			'QSEARCH' => false,
 			'SHOW' => true,
@@ -1142,7 +1157,8 @@ class CrmRequestAfwStructure
 		),
 
 		'request_priority' => array(
-			'FGROUP' => 'status',  'STEP' => 1,
+			'FGROUP' => 'status',  
+			'STEP' => 2,
 			'SHORTNAME' => 'priority',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -1169,7 +1185,7 @@ class CrmRequestAfwStructure
 
 		'estimatedHoursReport' => array(
 			'FGROUP' => 'status',
-			'STEP' => 1,
+			'STEP' => 5,
 			'SHOW-ADMIN' => true,
 			'NEVER-TOKEN' => true,
 			'READONLY' => true,
@@ -1650,42 +1666,70 @@ class CrmRequestAfwStructure
 
 
 		'chez_supervisor' => array(
-			'TYPE' => 'INT',
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => '',
-			'STEP' => 99,
+			'STEP' => 5,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
 
 		'chez_customer' => array(
-			'TYPE' => 'INT',
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => '',
-			'STEP' => 99,
+			'STEP' => 5,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
 
 		'chez_investigator' => array(
-			'TYPE' => 'INT',
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => '',
-			'STEP' => 99,
+			'STEP' => 5,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
 
 
 		'chez_archive' => array(
-			'TYPE' => 'INT',
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => '',
-			'STEP' => 99,
+			'STEP' => 5,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1693,11 +1737,18 @@ class CrmRequestAfwStructure
 
 
 		'request_done' => array(
-			'TYPE' => 'INT',
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => '',
-			'STEP' => 99,
+			'STEP' => 5,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
@@ -1705,11 +1756,52 @@ class CrmRequestAfwStructure
 
 
 		'request_ongoing' => array(
-			'TYPE' => 'INT',
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => '',
-			'STEP' => 99,
+			'STEP' => 5,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'is_done' => array(
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',
+			'STEP' => 2,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+
+
+		'is_ongoing' => array(
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',
+			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
