@@ -1779,7 +1779,7 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		
+
 		'is_done' => array(
 			'FGROUP' => 'status',
 			'TYPE' => 'ENUM',
@@ -1790,7 +1790,7 @@ class CrmRequestAfwStructure
 			'EDIT' => true,
 			'READONLY' => true,
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',
+			'DISPLAY' => true,
 			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
@@ -1808,7 +1808,7 @@ class CrmRequestAfwStructure
 			'EDIT' => true,
 			'READONLY' => true,
 			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',
+			'DISPLAY' => true,
 			'STEP' => 2,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
