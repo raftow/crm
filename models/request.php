@@ -465,25 +465,25 @@ class Request extends CrmObject
                 5 => array("COLUMN" => "is_support", "COLUMN_IS_FORMULA" => true, "GROUP-FUNCTION" => "sum", "SHOW-NAME" => "is_support", "FOOTER_SUM" => true),
                 6 => array("COLUMN" => "id", "GROUP-FUNCTION" => "count", "SHOW-NAME" => "count_request", "FOOTER_SUM" => true),
                 7 => array(
-                    "COLUMN" => "request_done",
-                    "COLUMN_IS_FORMULA" => true,
+                    "COLUMN" => "is_done",
+                    "COLUMN_IS_FORMULA" => false,
                     "GROUP-FUNCTION" => "sum",
-                    "SHOW-NAME" => "request_done",
+                    "SHOW-NAME" => "is_done",
                     "FOOTER_SUM" => true
                 ),
                 8 => array(
-                    "COLUMN" => "request_late",
-                    "COLUMN_IS_FORMULA" => true,
+                    "COLUMN" => "is_late",
+                    "COLUMN_IS_FORMULA" => false,
                     "GROUP-FUNCTION" => "sum",
-                    "SHOW-NAME" => "request_late",
+                    "SHOW-NAME" => "is_late",
                     "FOOTER_SUM" => true,
                     "URL" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"
                 ),
                 9 => array(
-                    "COLUMN" => "request_ongoing",
-                    "COLUMN_IS_FORMULA" => true,
+                    "COLUMN" => "is_ongoing",
+                    "COLUMN_IS_FORMULA" => false,
                     "GROUP-FUNCTION" => "sum",
-                    "SHOW-NAME" => "request_ongoing",
+                    "SHOW-NAME" => "is_ongoing",
                     "FOOTER_SUM" => true,
                     "URL" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&key=[orgunit_id_value]&currmod=crm&currstep=3"
                 ),
@@ -494,7 +494,7 @@ class Request extends CrmObject
             ),
 
             "OPTIONS" => array(
-                "perf" => array('count_request' => true, 'request_done' => true, 'request_late' => true, 'request_ongoing' => true, 'perf' => true),
+                "perf" => array('count_request' => true, 'is_done' => true, 'is_late' => true, 'is_ongoing' => true, 'perf' => true),
                 "MAX_MEMORY_BY_REQUEST" => 400000000,
                 "processLourd" => true,
             ),
