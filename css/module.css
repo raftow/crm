@@ -3661,7 +3661,7 @@ tr.csr_request_late.hzm_row_1 > td > span {
 }
 /* late requests */
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
   th.stats_orgunit_id, td.stats_orgunit_id,
   th.stats_is_request, td.stats_is_request,
   th.stats_is_enquiry, td.stats_is_enquiry,
