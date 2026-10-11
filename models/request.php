@@ -492,12 +492,12 @@ class Request extends CrmObject
             "FORMULA_COLS" => array(
                 0 => array("SHOW-NAME" => "perf", "METHOD" => "getPerf"),
             ),
-
+            /*
             "OPTIONS" => array(
                 "perf" => array('count_request' => true, 'is_done' => true, 'is_late' => true, 'is_ongoing' => true, 'perf' => true),
                 "MAX_MEMORY_BY_REQUEST" => 400000000,
                 "processLourd" => true,
-            ),
+            ),*/
             // "SUPER_HEADER"=>array(0=>array("colspan"=>3, "title"=>""), 1=>array("colspan"=>2, "title"=>"year_36"), 2=>array("colspan"=>2, "title"=>"year_37"),
             //                      3=>array("colspan"=>2, "title"=>"year_38"), 4=>array("colspan"=>2, "title"=>"year_39"), 5=>array("colspan"=>2, "title"=>"year_40"), ),
 
