@@ -4963,7 +4963,7 @@ class Request extends CrmObject
             $rows_updated = 0;
             if($commit) $rows_updated = $this->commit();
             if($pbm) return ["", $rows_updated . " " .$this->tm("record has been updated", $lang) . " : is_done=".$this->getVal("is_done").", is_ongoing=".$this->getVal("is_ongoing").", is_late=".$this->getVal("is_late")];
-            return $rows_updated;
+            return [$rows_updated, $this->getVal("request_date"), AfwDateHelper::convertHijriToGreg($this->getVal("request_date"))];
     }
 
     public static function updateDOL($lang = 'ar', $commit = true, $pbm = true, $limit = 5000)
@@ -4976,10 +4976,11 @@ class Request extends CrmObject
          * @var Request $requestItem
          */
         foreach ($requestList as $requestItem) {
-            $records += $requestItem->updateMyDOL($lang, $commit, false);
+            list($done, $requestDate, $requestGDate) = $requestItem->updateMyDOL($lang, $commit, false);
+            $records += $done;
         }
 
-        return ["", "$records records updated"];
+        return ["", "$records records updated until date ($requestDate / $requestGDate)"];
 
     }
 }
