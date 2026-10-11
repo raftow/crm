@@ -4957,9 +4957,9 @@ class Request extends CrmObject
 
 
     public function updateMyDOL($lang = 'ar', $commit = true, $pbm = true) {
-            $this->set("is_done", $this->calcRequest_done());
-            $this->set("is_ongoing", $this->calcRequest_ongoing());
-            $this->set("is_late", $this->calcRequest_late());
+            $this->setForce("is_done", $this->calcRequest_done());
+            $this->setForce("is_ongoing", $this->calcRequest_ongoing());
+            $this->setForce("is_late", $this->calcRequest_late());
             $rows_updated = 0;
             if($commit) $rows_updated = $this->commit();
             if($pbm) return ["", $rows_updated . " " .$this->tm("record has been updated", $lang) . " : is_done=".$this->getVal("is_done").", is_ongoing=".$this->getVal("is_ongoing").", is_late=".$this->getVal("is_late")];
@@ -4969,7 +4969,7 @@ class Request extends CrmObject
     public static function updateDOL($lang = 'ar', $commit = true, $pbm = true)
     {
         $requestObj = new Request();
-        $requestObj->where("is_done = 0 or is_ongoing = 0 or is_late is null");
+        $requestObj->where("is_done = 0 and is_ongoing = 0 and is_late = 0");
         $requestList = $requestObj->loadMany(1000, "request_date desc");
         $records = 0;
         /**
