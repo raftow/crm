@@ -3492,18 +3492,15 @@ class Request extends CrmObject
     public static function lateRequestsCount($orgunit_id = 0, $period = 30)
     {
         $date_start_stats = self::calc_special_period_date_start_stats($period);
-        
-        $late_days = self::maxResponsePeriod();
-
+        // $late_days = self::maxResponsePeriod();
         $obj = new Request();
         // for request date we accept 4 times late period because we consider redirections, customer data incomplete, etc...
-        $request_date_limit_late = AfwDateHelper::shiftHijriDate('', -4 * $late_days);
+        // $request_date_limit_late = AfwDateHelper::shiftHijriDate('', -4 * $late_days);
         // but for status date should be only one period date because it change at any action taken on status
-        $status_date_limit_late = AfwDateHelper::shiftHijriDate('', -$late_days);
+        // $status_date_limit_late = AfwDateHelper::shiftHijriDate('', -$late_days);
         if($orgunit_id) $obj->where("orgunit_id = $orgunit_id");
-        $obj->where("request_date >= '$date_start_stats' and (request_date < '$request_date_limit_late' or status_date < '$status_date_limit_late')");
-        $obj->where("(employee_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")) 
-                         or (supervisor_id > 0 and status_id in (" . Request::$REQUEST_STATUSES_ONGOING_SUPERVISOR . "))");
+        $obj->where("request_date >= '$date_start_stats'");
+        $obj->where("is_late = 1");
         return $obj->count();
     }
 
