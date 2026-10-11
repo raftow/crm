@@ -113,9 +113,16 @@ class RequestArTranslator
 		$trad['request']['step5'] = 'تطور حالة الطلب';
 
 		$trad['request']['perf'] = 'مؤشر الأداء';
-		$trad['request']['request_ongoing'] = 'جاري';
-		$trad['request']['request_late'] = 'متأخر';
-		$trad['request']['request_done'] = 'منجز';
+
+		$trad['request']['request_ongoing'] = 'جاري (صيغة)';
+		$trad['request']['request_late'] = 'متأخر (صيغة)';
+		$trad['request']['request_done'] = 'منجز (صيغة)';
+
+
+		$trad['request']['is_done'] = 'منجز';
+		$trad['request']['is_ongoing'] = 'جاري';
+		$trad['request']['is_late'] = 'متأخر';
+		
 		$trad['request']['is_support'] = 'دعم فني';
 		$trad['request']['is_suggestion'] = 'اقتراح';
 		$trad['request']['is_complaint'] = 'شكوى';

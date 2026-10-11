@@ -34,6 +34,12 @@ if ($objme) {
                         if ($info) AfwSession::pushInformation($info);
                         if ($error) AfwSession::pushError($error);
                 }
+                elseif ($_GET["udol"] == 1) {
+                        list($error, $info) = Request::updateDOL("ar", true, true);
+                        if ($info) AfwSession::pushInformation($info);
+                        if ($error) AfwSession::pushError($error);
+                }
+
         }
 
         // اذا عند احدى هذه الصلاحيات يدخل كموظف 
