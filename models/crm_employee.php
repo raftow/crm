@@ -409,19 +409,6 @@ class CrmEmployee extends CrmObject
         }
 
 
-
-
-
-        public function  calcCrm_orgunit_id()
-        {
-                if (!$this->getVal("orgunit_id")) return null;
-                $obj = CrmOrgunit::loadByMainIndex($this->getVal("orgunit_id"));
-                return $obj;
-        }
-
-
-
-
         public function calcRequests_count($only_done = false, $ongoing_only = false, $satisfied_only = false, $surveyed_only = false)
         {
                 if (!$this->getVal("employee_id")) return null;
