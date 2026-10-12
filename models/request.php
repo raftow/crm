@@ -4526,10 +4526,9 @@ class Request extends CrmObject
     {
         $status_reel_id = intval($this->getVal("status_id"));
         if ($status_reel_id == self::$REQUEST_STATUS_SENT) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_REDIRECT) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) $return = 1;
-
-        $return = 0;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_REDIRECT) $return = 1;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) $return = 1;
+        else $return = 0;
         return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_supervisor", $return);
     }
 
@@ -4537,10 +4536,10 @@ class Request extends CrmObject
     {
         $status_reel_id = intval($this->getVal("status_id"));
         if ($status_reel_id == self::$REQUEST_STATUS_DRAFT) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_MISSED_INFO) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_MISSED_FILES) $return = 1;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_MISSED_INFO) $return = 1;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_MISSED_FILES) $return = 1;
+        else $return = 0;
 
-        $return = 0;
         return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_customer", $return);
     }
 
@@ -4548,12 +4547,11 @@ class Request extends CrmObject
     {
         $status_reel_id = intval($this->getVal("status_id"));
         if ($status_reel_id == self::$REQUEST_STATUS_ASSIGNED) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_ONGOING) $return = 1;
-
-        $return = 0;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_ONGOING) $return = 1;
+        else $return = 0;
 
         $return_final = ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_investigator", $return);
-        return "what=$what return_final = $return_final (return = $return)";
+        // return "what=$what return_final = $return_final (return = $return)";
         return $return_final;
     }
 
@@ -4561,12 +4559,12 @@ class Request extends CrmObject
     {
         $status_reel_id = intval($this->getVal("status_id"));
         if ($status_reel_id == self::$REQUEST_STATUS_DONE) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_CANCELED) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_CLOSED) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_REJECTED) $return = 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_IGNORED) $return = 1;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_CANCELED) $return = 1;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_CLOSED) $return = 1;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_REJECTED) $return = 1;
+        elseif ($status_reel_id == self::$REQUEST_STATUS_IGNORED) $return = 1;
+        else $return = 0;
 
-        $return = 0;
         return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_archive", $return);
     }
 
