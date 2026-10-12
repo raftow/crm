@@ -323,11 +323,38 @@ class CrmCrmOrgunitAfwStructure
 			'CATEGORY' => 'ITEMS',
 			'ITEM' => '',
 			'DO-NOT-RETRIEVE-COLS' => ['man', 'service_satisfied', 'supervisor_id'],
+			'WHERE' => "request_date >= §archive_date§ 
+							        and orgunit_id = §orgunit_id§ 
+									and status_id in (2, 201, 3, 301, 4)
+									and is_late = 0
+									",   
+			'FORMAT' => 'retrieve',
+			'SHOW' => true,
+			'EDIT' => false,
+			'ICONS' => true,
+			'DELETE-ICON' => false,
+			'BUTTONS' => true,
+			'NO-LABEL' => false,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'lateRequests' => array(
+			'STEP' => 3,
+			'TYPE' => 'FK',
+			'ANSWER' => 'request',
+			'ANSMODULE' => 'crm',
+			'CATEGORY' => 'ITEMS',
+			'ITEM' => '',
+			'DO-NOT-RETRIEVE-COLS' => ['man', 'service_satisfied', 'supervisor_id'],
 			'FORCE-RETRIEVE-COLS' => ['days_retard'],
 			'WHERE' => "request_date >= §archive_date§ 
 							        and orgunit_id = §orgunit_id§ 
-									and status_id in (2, 4, 201)
-									",   // we should add [and status_id in (2, 4, 201) ] sql condition otherwise too much rceords to show
+									and status_id in (2, 201, 3, 301, 4)
+									and is_late = 1
+									",   
 			'FORMAT' => 'retrieve',
 			'SHOW' => true,
 			'EDIT' => false,
@@ -354,7 +381,7 @@ class CrmCrmOrgunitAfwStructure
 										((§orgunit_id§=70) and (orgunit_id = 0 or supervisor_id = 0)) or 
 										(orgunit_id = §orgunit_id§ and employee_id = 0)
 									)
-								and status_id in (2, 4, 201)",
+								and status_id in (2, 201, 3, 301, 4)",
 			'FORMAT' => 'retrieve',
 			'SHOW' => true,
 			'EDIT' => false,
