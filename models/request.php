@@ -4889,12 +4889,7 @@ class Request extends CrmObject
         } elseif (true) {
             $diffH = $this->totalWorkPeriodInHours();
         } else {
-            // otherwise for old tickets before implemeting audit system 
-            // we don't have sufficient audit data we can calculate the hours of work of the investigator 
-            // we are obliged to make estimation by removing weekends and estimation of periods of non working statuses
-            // we can estimated this from the responses given to the customer (each response contain the new status)
-
-            $diffH = $this->estimateHoursInvestigatorWorkFromResponses();
+            throw new AfwRuntimeException("updateHoursInvestigatorWork : case not implemented");
         }
         $this->set("hours_investigator_work", $diffH);
         if ($commit) $this->commit();
@@ -4907,8 +4902,16 @@ class Request extends CrmObject
 
     public function calcEstimatedHoursReport($what = "value")
     {
-        return $this->estimateHoursInvestigatorWorkFromResponses(true);
+        return $this->totalWorkPeriodInDays(true, true);
     }
+
+    /*
+    @todo may be
+    تحتاج إعادة نظر وأن تعتمد على جدول مستقبلي
+    request_assignment_history
+    يكون هذا الجدول أدق من الاعتماد على الأجوبة التي ليس فيها اعتبار من المكلف بالعمل على الطلب
+    في كل دقيقة من تاريخ الطلب الى الوقت الحالي
+
     public function estimateHoursInvestigatorWorkFromResponses($returnReport = false)
     {
         $report_arr = [];
@@ -4925,7 +4928,7 @@ class Request extends CrmObject
         if (!$old_response_time) $old_response_time = "14:00:00"; // وسط الدوام
         /**
          * @var Response $responseObj
-         */
+         *
         foreach ($responseList as $responseObj) {
             $new_status_id = $responseObj->getVal("new_status_id");
             if ($new_status_id > 0) $new_status = RequestStatus::loadById($new_status_id)->getDisplay("en"); //$responseObj->decode("new_status_id",'',false, "en");
@@ -4965,6 +4968,7 @@ class Request extends CrmObject
         }
         return $diffH;
     }
+    */
 
     /*
     public function calculateHoursInvestigatorWork($commit=true)
