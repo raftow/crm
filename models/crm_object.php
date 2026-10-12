@@ -282,4 +282,22 @@ class CrmObject extends AfwMomkenObject
         {
                 return AfwDateHelper::shiftHijriDate("", -$period);
         }
+
+        public function  calcCrm_orgunit_id($what='value', $create_obj_if_not_found = false)
+        {
+                if (!$this->getVal("orgunit_id")) $obj = null;
+                else $obj = CrmOrgunit::loadByMainIndex($this->getVal("orgunit_id"), $create_obj_if_not_found);
+                return AfwLoadHelper::giveWhat($obj, $what);
+        }
+
+        public function  calcCrm_employee_id($what='value', $create_obj_if_not_found = false)
+        {
+                $employee_id = $this->getVal("employee_id");
+                $orgunit_id = $this->getVal("orgunit_id");
+                if (!$employee_id) $obj = null;
+                elseif (!$orgunit_id) $obj = null;
+                else $obj = CrmEmployee::loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found);
+                
+                return AfwLoadHelper::giveWhat($obj, $what);
+        }
 }

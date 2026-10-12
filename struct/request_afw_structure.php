@@ -272,7 +272,7 @@ class CrmRequestAfwStructure
 			'TYPE' => 'FK',
 			'ANSWER' => 'employee',
 			'ANSMODULE' => 'hrm',
-			'RELATION' => 'OneToMany',
+			'RELATION' => 'ManyToOne',
 			'READONLY' => true,
 			'AUDIT' => true,
 			'SEARCH-BY-ONE' => false,
@@ -281,7 +281,29 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+					'crm_employee_id' => array(
+						'CATEGORY' => 'FORMULA',
+						'AGROUP' => 'status',
+						'STEP' => 1,
+						'AUTOCOMPLETE' => true,
+						'TYPE' => 'FK',
+						'ANSWER' => 'crm_employee',
+						'ANSMODULE' => 'crm',
+						'RELATION' => 'OneToMany',
+						'READONLY' => true,
+					),
 
+					'crm_orgunit_id' => array(
+						'CATEGORY' => 'FORMULA',
+						'AGROUP' => 'status',
+						'STEP' => 1,
+						'AUTOCOMPLETE' => true,
+						'TYPE' => 'FK',
+						'ANSWER' => 'crm_orgunit',
+						'ANSMODULE' => 'crm',
+						'RELATION' => 'OneToMany',
+						'READONLY' => true,
+					),
 
 
 		'assign_date' => array(

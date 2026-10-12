@@ -33,8 +33,13 @@ class RequestArTranslator
 		$trad['request']['prio_icon'] = 'الأولوية';
 		$trad['request']['intitled'] = 'بعنوان';
 
-		$trad['request']['orgunit_id'] = 'الجهة المعنية بالطلب';
-		$trad['request']['employee_id'] = 'المنسق المكلف';
+		$trad['request']['orgunit_id'] = 'الإدارة/الوحدة المكلفة بالطلب';
+		$trad['request']['employee_id'] = 'الموظف المكلف';
+
+		$trad['request']['crm_orgunit_id'] = 'الجهة المكلفة بالطلب';
+		$trad['request']['crm_employee_id'] = 'المنسق المكلف';
+
+
 		$trad['request']['supervisor_id'] = 'المشرف المكلف';
 		$trad['request']['man'] = 'الآن الطلب عند من ؟';
 		$trad['request']['man.short'] = 'عند من ؟';
