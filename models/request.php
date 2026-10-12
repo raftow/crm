@@ -4995,6 +4995,7 @@ class Request extends CrmObject
         else {
             $date_start = AfwDateHelper::shiftHijriDate("", -360); // 360 days ago
             $requestObj->where("request_date >= '$date_start'");
+            $limit = null;
         }
         $requestList = $requestObj->loadMany($limit, "request_date desc");
         $diffH = 0;
