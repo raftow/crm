@@ -1756,7 +1756,7 @@ class Request extends CrmObject
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", $status_comment);
-            if ($commit) $this->commit();
+            list($error, $info) = $this->updateMyDOL($lang, $commit);            
         } else {
             $info = "لا يوجد تغييرات";
             $error = "";
@@ -2078,6 +2078,7 @@ class Request extends CrmObject
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", $status_comment);
+            $this->updateMyDOL("ar", false);
             $new_status_decoded = $this->decode("status_id");
             if ($this->commit()) {
                 $technicals .= "<br> > request-status changed to $new_status_id/$new_status_decoded <br> > with comments $status_comment";
@@ -5007,14 +5008,17 @@ class Request extends CrmObject
         }
         $requestList = $requestObj->loadMany($limit, "request_date desc");
         $diffH = 0;
+        $records = 0;
         /**
          * @var Request $requestItem
          */
         foreach ($requestList as $requestItem) {
             $diffH += $requestItem->updateHoursInvestigatorWork('ar', true, false);
+            list($done, $request_date) = $requestItem->updateMyDOL('ar', true, false);
+            $records += $done;
         }
 
-        return ["", "$diffH hours calculated"];
+        return ["", "$diffH hours calculated, $records records DOL updated (Done or Ongoing or Late)"];
     }
 
     public function getMyCode()
