@@ -3553,7 +3553,7 @@ class Request extends CrmObject
     public static function lateRequestsCount($orgunit_id = 0, $period = 30)
     {
         $date_start_stats = self::calc_special_period_date_start_stats($period);
-        // $late_days = self::maxResponsePeriod();
+        // $late_days = $this->maxResponsePeriod();
         $obj = new Request();
         // for request date we accept 4 times late period because we consider redirections, customer data incomplete, etc...
         // $request_date_limit_late = AfwDateHelper::shiftHijriDate('', -4 * $late_days);
@@ -3570,16 +3570,20 @@ class Request extends CrmObject
      * عدد الأيام الأقصى للرد على العميل قبل أن يعتبر الطلب متأخرا
      * القيمة تأخذ من إعدادات مركز الاتصال CRM Center في الحقل "late_days"
      **/
-    public static function maxResponsePeriod()
+    public function maxResponsePeriod()
     {
-        return CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
+        $return = 0;
+        $crmOrgunit = $this->het("crm_orgunit_id");
+        if($crmOrgunit) $return = $crmOrgunit->getVal("late_days");
+        if(!$return) $return = CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
+        return $return;
     }
 
     public function calcRequest_late($what = "value")
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         if ($this->isExecuted()) $return = 0;
-        else $return = ($this->totalWorkPeriodInDays() > self::maxResponsePeriod()) ? 1 : 0;
+        else $return = ($this->totalWorkPeriodInDays() > $this->maxResponsePeriod()) ? 1 : 0;
 
         return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
     }
@@ -3588,7 +3592,7 @@ class Request extends CrmObject
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         if ($this->isExecuted()) $return = 0;
-        else $return = ($this->totalWorkPeriodInDays() > 2*self::maxResponsePeriod()) ? 1 : 0;
+        else $return = ($this->totalWorkPeriodInDays() > 2*$this->maxResponsePeriod()) ? 1 : 0;
 
         return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
     }
@@ -3598,7 +3602,7 @@ class Request extends CrmObject
      **/
     public function calcDays_retard()
     {
-        $return = $this->totalWorkPeriodInDays() - self::maxResponsePeriod();
+        $return = $this->totalWorkPeriodInDays() - $this->maxResponsePeriod();
         if ($return <= 0) return 0;
         else return $return;
     }
@@ -4958,7 +4962,7 @@ class Request extends CrmObject
         $report_arr[] = "  ---- about retard ----";
         $totalWorkPeriodInDays = $this->totalWorkPeriodInDays();
         $totalWorkPeriodInDaysReport = $this->totalWorkPeriodInDays(true, true);
-        $maxResponsePeriod = self::maxResponsePeriod();
+        $maxResponsePeriod = $this->maxResponsePeriod();
         $return = $totalWorkPeriodInDays - $maxResponsePeriod;
         $report_arr[] = "totalWorkPeriodInDays Report:" . $totalWorkPeriodInDaysReport;
         $report_arr[] = "Retard: $return days (totalWorkPeriodInDays:$totalWorkPeriodInDays - maxResponsePeriod:$maxResponsePeriod)";
