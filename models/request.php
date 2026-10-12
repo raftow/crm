@@ -1192,7 +1192,7 @@ class Request extends CrmObject
                 break;
         }
 
-        return AfwFormulaHelper::calculateFormulaResult($this, $attribute);
+        return AfwFormulaHelper::calculateFormulaResult($this, $attribute, $what);
     }
 
     protected function initObject()
