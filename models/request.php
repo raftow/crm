@@ -3475,7 +3475,7 @@ class Request extends CrmObject
 
 
 
-    public function calcRequest_done()
+    public function calcRequest_done($what="value")
     {
         return $this->isExecuted() ? 1 : 0;
     }
@@ -3582,10 +3582,10 @@ class Request extends CrmObject
 
     public function calcRequest_late($what = "value")
     {
-        $lang = AfwLanguageHelper::getGlobalLanguage();
+        
         if ($this->isExecuted()) $return = 0;
         else $return = ($this->totalWorkPeriodInDays() > $this->maxResponsePeriod()) ? 1 : 0;
-
+        $lang = AfwLanguageHelper::getGlobalLanguage();
         return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
     }
 
@@ -3616,11 +3616,12 @@ class Request extends CrmObject
     }
 
 
-    public function calcRequest_ongoing()
+    public function calcRequest_ongoing($what="value")
     {
-        if ($this->isExecuted()) return 0;
+        if ($this->isExecuted()) $return = 0;
+        else $return = 1 - $this->calcRequest_late();
 
-        return 1 - $this->calcRequest_late();
+
     }
 
     public function informCustomerBySMS($message, $lang)
