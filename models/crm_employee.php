@@ -1015,6 +1015,7 @@ class CrmEmployee extends CrmObject
 
                 $crm_root_mobile = AfwSession::config("crm_root_mobile", "0598988330");
                 $crm_root_email = AfwSession::config("crm_root_email", "");
+                $crm_simul_manager_email = AfwSession::config("crm_simul_manager_email", "simul.manager@gmail.com");
                         
 
                 if ($simul) {
@@ -1029,10 +1030,12 @@ class CrmEmployee extends CrmObject
                 {
                         $crmManagerObj = $this->getCrmManager();                        
                         if($crmManagerObj and $crmManagerObj->sureIs("admin")) {
-                                $cc_to = $employeeObj->getManagerEmail();
+                                if(!$simul) $cc_to = $employeeObj->getManagerEmail();
+                                else $cc_to = $crm_simul_manager_email;
                         }
                         elseif($bad_perf) {
-                                $cc_to = $crm_root_email;
+                                if(!$simul) $cc_to = $crm_root_email;
+                                else $cc_to = "bad.perf.".$crm_simul_manager_email;
                         }
                         
                 }
