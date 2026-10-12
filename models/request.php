@@ -3573,7 +3573,7 @@ class Request extends CrmObject
     public function maxResponsePeriod()
     {
         $return = 0;
-        $crmOrgunit = $this->het("crm_orgunit_id");
+        $crmOrgunit = $this->calcCrm_orgunit_id('object');
         if($crmOrgunit) $return = $crmOrgunit->getVal("late_days");
         if(!$return) $return = CrmOrgunit::getGlobalCRMCenter()->getVal("late_days");
         return $return;
