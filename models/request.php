@@ -4550,6 +4550,8 @@ class Request extends CrmObject
         elseif ($status_reel_id == self::$REQUEST_STATUS_ONGOING) $return = 1;
         else $return = 0;
 
+        if(($what=="value")) throw new AfwRuntimeException("calcChez_investigator : what=$what strange");
+
         $return_final = ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_investigator", $return);
         // return "what=$what return_final = $return_final (return = $return)";
         return $return_final;
