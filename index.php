@@ -41,8 +41,11 @@ if ($objme) {
                         if ($error) AfwSession::pushError($error);
                 }
                 elseif ($_GET["citw"] > 0) {
-                        $limit = $_GET["citw"] * 1000;
-                        list($error, $info) = Request::calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit, true);
+                        $forceAll = ($_GET["citw"]=="all");
+                        if($forceAll) $limit = null;
+                        else $limit = $_GET["citw"] * 1000;
+                        
+                        list($error, $info) = Request::calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit, $forceAll);
                         if ($info) AfwSession::pushInformation($info);
                         if ($error) AfwSession::pushError($error);
                 }
