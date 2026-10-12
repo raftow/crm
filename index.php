@@ -35,11 +35,19 @@ if ($objme) {
                         if ($error) AfwSession::pushError($error);
                 }
                 elseif ($_GET["udol"] > 0) {
-                        $limit = $_GET["udol"] * 1000;;
+                        $limit = $_GET["udol"] * 1000;
                         list($error, $info) = Request::updateDOL("ar", true, true, $limit);
                         if ($info) AfwSession::pushInformation($info);
                         if ($error) AfwSession::pushError($error);
                 }
+                elseif ($_GET["citw"] > 0) {
+                        $limit = $_GET["citw"] * 1000;
+                        list($error, $info) = Request::calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit, true);
+                        if ($info) AfwSession::pushInformation($info);
+                        if ($error) AfwSession::pushError($error);
+                }
+
+                
 
         }
 

@@ -173,6 +173,7 @@
                             <div class="row">                                 
                                 <div class="col-12">                                                                        
                                     <div class="quick_activity_wrap"> 
+                                        [crm_stats_general_stats_s]
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/customers_[crm_stats_new_customers_nb_status].svg" alt="">
@@ -182,6 +183,7 @@
                                                 <p>[crm_stats_new_customers_title]</p>
                                             </div>
                                         </div>   
+                                        [crm_stats_general_stats_e]
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/watch_[crm_stats_days_avg_status].svg" alt="">

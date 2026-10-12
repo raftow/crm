@@ -1746,6 +1746,12 @@ class Request extends CrmObject
         }
 
         if ($this->getVal("status_id") != $status_id) {
+            $oldWho = $this->whoIsInCharge($this->getVal("status_id"));
+            $newWho = $this->whoIsInCharge($status_id);
+            if($oldWho != $newWho) {
+                $this->set("assign_date", AfwDateHelper::currentHijriDate());
+                $this->set("assign_time", date("H:i:s"));
+            }
             $this->set("status_id", $status_id);
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
@@ -2056,6 +2062,12 @@ class Request extends CrmObject
                 $this->updateHoursInvestigatorWork('ar', false);
             }
 
+            $oldWho = $this->whoIsInCharge($this->getVal("status_id"));
+            $newWho = $this->whoIsInCharge($new_status_id);
+            if($oldWho != $newWho) {
+                $this->set("assign_date", AfwDateHelper::currentHijriDate());
+                $this->set("assign_time", date("H:i:s"));
+            }
 
             $this->set("status_id", $new_status_id);
             $this->set("status_action_enum", $status_action_enum);
@@ -3104,19 +3116,28 @@ class Request extends CrmObject
     }
 
 
+    public function whoIsInCharge($status_id=0)
+    {
+        return $this->calcMan("value", true, $status_id, true);
+    }
 
 
-    public function calcMan($what = "value", $showOnlyCode = false)
+    public function calcMan($what = "value", $showOnlyCode = false, $status_id=0, $showAlsoId=false)
     {
         $return = "man";
         $lang = AfwLanguageHelper::getGlobalLanguage();
-        $status_id = $this->getVal("status_id");
+        if(!$status_id) $status_id = $this->getVal("status_id");
         $return_arr = [];
         $req_employee_id = $this->getVal("employee_id");
         $return_arr["man"] = $this->translateOperator("archive", $lang);
         $return_arr["empl"] = $this->showAttribute("employee_id");
         $return_arr["sss"] = $this->showAttribute("supervisor_id");
         $return_arr["cust"] = $this->translate("customer_id", $lang);
+
+        $return_id_arr["man"] = "";
+        $return_id_arr["empl"] = $this->getVal("employee_id");
+        $return_id_arr["sss"] = $this->getVal("supervisor_id");
+        $return_id_arr["cust"] = $this->getVal("customer_id");
 
         // NEW -  مسودة طلب جديد  
         if ($status_id == self::$REQUEST_STATUS_DRAFT) $return = "cust";
@@ -3160,7 +3181,13 @@ class Request extends CrmObject
 
 
 
-        if ($showOnlyCode) return $return;
+        if ($showOnlyCode) {
+                if($showAlsoId) {
+                    if($return_id_arr[$return]) $return .= " (".$return_id_arr[$return].")";
+                    return $return;
+                }
+                else return $return;
+        } 
         else return $return_arr[$return];
     }
 
@@ -3453,14 +3480,48 @@ class Request extends CrmObject
     }
 
     /**
+     * @return int total work period for this ticket in hours 
+     *             calculated between assign date and now if assigned or 
+     *             calculated between request date and now if not yet assigned
+     */
+    public function totalWorkPeriodInHours($round = true, $report = false)
+    {
+        return $this->totalWorkPeriodInUnit("hours", $round, $report);
+    }
+
+    public function totalWorkPeriodInUnit($unit = "days", $round = true, $report = false)
+    {
+        $status_hdate =  AfwDateHelper::currentHijriDate();
+        $status_time = date("H:i:s");
+
+        $assign_hdate = $this->getVal("assign_date");
+        $assign_time = $this->getVal("assign_time");
+        if(!$assign_hdate) {
+            $assign_hdate = $this->getVal("request_date");
+            $assign_time = $this->getVal("request_time");
+        }
+        $return = AfwDateHelper::hijriDateTimeDiff($status_hdate, $status_time, $assign_hdate, $assign_time, $round, $unit);
+        if ($report) {
+            $status_en = $this->decode("status_id", '', false, 'en');
+            return "$return = (status[$status_en] = $status_hdate $status_time) - (assign = $assign_hdate $assign_time)";
+        }
+        return $return;
+    }
+
+    /**
      * @return int total work period for this ticket in days 
      *             calculated between assign date and now if assigned or 
      *             calculated between request date and now if not yet assigned
      */
     public function totalWorkPeriodInDays($round = true, $report = false)
     {
-        $status_hdate =  AfwDateHelper::currentHijriDate();
-        $status_time = date("H:i:s");
+        return $this->totalWorkPeriodInUnit("days", $round, $report);
+
+        /* also supervisor if who i n charge change to cutomer and after to employee
+           and finally back to supervisor, we should calculate the total work period between 
+           the last assign date and now, not between the first request date and now then it will be wrong
+           assign date and time now change every time the request who in charge change, 
+           so we can use the last assign date and time to calculate the total work period as above
         if (
             $this->getVal("orgunit_id")
             and $this->getVal("employee_id")
@@ -3485,7 +3546,7 @@ class Request extends CrmObject
                 return "$return = (status[$status_en] = $status_hdate $status_time) - (request = $request_hdate $request_time)";
             }
             return $return;
-        }
+        }*/
     }
 
 
@@ -4825,6 +4886,8 @@ class Request extends CrmObject
             // and not compute "(redirected", "data to complete", "files to upload" and similar statuses         
 
             // $diffH = $this->calculateHoursInvestigatorWorkFromAUDIT();
+        } elseif (true) {
+            $diffH = $this->totalWorkPeriodInHours();
         } else {
             // otherwise for old tickets before implemeting audit system 
             // we don't have sufficient audit data we can calculate the hours of work of the investigator 
@@ -4929,6 +4992,10 @@ class Request extends CrmObject
     {
         $requestObj = new Request();
         if (!$forceAll) $requestObj->where("hours_investigator_work is null or hours_investigator_work <= 0");
+        else {
+            $date_start = AfwDateHelper::shiftHijriDate("", -360); // 360 days ago
+            $requestObj->where("request_date >= '$date_start'");
+        }
         $requestList = $requestObj->loadMany($limit, "request_date desc");
         $diffH = 0;
         /**
