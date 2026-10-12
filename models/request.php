@@ -4552,7 +4552,9 @@ class Request extends CrmObject
 
         $return = 0;
 
-        return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_investigator", $return);
+        $return_final = ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_investigator", $return);
+        return "what=$what return_final = $return_final (return = $return)";
+        return $return_final;
     }
 
     public function calcChez_archive($what="value")
