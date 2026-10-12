@@ -4522,45 +4522,50 @@ class Request extends CrmObject
     }
 
 
-    public function calcChez_supervisor()
+    public function calcChez_supervisor($what="value")
     {
         $status_reel_id = intval($this->getVal("status_id"));
-        if ($status_reel_id == self::$REQUEST_STATUS_SENT) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_REDIRECT) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) return 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_SENT) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_REDIRECT) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) $return = 1;
 
-        return 0;
+        $return = 0;
+        return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_supervisor", $return);
     }
 
-    public function calcChez_customer()
+    public function calcChez_customer($what="value")
     {
         $status_reel_id = intval($this->getVal("status_id"));
-        if ($status_reel_id == self::$REQUEST_STATUS_DRAFT) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_MISSED_INFO) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_MISSED_FILES) return 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_DRAFT) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_MISSED_INFO) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_MISSED_FILES) $return = 1;
 
-        return 0;
+        $return = 0;
+        return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_customer", $return);
     }
 
-    public function calcChez_investigator()
+    public function calcChez_investigator($what="value")
     {
         $status_reel_id = intval($this->getVal("status_id"));
-        if ($status_reel_id == self::$REQUEST_STATUS_ASSIGNED) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_ONGOING) return 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_ASSIGNED) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_ONGOING) $return = 1;
 
-        return 0;
+        $return = 0;
+
+        return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_investigator", $return);
     }
 
-    public function calcChez_archive()
+    public function calcChez_archive($what="value")
     {
         $status_reel_id = intval($this->getVal("status_id"));
-        if ($status_reel_id == self::$REQUEST_STATUS_DONE) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_CANCELED) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_CLOSED) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_REJECTED) return 1;
-        if ($status_reel_id == self::$REQUEST_STATUS_IGNORED) return 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_DONE) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_CANCELED) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_CLOSED) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_REJECTED) $return = 1;
+        if ($status_reel_id == self::$REQUEST_STATUS_IGNORED) $return = 1;
 
-        return 0;
+        $return = 0;
+        return ($what=="value") ? $return : AfwFormatHelper::getEnumVal($this, "chez_archive", $return);
     }
 
     protected function beforeSetAttribute($attribute, $newvalue)
