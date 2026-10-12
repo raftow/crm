@@ -1002,22 +1002,7 @@ class CrmRequestAfwStructure
 
 		
 
-		'request_late' => array(
-			'FGROUP' => 'status',
-			'TYPE' => 'ENUM',
-			'ANSWER' => 'FUNCTION',
-			'FUNCTION_COL_NAME' => 'boolean',
-			'SHOW' => true,
-			'AUDIT' => true,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'READONLY' => true,
-			'CATEGORY' => 'FORMULA',
-			'DISPLAY' => true,
-			'STEP' => 5,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
+		
 
 		
 
@@ -1659,6 +1644,23 @@ class CrmRequestAfwStructure
 			'READONLY' => true,
 			'CATEGORY' => 'FORMULA',
 			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => true,
+			'STEP' => 5,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'request_late' => array(
+			'FGROUP' => 'status',
+			'TYPE' => 'ENUM',
+			'ANSWER' => 'FUNCTION',
+			'FUNCTION_COL_NAME' => 'boolean',
+			'SHOW' => true,
+			'AUDIT' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'READONLY' => true,
+			'CATEGORY' => 'FORMULA',
 			'DISPLAY' => true,
 			'STEP' => 5,
 			'DISPLAY-UGROUPS' => '',

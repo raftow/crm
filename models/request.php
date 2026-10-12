@@ -3622,6 +3622,10 @@ class Request extends CrmObject
         else $return = 1 - $this->calcRequest_late();
 
 
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
+
+
     }
 
     public function informCustomerBySMS($message, $lang)
