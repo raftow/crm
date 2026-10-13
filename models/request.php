@@ -320,7 +320,7 @@ class Request extends CrmObject
         4 => array(
             "resetRequestNew" => "neverDoThisNow",
             "assignRequest" => "iamTheSupervisor", // array(false, "iamTheSupervisor", "iamTheInvestigator"),
-            "redirectRequest" => "iamTheInvestigator",
+            "redirectRequest" => array(false,"iamTheInvestigator", "iamApprovedInvestigatorOrNeverRedirectedThisRequest"),
             "returnRequestToInvestigator" => "neverDoThisNow",
             "doneRequest" => array(false, "iResponded", "iamTheInvestigator"),
             "cancelRequest" => array(true, "iamTheApprovedInvestigator", "iamTheSupervisor"),
@@ -3477,7 +3477,9 @@ class Request extends CrmObject
 
     public function calcRequest_done($what="value")
     {
-        return $this->isExecuted() ? 1 : 0;
+        $return = $this->isExecuted() ? 1 : 0;
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        return ($what == "value") ? $return : self::name_of_boolean($return, $lang);
     }
 
     /**
