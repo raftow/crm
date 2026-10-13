@@ -320,7 +320,7 @@ class Request extends CrmObject
         4 => array(
             "resetRequestNew" => "neverDoThisNow",
             "assignRequest" => "iamTheSupervisor", // array(false, "iamTheSupervisor", "iamTheInvestigator"),
-            "redirectRequest" => array(false,"iamTheInvestigator", "iamApprovedInvestigatorOrNeverRedirectedThisRequest"),
+            "redirectRequest" => array(false,"iamTheInvestigator", "iamTheApprovedInvestigatorOrNeverRedirectedThisRequest"),
             "returnRequestToInvestigator" => "neverDoThisNow",
             "doneRequest" => array(false, "iResponded", "iamTheInvestigator"),
             "cancelRequest" => array(true, "iamTheApprovedInvestigator", "iamTheSupervisor"),
@@ -1632,6 +1632,23 @@ class Request extends CrmObject
 
 
         return $is_approved_crm_empl;
+    }
+
+    
+
+    public function  iamTheApprovedInvestigatorOrNeverRedirectedThisRequest()
+    {
+        return ($this->iamTheApprovedInvestigator() or $this->theInvestigatorNeverRedirectedThisRequest());
+    }
+
+    public function  theInvestigatorNeverRedirectedThisRequest()
+    {
+        $employee_id = $this->getVal("employee_id");
+        $request_id = $this->id;
+
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        $nb = AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.response where request_id=$request_id and employee_id=$employee_id and active = 'Y' and new_status_id = ".self::$REQUEST_STATUS_REDIRECT);
+        return ($nb==0);
     }
 
     public function  iamTheInvestigator()
