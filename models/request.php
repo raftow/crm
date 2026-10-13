@@ -4081,15 +4081,7 @@ class Request extends CrmObject
 
         foreach ($reqList as $reqItem) {
 
-            list($err, $info) = $reqItem->unAssignRequest($lang, "restoreLostRequests");
-
-            if ($err) $errors_arr[] = $err;
-            if ($info) $infos_arr[] = $info;
-
-            list($err, $info) = $reqItem->sendRequest($lang, "restoreLostRequests");
-
-            if ($err) $errors_arr[] = $err;
-            if ($info) $infos_arr[] = $info;
+            list($err, $info) = $reqItem->assignBestAvailableInvestigator($lang, true);            
         }
 
         $nb_errs = count($errors_arr);
