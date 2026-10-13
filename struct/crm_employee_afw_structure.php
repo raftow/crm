@@ -279,7 +279,7 @@ class CrmCrmEmployeeAfwStructure
 			'TYPE' => 'YN',
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
-			'STEP' => 2,
+			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),

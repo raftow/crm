@@ -1773,7 +1773,11 @@ class Request extends CrmObject
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
             $this->set("status_comment", $status_comment);
-            list($error, $info) = $this->updateMyDOL($lang, $commit);            
+            list($error, $info) = $this->updateMyDOL($lang, $commit);    
+            if(!$error) {
+                list($error, $info2) = $this->restoreResponsibleIfLost($lang);        
+            }
+            
         } else {
             $info = "لا يوجد تغييرات";
             $error = "";
@@ -2023,6 +2027,10 @@ class Request extends CrmObject
         if (($new_status_id == Request::$REQUEST_STATUS_DRAFT) and (!$old_status)) $silent_force = true;
 
         if ($new_status_id != $old_status) {
+            $lang = AfwLanguageHelper::getGlobalLanguage();
+            list($errors, $infos) = $this->restoreResponsibleIfLost($lang);            
+            if($errors) AfwSession::pushError($errors);
+
             if ($this->requestIsToComplete() and ($new_status_id == Request::$REQUEST_STATUS_ONGOING)) {
                 $response_type = ResponseType::$RESPONSE_TYPE_COMPLETE;
             } else {
@@ -3935,23 +3943,125 @@ class Request extends CrmObject
         return self::archiveOldRequests($silent = true, $lang, $limit, $jobContext = "silentArchiveOldRequests");
     }
 
-    public static function silentRestoreLostRequests($lang = "ar", $limit = "100")
-    {
-        return self::restoreLostRequests($silent = true, $lang, $limit);
-    }
+    
 
     public static function silentBootstrapBlockedRequests($lang = "ar", $limit = "100")
     {
         return self::bootstrapBlockedRequests($silent = true, $lang, $limit);
     }
 
+    public function restoreResponsibleIfLost($lang = "ar") {
+        $rt = $this->responsibleType();
+
+        if($rt=="empl") {
+            return $this->restoreInvestigatorIfLost($lang);
+        }
+
+        if($rt=="sss") {
+            return $this->restoreSupervisorIfLost($lang);
+        }
+
+        return ["","nothing to restore"];
+    }
+
+    public function restoreSupervisorIfLost($lang = "ar") {
+        $request_id = $this->id;
+        if($request_id>0) {
+            $return = self::restoreSupervisorLostRequests($silent = true, $lang, $limit = 1, $request_id);
+            $this->reloadMe();
+            return $return;
+        }
+        else {
+            return ['restoreSupervisorLostRequests : nothing to do without request_id', ''];
+        }
+    }
+
+    public function restoreInvestigatorIfLost($lang = "ar") {
+        $request_id = $this->id;
+        if($request_id>0) {
+            $return = self::restoreLostRequests($silent = true, $lang, $limit = 1, $request_id);
+            $this->reloadMe();
+
+            return $return;
+        }
+        else {
+            return ['restoreInvestigatorIfLost : nothing to do without request_id', ''];
+        }
+    }
 
 
-    public static function restoreLostRequests($silent = false, $lang = "ar", $limit = "100")
+    public static function restoreSupervisorLostRequests($silent = false, $lang = "ar", $limit = "100", $request_id = 0)
+    {
+        $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
+        $obj = new Request();
+        $obj->where("$request_id = 0 or id = $request_id");
+        $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_SUPERVISOR . ")");
+        // $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
+        // The condition below means that this reuqest is not assigned or assigned to an employee deleted or disable or not an inverstigator
+        $obj->where("me.supervisor_id is null or me.supervisor_id = 0 or me.supervisor_id not in (select employee_id 
+                                            from " . $server_db_prefix . "crm.crm_employee ce 
+                                            where ce.orgunit_id = ".CrmOrgunit::$MAIN_CUSTOMER_SERVICE_DEPARTMENT_ID."
+                                              and ce.active='Y' 
+                                              and ce.admin = 'Y')");
+
+        $reqList = $obj->loadMany($limit);
+
+        $errors_arr = array();
+        $infos_arr = array();
+
+        /**
+         * @var Request $reqItem
+         */
+
+        foreach ($reqList as $reqItem) {
+
+            
+            list($err, $info) = $reqItem->assignBestAvailableSupervisor($lang, true);
+
+            if ($err) $errors_arr[] = $err;
+            if ($info) $infos_arr[] = $info;
+        }
+
+        $nb_errs = count($errors_arr);
+
+        $infos_arr[] = "restored " . count($reqList) . " request(s) with $nb_errs error(s)";
+
+        if ((!$silent) and (count($errors_arr) > 0)) {
+            AfwSession::pushError(implode("<br>", $errors_arr));
+        }
+
+        if ((!$silent) and (count($infos_arr) > 0)) {
+            AfwSession::pushInformation(implode("<br>", $infos_arr));
+        }
+
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+    }
+
+
+    public static function silentRestoreLostRequests($lang = "ar", $limit = "100")
+    {
+        $errors_arr = array();
+        $infos_arr = array();
+
+        $silent = true;
+
+        list($err, $info) = self::restoreLostRequests($silent, $lang, $limit);
+        if ($err) $errors_arr[] = $err;
+        if ($info) $infos_arr[] = $info;
+
+        list($err, $info) = self::restoreSupervisorLostRequests($silent, $lang, $limit);
+        if ($err) $errors_arr[] = $err;
+        if ($info) $infos_arr[] = $info;
+
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+    }
+
+    public static function restoreLostRequests($silent = false, $lang = "ar", $limit = "100", $request_id = 0)
     {
         $server_db_prefix = AfwSession::config("db_prefix", "default_db_");
         $obj = new Request();
         $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
+        $obj->where("$request_id = 0 or id = $request_id");
         // $obj->where("status_id in (" . self::$REQUEST_STATUSES_ONGOING_INVESTIGATOR . ")");
         // The condition below means that this reuqest is not assigned or assigned to an employee deleted or disable or not an inverstigator
         $obj->where("me.employee_id is null or me.employee_id = 0 or me.employee_id not in (select employee_id 
@@ -4664,7 +4774,7 @@ class Request extends CrmObject
     }
 
 
-    public function myDisplayStatus()
+    public function responsibleType()
     {
         return $this->calcMan("value", true);
     }
