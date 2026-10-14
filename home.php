@@ -6,20 +6,20 @@
    $objme = AfwSession::getUserConnected();
    
 
-   if($customerMe)
+   if($objme)
+   {
+      $customerMe = null;
+      $file_dir_name = dirname(__FILE__);
+      // require("$file_dir_name/../lib/afw/cms/cms_main_page.php"); 
+      CmsMainPage::echoMainPage("crm","monitoring.php", $file_dir_name);
+   }
+   elseif($customerMe)
    {
       $controllerName = "Crm";
       $methodName = "myrequests";
 
       $file_dir_name = dirname(__FILE__);
       include("$file_dir_name/../crm/i.php");      
-   }
-   elseif($objme)
-   {
-      $customerMe = null;
-      $file_dir_name = dirname(__FILE__);
-      // require("$file_dir_name/../lib/afw/cms/cms_main_page.php"); 
-      CmsMainPage::echoMainPage("crm","monitoring.php", $file_dir_name);
    }
    else
    {
