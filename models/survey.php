@@ -84,7 +84,7 @@ class Survey extends CrmObject{
                     
                     $question_type_order = $question_row["question_type_order"];
                     $sql_arr[] = "select $question_order as question,
-                    '$question_title' as question_title,
+                    _utf8'$question_title' as question_title,
         sum(IF(attribute_enum_$question_type_order=5,1,0)) as verysatisfied,
         sum(IF(attribute_enum_$question_type_order=4,1,0)) as satisfied,
         sum(IF(attribute_enum_$question_type_order=3,1,0)) as indifferent,
@@ -112,7 +112,7 @@ class Survey extends CrmObject{
                     
                     $question_type_order = $question2_row["question_type_order"];
                     $sql_arr[] = "select $question_order as question,
-                    '$question_title' as question_title,
+                    _utf8'$question_title' as question_title,
         sum(IF(attribute_enum_$question_type_order=5,1,0)) as verysatisfied,
         sum(IF(attribute_enum_$question_type_order=4,1,0)) as satisfied,
         sum(IF(attribute_enum_$question_type_order=3,1,0)) as indifferent,
@@ -151,7 +151,7 @@ class Survey extends CrmObject{
                 $question_attribute = "attribute_$question_type"."_$question_type_order";
 
                 if($question_attribute==$attribute) {
-                    return var_export($question_row, true);
+                    // return var_export($question_row, true);
                     $question_title = str_replace("ما مدى","",$question_title);
                     $question_title = str_replace("يرجى ذكر","",$question_title);
                     return $question_title;
