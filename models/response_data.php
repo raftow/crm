@@ -44,9 +44,9 @@ class ResponseData extends AFWObject
      public static function loadByMainIndex($response_id, $module_id, $item_code, $create_obj_if_not_found = false)
      {
           $obj = new ResponseData();
-          if (!$response_id) $obj->_error("loadByMainIndex : response_id is mandatory field");
-          if (!$module_id) $obj->_error("loadByMainIndex : module_id is mandatory field");
-          if (!$item_code) $obj->_error("loadByMainIndex : item_code is mandatory field");
+          if (!$response_id) throw new AfwRuntimeException("loadByMainIndex : response_id is mandatory field");
+          if (!$module_id) throw new AfwRuntimeException("loadByMainIndex : module_id is mandatory field");
+          if (!$item_code) throw new AfwRuntimeException("loadByMainIndex : item_code is mandatory field");
 
 
           $obj->select("response_id", $response_id);

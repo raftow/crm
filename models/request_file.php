@@ -64,8 +64,8 @@ class RequestFile extends AFWObject
         public static function loadByMainIndex($request_id, $afile_id, $create_obj_if_not_found = false)
         {
                 $obj = new RequestFile();
-                if (!$request_id) $obj->_error("loadByMainIndex : request_id is mandatory field");
-                if (!$afile_id) $obj->_error("loadByMainIndex : afile_id is mandatory field");
+                if (!$request_id) throw new AfwRuntimeException("loadByMainIndex : request_id is mandatory field");
+                if (!$afile_id) throw new AfwRuntimeException("loadByMainIndex : afile_id is mandatory field");
 
 
                 $obj->select("request_id", $request_id);

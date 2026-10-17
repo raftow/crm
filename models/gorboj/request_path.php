@@ -45,7 +45,7 @@ class RequestPath extends CrmObject{
         public static function loadByMainIndex($prio_max,$create_obj_if_not_found=false)
         {
            $obj = new RequestPath();
-           if(!$prio_max) $obj->_error("loadByMainIndex : prio_max is mandatory field");
+           if(!$prio_max) throw new AfwRuntimeException("loadByMainIndex : prio_max is mandatory field");
 
 
            $obj->select("prio_max",$prio_max);

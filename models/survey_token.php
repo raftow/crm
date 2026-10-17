@@ -425,7 +425,7 @@ class SurveyToken extends CrmObject
         $surveyId = $this->getVal("survey_id");
         if(!$surveyId) $surveyId = 1;
         if (AfwStringHelper::stringStartsWith($attribute, "attribute_")) {
-            return "Survey::getQuestionLabel($surveyId, $attribute, $lang)";
+            return Survey::getQuestionLabel($surveyId, $attribute, $lang);
         }
         // die("calling getAttributeLabel($attribute, $lang, short=$short)");
         return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);

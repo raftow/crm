@@ -49,13 +49,13 @@ class ActionPolicy extends AFWObject{
         public static function loadByMainIndex($program_id, $request_type_id, $old_status_id, $new_status_id, $prio_min, $prio_max, $account_type_mfk,$create_obj_if_not_found=false)
         {
            $obj = new ActionPolicy();
-           if(!$program_id) $obj->_error("loadByMainIndex : program_id is mandatory field");
-           if(!$request_type_id) $obj->_error("loadByMainIndex : request_type_id is mandatory field");
-           if(!$old_status_id) $obj->_error("loadByMainIndex : old_status_id is mandatory field");
-           if(!$new_status_id) $obj->_error("loadByMainIndex : new_status_id is mandatory field");
-           if(!$prio_min) $obj->_error("loadByMainIndex : prio_min is mandatory field");
-           if(!$prio_max) $obj->_error("loadByMainIndex : prio_max is mandatory field");
-           if(!$account_type_mfk) $obj->_error("loadByMainIndex : account_type_mfk is mandatory field");
+           if(!$program_id) throw new AfwRuntimeException("loadByMainIndex : program_id is mandatory field");
+           if(!$request_type_id) throw new AfwRuntimeException("loadByMainIndex : request_type_id is mandatory field");
+           if(!$old_status_id) throw new AfwRuntimeException("loadByMainIndex : old_status_id is mandatory field");
+           if(!$new_status_id) throw new AfwRuntimeException("loadByMainIndex : new_status_id is mandatory field");
+           if(!$prio_min) throw new AfwRuntimeException("loadByMainIndex : prio_min is mandatory field");
+           if(!$prio_max) throw new AfwRuntimeException("loadByMainIndex : prio_max is mandatory field");
+           if(!$account_type_mfk) throw new AfwRuntimeException("loadByMainIndex : account_type_mfk is mandatory field");
 
 
            $obj->select("program_id",$program_id);
