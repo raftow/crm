@@ -131,7 +131,7 @@
                         <div id="fg-warn" class="attrib-warn form-group width_pct_100 ">
                         
                                 <div id="fg-reqstatus" class="attrib-warn form-group width_pct_100 ">
-                                حالة الطلب : <? echo $request_status;?>
+                                حالة الطلب : <?php echo $request_status;?>
                                 </div>
 
 

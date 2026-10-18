@@ -15,7 +15,7 @@
    }
    elseif($customerMe)
    {
-      $controllerName = "Crm";
+      $controllerName = "crm";
       $methodName = "myrequests";
 
       $file_dir_name = dirname(__FILE__);

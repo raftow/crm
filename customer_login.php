@@ -181,6 +181,7 @@ if ($desc_site) {
          </div>";
 }
 ?>
+
 <div class="home_banner login_banner">
         <div class="modal-dialog popup-login-customer">
                 <?php
@@ -188,7 +189,7 @@ if ($desc_site) {
                 ?>
                         <div class="quote">
                                 <div class="quoteinn">
-                                        <p class='login_error'><?= $customer_msg ?></p>
+                                        <p class='login_error'><?php echo  $customer_msg ?></p>
                                 </div>
                         </div>
                 <?php
@@ -201,7 +202,7 @@ if ($desc_site) {
                         <!-- <div class="modal-header">
                         <div>
                                 <a href="index.php" title="الرئيسسة">
-                                        <img src="pic/logo.png" alt="<?= $customer_login_by_sentence ?>" title="<?= $customer_login_by_sentence ?>"></a>
+                                        <img src="pic/logo.png" alt="<?php echo  $customer_login_by_sentence ?>" title="<?php echo  $customer_login_by_sentence ?>"></a>
                                         
                                 <h2 class='title_login'>عميل مسجل سابقا</h2>        
                         </div>

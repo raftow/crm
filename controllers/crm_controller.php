@@ -45,7 +45,7 @@ class CrmController extends AfwController
         {
                 
                 $login_template = AfwSession::config("customer-login-template", "right-left");
-                $xmodule = AfwSession::getCurrentlyExecutedModule();
+                $xmodule = AfwSession::currentCompanyOrDepartmentCode();
                 $module = UfwUrlManager::currentURIModule();
                 $company = AfwSession::currentCompany();
                 $login_out_css = "sign-in";
@@ -104,6 +104,11 @@ class CrmController extends AfwController
                 if ($run_mode) $run_mode = "-" . $run_mode;
                 
                 $data_tokens = array();
+
+                $data_tokens["logo-width"] = AfwSession::config("logo-width", 42, "display", "force-client", $company);
+                $data_tokens["logo-height"] = AfwSession::config("logo-height", 42, "display", "force-client", $company);
+                $data_tokens["title-width"] = AfwSession::config("title-width", 100, "display", "force-client", $company);
+
                 $data_tokens["orgunit_name_s"] = "<!--";
                 $data_tokens["orgunit_name_e"] = "-->";
 

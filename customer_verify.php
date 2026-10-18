@@ -251,6 +251,7 @@ else
         include("$file_dir_name/../$front_header_page");
 }
 
+
 if($sms_ok)
 {
 ?>
@@ -266,16 +267,16 @@ if($sms_ok)
                 <div class="modal-header">
                         <h2 class="title_register"> أدخل الرمز المرسل على جوالك</h2>        
                 </div>
-                    <?
+                    <?php
                        if($customer_verify_msg)
                        {
                     ?>
                         <div class="quote">
                             <div class="quoteinn">
-                               <p class='login_error'><?=$customer_verify_msg?></p>
+                               <p class='login_error'><?php echo $customer_verify_msg?></p>
                             </div>
                         </div>
-                    <? 
+                    <?php 
                        }         
                     ?>                    
                 <div class="modal-body">
@@ -340,7 +341,7 @@ if($sms_ok)
 </div>
 
 </div>
-<?
+<?php
 }
 else
 {       
@@ -350,7 +351,7 @@ else
         حدث خطأ أثناء ارسال رسالة قصيرة للعميل تحتوي على رمز التحقق ربما أن هذه العملية غير مسموح بها في البيئة الحالية
         <?php echo $sms_info_export ?>
 </div>
-<?
+<?php
 }
 
 if(!$front_footer) $front_footer = "lib/hzm/oldweb/hzm_simple_footer.php";

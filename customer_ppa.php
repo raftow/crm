@@ -119,13 +119,14 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
                 include_once("$file_dir_name/../$front_header_page");
         }    
 ?>
+
     <div class="home_banner login_banner">
     <div class="modal-dialog popup-login-customer ppa">
         <div class="modal-content">
                 <div class="modal-header">
                         <div>
                                 <a href="index.php" title="الرئيسسة">
-                                        <img src="pic/logo.png" alt="<?=$customer_login_by_sentence?>" title="<?=$customer_login_by_sentence?>"></a>
+                                        <img src="pic/logo.png" alt="<?php echo $customer_login_by_sentence?>" title="<?php echo $customer_login_by_sentence?>"></a>
                                         
                                 <h2 class='title_login'>الموافقة على سياسة الخصوصية</h2>        
                         </div>

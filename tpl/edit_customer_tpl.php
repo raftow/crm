@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var array $dataxv
+ */
+foreach($dataxv as $vard => $vald) $$vard = $vald;
 $uri_module = "crm";
 $file_dir_name = dirname(__FILE__);
 require_once("$file_dir_name/../../$uri_module/ini.php");
@@ -12,7 +16,7 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
         </div>
         <div class="content_big_title registration">تعديل الملف الشخصي للعميل</div>
         <div class="cms_bg">
-                <?
+                <?php
                 /**
                  * @var CrmCustomer $theCustomer
                  */
@@ -310,7 +314,7 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
 
                         </div>
                 </div>
-                <?
+                <?php
                 include("$file_dir_name/../customer_account_js.php");
                 $cr_prefix = "العودة إلى";
                 include("back_to_my_requests_tpl.php");

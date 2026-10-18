@@ -1,4 +1,6 @@
+OBSOLETE LOGIN TRAINEE VERY OLD
 <?php
+/*
 $file_dir_name = dirname(__FILE__);
 set_time_limit(8400);
 ini_set('error_reporting', E_ERROR | E_PARSE | E_RECOVERABLE_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
@@ -88,7 +90,7 @@ if (($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) {
                                 /* 
                         ldap_sort($ria_ldap,$result,$ria_ldap_sort_filter);
                         $ria_ldap_dbg .= "<br>\nldap_sort($ria_ldap,$result,$ria_ldap_sort_filter) => result=$result : ".var_export($result,true);
-                        */
+                        *
                                 $info = ldap_get_entries($ria_ldap, $result);
                                 $ria_ldap_dbg .= "<br>\nldap_get_entries($ria_ldap, $result) => [" . var_export($info, true) . "] :end of ldap_get_entries<br>\n";
                                 for ($i = 0; $i < $info["count"]; $i++) {
@@ -246,7 +248,7 @@ if (($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) {
                                         }
                                         $user_not_connected_reason = "Employee::loadAndUpdateFromExternalHRSystem($username, $hasseb_num) failed : employee : ".var_export($employee,true); 
                                         $user_connected = false;
-                                } */
+                                } *
                                 } else {
                                         $employeeOrgId = 1;
                                         if ($x_module_means_company and $email) {
@@ -260,7 +262,7 @@ if (($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname)) {
                                 
                                      $employee_org_id = $employee->getVal("id_sh_org");
                                      // @todo disable temp : if((!$employee) or ($employee_org_id != $employeeOrgId)) $user_connected = false;
-                                     */
+                                     *
                                         } else {
                                         }
                                 }
@@ -354,35 +356,36 @@ if ($desc_site) {
          </div>";
 }
 ?>
+
 <div class="home_banner">
         <div class="modal-dialog popup-login">
                 <div class="modal_login modal-content">
                         <div class="modal-header">
                                 <div>
                                         <a href="index.php" title="الرئيسسة">
-                                                <img src="../<?= $MODULE ?>/pic/logo<?= $XMODULE ?>.png" alt="<?= $login_by_sentence ?>" title="<?= $login_by_sentence ?>"></a>
+                                                <img src="../<?php echo  $MODULE ?>/pic/logo<?php echo  $XMODULE ?>.png" alt="<?php echo  $login_by_sentence ?>" title="<?php echo  $login_by_sentence ?>"></a>
 
-                                        <h2 class='title_login'><?= $login_title ?></h2>
+                                        <h2 class='title_login'><?php echo  $login_title ?></h2>
                                 </div>
                         </div>
-                        <?
+                        <?php
                         if ($msg) {
                         ?>
                                 <div class="quote">
                                         <div class="quoteinn">
                                                 <p>
-                                                        <font color='red'><?= $msg ?></font>
+                                                        <font color='red'><?php echo  $msg ?></font>
                                                 </p>
                                         </div>
                                 </div>
-                        <?
+                        <?php
                         }
                         ?>
                         <div class="modal-body">
                                 <h1>تسجيل دخول المتدربين</h1><br>
                                 <form id="formlogin0" name="formlogin0" method="post" action="login_trainee.php" onSubmit="return checkForm();" dir="rtl" enctype="multipart/form-data">
                                         <div class="form-group">
-                                                <label><?= $login_by ?>
+                                                <label><?php echo  $login_by ?>
                                                 </label>
                                                 <input class="form-control" type="text" name="mail" value="<?php echo $user_name_c ?>" required>
                                         </div>
@@ -393,18 +396,18 @@ if ($desc_site) {
                                         </div>
                                         <!-- logbl:<?php echo $logbl ?> -->
                                         <input type="submit" class="btnbtsp btn-primary" value="تسجيل الدخول" name="loginGo">&nbsp;
-                                        <?
+                                        <?php
                                         if ($login_page_options["password_reminder"]) {
                                         ?>
                                                 <a class="btn-default password_reminder" href="#forgotpassword">التذكير بكلمة المرور</a>
-                                        <?
+                                        <?php
                                         }
                                         ?>
 
 
                                 </form>
                         </div>
-                        <?
+                        <?php
                         if ($login_page_options["customer_authorized"]) {
                         ?>
                                 <div class="modal-footer">
@@ -412,7 +415,7 @@ if ($desc_site) {
                                                 <a class="btnbtsp btn_link" href="customer_login.php">دخول العملاء</a>
                                         </div>
                                 </div>
-                        <?
+                        <?php
                         }
                         ?>
                 </div>

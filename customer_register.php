@@ -232,18 +232,17 @@ else
                                         
                                 <h2 class='title_login'>عميلنا العزيز، تفضل بادخال  بياناتك</h2>        
                         </div>
-                </div>
-                
-                    <?
-                       if($customer_msg)
+                </div>                
+                    <?php                       
+                        if($customer_msg)
                        {
                     ?>
                         <div class="quote">
                             <div class="quoteinn">
-                               <p class='login_error'><?=$customer_msg?></p>
+                               <p class='login_error'><?php echo $customer_msg?></p>
                             </div>
                         </div>
-                    <? 
+                    <?php 
                        }         
                     ?>                    
                 <div class="modal-body">
@@ -490,7 +489,7 @@ echo $js_for_cust_type;
 
 
 
-<?
+<?php        
         include("$file_dir_name/customer_account_js.php");
         if(!$front_footer) $front_footer = "lib/hzm/oldweb/hzm_simple_footer.php";
         if(!file_exists("$file_dir_name/../$front_footer"))

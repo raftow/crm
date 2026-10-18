@@ -132,9 +132,9 @@
                         <div id="fg-warn" class="attrib-warn form-group width_pct_100 ">
                         
                                 <div id="fg-reqstatus" class="attrib-warn form-group width_pct_100 ">
-                                حالة الطلب : <? echo $request_status;?>
+                                حالة الطلب : <?php echo $request_status;?>
                                 </div>
-                                <pre class='request_instructions'><? echo $request_instructions;?></pre>
+                                <pre class='request_instructions'><?php echo $request_instructions;?></pre>
                                 <?php
                                         // echo var_export($files_list, true);
                                         foreach($files_list as $file_order => $file_title)

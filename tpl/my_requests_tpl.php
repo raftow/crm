@@ -25,7 +25,7 @@ if(count($requestList)>0)
 }
 ?>
 <div class="cms_bg">
-<?
+<?php
 foreach($requestList as $ticketObj)     
 {
         $my_status = $ticketObj->getVal("status_id");
@@ -104,7 +104,7 @@ foreach($requestList as $ticketObj)
                 
         </div>
 </div>
-<?
+<?php
 }
 
 include("new_request_tpl.php");

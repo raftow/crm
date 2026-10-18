@@ -13,7 +13,7 @@
 </div>  
 <div class="content_big_title registration">بطاقة طلب</div>
 <div class="cms_bg">
-<?
+<?php
         //if(!$ticketObj) die("this ticket is lost");
         $my_status = $ticketObj->getVal("status_id");
         $my_status_decoded = $ticketObj->getCustomerStatus("ar");
@@ -248,7 +248,7 @@
                 
         </div>
 </div>
-<?
+<?php
 $my_survey2_url = $ticketObj->mySurvey2Url();
 if($ticketObj->calcRequest_very_late()) {
         $ticketObj->resetSurveyForMe("ar");
