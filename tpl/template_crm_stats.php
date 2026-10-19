@@ -214,7 +214,7 @@
                                         </div>
 
                                         
-
+                                        [crm_stats_general_stats_s]
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/request.svg" alt="">
@@ -224,6 +224,7 @@
                                                 <p>[crm_stats_requests_period_title]</p>
                                             </div>
                                         </div>
+                                        [crm_stats_general_stats_e]
 
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
@@ -244,7 +245,7 @@
                                                 <p>[crm_stats_nb_closed_title]</p>
                                             </div>
                                         </div>
-
+                                        [crm_stats_general_stats_s]
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/heart_[crm_stats_nb_without_status].svg" alt="">
@@ -264,6 +265,7 @@
                                                 <p>[crm_stats_pct_without_title]</p>
                                             </div>
                                         </div>
+                                        [crm_stats_general_stats_e]
 
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">

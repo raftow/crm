@@ -23,12 +23,14 @@ class RequestArTranslator
 		$trad['request']['request_code'] = 'رمز الطلب';
 		$trad['request']['request_date'] = 'تاريخ الطلب';
 		$trad['request']['request_time'] = 'وقت الطلب';
-		$trad['request']['request_type_id'] = 'نوع  الطلب';
+		$trad['request']['request_type_id'] = 'نوع الطلب';
+		$trad['request']['request_category_id'] = 'صنف الطلب';
+		  
 		$trad['request']['related_request_code'] = 'رمز طلب سابق';
 		$trad['request']['related_request_id'] = 'الطلب السابق';
 		$trad['request']['request_link'] = 'رابط متعلق بالطلب';
-		$trad['request']['service_category_id'] = 'صنف الخدمة';
-		$trad['request']['service_id'] = 'الخدمة';
+		$trad['request']['service_category_id'] = 'الخدمة';
+		$trad['request']['service_id'] = 'القسم';
 		$trad['request']['request_priority'] = 'أولوية الطلب';
 		$trad['request']['prio_icon'] = 'الأولوية';
 		$trad['request']['intitled'] = 'بعنوان';
@@ -167,7 +169,7 @@ class RequestArTranslator
 		$trad['request']['pct_without'] = 'نسبة التذاكر الغير معقب عليها';
 		$trad['request']['nb_taqibs'] = 'عدد التعقيبات';
 
-		$trad['request']['stats.gs001'] = 'تقرير الأداء'; //  لفترة من [date_start_perf_greg] إلى اليوم
+		$trad['request']['stats.gs001'] = 'تقرير الأداء لفترة من [date_start_perf_greg] إلى اليوم'; //  
 		$trad['request']['stats.gs002'] = 'احصائيات الطلبات الجارية';
 		$trad['request']['stats.gs003'] = 'احصائيات الطلبات';
 		$trad['request']['stats.gs004'] = 'تقرير التذاكر المتأخرة بحسب الجهة المكلفة والحالة';

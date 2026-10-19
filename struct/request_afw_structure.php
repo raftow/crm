@@ -22,6 +22,7 @@ class CrmRequestAfwStructure
 			$obj->UNIQUE_KEY = array('request_code', 'customer_id');
 			$obj->editByStep = true;
 			$obj->editNbSteps = 5;
+			$obj->excelExport = true;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
 
@@ -363,7 +364,7 @@ class CrmRequestAfwStructure
 			'QSEARCH' => true,
 			'SHOW' => true,
 			'RETRIEVE' => false,
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'SIZE' => 'AREA',
@@ -1334,7 +1335,7 @@ class CrmRequestAfwStructure
 			'SHOW' => true,
 			'STEP' => 99,
 			'RETRIEVE' => false,
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'SIZE' => 255,

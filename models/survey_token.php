@@ -158,9 +158,11 @@ class SurveyToken extends CrmObject
         if (($col_struct == "retrieve") or ($col_struct == "excel")) {
             return (Survey::isQuestionToRetrieve($survey_id, $field_type, $field_order));
         }
+
+        /*
         if ($col_struct == "required") {
             return !$params["optional"];
-        }
+        }*/
 
         if ($col_struct == "function_col_name") {
             return "stars";
@@ -486,13 +488,22 @@ class SurveyToken extends CrmObject
     }
 
 
-    public static function satisfactionPct($orgunit_id = 0)
+    public static function satisfactionPct($orgunit_id = 0, $period=30)
     {
         $server_db_prefix = AfwSession::config("db_prefix","ttc_");
-        $date_start_stats = self::calcCrmDate_start_satisfaction();
-        $date_end_stats = self::calcCrmDate_end_satisfaction();
-        $date_start_stats_greg = self::calcCrmDate_start_satisfaction_greg();
-        $date_end_stats_greg = self::calcCrmDate_end_satisfaction_greg();
+        if($orgunit_id == 0) {
+            $date_start_stats = self::calcCrmDate_start_satisfaction();
+            $date_end_stats = self::calcCrmDate_end_satisfaction();
+            $date_start_stats_greg = self::calcCrmDate_start_satisfaction_greg();
+            $date_end_stats_greg = self::calcCrmDate_end_satisfaction_greg();
+        }
+        else {
+            $date_start_stats = self::calc_special_period_date_start_stats($period);
+            $date_end_stats = AfwDateHelper::currentHijriDate();
+            $date_start_stats_greg = self::calc_special_period_greg_date_start_stats($period);
+            $date_end_stats_greg = date('Y-m-d');
+        }
+        
         $survey_token_stats_row     = AfwDatabase::db_recup_row("select sum(IF(attribute_enum_4=5,1,0)) as verysatisfied,
         sum(IF(attribute_enum_4=4,1,0)) as satisfied,
         sum(IF(attribute_enum_4=3,1,0)) as indifferent,

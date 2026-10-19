@@ -1,6 +1,8 @@
 img.hlc {
-  height: 180px;
-  margin-right: calc(50% - 140px);
+    margin-top: 20px;
+    height: 140px;
+    margin-right: calc(50% - 219px);
+    margin-bottom: 30px;
 }
 
 .modal-header {
@@ -37,7 +39,8 @@ div.modal-dialog > .modal-content {
 }
 
 div.modal-dialog.verify > .modal-content {
-  background-color: #9bddf7a6 !important;
+  background-color: #9bddf7e0 !important;
+  
   width: 80%;
   margin-right: 10%;
   margin-left: 10%;
@@ -376,14 +379,14 @@ h2.crm_question {
   padding-right: 0px !important;
   padding-bottom: 30px;
   float: right;
-  min-height: 870px;
+  min-height: 970px;
   min-width: 300px !important;
   max-width: 500px !important;
   width: 500px !important;
   margin-right: 0px !important;
   margin-left: 0px !important;
   margin-top: 0px !important;
-  border-left: 8px solid #576063;
+  border-left: 1px solid #71abbe7a;
   margin-bottom: 0px !important;
 }
 
@@ -425,12 +428,12 @@ h2.crm_question {
 
 .modal-dialog.popup-company {
   float: right;
-  min-height: 870px;
+  min-height: 970px;
   min-width: 300px !important;
   width: calc(100% - 500px) !important;
   max-width: calc(100% - 500px);
   background-size: cover;
-  background-position: right;
+  background-position: right bottom;
   background-repeat: no-repeat;
   margin: 0px !important;
 }
@@ -663,25 +666,25 @@ h2.title_register {
 }
 
 div.btnbtsp.btn-success.btnregister {
-  font-family: menu;
-  margin-top: 9px;
-  font-size: 80%;
-  font-weight: normal;
-  background-color: #5478af;
-  color: white;
-  border-color: #5478af;
-  border-width: 1px;
-  /* width: 60%; */
-  /* margin-right: 20%; */
-  float: right;
-  margin-bottom: 25px;
-  width: 40%;
-  margin-left: 30%;
-  margin-right: 30%;
-  border-radius: 0;
-  height: 34px;
-  vertical-align: middle;
-  padding-top: 6px;
+    font-family: menu;
+    margin-top: 9px;
+    font-size: 80%;
+    font-weight: normal;
+    background-color: #5478af;
+    color: white;
+    border-color: #5478af;
+    border-width: 1px;
+    /* width: 60%; */
+    /* margin-right: 20%; */
+    float: right;
+    margin-bottom: 25px;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    border-radius: 0;
+    height: 44px;
+    vertical-align: middle;
+    padding-top: 11px;
 }
 
 .q_new_customer {
@@ -689,8 +692,22 @@ div.btnbtsp.btn-success.btnregister {
   padding: 16px 0px 0px 0px;
   border: none;
   background-color: transparent !important;
-  border-top: 2px solid #5478af;
+  border-top: 1px solid #5478af85;
   width: 100%;
+  margin-top: 40px;
+}
+
+.q_new_customer::before {
+  content: 'أو';
+  margin-top: -34px !important;
+  display: block;
+  width: 10%;
+  margin-right: 45%;
+  background-color: #c2ecff;
+  text-align: center;
+  font-size: 22px !important;
+  color: #205b84;
+  margin-bottom: 20px;
 }
 
 .hzm_minibox_btns {
@@ -1401,12 +1418,12 @@ div.row.odd.crm_data.crm_response.type1 > div.hzm_small_calendar > label {
 }
 
 input.btnbtsp.btn-primary.btnregister {
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-  height: 64px;
-  font-size: 20px !important;
-  border-radius: 0;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 44px;
+    font-size: 20px !important;
+    border-radius: 0;
 }
 
 input.btnbtsp.btn-primary.btncheck {
@@ -1495,14 +1512,6 @@ input.btnbtsp.btn-primary.btncheck {
 .hzm_minibox_container {
   float: right;
   border: 1px solid #2889b3;
-}
-
-.ui-accordion-header-active.ui-state-active {
-  border: 1px #2889b3 solid !important;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: rgb(40, 137, 179);
-  border-bottom: none !important;
 }
 
 @media (max-width: 660px) {
@@ -1756,16 +1765,16 @@ td.stats_orgunit_id {
 }
 
 a.btnbtsp.btn_link {
-  color: white;
-  font-size: 80%;
-  padding: 8px 0px;
-  border: none;
-  border-radius: 0;
-  background-color: #2168ffe8 !important;
-  width: 40%;
-  margin-left: 0;
-  margin-right: 0;
-  text-align: center;
+    color: white;
+    font-size: 80%;
+    padding: 11px 0px;
+    border: none;
+    border-radius: 0;
+    background-color: #2168ffe8 !important;
+    width: 80%;
+    /* margin-left: 0; */
+    /* margin-right: 0; */
+    text-align: center;
 }
 
 a.btnbtsp.btn_link:hover {
@@ -3064,19 +3073,39 @@ label.light_label {
   border-right: none !important;
 }
 
-.modal-footer {
+.login-employee {
+  font-size: 19px;
+  text-align: center;
+  width: 100%;
+}
+
+.modal-employee.modal-footer {
   padding: 20px 0px;
-  border-top: 2px solid #2168ffe8 !important;
-  /* padding-top: 5px; */
+  border-top: 1px solid #2168ff5c !important;
   background-color: transparent !important;
-  margin-top: 0px;
   max-width: none;
+  margin-top: 40px;
+}
+
+.modal-employee.modal-footer::before {
+  content: 'إذا كنت موظفا';
+  margin-top: -34px !important;
+  display: block;
+  width: 50%;
+  margin-left: 25%;
+  background-color: #c2ecff;
+  text-align: center;
+  font-size: 20px !important;
+  color: #205b84;
+  margin-bottom: 20px;
 }
 
 ul.hzm_front_menu_bar > li {
   border: 1px #518ea8 solid;
   background-color: #d6f2ff63;
 }
+
+
 
 ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav > li > a {
   background-color: #ffffff40 /* !important : here no but in sub-modules */;
@@ -3847,7 +3876,7 @@ input#customer_verify_code {
     background-color: transparent;
     font-size: 45px !important;
     font-family: led;
-    color: #279de5;
+    color: #04304c;
     padding: 7px !important;
     padding-left: 10px !important;
     height: 50px !important;

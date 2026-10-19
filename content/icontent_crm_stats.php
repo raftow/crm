@@ -140,10 +140,10 @@ elseif ($tokens["nb_responded"] < ($nb_responded_warning_limit)) $tokens["nb_res
 else $tokens["nb_responded_status"] = "ok";
 
 
+$orgunit_nb_monitored = $pure_department_supervisor ? 1 : $tokens["orgunit_nb"];
 
-
-$late_request_error_limit = $tokens["orgunit_nb"] * 0.5;
-$late_request_warning_limit = $tokens["orgunit_nb"] * 0.3;
+$late_request_error_limit = $orgunit_nb_monitored * 0.5;
+$late_request_warning_limit = $orgunit_nb_monitored * 0.3;
 $tokens["late_request_nb"] = Request::lateRequestsCount($orgunit_id, $period);
 $tokens["late_requests_title"] = Request::t('tickets-late', $lang);
 
@@ -191,7 +191,7 @@ list(
     $date_end_satisfaction_greg,
     $total_sent,
     $total_participated
-) = SurveyToken::satisfactionPct($orgunit_id);
+) = SurveyToken::satisfactionPct($orgunit_id, $period);
 
 $tokens["satisfaction_pct"] = $pct;
 $tokens["satisfaction_title"] = Request::t('satisfaction', $lang);

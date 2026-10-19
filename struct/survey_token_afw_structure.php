@@ -100,7 +100,7 @@ class CrmSurveyTokenAfwStructure
 			'EDIT' => true,
 			'QEDIT' => false,
 			'SIZE' => 40,
-			'MANDATORY' => true,
+			'MANDATORY' => false, // in survey 2 orgunit_id has no sens
 			'UTF8' => false,
 			'CSS' => 'width_pct_25',
 			'TYPE' => 'FK',

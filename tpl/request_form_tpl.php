@@ -104,7 +104,7 @@ $request_type_readonly = true;
                 <!-- fg-customer_mobile -->
                 <!-- fg-customer_email -->
                 <div id="fg-customer_email" class="attrib-customer_email form-group width_pct_100 ">
-                        <label for="customer_email" class="hzm_label hzm_data_customer_email label_required">رقم جوالك 
+                        <label for="customer_email" class="hzm_label hzm_data_customer_email label_required">بريدك الالكتروني 
                         </label>                    				
                         <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_email" id="customer_email" dir="rtl" value="<?php echo $customer_email ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_email_readonly ?>>	
                         <?php echo AfwInputHelper::inputErrorsInRequest("customer_email", $data); ?>

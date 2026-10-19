@@ -48,7 +48,8 @@ else {
 include_once("$file_dir_name/../$uri_module/application_config.php");
 AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/application_config.php");
 
-
+$company = AfwSession::currentCompany();
+$main_company_domain = AfwSession::config("main_company_domain", "$company.com");
 
 $nom_site = $NOM_SITE[$lang];
 $desc_site = $DESC_SITE[$lang];
@@ -196,7 +197,7 @@ if ($desc_site) {
                 }
                 ?>
                 <div class="modal-header logo-company">
-                        <img class='hlc' src="pic/home-company-header.png">
+                        <img class="hlc" src="../client-<?php echo $company ?>/pic/customer-login-banner.png">
                 </div>
                 <div class="modal-content">
                         <!-- <div class="modal-header">
@@ -217,8 +218,7 @@ if ($desc_site) {
                                 </div>
                         <?php
                         }
-                        $company = AfwSession::currentCompany();
-                        $main_company_domain = AfwSession::config("main_company_domain", "$company.gov.sa");
+                        
                         ?>
                         <div class="modal-body">
                                 <h1><?php echo $customer_login_welcome ?></h1><br>
@@ -280,8 +280,8 @@ if ($desc_site) {
 
                         ?>
                 </div>
-                <div class="modal-footer">
-                        <div class="login-register">
+                <div class="modal-footer modal-employee">
+                        <div class="login-employee">
                                 <a class="btnbtsp btn_link" href="login.php"><?php echo $login_employee_phrase; ?></a>
                         </div>
                 </div>

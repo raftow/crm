@@ -198,20 +198,39 @@ class Survey extends CrmObject{
         {
             $mandatory = [];
 
-            $mandatory['yn'][1] = true;
-            $mandatory['gdate'][1] = true;
-            
-            $mandatory['enum'][1] = true;
-            $mandatory['enum'][2] = false;
-            $mandatory['enum'][3] = false;
-            $mandatory['enum'][4] = true;
-            $mandatory['string'][1] = true;
-            $mandatory['string'][2] = true;
-            $mandatory['string'][3] = true;
+            if($survey_id==1) {
+                $mandatory['yn'][1] = true;
+                $mandatory['gdate'][1] = true;
+                
+                $mandatory['enum'][1] = true;
+                $mandatory['enum'][2] = false;
+                $mandatory['enum'][3] = false;
+                $mandatory['enum'][4] = true;
+                $mandatory['string'][1] = true;
+                $mandatory['string'][2] = true;
+                $mandatory['string'][3] = true;
 
-            $mandatory['area'][1] = true;
-            $mandatory['area'][2] = false;
-            $mandatory['area'][3] = false;
+                $mandatory['area'][1] = true;
+                $mandatory['area'][2] = false;
+                $mandatory['area'][3] = false;
+            }
+            elseif($survey_id==2) {
+                $mandatory['yn'][1] = false;
+                $mandatory['gdate'][1] = true;
+                
+                $mandatory['enum'][1] = true;
+                $mandatory['enum'][2] = false;
+                $mandatory['enum'][3] = false;
+                $mandatory['enum'][4] = false;
+                $mandatory['string'][1] = true;
+                $mandatory['string'][2] = false;
+                $mandatory['string'][3] = false;
+
+                $mandatory['area'][1] = true;
+                $mandatory['area'][2] = false;
+                $mandatory['area'][3] = false;
+            }
+            
 
             return $mandatory[$question_type][$question_type_order];
 

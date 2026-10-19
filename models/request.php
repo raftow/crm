@@ -2757,7 +2757,7 @@ class Request extends CrmObject
         $date_start_stats = self::calc_special_period_date_start_stats($period);
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نستثني التعقيب نفسه كما نستثني الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null)");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,7) and request_date >= '$date_start_stats' and (nb_taqibs = 0 or nb_taqibs is null)");
     }
 
     public static function nbRespondedTicketsWithTaqib($employee_id = 0, $orgunit_id = 0, $period = 30)
@@ -2765,7 +2765,7 @@ class Request extends CrmObject
         $date_start_stats = self::calc_special_period_date_start_stats($period);
         $server_db_prefix = AfwSession::currentDBPrefix();
         // نحسب التعقيب نفسه كما نحسب الطلب المعقب عليه
-        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,6,7,8,9) and request_date >= '$date_start_stats' and (nb_taqibs > 0)");
+        return AfwDatabase::db_recup_value("select count(*) from $server_db_prefix" . "crm.request where ($employee_id=0 or employee_id=$employee_id) and ($orgunit_id=0 or orgunit_id=$orgunit_id) and status_id in (5,7) and request_date >= '$date_start_stats' and (nb_taqibs > 0)");
     }
 
     public static function pctClosedTicketsWithoutTaqib($employee_id = 0, $orgunit_id = 0, $period = 30)
@@ -4927,6 +4927,7 @@ class Request extends CrmObject
         $request_title = $this->getVal("request_title");
         $intitled = $this->getAttributeLabel("intitled", $lang);
         $request_text = $this->getVal("request_text");
+        $request_text = str_replace("\n","<br>",$request_text);
         $request_type = $this->showAttribute("request_type_id", null, true, $lang);
         $request_status = $this->showAttribute("status_id", null, true, $lang);
         $request_status_title = $this->getAttributeLabel("status_id", $lang);
