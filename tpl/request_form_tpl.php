@@ -74,7 +74,7 @@ $request_type_readonly = true;
         <div id="fg-warn" class="attrib-warn form-group width_pct_100 ">
         الرجاء ادخال بيانات مكتملة وصحيحة حتى يتم اعتماد طلبكم والرد عليكم. سيتم آليا اهمال أي طلب يحتوي على بيانات غير صحيحة
         </div>
-        <div class="">
+        <div class="crm-title">
                 <h5 class="greentitle"><i></i>بيانات صاحب <?php echo $request_type_decoded ?> </h5>
         </div>        
         <div id="group_customer_data" class="" aria-expanded="true">
@@ -113,7 +113,7 @@ $request_type_readonly = true;
                 
         </div> 
              
-        <div class="">
+        <div class="crm-title">
                 <h5 class="greentitle"><i></i>بيانات <?php echo $request_type_decoded ?> </h5>
         </div>        
         <div id="group_company_data" class="" aria-expanded="true">
@@ -143,15 +143,16 @@ $request_type_readonly = true;
                 $custTypeList = AfwSession::config("cust_type_list", $custTypeListDefault);
                 foreach($custTypeList as $custTypeId => $custTypeRow)
                 {
-                        $canBecome = $custTypeRow["canBecome"];
-                        if(($customer_type_id == $custTypeId) or in_array($customer_type_id,$canBecome))
-                        {
-                        $customer_type_id_selected_i = ($customer_type_id == $custTypeId) ? "selected" : "";
-                        ?>                                        
-                        <option value="<?php echo $custTypeId?>" <?php echo $customer_type_id_selected_i?>><?php echo $custTypeRow['ar']?></option>        
-                        <?php
+                        if($custTypeRow and is_array($custTypeRow) and $custTypeRow["canBecome"]) {
+                                $canBecome = $custTypeRow["canBecome"];
+                                if(($customer_type_id == $custTypeId) or in_array($customer_type_id,$canBecome))
+                                {
+                                        $customer_type_id_selected_i = ($customer_type_id == $custTypeId) ? "selected" : "";
+                                        ?>                                        
+                                                <option value="<?php echo $custTypeId?>" <?php echo $customer_type_id_selected_i?>><?php echo $custTypeRow['ar']?></option>        
+                                        <?php
+                                }
                         }
-
                 }
 
                 $custTypeLogic = AfwSession::config("cust_type_logic", []);
