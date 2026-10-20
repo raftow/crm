@@ -5,6 +5,7 @@ $messages = [
     "no more available supervisors in the system" => "لا يوجد بعد مشرفين خدمة العملاء",
     "Session ended !" => "تم إنهاء الجلسة !",
     "login" => "سجل الدخول",
+    "login again" => "سجل الدخول مرة أخرى",
     "click here" => "من هنا",
     "save responses" => "حفظ الاجابات",
     "send participation" => "إرسال",

@@ -277,9 +277,29 @@ class CrmController extends AfwController
                 return $theCustomer;
         }
 
+
+        /**
+         * @param int $customer_id
+         * @return CrmCustomer
+         */
+
+        public function checkThisCustomer($customer_id)
+        {
+                $theCustomer = CrmCustomer::loadById($customer_id);
+                if (!$theCustomer) {
+                        $login_module = AfwSession::config("login_module", "crm");
+                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
+                        return;
+                }
+
+                return $theCustomer;
+        }
+
+
         public function initiateStandardDisplay($request, $noTaqib = false)
         {
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if(!$theCustomer) return;
                 if ($noTaqib) {
                         $candRequestObj = null;
                 } else {
@@ -418,7 +438,8 @@ class CrmController extends AfwController
                 else $lang_suffix = "_" . $lang;
 
 
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if(!$theCustomer) return;
 
                 $data = $request;
                 // echo("request = ".var_export($request,true)."<br><br>");
@@ -499,13 +520,9 @@ class CrmController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
 
 
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if(!$theCustomer) return;
 
-                if (!$theCustomer) {
-                        $login_module = AfwSession::config("login_module", "crm");
-                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
-                        return;
-                }
                 $data["ticketObj"] = null;
 
                 if ($rid) $data["ticketObj"] = Request::loadById($rid);
@@ -556,13 +573,9 @@ class CrmController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
 
 
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if(!$theCustomer) return;
 
-                if (!$theCustomer) {
-                        $login_module = AfwSession::config("login_module", "crm");
-                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
-                        return;
-                }
                 $data["ticketObj"] = null;
 
                 if ($rid) $data["ticketObj"] = Request::loadById($rid);
@@ -667,7 +680,8 @@ class CrmController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
 
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if(!$theCustomer) return;
 
                 // if(!$rid) $rid = Request::myLastRequestId();
 
@@ -750,7 +764,6 @@ class CrmController extends AfwController
                         $data["requestList"] = $theCustomer->get("requestList");
                         $data["title"] = "طلباتي الحالية";
                 } else {
-                        //$login_module = AfwSession::config("login_module","crm"); $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
                         $data = null;
                 }
 
@@ -780,7 +793,6 @@ class CrmController extends AfwController
                         $data["requestList"] = $theCustomer->get("oldRequestList");
                         $data["title"] = "طلباتي المنتهية";
                 } else {
-                        //$login_module = AfwSession::config("login_module","crm"); $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
                         $data = null;
                 }
 
@@ -856,16 +868,12 @@ class CrmController extends AfwController
 
 
                 if (!$data["customer_id"]) {
-                        $theCustomer = AfwSession::getCustomerConnected();
+                        $theCustomer = $this->checkLoggedIn();
                 } else {
-                        $theCustomer = CrmCustomer::loadById($data["customer_id"]);
+                        $theCustomer = $this->checkThisCustomer($data["customer_id"]);
                 }
 
-                if (!$theCustomer) {
-                        $login_module = AfwSession::config("login_module", "crm");
-                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
-                        return;
-                } else {
+                if ($theCustomer) {
                         $data["customer_id"] = $theCustomer->id;
                         $data["customer_type_id"] = $theCustomer->getVal("customer_type_id");
                         $data["ref_num"] = $theCustomer->getVal("ref_num");
@@ -901,6 +909,7 @@ class CrmController extends AfwController
                         $data["customer_email"] = $theCustomer->getVal("email");
                         $data["customer_idn"] = $theCustomer->getVal("idn");
                 }
+                else return;
 
                 if (!$data["city_id"]) $data["city_id"] = 301; //RIYADH
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
@@ -926,12 +935,7 @@ class CrmController extends AfwController
                 $data = array();
 
                 if ($rid) {
-                        $theCustomer = AfwSession::getCustomerConnected();
-                        if (!$theCustomer) {
-                                $login_module = AfwSession::config("login_module", "crm");
-                                $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
-                                return;
-                        }
+                        $theCustomer = $this->checkLoggedIn();
 
                         $data["id"] = $rid;
                         $data["obj"] = Request::loadById($data["id"]);
@@ -1024,10 +1028,8 @@ class CrmController extends AfwController
 
                 if ($rid) {
 
-                        $theCustomer = AfwSession::getCustomerConnected();
+                        $theCustomer = $this->checkLoggedIn();
                         if (!$theCustomer) {
-                                $login_module = AfwSession::config("login_module", "crm");
-                                $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
                                 return;
                         }
 
@@ -1075,10 +1077,8 @@ class CrmController extends AfwController
 
                 if ($rid) {
 
-                        $theCustomer = AfwSession::getCustomerConnected();
+                        $theCustomer = $this->checkLoggedIn();
                         if (!$theCustomer) {
-                                $login_module = AfwSession::config("login_module", "crm");
-                                $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
                                 return;
                         }
 
@@ -1158,7 +1158,10 @@ class CrmController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if (!$theCustomer) {
+                        return;
+                }
 
                 if ($request_id) {
 
@@ -1247,10 +1250,8 @@ class CrmController extends AfwController
 
                 if ($rid) {
 
-                        $theCustomer = AfwSession::getCustomerConnected();
+                        $theCustomer = $this->checkLoggedIn();
                         if (!$theCustomer) {
-                                $login_module = AfwSession::config("login_module", "crm");
-                                $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
                                 return;
                         }
 
@@ -1342,7 +1343,10 @@ class CrmController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if (!$theCustomer) {
+                        return;
+                }
 
                 if ($request_id) {
 
@@ -1501,7 +1505,10 @@ class CrmController extends AfwController
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
 
-                $theCustomer = self::checkLoggedIn();
+                $theCustomer = $this->checkLoggedIn();
+                if (!$theCustomer) {
+                        return;
+                }
 
                 if ((!$customer_idn) or (!$customer_mobile)) {
                         if ($theCustomer) {
