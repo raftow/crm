@@ -270,7 +270,7 @@ class CrmController extends AfwController
 
                 if (!$theCustomer) {
                         $login_module = AfwSession::config("login_module", "crm");
-                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
+                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php", "login", "click here", "crm");
                         return;
                 }
 
@@ -288,7 +288,7 @@ class CrmController extends AfwController
                 $theCustomer = CrmCustomer::loadById($customer_id);
                 if (!$theCustomer) {
                         $login_module = AfwSession::config("login_module", "crm");
-                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php");
+                        $this->renderLogOutMessage("Session ended !", "../$login_module/customer_login.php", "login", "click here", "crm");
                         return;
                 }
 
