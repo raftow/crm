@@ -106,9 +106,9 @@ a.crm {
 }
 
 .content_form {
-    width: 42%;
+    width: 48%;
     min-width: 198px;
-    margin: 0 8% 33px 0;
+    margin: 0 2% 33px 0;
     position: relative;
     max-width: 100%;
     min-height: 989px;
@@ -168,9 +168,9 @@ div.content_form>form>.in-group-customer_data {
 }
 
 .register_pic {
-    width: 42%;
+    width: 46%;
     min-width: 198px;
-    margin: 0 2% 33px 6%;
+    margin: 0 2% 33px 2%;
     position: relative;
     max-width: 100%;
     min-height: 877px;

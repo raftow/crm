@@ -300,7 +300,7 @@ else
                                                 echo "<label id='customer_email-error' class='down error $d_class' for='customer_email'>".$customer_register_errors["customer_email"]."</label>"; 
                                         ?>
                                 </div>
-                                <div class="form-group width_pct_50">
+                                <div class="form-group width_pct_100">
                                         <label class="hzm_label hzm_label_gender_id label_mandatory">الجنس
                                         </label>
                                         <select class="form-control valid" name="gender_id" id="gender_id" size="1" required>
@@ -310,7 +310,7 @@ else
                                 	</select>                                        
                                 </div>
                                 
-                                <div class="form-group width_pct_50">
+                                <div class="form-group width_pct_100">
                                         <label class="hzm_label hzm_label_customer_type_id label_mandatory">نوع العميل
                                         </label>
                                         <select class="form-control valid" name="customer_type_id" id="customer_type_id" tabindex="0" onchange="register_customer_type_id_changed()" size="1" required="required" aria-invalid="false">

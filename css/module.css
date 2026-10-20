@@ -1784,9 +1784,9 @@ a.btnbtsp.btn_link:hover {
 }
 
 .cms_bg_pic {
-  width: 80%;
-  margin-right: 10%;
-  margin-left: 10%;
+  width: 92%;
+  margin-right: 4%;
+  margin-left: 4%;
   /* background-image: url(../pic/bg_1003.png);*/
   background-repeat: no-repeat;
   /* background-size: contain;*/
@@ -3910,6 +3910,8 @@ label.hzm_label.hzm_data_confidential {
   width: 90% !important;
   float: right;
   white-space: pre-wrap;
+  max-height: 120px !important;
+  padding: 4px;
 }
 
 div.confidential > div.request-desc {
