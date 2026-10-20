@@ -490,6 +490,7 @@ echo $js_for_cust_type;
 
 
 <?php        
+        $file_dir_name = dirname(__FILE__);
         include("$file_dir_name/customer_account_js.php");
         if(!$front_footer) $front_footer = "lib/hzm/oldweb/hzm_simple_footer.php";
         if(!file_exists("$file_dir_name/../$front_footer"))
