@@ -2,13 +2,13 @@
 
 class CrmController extends AfwController
 {
-        public static function pushError($message_en, $lang="")
+        public static function pushError($message_en, $lang = "")
         {
                 if (!$lang) $lang = AfwSession::getSessionVar("current_lang");
                 if (!$lang) $lang = "ar";
-                $support_mobile_number = AfwSession::config("support_mobile_number","0500000001");
-                self::pushError(AfwLanguageHelper::translateCompanyMessage($message_en,"crm",$lang));
-                self::pushError(AfwLanguageHelper::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number","crm",$lang)." ".$support_mobile_number);
+                $support_mobile_number = AfwSession::config("support_mobile_number", "0500000001");
+                self::pushError(AfwLanguageHelper::translateCompanyMessage($message_en, "crm", $lang));
+                self::pushError(AfwLanguageHelper::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number", "crm", $lang) . " " . $support_mobile_number);
         }
 
         public function getMyModule()
@@ -43,7 +43,7 @@ class CrmController extends AfwController
 
         public function prepareMenuTokens($lang, $role, $selected_menu, $options)
         {
-                
+
                 $login_template = AfwSession::config("customer-login-template", "right-left");
                 $xmodule = AfwSession::currentCompanyOrDepartmentCode();
                 $module = UfwUrlManager::currentURIModule();
@@ -70,7 +70,7 @@ class CrmController extends AfwController
                         $display_date_month = $hijri_date_arr[2];
                 } else {
                         $display_date_day = date("d");
-                        $display_date_month = AfwDateHelper::getFullMonthName(date("m"),$lang);
+                        $display_date_month = AfwDateHelper::getFullMonthName(date("m"), $lang);
                         $display_date_year = date("Y");
                 }
                 $customerMe = AfwSession::getCustomerConnected();
@@ -102,26 +102,22 @@ class CrmController extends AfwController
                 $run_mode_var = AfwSession::config("run_mode_var", "run_mode");
                 $run_mode = AfwSession::config($run_mode_var, "");
                 if ($run_mode) $run_mode = "-" . $run_mode;
-                
+
                 $data_tokens = array();
 
                 $data_tokens["logo-width"] = AfwSession::config("logo-width", 42, "display", "force-client", $company);
                 $data_tokens["logo-height"] = AfwSession::config("logo-height", 42, "display", "force-client", $company);
                 $data_tokens["title-width"] = AfwSession::config("title-width", 100, "display", "force-client", $company);
-
                 $data_tokens["orgunit_name_s"] = "<!--";
                 $data_tokens["orgunit_name_e"] = "-->";
 
                 $enable_search_box = AfwSession::config("crm_enable_search_box", false);
-                if($enable_search_box)
-                {
-                    $data_tokens["enable_search_box_s"] = "";
-                    $data_tokens["enable_search_box_e"] = "";
-                }
-                else
-                {
-                    $data_tokens["enable_search_box_s"] = "<!-- ";
-                    $data_tokens["enable_search_box_e"] = " -->";
+                if ($enable_search_box) {
+                        $data_tokens["enable_search_box_s"] = "";
+                        $data_tokens["enable_search_box_e"] = "";
+                } else {
+                        $data_tokens["enable_search_box_s"] = "<!-- ";
+                        $data_tokens["enable_search_box_e"] = " -->";
                 }
 
                 if ($options["no_calendar"]) {
@@ -281,19 +277,16 @@ class CrmController extends AfwController
                 return $theCustomer;
         }
 
-        public function initiateStandardDisplay($request, $noTaqib=false)
+        public function initiateStandardDisplay($request, $noTaqib = false)
         {
                 $theCustomer = self::checkLoggedIn();
-                if($noTaqib)
-                {
+                if ($noTaqib) {
                         $candRequestObj = null;
-                }
-                else
-                {
+                } else {
                         $candRequestObj = $theCustomer->getTaqibCandidate();
                         if ($candRequestObj) {
                                 $token = $candRequestObj->getVal("survey_token");
-        
+
                                 if ($token) {
                                         $limesurvey_url = AfwSession::config("limesurvey_url", "[limesurvey-url]");
                                         $limesurvey_sid = AfwSession::config("limesurvey_url", "[limesurvey_sid]");
@@ -310,11 +303,11 @@ class CrmController extends AfwController
                                 $taqib_message .= "$fadhlan_fi_hal</div>" . "<br> $a_survey";
                                 $taqib_message .= "<div class=\"column btns-qsearch\">$wafi_hal يمكنك في أقل من دقيقة تقديم تعقيب من هنا : </div>" . "<br>";
                                 $taqib_message .= "<a class='crm question thin-btn width_90' href='i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=" . $candRequestObj->getVal("request_type_id") . "&pt=" . $candRequestObj->id . "'>تقديم طلب تعقيب ذو أولوية عالية</a>" . "<br>";
-        
+
                                 AfwSession::pushWarning($taqib_message);
                         }
                 }
-                
+
 
                 return array($theCustomer, $candRequestObj);
         }
@@ -363,7 +356,7 @@ class CrmController extends AfwController
 
         public function prepareOptions($methodName)
         {
-                $options= [];
+                $options = [];
                 $options["front-application"] = "crm";
                 $options["user-is-customer"] = true;
 
@@ -372,8 +365,7 @@ class CrmController extends AfwController
 
         public function prepareStandard($request)
         {
-                if($request["all_error"])
-                {
+                if ($request["all_error"]) {
                         self::pushError($request["all_error"]);
                 }
                 $crst = md5("crst" . date("YmdHis"));
@@ -534,7 +526,7 @@ class CrmController extends AfwController
                         return;
                 }
 
-                $data["ticketObj"]->sendRequest($lang,"CrmController::send_request(new request)");
+                $data["ticketObj"]->sendRequest($lang, "CrmController::send_request(new request)");
 
                 return $data;
         }
@@ -720,7 +712,7 @@ class CrmController extends AfwController
                 $this->render("crm", "new_request", $data);
         }
 
-         
+
         public function initiateNewrequest($request)
         {
                 // list($theCustomer, ) = $this->initiateStandardDisplay($request, true);
@@ -729,7 +721,7 @@ class CrmController extends AfwController
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
                 $data["title"] = "طلب جديد";
-                
+
 
                 return $data;
         }
@@ -777,7 +769,7 @@ class CrmController extends AfwController
 
         /******************************** oldrequests action ********************************************** */
 
-        
+
         public function initiateOldrequests($request)
         {
                 list($theCustomer, $candRequestObj) = $this->initiateStandardDisplay($request);
@@ -806,7 +798,7 @@ class CrmController extends AfwController
         {
                 // foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
-                
+
 
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
@@ -835,7 +827,7 @@ class CrmController extends AfwController
 
                 if (!$data["request_type"] and $rt) {
                         $data["request_type"] = $rt;
-                        if($rt != Request::$REQUEST_TYPE_BALAGH) $data["request_category"] = $rt;
+                        if ($rt != Request::$REQUEST_TYPE_BALAGH) $data["request_category"] = $rt;
                         else $data["request_category"] = 0;
                 }
 
@@ -851,13 +843,13 @@ class CrmController extends AfwController
 
                 $data["requestTypeList"] = RequestType::loadAll();
                 $requestTypeObj = null;
-                if(($data["request_type"] > 0) and ($data["request_type"] != 1) and ($data["request_type"] != 12)) {
+                if (($data["request_type"] > 0) and ($data["request_type"] != 1) and ($data["request_type"] != 12)) {
                         $requestTypeObj = $data["requestTypeList"][$data["request_type"]];
-                } 
-                $data["request_type_decoded"] = $requestTypeObj ? "الــ".$requestTypeObj->getDisplay("ar") : "الطلب";
+                }
+                $data["request_type_decoded"] = $requestTypeObj ? "الــ" . $requestTypeObj->getDisplay("ar") : "الطلب";
                 $data["requestCategoryList"] = RequestCategory::loadAllRelatedTo($data["request_type"]);
                 $data["regionList"] = Region::loadAll();
-                
+
                 $roClassName = AfwSession::config("roClassName", "");
                 if ($roClassName) $data["roList"] = $roClassName::loadAllMyObjects();
 
@@ -914,7 +906,7 @@ class CrmController extends AfwController
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
-                
+
                 // call the view 1
                 $this->render("crm", "request_form", $data);
         }
@@ -962,11 +954,11 @@ class CrmController extends AfwController
 
                         $data["request_type"] = $data["obj"]->getVal("request_type_id");
                         $requestTypeObj = null;
-                        if(($data["request_type"] > 0) and ($data["request_type"] != 1) and ($data["request_type"] != 12)) {
+                        if (($data["request_type"] > 0) and ($data["request_type"] != 1) and ($data["request_type"] != 12)) {
                                 $requestTypeObj =  $data["obj"]->het("request_type_id");
                         }
-                        
-                        $data["request_type_decoded"] = $requestTypeObj ? "الــ".$requestTypeObj->getDisplay("ar") : "الطلب";
+
+                        $data["request_type_decoded"] = $requestTypeObj ? "الــ" . $requestTypeObj->getDisplay("ar") : "الطلب";
                         $data["request_category"] = $data["obj"]->getVal("request_category_id");
                         $data["request_status_id"] = $data["obj"]->getVal("status_id");
                         $data["request_status"] = $data["obj"]->decode("status_id");
@@ -1060,7 +1052,7 @@ class CrmController extends AfwController
                         $data["obj"]->closeRequest($lang, "customer");
                         CrmCustomerSurvey::surveyClosedTicket($data["obj"], $lang, true);
 
-                        
+
                         // call the view 1
                         $this->view_request($request);
                 }
@@ -1197,7 +1189,7 @@ class CrmController extends AfwController
                         }
                         $data["ticketObj"] = $reqObj;
                         if (!$reqObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj, ));
+                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj,));
                         }
                 } else {
                         $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
@@ -1346,7 +1338,7 @@ class CrmController extends AfwController
         public function initiateSubmit_complete($request)
         {
                 $lang = AfwSession::getSessionVar("current_lang");
-                if(!$lang) $lang = "ar";
+                if (!$lang) $lang = "ar";
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
@@ -1405,14 +1397,10 @@ class CrmController extends AfwController
                                 $responseId = $responseObj->id;
                                 $responseAge = $responseObj->is_new ? "جديد" : "سابق";
 
-                                if($responseId)
-                                {
+                                if ($responseId) {
                                         AfwSession::pushInformation("تم بحمد الله ارسال ردك ال$responseAge بالرقم التسلسلي $responseId إلى مكتب خدمة العملاء");
-                                }
-                                else
-                                {
+                                } else {
                                         self::pushError("Unfortunately, sending your response to the customer service office failed", $lang);
-                                        
                                 }
 
                                 // die("_REQUEST_FILES => ".var_export($request["_REQUEST_FILES"],true));
@@ -1442,13 +1430,10 @@ class CrmController extends AfwController
                                 }
 
                                 if ($continue_complete) {
-                                        if($completed_action == "files") 
-                                        {
+                                        if ($completed_action == "files") {
                                                 $action_completed = "تم الانتهاء من رفع المرفقات واعادة الطلب الى مكتب خدمة العملاء";
                                                 $action_enum = Request::status_action_by_code("filesUploaded");
-                                        }        
-                                        else 
-                                        {
+                                        } else {
                                                 $action_completed = "تم الانتهاء من استكمال البيانات واعادة الطلب الى مكتب خدمة العملاء";
                                                 $action_enum = Request::status_action_by_code("dataCompleted");
                                         }
@@ -1457,7 +1442,7 @@ class CrmController extends AfwController
                         }
 
                         if (!$reqObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj, ));
+                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj,));
                         }
                 } else {
                         $error_saving = AfwLanguageHelper::tt("Can't apply changes, The ticket is unknown");
@@ -1494,7 +1479,7 @@ class CrmController extends AfwController
                         if (!$data["rid"]) {
                                 $this->request($data);
                         } else {
-                                $this->prepareComplete_request($data);                                
+                                $this->prepareComplete_request($data);
                                 $this->complete_request($data);
                         }
                 }
@@ -1570,7 +1555,7 @@ class CrmController extends AfwController
                         $reqObj->set("active", "Y");
 
                         if (!$reqObj->isOk(true)) {
-                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj, ));
+                                $data["all_error"] = implode(",\n", AfwDataQualityHelper::getDataErrors($reqObj,));
                         } else {
                                 $reqObj->commit();
                                 if ($oldReqObj) $oldReqObj->commit();
@@ -1619,7 +1604,4 @@ class CrmController extends AfwController
                         }
                 }
         }
-
-
-
 }

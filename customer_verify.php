@@ -257,7 +257,7 @@ if($sms_ok)
 ?>
 <div class="home_banner">
 <?php
-        $bcounter = random_int(1, 3);
+        $bcounter = random_int(4, 4);
 ?>
 <div class="modal-dialog verify popup-company banner<?php echo $bcounter; ?>">
         <div class="modal-content">
