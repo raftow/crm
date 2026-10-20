@@ -1,4 +1,8 @@
 <?php
+        /**
+         * @var CrmCustomer $custObj
+         * @var array $login_page_options
+         */
         //effacer les var d'une eventuelle session précédente
         AfwSession::resetSession("main_company");
         $custObj->set("last_login_date", date("Y-m-d H:i:s"));

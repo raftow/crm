@@ -353,7 +353,7 @@ else
 </div>
 <?php
 }
-
+$file_dir_name = dirname(__FILE__);
 if(!$front_footer) $front_footer = "lib/hzm/oldweb/hzm_simple_footer.php";
 if(!file_exists("$file_dir_name/../$front_footer"))
 {
