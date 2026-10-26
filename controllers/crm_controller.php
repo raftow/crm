@@ -875,9 +875,9 @@ class CrmController extends AfwController
 
                 if ($theCustomer) {
                         $data["customer_id"] = $theCustomer->id;
-                        $data["customer_type_id"] = $theCustomer->getVal("customer_type_id");
-                        $data["ref_num"] = $theCustomer->getVal("ref_num");
-                        $data["org_name"] = $theCustomer->getVal("org_name");
+                        if(!$data["customer_type_id"]) $data["customer_type_id"] = $theCustomer->getVal("customer_type_id");
+                        if(!$data["ref_num"]) $data["ref_num"] = $theCustomer->getVal("ref_num");
+                        if(!$data["org_name"]) $data["org_name"] = $theCustomer->getVal("org_name");
                         $custTypeLogic = AfwSession::config("cust_type_logic", []);
                         $org_name_label = $custTypeLogic[$customer_type_id]["org_name"]["title_ar"];
                         $ref_num_label = $custTypeLogic[$customer_type_id]["ref_num"]["title_ar"];
@@ -912,6 +912,11 @@ class CrmController extends AfwController
                 else return;
 
                 if (!$data["city_id"]) $data["city_id"] = 301; //RIYADH
+                
+                $data["confidential_checked"] = (($data["request_type"]==Request::$REQUEST_TYPE_BALAGH) or 
+                                                 ($data["request_type"]==Request::$REQUEST_TYPE_COMPLAINT) or 
+                                                 ($data["request_type"]==Request::$REQUEST_TYPE_GRIEVANCE) or 
+                                                 ($data["request_type"]==Request::$REQUEST_TYPE_HI)) ? "checked" : "";
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
@@ -1110,9 +1115,7 @@ class CrmController extends AfwController
                         $data["web_site"] = $data["obj"]->getVal("request_link");
                         /*
 
-                        list($crmtmp, $related_object_id) = explode("-", $data["obj"]->getVal("request_for"));
-                        if($related_object_id) $data["related_object_id"] = $related_object_id;                                
-                        else $data["related_object_id"] = $data["obj"]->getVal("request_for"); 
+                        
 
                         $data["requestTypeList"] = RequestType::loadAll();
                         $roClassName = AfwSession::config("roClassName","");
@@ -1294,9 +1297,7 @@ class CrmController extends AfwController
                         $data["web_site"] = $data["obj"]->getVal("request_link");
                         /*
 
-                        list($crmtmp, $related_object_id) = explode("-", $data["obj"]->getVal("request_for"));
-                        if($related_object_id) $data["related_object_id"] = $related_object_id;                                
-                        else $data["related_object_id"] = $data["obj"]->getVal("request_for"); 
+                        
 
                         $data["requestTypeList"] = RequestType::loadAll();
                         $roClassName = AfwSession::config("roClassName","");
@@ -1553,9 +1554,17 @@ class CrmController extends AfwController
                         if ($request_priority) $reqObj->set("request_priority", $request_priority);
                         $reqObj->set("request_for", "crm-" . $related_object_id);
                         $reqObj->set("request_text", $request_body);
+
                         $confidentialYN = $confidential ? "Y" : "N";
                         $reqObj->set("confidential", $confidentialYN);
+
+                        $bpa_ind = $bpa ? "Y" : "N";
+                        $reqObj->set("bpa_ind", $bpa_ind);
+                        
                         $reqObj->set("request_title", $request_subject);
+                        $reqObj->set("request_entity", $request_entity);
+                        $reqObj->set("request_period", $request_period);
+                        
                         $reqObj->set("request_type_id", $request_type);
                         $reqObj->set("request_category_id", $request_category);
                         $reqObj->set("region_id", $region);

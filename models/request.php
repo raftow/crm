@@ -2445,24 +2445,32 @@ class Request extends CrmObject
         $notify_supervisor_arr = AfwSession::config("notify_supervisor", null);
         $notify_supervisor_assign_settings = $notify_supervisor_arr["assign_request"];
 
+        $disable_notifications = AfwSession::config("disable_notifications", null);
+
 
         // notify the customer 
         $the_customer = $this->hetCustomer();
         if (($old_status < self::$REQUEST_STATUS_SENT) and (!$old_supervisor_id)) {
             if ($the_customer) {
-                $receiver = array();
-                $receiver["mobile"] = $the_customer->getVal("mobile");
-                $receiver["email"] = $the_customer->getVal("email");
-                $receiver["id"] = "customeridn-" . $the_customer->getVal("idn");
-                $notification_sender_result_arr = UfwNotificationManager::sendNotification($notify_customer_new_request_settings, $receiver, "new_request", $this, $lang);
-                foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
-                    $notification_sender_result_ok = $notification_sender_result_item[0];
-                    $notification_sender_result_message = $notification_sender_result_item[1];
-                    $notification_message = $notification_sender_result_item[2];
-                    if ((!$notification_sender_result_ok) and ($development_mode)) {
-                        AfwSession::pushError($this->tr($notification_type) . " &larr; " . $notification_message . " &larr; " . $notification_sender_result_message);
+                if(!$disable_notifications) {
+                    $receiver = array();
+                    $receiver["mobile"] = $the_customer->getVal("mobile");
+                    $receiver["email"] = $the_customer->getVal("email");
+                    $receiver["id"] = "customeridn-" . $the_customer->getVal("idn");
+                    $notification_sender_result_arr = UfwNotificationManager::sendNotification($notify_customer_new_request_settings, $receiver, "new_request", $this, $lang);
+                    foreach ($notification_sender_result_arr as $notification_type => $notification_sender_result_item) {
+                        $notification_sender_result_ok = $notification_sender_result_item[0];
+                        $notification_sender_result_message = $notification_sender_result_item[1];
+                        $notification_message = $notification_sender_result_item[2];
+                        if ((!$notification_sender_result_ok) and ($development_mode)) {
+                            AfwSession::pushError($this->tr($notification_type) . " &larr; " . $notification_message . " &larr; " . $notification_sender_result_message);
+                        }
                     }
                 }
+                else {
+                    AfwSession::pushWarning($this->tm("real customer notification is disabled and will only be simulated"));
+                }
+                
             } else AfwSession::pushWarning($this->tm("can't send notification to customer, the request is without customer defined"));
         }
 
@@ -4925,6 +4933,13 @@ class Request extends CrmObject
         else $request_type_code = "unknown";
         $status_id = $this->getVal("status_id");
         $request_title = $this->getVal("request_title");
+
+        $request_entity = $this->getVal("request_entity");
+        $request_entity_title = $this->getAttributeLabel("request_entity", $lang, true);
+
+        $request_period = $this->getVal("request_period");
+        $request_period_title = $this->getAttributeLabel("request_period", $lang, true);
+        
         $intitled = $this->getAttributeLabel("intitled", $lang);
         $request_text = $this->getVal("request_text");
         $request_text = str_replace("\n","<br>",$request_text);
@@ -4945,8 +4960,11 @@ class Request extends CrmObject
         $html = "<div id='div-request-body-$this_id' class='security $confidential_class'>";
         $html .= "<div class='request-desc $request_late_color'>";
         $html .= "<h3 class='request-type $request_type_code'>$request_type $intitled</h3>";
+         
         $html .= "<h1 class='request-title ST$status_id $status_class'>$request_title</h1>";
         $html .= "<h2 class='request-text $status_class'>$request_text</h2>";
+        $html .= "<h3 class='request-entity'>$request_entity_title : $request_entity</h3>";
+        $html .= "<h3 class='request-entity'>$request_period_title : $request_period</h3>";
         $html .= "<p class='request-status $status_class $resolved_class'>$request_status_title : $request_status</p>";
         $html_rti = "";
         $respObj = $this->getLastResponse();

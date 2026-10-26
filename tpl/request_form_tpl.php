@@ -17,6 +17,8 @@
  * @var string $request_type_decoded
  * @var string $request_category
  * @var string $request_subject
+ * @var string $request_entity
+ * @var string $request_period
  * @var string $request_body
  * @var string $web_site
  * @var string $old_ticket
@@ -25,6 +27,7 @@
  * @var string $related_object_id
  * @var string $web_site_readonly
  * @var string $old_ticket_ro
+ * @var string $confidential_checked
  * 
  * @var array $data
  * @var array $regionList
@@ -37,6 +40,8 @@
  * 
  * @var bool $request_type_readonly
  * @var bool $request_subject_readonly
+ * @var bool $request_entity_readonly
+ * @var bool $request_period_readonly
  * @var bool $request_body_readonly
  * @var bool $region_readonly
  * @var bool $org_name_required
@@ -45,9 +50,20 @@
  * 
  * 
  * 
+ * 
  */
+$is_balagh = ($request_type==Request::$REQUEST_TYPE_BALAGH);
 
 $request_type_readonly = true;
+$max_files_nb = $is_balagh ? 5 : 3;
+$nb_files = 1;
+$file_size_max_mb = 5;
+$files_instructions = "يمكن رفع حتى ($max_files_nb) مرفقات بصيغ PDF أو JPG أو JPEG أو PNG، وبحد أقصى ($file_size_max_mb) ميجابايت لكل مرفق. الأزرار [+] و [-] تمكنك من التحكم في عدد المرفقات المراد رفعها";
+
+// $file_title_0 = Request::translateAttribute('file', $lang);
+
+
+
 ?>
 <div class="cms_bg_pic">
 <div class='hzm_left_image award award_glue'>
@@ -75,7 +91,7 @@ $request_type_readonly = true;
         الرجاء ادخال بيانات مكتملة وصحيحة حتى يتم اعتماد طلبكم والرد عليكم. سيتم آليا اهمال أي طلب يحتوي على بيانات غير صحيحة
         </div>
         <div class="crm-title">
-                <h5 class="greentitle"><i></i>بيانات صاحب <?php echo $request_type_decoded ?> </h5>
+                <h5 class="crm-bloc-title"><i></i>بيانات صاحب <?php echo $request_type_decoded ?> </h5>
         </div>        
         <div id="group_customer_data" class="" aria-expanded="true">
                 <!-- fg-your_full_name -->
@@ -114,7 +130,7 @@ $request_type_readonly = true;
         </div> 
              
         <div class="crm-title">
-                <h5 class="greentitle"><i></i>بيانات <?php echo $request_type_decoded ?> </h5>
+                <h5 class="crm-bloc-title"><i></i>بيانات <?php echo $request_type_decoded ?> </h5>
         </div>        
         <div id="group_company_data" class="" aria-expanded="true">
                 <!-- fg-region -->
@@ -274,7 +290,7 @@ echo $js_for_cust_type;
 
                 <!-- fg-request_subject -->
                 <div id="fg-request_subject" class="attrib-request_subject form-group width_pct_100 ">
-                        <label for="request_subject" class="hzm_label hzm_data_request_subject label_required">موضوع <?php echo $request_type_decoded ?> :  
+                        <label for="request_subject" class="hzm_label hzm_data_request_subject label_required">عنوان <?php echo $request_type_decoded ?> :  
                         </label>        				
                         <input placeholder="" type="text" tabindex="0" class="form-control valid" name="request_subject" id="request_subject" dir="rtl" value="<?php echo $request_subject ?>" size="24" maxlength="32" onchange="" required="true" aria-invalid="false" <?php echo $request_subject_readonly ?>>	
                         <?php echo AfwInputHelper::inputErrorsInRequest("request_subject", $data); ?>
@@ -308,27 +324,79 @@ echo $js_for_cust_type;
                 ?>               
                 <!-- fg-request_body -->
                 <div id="fg-request_body" class="attrib-request_body form-group width_pct_100 ">
-                        <label for="request_body" class="hzm_label hzm_data_request_body label_required">نص <?php echo $request_type_decoded ?>
+                        <label for="request_body" class="hzm_label hzm_data_request_body label_required">وصف <?php echo $request_type_decoded ?>
                         </label>                    				
                         <textarea tabindex="0" class="form-control" name="request_body" id="request_body" dir="rtl" rows="8" cols="55" required="true" aria-invalid="false" <?php echo $request_body_readonly ?>><?php echo $request_body ?></textarea>	
                         <?php echo AfwInputHelper::inputErrorsInRequest("request_body", $data); ?>
                 </div>
                 <!-- fg-request_body -->
+                <?php
+                if($confidential_checked) {
+                ?>
+                <!-- fg-request_entity -->
+                <div id="fg-request_entity" class="attrib-request_entity form-group width_pct_100 ">
+                        <label for="request_entity" class="hzm_label hzm_data_request_entity label_required">الجهة المعنية بـ<?php echo $request_type_decoded ?> :  
+                        </label>        				
+                        <input placeholder="" type="text" tabindex="0" class="form-control valid" name="request_entity" id="request_entity" dir="rtl" value="<?php echo $request_entity ?>" size="24" maxlength="32" onchange="" required="true" aria-invalid="false" <?php echo $request_entity_readonly ?>>	
+                        <?php echo AfwInputHelper::inputErrorsInRequest("request_entity", $data); ?>
+                </div>
+                <!-- fg-request_entity -->
+                <?php
+                }
+                ?>
+                <!-- fg-request-files -->
+                <div id="fg-request-files" class="attrib-request-files form-group width_pct_100 ">
+                <label for="request-files" class="hzm_label hzm-data-request-files">رفع المرفقات التي تدعم البلاغ</label>                 
+                <pre class='request_instructions'><?php echo $files_instructions;?></pre>
+                <?php
+                        echo AfwInputHelper::multipleFileUploader($nb_files, $canAddRemoveFiles = true, $max_files_nb, $file_labels = [], $file_required_arr = [], $lang);
+                ?>
+                </div>
+                <!-- fg-request-files --> 
+                <?php
+                if($is_balagh) {
+                ?>
+                <!-- fg-request_period -->
+                <div id="fg-request_period" class="attrib-request_period form-group width_pct_100 ">
+                        <label for="request_period" class="hzm_label hzm_data_request_period">تاريخ الواقعة أو الفترة المرتبطة بها :  
+                        </label>        				
+                        <input placeholder="" type="text" tabindex="0" class="form-control valid" name="request_period" id="request_period" dir="rtl" value="<?php echo $request_period ?>" size="24" maxlength="32" onchange="" aria-invalid="false" <?php echo $request_period_readonly ?>>	
+                        <?php echo AfwInputHelper::inputErrorsInRequest("request_period", $data); ?>
+                </div>
+                <!-- fg-request_period --> 
 
+                
+                <!-- fg-bpa -->
+                <div id="fg-bpa" class="attrib-bpa form-group width_pct_100 ">
+                        <div class="form-control form-ckbox bpa"><input type="checkbox" value="1" id="bpa" name="bpa" class="echeckbox" required></div>        
+                        <label for="bpa" class="hzm_label hzm_data_bpa">أقر وأتعهد بالتزام سياسة البلاغات (<a href='#'>الاطلاع على نصها</a>)
+                        </label>                    				
+                        
+                </div>
+                <!-- fg-bpa -->
+                <?php
+                }
+                else {
+                ?>
+                        <input type="hidden" value="1" id="bpa" name="bpa">
+                <?php
+                }
+                ?>
                 <!-- fg-confidential -->
                 <div id="fg-confidential" class="attrib-confidential form-group width_pct_100 ">
-                        <div class="form-control form-ckbox confidential"><input type="checkbox" value="1" id="confidential" name="confidential" class="echeckbox "></div>        
+                        <div class="form-control form-ckbox confidential"><input type="checkbox" value="1" id="confidential" name="confidential" class="echeckbox " <?php echo $confidential_checked ?>></div>        
                         <label for="confidential" class="hzm_label hzm_data_confidential">البيانات التي يشتمل عليها هذا <?php echo $request_type_decoded ?> سرية للغاية أطلب المحافظة على تشفيرها إلا على المسؤولين المعنيين بمعالجة هذا <?php echo $request_type_decoded ?>
                         </label>                    				
                         <?php echo AfwInputHelper::inputErrorsInRequest("confidential", $data); ?>
                 </div>
                 <!-- fg-confidential -->
 
-                <!-- fg-related_object_id -->
+                
                 <?php
                         if($roList)
                         {
                 ?>
+                <!-- fg-related_object_id -->
                 <div id="fg-related_object_id" class="attrib-related_object_id form-group width_pct_100 ">
                         <label for="related_object_id" class="hzm_label hzm_data_related_object_id"> <?php echo AfwLanguageHelper::tt("related_object_title",$lang,"crm")?> (إختياري)</label>                
                         <?php echo AfwInputHelper::picture_dropdown($roList, "related_object_id", $selected=array($related_object_id), 
@@ -341,11 +409,14 @@ echo $js_for_cust_type;
                                                                         $lang
                                                                         ); ?>        
                 </div>
+                <!-- fg-related_object_id -->
                 <?php
                         }
+                        $web_site_ask = false;
+
+                        if($web_site_ask)
+                        {
                 ?>
-                <!-- fg-related_object_id -->
-                
                 <!-- fg-web_site -->
                 <div id="fg-web_site" class="attrib-web_site form-group width_pct_100 ">
                         <label for="web_site" class="hzm_label hzm_data_web_site">رابط متعلق ب<?php echo $request_type_decoded ?> (إختياري)
@@ -354,13 +425,27 @@ echo $js_for_cust_type;
                         <?php echo AfwInputHelper::inputErrorsInRequest("web_site", $data); ?>
                 </div>
                 <!-- fg-web_site --> 
+                 <?php
+                        }
+                        
+                ?>
 
                 <!-- fg-old_ticket -->
                 <div id="fg-old_ticket" class="attrib-old_ticket form-group width_pct_100 ">
-                        <label for="old_ticket" class="hzm_label hzm_data_old_ticket"> متعلق برقم طلب سابق (إختياري)  
-                        </label>        				
-                        <input placeholder="" type="text" tabindex="0" class="form-control" name="old_ticket" id="old_ticket" dir="rtl" value="<?php echo $old_ticket ?>" size="255" maxlength="255" onchange="" <?php echo $old_ticket_ro ?>>	
-                        <?php echo AfwInputHelper::inputErrorsInRequest("old_ticket", $data); ?>
+                        <div class="form-control form-ckbox old_ticket_exists"><input type="checkbox" value="1" id="old_ticket_exists" name="old_ticket_exists" class="echeckbox"  onchange="old_ticket_exists_changed()"></div>        
+                        <label for="old_ticket" class="hzm_label hzm_data_old_ticket"> متعلق برقم طلب سابق ؟ </label>        				
+                        <input placeholder="" type="text" tabindex="0" class="form-control hide" name="old_ticket" id="old_ticket" dir="rtl" value="<?php echo $old_ticket ?>" size="255" maxlength="255" onchange="" <?php echo $old_ticket_ro ?>>	
+                        <script>
+                                function old_ticket_exists_changed()
+                                {
+                                        if($("#old_ticket_exists").is(':checked'))
+                                                $("#old_ticket").removeClass("hide");
+                                        else
+                                                $("#old_ticket").addClass("hide");
+                                        
+                                
+                                }
+                        </script>
                 </div>
                 <!-- fg-old_ticket -->
 

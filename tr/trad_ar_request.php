@@ -12,13 +12,23 @@ class RequestArTranslator
 		
 
 		$trad['request']['request_subject'] = "أصناف الطلبات";
-		$trad['request']['request_title'] = 'موضوع الطلب';
+		$trad['request']['request_title'] = 'عنوان الطلب';
 		$trad['request']['lang_id'] = 'لغة الطلب';
 		$trad['request']['request_for'] = 'متعلق الطلب';
-		$trad['request']['request_for_help'] = 'الجهة المبلغ عنها أو المعنية بالطلب';
-		$trad['request']['request_text'] = 'نص الطلب';
-		$trad['request']['request_html'] = 'الطلب';
+
+		$trad['request']['request_entity'] = 'الجهة المعنية بالطلب';
+		$trad['request']['request_entity.short'] = 'المبلغ عنه';
+		$trad['request']['request_entity_tooltip'] = 'الجهة المبلغ عنها أو المعنية بالطلب';
+
+		$trad['request']['request_period'] = 'تاريخ الواقعة أو الفترة المرتبطة بها';
+		$trad['request']['request_period.short'] = 'التاريخ أو الفترة';
+		$trad['request']['request_period_tooltip'] = 'تاريخ الواقعة أو الفترة المرتبطة بها، عند توفرها';
+		
+		// 
+		$trad['request']['request_text'] = 'وصف الطلب';
+		$trad['request']['request_html'] = 'تفاصيل الطلب';
 		$trad['request']['body'] = 'نص الطلب';
+		$trad['request']['file'] = 'الملف';
 		$trad['request']['props'] = 'متعلقات الطلب';
 		$trad['request']['request_code'] = 'رمز الطلب';
 		$trad['request']['request_date'] = 'تاريخ الطلب';

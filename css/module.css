@@ -2786,6 +2786,7 @@ pre.request_instructions {
   background: transparent;
   border: none;
   overflow: hidden;
+  word-break: auto-phrase;
 }
 
 label.hzm_label.for_file {
@@ -3897,7 +3898,9 @@ input#customer_verify_code {
   background-size: 66% 90%;
 }
 
-.form-control.form-ckbox.confidential {
+.form-control.form-ckbox.confidential,
+.form-control.form-ckbox.bpa,
+.form-control.form-ckbox.old_ticket_exists {
   border: none !important;
   padding: 0 !important;
   margin: 0;
@@ -3906,7 +3909,9 @@ input#customer_verify_code {
   min-width: 22px;
 }
 
-label.hzm_label.hzm_data_confidential {
+label.hzm_label.hzm_data_confidential,
+label.hzm_label.hzm_data_bpa,
+label.hzm_label.hzm_data_old_ticket {
   width: 90% !important;
   float: right;
   white-space: pre-wrap;
@@ -4248,4 +4253,14 @@ td.srch-result-col-attribute_enum_10.value-5>span {
 .hzm_data_prop.hzm_recommendation.protest {
     color: white;
     background-color: #894848;
+}
+
+h5.crm-bloc-title {
+    float: right;
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    background-color: #14a9bd;
+    color: white;
+    padding: 10px;
 }
