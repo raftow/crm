@@ -234,7 +234,7 @@ class CrmCrmEmpRequestAfwStructure
 			'TYPE' => 'FK',
 			'ANSWER' => 'employee',
 			'ANSMODULE' => 'hrm',
-			'WHERE' => "id_sh_div = §orgunit_id§ or id_sh_dep = §orgunit_id§", /* and jobrole_mfk like '%,117,%'*/
+			'WHERE' => "email = §email§ and id_sh_div = §orgunit_id§ or id_sh_dep = §orgunit_id§", /* and jobrole_mfk like '%,117,%'*/
 			'DEPENDENCY' => 'orgunit_id',
 			'RELATION' => 'ManyToOne',			
 			'SEARCH-BY-ONE' => false,
