@@ -3610,6 +3610,23 @@ h1.request-title.ST9 {
   background-color: red;
 }
 
+
+h3.request-entity {
+  color:white;
+  background-color: red;
+}
+
+h3.request-period {
+  color:white;
+  background-color: rgb(16, 127, 195);
+}
+
+/*  request types legend  start */
+
+h3.request-type.balagh {
+  background-color: red;
+}
+
 h3.request-type.complaint {
   background-color: rgb(178, 18, 87);
 }
@@ -3619,7 +3636,7 @@ h3.request-type.enquiry {
 }
 
 h3.request-type.grievance {
-  background-color: rgb(213, 22, 28);
+  background-color: rgb(169, 79, 6);
 }
 
 h3.request-type.HI {
@@ -3637,6 +3654,9 @@ h3.request-type.suggestion {
 h3.request-type.support {
   background-color: rgb(39, 136, 232);
 }
+
+/*  request types legend  end  */
+
 
 p.request-status {
   font-size: 14px;

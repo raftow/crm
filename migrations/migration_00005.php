@@ -13,7 +13,7 @@ try {
        'Y',1,NULL,NULL,NULL,0, 
        'balagh', _utf8'بلاغ',
        'balagh','Y','');");
-       
+
     AfwDatabase::db_query("DROP TABLE IF EXISTS " . $server_db_prefix . "crm.request_category;");
 
     AfwDatabase::db_query("CREATE TABLE IF NOT EXISTS " . $server_db_prefix . "crm.`request_category` (
@@ -68,3 +68,12 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 } catch (Exception $e) {
     $migration_error = " " . $e->getMessage();
 }
+
+
+/*
+
+ALTER TABLE tvtc_crm.request add   bpa_ind char(1) DEFAULT NULL  AFTER confidential;
+ALTER TABLE tvtc_crm.request add   request_entity varchar(128)  NOT NULL DEFAULT ''  AFTER request_title;
+ALTER TABLE tvtc_crm.request add   request_period varchar(128)  NOT NULL DEFAULT ''  AFTER request_entity;
+
+ */

@@ -4964,7 +4964,7 @@ class Request extends CrmObject
         $html .= "<h1 class='request-title ST$status_id $status_class'>$request_title</h1>";
         $html .= "<h2 class='request-text $status_class'>$request_text</h2>";
         $html .= "<h3 class='request-entity'>$request_entity_title : $request_entity</h3>";
-        $html .= "<h3 class='request-entity'>$request_period_title : $request_period</h3>";
+        $html .= "<h3 class='request-period'>$request_period_title : $request_period</h3>";
         $html .= "<p class='request-status $status_class $resolved_class'>$request_status_title : $request_status</p>";
         $html_rti = "";
         $respObj = $this->getLastResponse();
