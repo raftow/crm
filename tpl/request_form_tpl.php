@@ -16,6 +16,7 @@
  * @var string $region
  * @var string $request_type
  * @var string $request_type_decoded
+ * @var string $request_type_decoded_nakira
  * @var string $request_category
  * @var string $request_subject
  * @var string $request_entity
@@ -71,7 +72,7 @@ $files_instructions = "يمكن رفع حتى ($max_files_nb) مرفقات بص�
                 <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
         </div>
         <div class="content_form_bg">
-                <div class="content_big_title registration">تقديم طلب جديد</div>
+                <div class="content_big_title registration">تقديم <?php echo $request_type_decoded_nakira ?> جديد</div>
                 <div id="container_div" class="table_div">
                         <div id="container_right_div" class="table_cell_div content_form">
                                 <form id="crm_form" method="POST" enctype="multipart/form-data" action="i.php">

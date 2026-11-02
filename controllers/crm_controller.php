@@ -858,6 +858,7 @@ class CrmController extends AfwController
                 if (($data["request_type"] > 0) and ($data["request_type"] != 1) and ($data["request_type"] != 12)) {
                         $requestTypeObj = $data["requestTypeList"][$data["request_type"]];
                 }
+                $data["request_type_decoded_nakira"] = $requestTypeObj ? $requestTypeObj->getDisplay("ar") : "طلب";
                 $data["request_type_decoded"] = $requestTypeObj ? "الــ" . $requestTypeObj->getDisplay("ar") : "الطلب";
                 $data["requestCategoryList"] = RequestCategory::loadAllRelatedTo($data["request_type"]);
                 $data["regionList"] = Region::loadAll();
