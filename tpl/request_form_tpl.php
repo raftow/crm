@@ -55,7 +55,7 @@
  * 
  */
 $is_balagh = ($request_type == Request::$REQUEST_TYPE_BALAGH);
-
+$save_form_disabled = $is_balagh ? "disabled" : "";
 $request_type_readonly = true;
 $max_files_nb = $is_balagh ? 5 : 3;
 $nb_files = 1;
@@ -376,10 +376,19 @@ $files_instructions = "يمكن رفع حتى ($max_files_nb) مرفقات بص�
 
                                                                 <!-- fg-bpa -->
                                                                 <div id="fg-bpa" class="attrib-bpa form-group width_pct_100 ">
-                                                                        <div class="form-control form-ckbox bpa"><input type="checkbox" value="1" id="bpa" name="bpa" class="echeckbox" required></div>
+                                                                        <div class="form-control form-ckbox bpa"><input type="checkbox" value="1" id="bpa" name="bpa" class="echeckbox" onchange="bpa_changed()" required></div>
                                                                         <label for="bpa" class="hzm_label hzm_data_bpa">أقر وأتعهد بالتزام سياسة البلاغات (<a href='#'>الاطلاع على نصها</a>)
                                                                         </label>
+                                                                        <script>
+                                                                        function bpa_changed() {
+                                                                                if ($("#bpa").is(':checked'))
+                                                                                        $("#save_form").removeAttr("disabled");
+                                                                                else
+                                                                                        $("#save_form").attr('disabled', 'disabled');
 
+
+                                                                        }
+                                                                        </script>        
                                                                 </div>
                                                                 <!-- fg-bpa -->
                                                         <?php
@@ -460,7 +469,7 @@ $files_instructions = "يمكن رفع حتى ($max_files_nb) مرفقات بص�
 
 
                                                 </div>
-                                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال $request_type_decoded", $lang, "crm") ?>&nbsp;" style="margin-right: 5px;">
+                                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright <?php echo $save_form_disabled ?>" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال $request_type_decoded", $lang, "crm") ?>&nbsp;" style="margin-right: 5px;">
                                         </div>
                                 </form>
                         </div>
