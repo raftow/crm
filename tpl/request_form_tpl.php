@@ -469,7 +469,7 @@ $files_instructions = "يمكن رفع حتى ($max_files_nb) مرفقات بص�
 
 
                                                 </div>
-                                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright <?php echo $save_form_disabled ?>" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال $request_type_decoded", $lang, "crm") ?>&nbsp;" style="margin-right: 5px;">
+                                                <input type="submit" name="save" id="save_form" class="bluebtn wizardbtn fright" value="&nbsp; <?php echo AfwLanguageHelper::tt("ارسال $request_type_decoded", $lang, "crm") ?>&nbsp;" style="margin-right: 5px;" <?php echo $save_form_disabled ?>>
                                         </div>
                                 </form>
                         </div>
