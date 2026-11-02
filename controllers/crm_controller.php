@@ -1512,12 +1512,7 @@ class CrmController extends AfwController
                  * @var string $web_site
                  * @var string $request_entity
                  * @var string $request_period
-                 * @var string $xxxxxxx
-                 * @var string $xxxxxxx
-                 * @var string $xxxxxxx
-                 * 
-                 * 
-                 * 
+
                  * @var int $request_id
                  * @var int $customer_type_id
                  * @var int $request_priority
@@ -1528,18 +1523,9 @@ class CrmController extends AfwController
                  * 
                  * @var bool $confidential
                  * @var bool $bpa
-                 * @var bool $xxxxxxx
-                 * @var bool $xxxxxxx
-                 *  
-                 * 
-                 * @var array $xxxxxxx
-                 * @var array $xxxxxxx
-                 * @var array $xxxxxxx
-                 * @var array $xxxxxxx
-                 * @var array $xxxxxxx
                  */
                 $lang = AfwLanguageHelper::getGlobalLanguage();
-                //foreach ($request as $key => $value) $$key = $value;
+                foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
 

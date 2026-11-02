@@ -358,7 +358,7 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
                                                         <!-- fg-request-files -->
                                                         <div id="fg-request-files" class="attrib-request-files form-group width_pct_100 ">
                                                                 <label for="request-files" class="hzm_label hzm-data-request-files">رفع المرفقات التي تدعم البلاغ</label>
-                                                                <pre class='request_instructions'><?php echo $files_instructions; ?></pre>
+                                                                <pre class='request-files'><?php echo $files_instructions; ?></pre>
                                                                 <?php
                                                                 echo AfwInputHelper::multipleFileUploader($nb_files, $canAddRemoveFiles = true, $max_files_nb, $file_labels = [], $file_required_arr = [], $lang);
                                                                 ?>
