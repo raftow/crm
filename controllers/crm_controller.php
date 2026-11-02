@@ -1608,20 +1608,26 @@ class CrmController extends AfwController
                                         foreach ($request["_REQUEST_FILES"] as $file_code => $file_arr) {
                                                 list(,$file_num) = explode("_", $file_code);
                                                 $file_title = $file_order_labels[$file_num];
-                                                $uploadResult = UfwFileUploader::completeUpload($file_title, $file_code, $file_arr, $reqObj);
+                                                if($file_num<=$nb_files) {
+                                                        $uploadResult = UfwFileUploader::completeUpload($file_title, $file_code, $file_arr, $reqObj);
 
-                                                $status = $uploadResult["status"];
-                                                $message = $uploadResult["message"];
-                                                // $afObj = $uploadResult["afObj"];
+                                                        $status = $uploadResult["status"];
+                                                        $message = $uploadResult["message"];
+                                                        // $afObj = $uploadResult["afObj"];
 
-                                                if ($status == "success") {
-                                                        AfwSession::pushInformation("تم بحمد الله تحميل الملف : " . $file_title);
-                                                } else {
-                                                        $error_message = "فشلت عملية تحميل الملف : " . $file_title . ". السبب : " . $message;
-                                                        self::pushError($error_message);
-                                                        $data["all_error"] = $error_message;
-                                                        break;
+                                                        if ($status == "success") {
+                                                                AfwSession::pushInformation("تم بحمد الله تحميل الملف : " . $file_title);
+                                                        } else {
+                                                                $error_message = "فشلت عملية تحميل الملف : " . $file_title . ". السبب : " . $message;
+                                                                self::pushError($error_message);
+                                                                $data["all_error"] = $error_message;
+                                                                break;
+                                                        }
                                                 }
+                                                else {
+                                                        // ignore disabled files (not added by button [+] so remain disabled)
+                                                }
+                                                
                                                 
                                         }
                                 }
