@@ -2916,7 +2916,7 @@ class Request extends CrmObject
         }
 
 
-        if ($objme->isAdmin()) {
+        if ($objme and $objme->isAdmin()) {
             if ((!$this->getVal("supervisor_id")) or $objme->isSuperAdmin()) {
                 $color = "yellow";
                 if (!$this->getVal("supervisor_id")) $title_ar = "تعيين مشرف على هذا الطلب";
