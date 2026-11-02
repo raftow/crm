@@ -3620,6 +3620,7 @@ h3.request-entity {
   margin: 0;
   padding: 4px;
   line-height: 150%;
+  font-size: 14px;
 }
 
 h3.request-period {
@@ -3629,6 +3630,7 @@ h3.request-period {
   margin: 0;
   padding: 4px;
   line-height: 150%;
+  font-size: 14px;
 }
 
 /*  request types legend  start */
@@ -3674,7 +3676,8 @@ p.request-status {
   float: right;
   background-color: black;
   margin: 0;
-  padding: 0 3px;
+  padding: 4px;
+  line-height: 150%;
 }
 
 p.request-status.closed {
