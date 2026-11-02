@@ -238,26 +238,7 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
                                                         <h5 class="crm-bloc-title"><i></i>بيانات <?php echo $request_type_decoded ?> </h5>
                                                 </div>
                                                 <div id="group_company_data" class="" aria-expanded="true">
-                                                        <!-- fg-region -->
-                                                        <div id="fg-region" class="attrib-region form-group width_pct_100 ">
-                                                                <label for="region" class="hzm_label hzm_data_region label_required">المنطقة التي يقع فيها موضوع <?php echo $request_type_decoded ?></label>
-                                                                <?php echo AfwInputHelper::picture_dropdown(
-                                                                        $regionList,
-                                                                        "region",
-                                                                        $selected = array($region),
-                                                                        "region",
-                                                                        $data_images = false, // no drop dwon pictures
-                                                                        $select_width = 0, // means auto
-                                                                        $select_css = "form-control",
-                                                                        $sort_order = "",
-                                                                        $empty_option = true,
-                                                                        $lang,
-                                                                        null,
-                                                                        null,
-                                                                        ["readonly" => $region_readonly]
-                                                                ); ?>
-                                                        </div>
-                                                        <!-- fg-region -->
+                                                        
 
 
 
@@ -300,6 +281,27 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
                                                                 ); ?>
                                                         </div>
                                                         <!-- fg-request_category -->
+
+                                                        <!-- fg-region -->
+                                                        <div id="fg-region" class="attrib-region form-group width_pct_100 ">
+                                                                <label for="region" class="hzm_label hzm_data_region label_required">المنطقة التي يقع فيها موضوع <?php echo $request_type_decoded ?></label>
+                                                                <?php echo AfwInputHelper::picture_dropdown(
+                                                                        $regionList,
+                                                                        "region",
+                                                                        $selected = array($region),
+                                                                        "region",
+                                                                        $data_images = false, // no drop dwon pictures
+                                                                        $select_width = 0, // means auto
+                                                                        $select_css = "form-control",
+                                                                        $sort_order = "",
+                                                                        $empty_option = true,
+                                                                        $lang,
+                                                                        null,
+                                                                        null,
+                                                                        ["readonly" => $region_readonly]
+                                                                ); ?>
+                                                        </div>
+                                                        <!-- fg-region -->
 
 
                                                         <!-- fg-request_subject -->

@@ -7,8 +7,8 @@ class CrmController extends AfwController
                 if (!$lang) $lang = AfwSession::getSessionVar("current_lang");
                 if (!$lang) $lang = "ar";
                 $support_mobile_number = AfwSession::config("support_mobile_number", "0500000001");
-                self::pushError(AfwLanguageHelper::translateCompanyMessage($message_en, "crm", $lang));
-                self::pushError(AfwLanguageHelper::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number", "crm", $lang) . " " . $support_mobile_number);
+                AfwSession::pushError(AfwLanguageHelper::translateCompanyMessage($message_en, "crm", $lang));
+                AfwSession::pushError(AfwLanguageHelper::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number", "crm", $lang) . " " . $support_mobile_number);
         }
 
         public function getMyModule()
@@ -1620,22 +1620,25 @@ class CrmController extends AfwController
                                                         $error_message = "فشلت عملية تحميل الملف : " . $file_title . ". السبب : " . $message;
                                                         self::pushError($error_message);
                                                         $data["all_error"] = $error_message;
+                                                        break;
                                                 }
                                                 
                                         }
                                 }
 
 
-
-                                // send the request 
-                                $reqObj->sendRequest($lang, "CrmController::submit_request(edited)");
-                                if (!$data["id"]) {
-                                        $data["id"] = $reqObj->id;
-                                        $data["is_new"] = true;
-                                } else {
-                                        $data["is_new"] = false;
+                                if(!$data["all_error"]) {
+                                        // send the request 
+                                        $reqObj->sendRequest($lang, "CrmController::submit_request(edited)");
+                                        if (!$data["id"]) {
+                                                $data["id"] = $reqObj->id;
+                                                $data["is_new"] = true;
+                                        } else {
+                                                $data["is_new"] = false;
+                                        }
+                                        $data["ticketObj"] = $reqObj;
                                 }
-                                $data["ticketObj"] = $reqObj;
+                                
                         }
                 }
 
