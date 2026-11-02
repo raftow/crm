@@ -72,8 +72,8 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 
 /*
 
-ALTER TABLE tvtc_crm.request add   bpa_ind char(1) DEFAULT NULL  AFTER confidential;
-ALTER TABLE tvtc_crm.request add   request_entity varchar(128)  NOT NULL DEFAULT ''  AFTER request_title;
-ALTER TABLE tvtc_crm.request add   request_period varchar(128)  NOT NULL DEFAULT ''  AFTER request_entity;
+AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   bpa_ind char(1) DEFAULT NULL  AFTER confidential;");
+AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_entity varchar(128)  NOT NULL DEFAULT ''  AFTER request_title;");
+AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_period varchar(128)  NOT NULL DEFAULT ''  AFTER request_entity;");
 
  */
