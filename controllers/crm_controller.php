@@ -299,7 +299,7 @@ class CrmController extends AfwController
         public function initiateStandardDisplay($request, $noTaqib = false)
         {
                 $theCustomer = $this->checkLoggedIn();
-                if(!$theCustomer) return;
+                if (!$theCustomer) return;
                 if ($noTaqib) {
                         $candRequestObj = null;
                 } else {
@@ -439,7 +439,7 @@ class CrmController extends AfwController
 
 
                 $theCustomer = $this->checkLoggedIn();
-                if(!$theCustomer) return;
+                if (!$theCustomer) return;
 
                 $data = $request;
                 // echo("request = ".var_export($request,true)."<br><br>");
@@ -521,7 +521,7 @@ class CrmController extends AfwController
 
 
                 $theCustomer = $this->checkLoggedIn();
-                if(!$theCustomer) return;
+                if (!$theCustomer) return;
 
                 $data["ticketObj"] = null;
 
@@ -574,7 +574,7 @@ class CrmController extends AfwController
 
 
                 $theCustomer = $this->checkLoggedIn();
-                if(!$theCustomer) return;
+                if (!$theCustomer) return;
 
                 $data["ticketObj"] = null;
 
@@ -681,7 +681,7 @@ class CrmController extends AfwController
                 $data = $request;
 
                 $theCustomer = $this->checkLoggedIn();
-                if(!$theCustomer) return;
+                if (!$theCustomer) return;
 
                 // if(!$rid) $rid = Request::myLastRequestId();
 
@@ -875,9 +875,9 @@ class CrmController extends AfwController
 
                 if ($theCustomer) {
                         $data["customer_id"] = $theCustomer->id;
-                        if(!$data["customer_type_id"]) $data["customer_type_id"] = $theCustomer->getVal("customer_type_id");
-                        if(!$data["ref_num"]) $data["ref_num"] = $theCustomer->getVal("ref_num");
-                        if(!$data["org_name"]) $data["org_name"] = $theCustomer->getVal("org_name");
+                        if (!$data["customer_type_id"]) $data["customer_type_id"] = $theCustomer->getVal("customer_type_id");
+                        if (!$data["ref_num"]) $data["ref_num"] = $theCustomer->getVal("ref_num");
+                        if (!$data["org_name"]) $data["org_name"] = $theCustomer->getVal("org_name");
                         $custTypeLogic = AfwSession::config("cust_type_logic", []);
                         $org_name_label = $custTypeLogic[$customer_type_id]["org_name"]["title_ar"];
                         $ref_num_label = $custTypeLogic[$customer_type_id]["ref_num"]["title_ar"];
@@ -908,15 +908,14 @@ class CrmController extends AfwController
                         $data["customer_mobile"] = $theCustomer->getVal("mobile");
                         $data["customer_email"] = $theCustomer->getVal("email");
                         $data["customer_idn"] = $theCustomer->getVal("idn");
-                }
-                else return;
+                } else return;
 
                 if (!$data["city_id"]) $data["city_id"] = 301; //RIYADH
-                
-                $data["confidential_checked"] = (($data["request_type"]==Request::$REQUEST_TYPE_BALAGH) or 
-                                                 ($data["request_type"]==Request::$REQUEST_TYPE_COMPLAINT) or 
-                                                 ($data["request_type"]==Request::$REQUEST_TYPE_GRIEVANCE) or 
-                                                 ($data["request_type"]==Request::$REQUEST_TYPE_HI)) ? "checked" : "";
+
+                $data["confidential_checked"] = (($data["request_type"] == Request::$REQUEST_TYPE_BALAGH) or
+                        ($data["request_type"] == Request::$REQUEST_TYPE_COMPLAINT) or
+                        ($data["request_type"] == Request::$REQUEST_TYPE_GRIEVANCE) or
+                        ($data["request_type"] == Request::$REQUEST_TYPE_HI)) ? "checked" : "";
                 $data["main_module_home_page"] = AfwSession::config("main_module_home_page", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
                 $data["customer_module_banner"] = AfwSession::config("customer_module_banner", "");
@@ -1501,8 +1500,45 @@ class CrmController extends AfwController
 
         public function initiateSubmit_request($request)
         {
+                /**
+                 * @var string $customer_idn
+                 * @var string $customer_mobile
+                 * @var string $request_subject
+                 * @var string $request_body
+                 * @var string $org_name
+                 * @var string $ref_num
+                 * @var string $old_ticket
+                 * @var string $web_site
+                 * @var string $request_entity
+                 * @var string $request_period
+                 * @var string $xxxxxxx
+                 * @var string $xxxxxxx
+                 * @var string $xxxxxxx
+                 * 
+                 * 
+                 * 
+                 * @var int $request_id
+                 * @var int $customer_type_id
+                 * @var int $request_priority
+                 * @var int $related_object_id
+                 * @var int $request_type
+                 * @var int $request_category
+                 * @var int $region
+                 * 
+                 * @var bool $confidential
+                 * @var bool $bpa
+                 * @var bool $xxxxxxx
+                 * @var bool $xxxxxxx
+                 *  
+                 * 
+                 * @var array $xxxxxxx
+                 * @var array $xxxxxxx
+                 * @var array $xxxxxxx
+                 * @var array $xxxxxxx
+                 * @var array $xxxxxxx
+                 */
                 $lang = AfwLanguageHelper::getGlobalLanguage();
-                foreach ($request as $key => $value) $$key = $value;
+                //foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
                 AfwAutoLoader::addMainModule("crm");
 
@@ -1529,6 +1565,10 @@ class CrmController extends AfwController
                         $reqObj = Request::loadByText($theCustomer->id, AfwDateHelper::currentHijriDate(), $request_subject, $request_body);
                         if (!$reqObj) $reqObj = new Request();
                 }
+
+
+
+
 
                 $oldReqObj = null;
 
@@ -1560,11 +1600,11 @@ class CrmController extends AfwController
 
                         $bpa_ind = $bpa ? "Y" : "N";
                         $reqObj->set("bpa_ind", $bpa_ind);
-                        
+
                         $reqObj->set("request_title", $request_subject);
                         $reqObj->set("request_entity", $request_entity);
                         $reqObj->set("request_period", $request_period);
-                        
+
                         $reqObj->set("request_type_id", $request_type);
                         $reqObj->set("request_category_id", $request_category);
                         $reqObj->set("region_id", $region);
@@ -1575,6 +1615,31 @@ class CrmController extends AfwController
                         } else {
                                 $reqObj->commit();
                                 if ($oldReqObj) $oldReqObj->commit();
+
+                                list($file_title_0, $file_order_labels) = AfwInputHelper::multipleFileUploaderLabels($lang);
+                                if (isset($request["_REQUEST_FILES"]) and $request["_REQUEST_FILES"] and (count($request["_REQUEST_FILES"]) > 0)) {
+                                        foreach ($request["_REQUEST_FILES"] as $file_code => $file_arr) {
+                                                list(,$file_num) = explode("_", $file_code);
+                                                $file_title = $file_order_labels[$file_num];
+                                                $uploadResult = UfwFileUploader::completeUpload($file_title, $file_code, $file_arr, $reqObj);
+
+                                                $status = $uploadResult["status"];
+                                                $message = $uploadResult["message"];
+                                                // $afObj = $uploadResult["afObj"];
+
+                                                if ($status == "success") {
+                                                        AfwSession::pushInformation("تم بحمد الله تحميل الملف : " . $file_title);
+                                                } else {
+                                                        $error_message = "فشلت عملية تحميل الملف : " . $file_title . ". السبب : " . $message;
+                                                        self::pushError($error_message);
+                                                        $data["all_error"] = $error_message;
+                                                }
+                                                
+                                        }
+                                }
+
+
+
                                 // send the request 
                                 $reqObj->sendRequest($lang, "CrmController::submit_request(edited)");
                                 if (!$data["id"]) {

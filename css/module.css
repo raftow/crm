@@ -4297,3 +4297,10 @@ h5.crm-bloc-title {
     color: white;
     padding: 10px;
 }
+
+pre.request-files {
+  padding: 8px;
+  word-break: revert;
+  border: none;
+  background-color: #e0f3eca8;
+}

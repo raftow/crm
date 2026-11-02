@@ -671,6 +671,12 @@ class Response extends CrmObject
                 return parent::attributeIsApplicable($attribute);
         }
 
+        /**
+         * @param int $doc_type_id
+         * @param string $file_code
+         * @param AfwStorable $af
+         *
+         */
         public function uploadedSuccessfully($file_code, $doc_type_id, $af)
         {
                 global $lang;
@@ -680,7 +686,7 @@ class Response extends CrmObject
                 $pfObj = RequestFile::loadByMainIndex($this->getVal("request_id"), $af->getId(), $create_obj_if_not_found = true);
                 $pfObj->set("doc_type_id", $doc_type_id);
                 $pfObj->set("response_id", $this->getId());
-                $pfObj->set("description", $af->getVal("afile_name") . " (" . $pfObj->showAttribute("doc_type_id") . ")");
+                $pfObj->set("description", $af->getStoredFileName() . " (" . $pfObj->showAttribute("doc_type_id") . ")");
                 $pfObj->update();
         }
 
