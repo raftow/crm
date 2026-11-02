@@ -346,7 +346,7 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
                                                         ?>
                                                                 <!-- fg-request_entity -->
                                                                 <div id="fg-request_entity" class="attrib-request_entity form-group width_pct_100 ">
-                                                                        <label for="request_entity" class="hzm_label hzm_data_request_entity label_required">****** :
+                                                                        <label for="request_entity" class="hzm_label hzm_data_request_entity label_required"><?php echo $entity_title; ?> :
                                                                         </label>
                                                                         <input placeholder="" type="text" tabindex="0" class="form-control valid" name="request_entity" id="request_entity" dir="rtl" value="<?php echo $request_entity ?>" size="24" maxlength="32" onchange="" required="true" aria-invalid="false" <?php echo $request_entity_readonly ?>>
                                                                         <?php echo AfwInputHelper::inputErrorsInRequest("request_entity", $data); ?>
