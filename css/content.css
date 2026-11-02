@@ -240,18 +240,22 @@ div#fg-warn {
     margin-top: 28px;
 }
 
-
 div.crm_success_message > a {
-    border: solid 1px #5bb354;
-    color: white;
-    font-size: 75%;
-    font-weight: normal;
-    padding: 4px 15px 8px;
-    background-color: #3fbf2ed6;
-    font-family: menu;
-    line-height: 60px;
-    margin-right: 70px;
-}  
+  border: solid 1px #5bb354;
+  color: white;
+  font-size: 75%;
+  font-weight: normal;
+  padding: 4px 15px 8px;
+  background-color: #3fbf2ed6;
+  font-family: menu;
+  line-height: 33px;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  margin-top: 14px !important;
+  width: 60%;
+  margin-left: auto;
+}
 
 @media (max-width: 1177px) {
     .register_success {
