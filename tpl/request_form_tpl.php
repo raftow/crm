@@ -62,6 +62,9 @@ $nb_files = 1;
 $file_size_max_mb = 5;
 $files_instructions = "يمكن رفع حتى ($max_files_nb) مرفقات بصيغ PDF أو JPG أو JPEG أو PNG، وبحد أقصى ($file_size_max_mb) ميجابايت لكل مرفق. الأزرار [+] و [-] تمكنك من التحكم في عدد المرفقات المراد رفعها";
 
+$entity_title = "الجهة المعنية بـ$request_type_decoded";
+$entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
+
 // $file_title_0 = Request::translateAttribute('file', $lang);
 
 
@@ -343,7 +346,7 @@ $files_instructions = "يمكن رفع حتى ($max_files_nb) مرفقات بص�
                                                         ?>
                                                                 <!-- fg-request_entity -->
                                                                 <div id="fg-request_entity" class="attrib-request_entity form-group width_pct_100 ">
-                                                                        <label for="request_entity" class="hzm_label hzm_data_request_entity label_required">الجهة المعنية بـ<?php echo $request_type_decoded ?> :
+                                                                        <label for="request_entity" class="hzm_label hzm_data_request_entity label_required">****** :
                                                                         </label>
                                                                         <input placeholder="" type="text" tabindex="0" class="form-control valid" name="request_entity" id="request_entity" dir="rtl" value="<?php echo $request_entity ?>" size="24" maxlength="32" onchange="" required="true" aria-invalid="false" <?php echo $request_entity_readonly ?>>
                                                                         <?php echo AfwInputHelper::inputErrorsInRequest("request_entity", $data); ?>
