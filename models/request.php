@@ -4972,10 +4972,20 @@ class Request extends CrmObject
         $this_id = $this->id;
         $status_class = $isClosed ? "closed" : "opened";
 
-        $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
+        if(CrmEmployee::daysNumberWithCrmOfAuthenticatedUser()<90)
+        {
+            $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
+            $help_html = "<p class='help p-helper'>$help</p>";
+        }
+        else {
+            $help_html = "";
+        }
+
+        
+
 
         $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
-        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class'>&nbsp;</p><p class='help p-helper'>$help</p>" : "";
+        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class'>&nbsp;</p>$help_html" : "";
 
         $html = "<div id='div-request-body-$this_id' class='security $confidential_class'>";
         $html .= "<div class='request-desc $request_late_color'>";

@@ -175,6 +175,21 @@ class CrmEmployee extends CrmObject
         }
 
 
+        public static function daysNumberWithCrmOfAuthenticatedUser()
+        {
+                $objme = AfwSession::getUserConnected();
+                if (!$objme) return -2;
+                if ($objme->isSuperAdmin()) return 999999;
+                $objme_employee_id = $objme->getEmployeeId();
+                $objCrmEmpl = self::findCrmEmployee($objme_employee_id);
+                if(!$objCrmEmpl) return -1;
+                $created_at_gdate = $objCrmEmpl->getVal("created_at");
+                $days = AfwDateHelper::diff_date(date("Y-m-d H:i:s"), $created_at_gdate);
+
+                return $days;
+        }
+
+
 
         public function getDisplay($lang = "ar")
         {

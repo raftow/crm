@@ -2876,8 +2876,8 @@ div.hzm_data_ul_cl_files > ul > li.smooth-active {
   margin: 0 1%;
   min-height: 50px !important;
   text-align: center;
-  color: #1f59c1;
-  font-size: 18px;
+  color: #000;
+  font-size: 16px;
 }
 
 div.hzm_data_ul_cl_files > ul.smooth-dots {
