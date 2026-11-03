@@ -67,7 +67,9 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
 
 // $file_title_0 = Request::translateAttribute('file', $lang);
 
-
+$file_dir_name = dirname(__FILE__);
+$icontent_full_path_name = "$file_dir_name/../content/bpa_content_html.php";
+$bpa_content_html = include($icontent_full_path_name);
 
 ?>
 <div class="cms_bg_pic">
@@ -238,7 +240,7 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
                                                         <h5 class="crm-bloc-title"><i></i>بيانات <?php echo $request_type_decoded ?> </h5>
                                                 </div>
                                                 <div id="group_company_data" class="" aria-expanded="true">
-                                                        
+
 
 
 
@@ -385,15 +387,15 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
                                                                         <label for="bpa" class="hzm_label hzm_data_bpa">أقر وأتعهد بالتزام سياسة البلاغات (<a href='#'>الاطلاع على نصها</a>)
                                                                         </label>
                                                                         <script>
-                                                                        function bpa_changed() {
-                                                                                if ($("#bpa").is(':checked'))
-                                                                                        $("#save_form").removeAttr("disabled");
-                                                                                else
-                                                                                        $("#save_form").attr('disabled', 'disabled');
+                                                                                function bpa_changed() {
+                                                                                        if ($("#bpa").is(':checked'))
+                                                                                                $("#save_form").removeAttr("disabled");
+                                                                                        else
+                                                                                                $("#save_form").attr('disabled', 'disabled');
 
 
-                                                                        }
-                                                                        </script>        
+                                                                                }
+                                                                        </script>
                                                                 </div>
                                                                 <!-- fg-bpa -->
                                                         <?php
@@ -487,6 +489,11 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
                         </div>
                         <div id="container_left_div" class="table_cell_div register_pic">
                         </div>
+                </div>
+                <div class="show-infos-popup-div hide" id="bpa-content">
+                        <div class="bpa-content">
+                        <?php echo $bpa_content_html; ?>
+                        </div>        
                 </div>
 
         </div>

@@ -1475,6 +1475,11 @@ class Request extends CrmObject
             return ($val != "");
         }
 
+        if ($attribute == "tip_of_day") {
+            $val = trim($this->calc($attribute));
+            return (strlen($val)>5);
+        }
+
         /* rafik 5/9/2026 even if related_request_code is empty investigators and supervisors can fill it
            so keep it applicable
         if ($attribute == "related_request_code") {
@@ -3156,13 +3161,18 @@ class Request extends CrmObject
     public function calcTip_of_day($what = "value")
     {
         $tip_of_day_arr = [];
-        $tip_of_day_arr[] = ["ar" => "في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en" => "In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
+        if(CrmEmployee::daysNumberWithCrmOfAuthenticatedUser()<90) {
+                $tip_of_day_arr[] = ["ar" => "في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en" => "In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
+        }       
+        $countTOD = count($tip_of_day_arr);
+        if(!$countTOD) return "";
+        
         $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
-        $countTOD = count($tip_of_day_arr);
+        
         $k = rand(0, $countTOD - 1);
         $tip_of_day = $tip_of_day_arr[$k][$lang];
-        if (!$tip_of_day) $tip_of_day = " tip_of_day_arr[$k][$lang] from tip_of_day_arr = " . var_export($tip_of_day_arr, true);
+        if (!$tip_of_day) $tip_of_day = "<!-- tip_of_day_arr[$k][$lang] from tip_of_day_arr = " . var_export($tip_of_day_arr, true)."-- >";
         $html = "<div class='tip_of_day'>$tip_of_day</div>";
 
         return $html;
