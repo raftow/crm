@@ -70,6 +70,7 @@ $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
 $file_dir_name = dirname(__FILE__);
 $icontent_full_path_name = "$file_dir_name/../content/bpa_content_html.php";
 $bpa_content_html = include($icontent_full_path_name);
+$bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
 
 ?>
 <div class="cms_bg_pic">
