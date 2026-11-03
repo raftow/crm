@@ -385,7 +385,7 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
                                                                 <!-- fg-bpa -->
                                                                 <div id="fg-bpa" class="attrib-bpa form-group width_pct_100 ">
                                                                         <div class="form-control form-ckbox bpa"><input type="checkbox" value="1" id="bpa" name="bpa" class="echeckbox" onchange="bpa_changed()" required></div>
-                                                                        <label for="bpa" class="hzm_label hzm_data_bpa">أقر وأتعهد بالتزام سياسة البلاغات (<a href='#'>الاطلاع على نصها</a>)
+                                                                        <label for="bpa" class="hzm_label hzm_data_bpa">أقر وأتعهد بالتزام سياسة البلاغات (<a id='bpa-read' href='#'>الاطلاع على نصها</a>)
                                                                         </label>
                                                                         <script>
                                                                                 function bpa_changed() {
