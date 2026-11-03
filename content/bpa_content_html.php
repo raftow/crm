@@ -153,7 +153,7 @@ ob_start();
         // الاستماع لحدث التغيير في مربع الاختيار باستخدام jQuery
         $('#agreeCheckbox').on('change', function() {
             // تفعيل أو تعطيل الزر بناءً على حالة الـ Checkbox
-            $('#submitBtn').prop('disabled', !this.checked);
+            if(this.checked) $('#closeBpaBtn').removeAttr("disabled");
         });
 
         $('#closeBpaBtn').on('click', function() {
