@@ -1029,7 +1029,7 @@ class CrmRequestAfwStructure
 
 		'requestFileList' => array(
 			'FGROUP' => 'props',
-			'STEP' => 99, // see the next formula attribute
+			'STEP' => 99, // see the next ul_cl_files formula attribute
 			'SHORTNAME' => 'files',
 			'SHOW' => false,
 			/*'FORMAT' => 'minibox',  'ICONS' => true,  'DELETE-ICON' => true,  'BUTTONS' => true,  */

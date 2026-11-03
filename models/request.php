@@ -1424,9 +1424,9 @@ class Request extends CrmObject
         $connected_employee_id = ($objme) ? $objme->getEmployeeId() : 0;
 
 
-        if ($attribute == "ul_cl_files") {
+        /*if ($attribute == "ul_cl_files") {
             return ($this->calc("ul_cl_files") != "");
-        }
+        }*/
 
 
         // hours_investigator_work عدد ساعات عمل المنسق';

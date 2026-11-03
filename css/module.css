@@ -3443,7 +3443,7 @@ div#div_data_tip_of_day {
 .signin-content {
   /* background-image: url(../../crm/pic/login_banner.jpg) !important;*/
   background-size: 82% 100% !important;
-  background-color: transparent !important;
+  background-color: #c2ecff !important;
   background-position: left top !important;
 }
 
@@ -3451,7 +3451,7 @@ div#div_data_tip_of_day {
   padding-right: 90px !important;
   border-right: none !important;
   padding-left: 80px !important;
-  background-color: #aee4fd87 !important;
+  background-color: #f2fbffd1 !important
 }
 
 #signin {
