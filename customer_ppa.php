@@ -131,57 +131,25 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
                                 <h2 class='title_login'>الموافقة على سياسة الخصوصية</h2>        
                         </div>
                 </div>
-                    <?php                         
-                       $company = AfwSession::currentCompany();
-                       $main_company_domain = AfwSession::config("main_company_domain", "$company.gov.sa");       
-                       $url_ppa = AfwSession::config("url_ppa", "https://$main_company_domain/ar/Pages/PrivacyPolicy.aspx");       
-                    ?>                    
+                                 
                 <div class="modal-body">
-                        <div class="ppa">
-                                <p class="special-link todo">
-                                        قبل تسجيل الدخول فضلا نأمل منكم فتح الرابط أسفله ثم قراءة تفاصيل وبنود سياسة الخصوصية في النافذة الجديدة التي ستفتح لك
-                                         ثم غلق هذه الأخيرة والرجوع إلى هذه النافذة للموافقة على سياسة الخصوصية واكمال عملية تسجيل الدخول</p>
-                                <p class="special-link ppa read"><a target="_new" href="<?php echo $url_ppa;?>">الاطلاع على سياسة الخصوصية</a></p>
-                        </div><br>
-                        <?php
+                    <?php 
+                        include("tpl/please_read_ppa_content_tpl.php");  
+                        
                         if($custObj->getVal("ppa") == "W") {
-                        ?>
+                    ?>
                         <div class="ppa warning">
                                 <p class="special-link important">يبدوا أن هذا الحساب مجمد يكفي قراءة سياسة الخصوصية والموافقة عليها واكمال عملية تسجيل الدخول لرفع التجميد</p>
                         </div><br>
-                        <?php
+                    <?php
                         }
-                        ?>
+                    ?>
                         <form id="formlogin2" name="formlogin2" method="post" action="customer_login.php" dir="rtl" enctype="multipart/form-data">
                                         <input type="hidden" name="customer_mobile_or_email" value="<?php echo $customer_mobile_or_email?>">
                                         <input type="hidden" name="customer_idn" value="<?php echo $customer_idn?>">                                        
                                         <input type="hidden" name="customer_id" value="<?php echo $customer_id?>">                                        
                                         
-                                        <p class="ppa-acceptance hide">
-                                            <input type="checkbox" name="ppa" id="ppa" value="Y">
-                                            <span>
-                                                أوافق على سياسة الخصوصية
-                                            </span>    
-                                        </p>
-                                <script>  
-                                $(document).ready(function() {       
-                                        $(".special-link.ppa.read>a").click(function() {
-                                                $(".ppa-acceptance.hide").removeClass("hide");
-                                        });
-
-                                        $(".ppa-acceptance").click(function() {
-                                            if($("#ppa").val() == "Y")
-                                            {
-                                                $("#crm_go").removeAttr("disabled");
-                                            }
-                                            else 
-                                            {
-                                                alert("ppa val = "+$("#ppa").val());    
-                                            }    
-                                                
-                                        });
-                                });
-                                </script>  
+                                        <?php include("tpl/ppa_tpl.php");  ?>
 
                                 <input type="submit" class="btnbtsp btn-primary btnregister" value="تسجيل الدخول" id="crm_go" name="crm_go" disabled>&nbsp;
                         </form>
