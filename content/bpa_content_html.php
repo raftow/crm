@@ -157,5 +157,5 @@ ob_start();
     
 </script>
 <?php
-    return ob_clean();
+    return ob_get_clean();
 ?>
