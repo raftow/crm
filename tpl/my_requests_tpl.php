@@ -33,7 +33,7 @@ foreach($requestList as $ticketObj)
         $request_type_decoded = $ticketObj->decode("request_type_id");
         $confidential_class = ""; // $ticketObj->sureIs("confidential") ? "confidential" : "";
         $this_id = $ticketObj->id;
-        $confidential_button = "";//$ticketObj->sureIs("confi dential") ? "<button id='confid entialbtn-$this_id' name='confide ntialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
+        $confidential_button = "";//$ticketObj->sureIs("confi dential") ? "<button type="button" id='confid entialbtn-$this_id' name='confide ntialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
 
         $full_request_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("request_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("request_date")));
         $full_status_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("status_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("status_date")));
