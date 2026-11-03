@@ -95,7 +95,7 @@ if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname))
 	//die("rafik 2019-007 sess = ".var_export($_SESSION,true));
         header("Location: index.php");
 } 
-elseif($_POST["crm_new_go"])
+elseif($_POST["crm_login"])
 {
       $sessionVarCpt = AfwSession::getSessionVar("cpt"); 
       if((!AfwSession::config("sms-captcha-register",true)) or (strtoupper($_POST["customer_cpt"])==strtoupper($sessionVarCpt)))
@@ -437,7 +437,7 @@ echo $js_for_cust_type;
                         ?>
                                 <br>
                                 <!-- logreg:<?php echo $logbl?> -->
-                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_new_go" id="crm_new_go" disabled>&nbsp;
+                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_login" id="crm_login" disabled>&nbsp;
                                 
                                 
                         </form>

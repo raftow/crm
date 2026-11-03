@@ -75,7 +75,7 @@ if(AfwSession::customerIsConnected())
     // die("rafik debugging : customerIsConnected");     
     header("Location: customer_index.php");
 } 
-elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_POST["crm_go"]))
+elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_POST["crm_login"]))
 {
     $customer_mobile_or_email = AfwStringHelper::hardSecureCleanString(trim(strtolower($_POST["customer_mobile_or_email"])));
     $customer_idn = AfwStringHelper::hardSecureCleanString(trim($_POST["customer_idn"]));
@@ -151,7 +151,7 @@ elseif(($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_
                                         
                                         <?php include("tpl/ppa_tpl.php");  ?>
 
-                                <input type="submit" class="btnbtsp btn-primary btnregister" value="تسجيل الدخول" id="crm_go" name="crm_go" disabled>&nbsp;
+                                <input type="submit" class="btnbtsp btn-primary btnregister" value="تسجيل الدخول" id="crm_login" name="crm_login" disabled>&nbsp;
                         </form>
                 </div>
         </div>

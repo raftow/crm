@@ -15,8 +15,8 @@
 
                                                 $('#ppa').on('change', function() {
                                                     // تفعيل أو تعطيل الزر بناءً على حالة الـ Checkbox
-                                                    if(this.checked) $('#crm_go').removeAttr("disabled");
-                                                    else $('#crm_go').attr("disabled", true);
+                                                    if(this.checked) $('#crm_login').removeAttr("disabled");
+                                                    else $('#crm_login').attr("disabled", true);
                                                 });
                                                 
                                         });

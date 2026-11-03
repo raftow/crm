@@ -73,7 +73,7 @@ if (!$front_header_page) $front_header_page = "lib/hzm/oldweb/hzm_header.php";
 if (AfwSession::customerIsConnected()) {
         // die("rafik debugging : customerIsConnected");     
         header("Location: customer_index.php");
-} elseif (($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_POST["crm_go"])) {
+} elseif (($_POST["customer_mobile_or_email"]) and ($_POST["customer_idn"]) and ($_POST["crm_login"])) {
         if (($_POST["ppa"] != "Y") and ($_POST["ppa"] != "X")) {
                 include("$file_dir_name/../crm/customer_ppa.php");
                 die();
@@ -254,7 +254,7 @@ if ($desc_site) {
                                         ?>
 
                                         <!-- logbl:<?php echo $logbl ?> -->
-                                        <input type="submit" class="btnbtsp btn-primary btnregister" value="تسجيل الدخول" id="crm_go" name="crm_go">&nbsp;
+                                        <input type="submit" class="btnbtsp btn-primary btnregister" value="تسجيل الدخول" id="crm_login" name="crm_login">&nbsp;
 
                                 </form>
                         </div>
