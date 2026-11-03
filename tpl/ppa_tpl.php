@@ -13,8 +13,11 @@
                                                 $(".ppa-acceptance.hide").removeClass("hide");
 
 
-                                                $(".ppa-acceptance").click(function() {
-                                                    $("#crm_go").attr("disabled", $("#ppa").checked);
+                                                $('#ppa').on('change', function() {
+                                                    // تفعيل أو تعطيل الزر بناءً على حالة الـ Checkbox
+                                                    if(this.checked) $('#crm_go').removeAttr("disabled");
+                                                    else $('#crm_go').attr("disabled", true);
                                                 });
+                                                
                                         });
                                         </script>
