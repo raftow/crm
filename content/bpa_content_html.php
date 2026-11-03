@@ -149,6 +149,7 @@ ob_start();
 </div>
 <script>
     $('#bpa-read').on('click', function() {
+        $('#bpa-content').removeClass('hide');
         // الاستماع لحدث التغيير في مربع الاختيار باستخدام jQuery
         $('#agreeCheckbox').on('change', function() {
             // تفعيل أو تعطيل الزر بناءً على حالة الـ Checkbox
