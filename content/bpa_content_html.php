@@ -154,6 +154,7 @@ ob_start();
         $('#agreeCheckbox').on('change', function() {
             // تفعيل أو تعطيل الزر بناءً على حالة الـ Checkbox
             if(this.checked) $('#closeBpaBtn').removeAttr("disabled");
+            else $('#closeBpaBtn').attr("disabled", true);
         });
 
         $('#closeBpaBtn').on('click', function() {
