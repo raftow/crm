@@ -24,14 +24,14 @@ ob_start();
         min-height: 100%;
         height: 100%;
         position: absolute;
-        top: 160px;
+        top: 225px;
+        width: 96%;
     }
 
     .pledge-container {
         background-color: var(--card-bg);
         border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        max-width: 600px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);        
         width: 100%;
         padding: 30px;
         border: 1px solid var(--border-color);

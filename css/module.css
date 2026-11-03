@@ -1784,9 +1784,10 @@ a.btnbtsp.btn_link:hover {
 }
 
 .cms_bg_pic {
-  width: 92%;
-  margin-right: 4%;
-  margin-left: 4%;
+  width: 98% !important;
+  margin-right: 1% !important;
+  margin-left: 1% !important;
+  margin-top: 10px !important;
   /* background-image: url(../pic/bg_1003.png);*/
   background-repeat: no-repeat;
   /* background-size: contain;*/
