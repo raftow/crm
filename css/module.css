@@ -2482,7 +2482,7 @@ div#div_data_request_code {
 /* ======================================================== */
 
 a.crm.complaint {
-  background-color: #f0392e;
+  background-color: #a26f0e;
   color: white;
   margin-left: 10px;
 }
@@ -4370,7 +4370,7 @@ pre.request-files {
 
 .form-control.inputreadonly.hzm_value_request_type_id_12>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-12 {
   padding: 4px !important;
-  background-color: #404040;
+  background-color: #57bc3d;
   color: white !important;
   text-align: center;
   border: 5px white solid !important;
@@ -4392,7 +4392,7 @@ pre.request-files {
 
 .form-control.inputreadonly.hzm_value_request_type_id_3>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-3 {
   padding: 4px !important;
-  background-color: #f0392e;
+  background-color: #a26f0e;
   color: white !important;
   text-align: center;
   border: 5px white solid !important;
@@ -4402,7 +4402,7 @@ pre.request-files {
 
 /*
 a.crm.complaint {
-  background-color: #f0392e;
+  background-color: #a26f0e;
   color: white;
   margin-left: 10px;
 }
