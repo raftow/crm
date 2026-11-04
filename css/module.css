@@ -30,11 +30,8 @@ img.hlc {
 }*/
 
 .popup-login-customer > .modal-header {
-  border-radius: 50% !important;
   background-color: transparent;
   overflow: hidden;
-  width: 32px;
-  height: 32px;
   text-align: center;
   padding-top: 6px;
   min-width: 32px;
