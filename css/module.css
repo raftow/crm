@@ -4341,11 +4341,16 @@ pre.request-files {
   background-color: #e0f3eca8;
 }
 
-.hzm_value_request_type_id_18, .srch-result-col-request_type_id.value-18 {
-  padding:4px;
+.form-control.inputreadonly.hzm_value_request_type_id_18>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-18 {
+  padding: 4px !important;
   background-color: red;
-  color:white;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  vertical-align: top;
 }
+
+
 
 /*
 h3.request-type.balagh {
