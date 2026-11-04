@@ -17,9 +17,21 @@ img.hlc {
   overflow: hidden;
 }
 
+/* ca bouzi la page de login splitter en un autre css context
 .popup-login-customer > .modal-header {
   border-radius: 50% !important;
   background-color: silver;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  padding-top: 6px;
+  min-width: 32px;
+}*/
+
+.popup-login-customer > .modal-header {
+  border-radius: 50% !important;
+  background-color: transparent;
   overflow: hidden;
   width: 32px;
   height: 32px;
