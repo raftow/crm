@@ -3138,11 +3138,22 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav > li > a {
   color: #005e84;
 }
 
-.modal-body > h1 {
-  text-align: center;
+h2.title_login {
   margin-top: 0;
   margin-bottom: 0;
-  color: #022a3c;
+  text-align: center;
+  color: black !important;
+  background-color: #ade4fd;
+  padding: 6px;
+}
+
+.modal-body > h1 {  
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+  color: black !important;
+  background-color: #ade4fd;
+  padding: 6px;
 }
 
 .container {
