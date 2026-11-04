@@ -417,7 +417,7 @@ h2.crm_question {
 }
 
 .modal-dialog.popup-login-customer.popup-register {
-  padding-left: 15px !important;
+  padding-left: 0px !important;
   padding-right: 0px !important;
 }
 
@@ -1354,12 +1354,15 @@ div.crm_calendar {
     padding-left: 15px !important;
     padding-right: 15px !important;
     padding-bottom: 15px !important;
+    margin-right: 5% !important;
+    margin-left: 5% !important;
+    width: 88% !important;
   }
 
   .modal-dialog.popup-login {
-    width: 60% !important;
-    margin-right: 20% !important;
-    margin-left: 20% !important;
+    width: 80% !important;
+    margin-right: 10% !important;
+    margin-left: 10% !important;
     max-width: none !important;
     min-height: 450px !important;
     padding-bottom: 50px !important;
@@ -2376,17 +2379,7 @@ div#div_data_request_code {
   }
 }
 
-@media screen and (max-width: 484px) {
-  .modal-dialog.popup-login {
-    margin-right: 10% !important;
-  }
 
-  .modal-dialog.popup-register {
-    margin-right: 5% !important;
-    margin-left: 5% !important;
-    width: 88% !important;
-  }
-}
 
 @media screen and (max-width: 1100px) {
   .modal-dialog.popup-login {
