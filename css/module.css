@@ -519,8 +519,8 @@ div.popup-sms-verify > .modal-content {
     float: right;
     min-height: 370px;
     min-width: 360px !important;
-    width: 500px !important;
-    max-width: none;
+    width: 84% !important;
+    max-width: 500px !important;
     margin-right: 50px !important;
     margin-left: 50px !important;
     margin-top: 20px !important;
@@ -542,14 +542,14 @@ div.popup-sms-verify > .modal-content {
 
   .modal-dialog.popup-login-customer {
     min-width: 400px !important;
-    max-width: 100% !important;
-    width: 100% !important;
+    max-width: 400px !important;
+    width: 400px !important;
   }
 
   .modal-dialog.popup-company {
     min-width: 200px !important;
-    width: calc(100% - 400px) !important;
-    max-width: calc(100% - 400px);
+    width: calc(98% - 400px) !important;
+    max-width: calc(98% - 400px);
   }
 
   .modal-dialog.verify.popup-company {
@@ -623,11 +623,24 @@ div.popup-sms-verify > .modal-content {
     width: 98% !important;
     margin-right: 1% !important;
     margin-left: 1% !important;
-    margin-top: 520px !important;
+    margin-top: 120px !important;
   }
 }
 
 @media (max-width: 512px) {  
+
+
+  .modal-dialog.popup-content {
+    float: right;
+    min-height: 350px;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: 98% !important;
+    margin-right: 1% !important;
+    margin-left: 1% !important;
+    margin-top: 460px !important;
+  }
+
   .modal-dialog.popup-company.banner1 {
     background-image: url(../pic/home-welcome-banner-mobile-1.jpg);
   }
