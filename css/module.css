@@ -18,16 +18,19 @@ img.hlc {
 }
 
 .popup-login-customer > .modal-header {
-  background-color: transparent;
-  padding: 0 !important;
-  border-bottom: none !important;
-  padding-bottom: 0 !important;
-  max-width: none !important;
-  margin-bottom: 0px !important;
+  border-radius: 50% !important;
+  background-color: silver;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  padding-top: 6px;
+  min-width: 32px;
 }
 
 .popup-login-customer > .modal-content > .modal-header {
   background-color: #b2cfdd !important;
+  padding: 0 !important;
 }
 
 div.home_banner > .modal-dialog.popup-login {
@@ -619,7 +622,8 @@ div.popup-sms-verify > .modal-content {
     margin-right: 3% !important;
     margin-left: 3% !important;
     width: 94% !important;
-    margin-top: 20px !important;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
   }
 
   .modal-dialog.popup-content {
@@ -2989,6 +2993,8 @@ header.top-header {
   float: right;
   padding-top: 30px;
   background-color: white;
+  min-height: 48px;
+  margin-top: auto;
 }
 
 .logo_company {
