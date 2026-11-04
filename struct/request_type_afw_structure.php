@@ -7,10 +7,12 @@ class CrmRequestTypeAfwStructure
                 'id' => array(
                         'SHOW' => true,
                         'RETRIEVE' => true,
+                        'QEDIT' => true,
                         'EDIT' => true,
                         'TYPE' => 'PK',
                         'SEARCH-BY-ONE' => '',
                         'DISPLAY' => true,
+                        'READONLY' => true,
                         'STEP' => 1,
                         'DISPLAY-UGROUPS' => '',
                         'EDIT-UGROUPS' => '',

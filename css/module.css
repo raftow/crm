@@ -4343,7 +4343,7 @@ pre.request-files {
 
 .form-control.inputreadonly.hzm_value_request_type_id_18>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-18 {
   padding: 4px !important;
-  background-color: red;
+  background-color: #db920c;
   color: white !important;
   text-align: center;
   border: 5px white solid !important;
@@ -4352,7 +4352,7 @@ pre.request-files {
 
 .form-control.inputreadonly.hzm_value_request_type_id_3>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-3 {
   padding: 4px !important;
-  background-color: rgb(178, 18, 87);
+  background-color: #f0392e;
   color: white !important;
   text-align: center;
   border: 5px white solid !important;
@@ -4361,34 +4361,44 @@ pre.request-files {
 
 
 /*
-h3.request-type.balagh {
-  background-color: red;
+a.crm.complaint {
+  background-color: #f0392e;
+  color: white;
+  margin-left: 10px;
 }
 
-h3.request-type.complaint {
-  background-color: rgb(178, 18, 87);
+a.crm.question {
+  background-color: #3b8be9;
+  color: white;
+  margin-left: 10px;
 }
 
-h3.request-type.enquiry {
-  background-color: rgb(18, 178, 85);
+a.crm.response {
+  background-color: #0fbecd;
+  color: white;
+  margin-left: 10px;
 }
 
-h3.request-type.grievance {
-  background-color: rgb(169, 79, 6);
+a.crm.suggestion {
+  background-color: #404040;
+  color: white;
+  margin-left: 10px;
 }
 
-h3.request-type.HI {
-  background-color: rgb(31, 1, 14);
+a.crm.support {
+  background-color: #57bc3d;
+  color: white;
+  margin-left: 10px;
 }
 
-h3.request-type.request {
-  background-color: rgb(31, 69, 219);
+a.crm.request {
+  background-color: #404040;
+  color: white;
+  margin-left: 10px;
 }
 
-h3.request-type.suggestion {
-  background-color: rgb(119, 151, 14);
-}
-
-h3.request-type.support {
-  background-color: rgb(39, 136, 232);
+a.crm.balagh {
+    background-color: #db920c;
+    color: white;
+    margin-left: 10px;
 }*/
