@@ -4350,6 +4350,37 @@ pre.request-files {
   vertical-align: top;
 }
 
+.form-control.inputreadonly.hzm_value_request_type_id_13>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-13 {
+  padding: 4px !important;
+  background-color: #404040;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  vertical-align: top;
+}
+
+.form-control.inputreadonly.hzm_value_request_type_id_12>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-12 {
+  padding: 4px !important;
+  background-color: #57bc3d;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  vertical-align: top;
+}
+
+
+
+
+
+.form-control.inputreadonly.hzm_value_request_type_id_2>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-2 {
+  padding: 4px !important;
+  background-color: #3b8be9;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  vertical-align: top;
+}
+
 .form-control.inputreadonly.hzm_value_request_type_id_3>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-3 {
   padding: 4px !important;
   background-color: #f0392e;
