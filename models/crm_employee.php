@@ -633,7 +633,7 @@ class CrmEmployee extends CrmObject
                 // $obj->select_visibilite_horizontale();
                 $obj->select("orgunit_id", $orgunit_id);
                 $obj->select("active", 'Y');
-                $obj->where("super_admin = 'N' and employee_id != $except_investigator_id");
+                $obj->where("investigator = 'Y' and employee_id != $except_investigator_id");
                 // admin = 'N' and // rafik 30/8/2022 : I removed this from above acondition because admin (مشرف تنسيق) can be a supervisor 
 
 

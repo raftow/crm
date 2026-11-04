@@ -285,7 +285,7 @@ class Request extends CrmObject
 
         // SENT - طلب مرسل  للتحقيق $REQUEST_STATUS_SENT = 2; 
         2 => array(
-            "resetRequestNew" => array(true, "iamTheCustomer", "iamTheSupervisor"),
+            "resetRequestNew" => array(true, "iamTheCustomer"),
             "assignRequest" => "iamTheSupervisor",
             "startRequest" => array(true, "iamTheInvestigator", "iamTheSupervisor"),
             "redirectRequest" => "iamTheInvestigator",
@@ -1312,7 +1312,7 @@ class Request extends CrmObject
 
     public function canResetAsNew()
     {
-        return ((($this->iamTheCustomer()) or ($this->iamTheInvestigator()) or ($this->iamTheSupervisor())) and (!$this->isDraft()) and (!$this->isStarted()));
+        return ($this->iamTheCustomer() and (!$this->isDraft()) and (!$this->isStarted()));
     }
 
 
@@ -2541,6 +2541,7 @@ class Request extends CrmObject
 
     public function refreshRequest($lang = "ar")
     {
+        // just to reload page and avoid user use F5 keybord button
         return array("", "تم تحديث بيانات الطلب");
     }
 
@@ -2872,7 +2873,7 @@ class Request extends CrmObject
         $objme = AfwSession::getUserConnected();
 
         $pbms = array();
-        if ($objme) /* @todo */ {
+        if ($objme and $objme->isAdmin()) {
 
             $methodConfirmationWarningEn = "You will update status of request depending on last response";
             $methodConfirmationWarning = AfwLanguageHelper::tt($methodConfirmationWarningEn, 'ar', 'crm');
@@ -2918,10 +2919,7 @@ class Request extends CrmObject
                     "HZM-SIZE" => 12,
                 );
             }
-        }
-
-
-        if ($objme and $objme->isAdmin()) {
+        
             if ((!$this->getVal("supervisor_id")) or $objme->isSuperAdmin()) {
                 $color = "yellow";
                 if (!$this->getVal("supervisor_id")) $title_ar = "تعيين مشرف على هذا الطلب";
