@@ -2473,7 +2473,7 @@ div#div_data_request_code {
 /* ======================================================== */
 
 a.crm.complaint {
-  background-color: #6c3007;
+  background-color: #f0392e;
   color: white;
   margin-left: 10px;
 }
@@ -4342,7 +4342,7 @@ pre.request-files {
 }
 
 .form-control.inputreadonly.hzm_value_request_type_id_18>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-18 {
-  padding: 8px !important;
+  padding: 4px !important;
   background-color: #db920c;
   color: white !important;
   text-align: center;
@@ -4351,7 +4351,7 @@ pre.request-files {
 }
 
 .form-control.inputreadonly.hzm_value_request_type_id_13>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-13 {
-  padding: 8px !important;
+  padding: 4px !important;
   background-color: #404040;
   color: white !important;
   text-align: center;
@@ -4360,8 +4360,8 @@ pre.request-files {
 }
 
 .form-control.inputreadonly.hzm_value_request_type_id_12>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-12 {
-  padding: 8px !important;
-  background-color: #57bc3d;
+  padding: 4px !important;
+  background-color: #404040;
   color: white !important;
   text-align: center;
   border: 5px white solid !important;
@@ -4373,7 +4373,7 @@ pre.request-files {
 
 
 .form-control.inputreadonly.hzm_value_request_type_id_2>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-2 {
-  padding: 8px !important;
+  padding: 4px !important;
   background-color: #3b8be9;
   color: white !important;
   text-align: center;
@@ -4382,8 +4382,8 @@ pre.request-files {
 }
 
 .form-control.inputreadonly.hzm_value_request_type_id_3>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-3 {
-  padding: 8px !important;
-  background-color: #6c3007;
+  padding: 4px !important;
+  background-color: #f0392e;
   color: white !important;
   text-align: center;
   border: 5px white solid !important;
@@ -4393,7 +4393,7 @@ pre.request-files {
 
 /*
 a.crm.complaint {
-  background-color: #6c3007;
+  background-color: #f0392e;
   color: white;
   margin-left: 10px;
 }
