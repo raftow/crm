@@ -541,9 +541,9 @@ div.popup-sms-verify > .modal-content {
   }
 
   .modal-dialog.popup-login-customer {
-    min-width: 200px !important;
-    max-width: 400px !important;
-    width: 400px !important;
+    min-width: 400px !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
   .modal-dialog.popup-company {
@@ -625,7 +625,9 @@ div.popup-sms-verify > .modal-content {
     margin-left: 1% !important;
     margin-top: 520px !important;
   }
+}
 
+@media (max-width: 512px) {  
   .modal-dialog.popup-company.banner1 {
     background-image: url(../pic/home-welcome-banner-mobile-1.jpg);
   }
