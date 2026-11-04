@@ -219,18 +219,17 @@ else
         $no_front_header = true;
         include_once("$file_dir_name/../$front_header_page");
 }
-
+$company = AfwSession::currentCompany();
 ?>
 <div class="home_banner login_banner">
 <div class="modal-dialog popup-login-customer popup-register">
-        <div class="modal-content">
+        <div class="modal-header logo-company">
+                        <img class="hlc" src="../client-<?php echo $company ?>/pic/customer-login-banner.png">
+                </div>
+        <div class="modal-content">                
                 <div class="modal-header">
                         <div>
-                                <a href="index.php" title="الرئيسسة">
-                                        <img src="pic/logo.png" alt="" title="">
-                                </a>
-                                        
-                                <h2 class='title_login'>عميلنا العزيز، تفضل بادخال  بياناتك</h2>        
+                                <h2 class='title_login'>تسجيل عميل جديد</h2>        
                         </div>
                 </div>                
                     <?php                       
