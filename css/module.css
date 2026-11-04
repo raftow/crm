@@ -4340,3 +4340,42 @@ pre.request-files {
   border: none;
   background-color: #e0f3eca8;
 }
+
+.hzm_value_request_type_id_18, .srch-result-col-request_type_id.value-18 {
+  padding:4px;
+  background-color: red;
+  color:white;
+}
+
+/*
+h3.request-type.balagh {
+  background-color: red;
+}
+
+h3.request-type.complaint {
+  background-color: rgb(178, 18, 87);
+}
+
+h3.request-type.enquiry {
+  background-color: rgb(18, 178, 85);
+}
+
+h3.request-type.grievance {
+  background-color: rgb(169, 79, 6);
+}
+
+h3.request-type.HI {
+  background-color: rgb(31, 1, 14);
+}
+
+h3.request-type.request {
+  background-color: rgb(31, 69, 219);
+}
+
+h3.request-type.suggestion {
+  background-color: rgb(119, 151, 14);
+}
+
+h3.request-type.support {
+  background-color: rgb(39, 136, 232);
+}*/
