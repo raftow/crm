@@ -543,7 +543,7 @@ class CrmRequestAfwStructure
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'SHOW' => true,
-			'RETRIEVE' => false,
+			'RETRIEVE' => true,
 			'EXCEL' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
