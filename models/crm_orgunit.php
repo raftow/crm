@@ -626,6 +626,11 @@ class CrmOrgunit extends CrmObject{
                         return ($this->getVal("orgunit_id") == self::$CRM_CENTER_ID);
                 }
 
+                if ($attribute == "disabledEmployeeList") {
+                        $objme = AfwSession::getUserConnected();
+                        return $objme->isSuperAdmin();
+                }
+
                 return true;
         }
 
