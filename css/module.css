@@ -2190,6 +2190,12 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav
   }
 }
 
+.hzm_label.response.greentitle {
+    float: right;
+    min-height: fit-content;
+    background-color: transparent !important;
+}
+
 .hzm_label.response.greentitle i {
   margin-right: -5px !important;
   display: inline-block;
