@@ -4350,7 +4350,7 @@ pre.request-files {
   background-color: #e0f3eca8;
 }
 
-.form-control.inputreadonly.hzm_value_request_type_id_18>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-18 {
+.form-control.inputreadonly.hzm_value_request_type_id_18>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-18>span {
   padding: 4px !important;
   background-color: #db920c;
   color: white !important;
@@ -4359,7 +4359,7 @@ pre.request-files {
   vertical-align: top;
 }
 
-.form-control.inputreadonly.hzm_value_request_type_id_13>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-13 {
+.form-control.inputreadonly.hzm_value_request_type_id_13>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-13>span {
   padding: 4px !important;
   background-color: #404040;
   color: white !important;
@@ -4368,7 +4368,7 @@ pre.request-files {
   vertical-align: top;
 }
 
-.form-control.inputreadonly.hzm_value_request_type_id_12>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-12 {
+.form-control.inputreadonly.hzm_value_request_type_id_12>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-12>span {
   padding: 4px !important;
   background-color: #57bc3d;
   color: white !important;
@@ -4381,7 +4381,7 @@ pre.request-files {
 
 
 
-.form-control.inputreadonly.hzm_value_request_type_id_2>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-2 {
+.form-control.inputreadonly.hzm_value_request_type_id_2>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-2>span {
   padding: 4px !important;
   background-color: #3b8be9;
   color: white !important;
@@ -4390,7 +4390,7 @@ pre.request-files {
   vertical-align: top;
 }
 
-.form-control.inputreadonly.hzm_value_request_type_id_3>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-3 {
+.form-control.inputreadonly.hzm_value_request_type_id_3>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-3>span {
   padding: 4px !important;
   background-color: #a26f0e;
   color: white !important;
