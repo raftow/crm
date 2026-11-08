@@ -1,8 +1,10 @@
 img.hlc {
-    margin-top: 20px;
-    height: 140px;
-    margin-right: calc(50% - 219px);
-    margin-bottom: 30px;
+  margin-top: 20px;
+  height: 140px;
+  margin-right: 5px;
+  margin-bottom: 30px;
+  margin-left: 5px;
+  width: calc(100% - 10px) !important;
 }
 
 .modal-header {
@@ -11,17 +13,33 @@ img.hlc {
   max-width: none !important; /* for mobile screen mode */
 }
 
+.modal-header.logo-company {
+  overflow: hidden;
+}
+
+/* ca bouzi la page de login splitter en un autre css context
+.popup-login-customer > .modal-header {
+  border-radius: 50% !important;
+  background-color: silver;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  padding-top: 6px;
+  min-width: 32px;
+}*/
+
 .popup-login-customer > .modal-header {
   background-color: transparent;
-  padding: 0 !important;
-  border-bottom: none !important;
-  padding-bottom: 0 !important;
-  max-width: none !important;
-  margin-bottom: 0px !important;
+  overflow: hidden;
+  text-align: center;
+  padding-top: 6px;
+  min-width: 32px;
 }
 
 .popup-login-customer > .modal-content > .modal-header {
   background-color: #b2cfdd !important;
+  padding: 0 !important;
 }
 
 div.home_banner > .modal-dialog.popup-login {
@@ -409,15 +427,15 @@ h2.crm_question {
   padding-bottom: 180px;
   float: right;
   min-height: 1190px;
-  margin-right: 2% !important;
-  margin-left: 0% !important;
-  width: 96% !important;
-  min-width: 0px !important;
-  max-width: 430px !important;
+  margin-right: 10px !important;
+  margin-left: 10px !important;
+  width: 480px !important;
+  min-width: 480px !important;
+  max-width: 480px !important;
 }
 
 .modal-dialog.popup-login-customer.popup-register {
-  padding-left: 15px !important;
+  padding-left: 0px !important;
   padding-right: 0px !important;
 }
 
@@ -519,8 +537,8 @@ div.popup-sms-verify > .modal-content {
     float: right;
     min-height: 370px;
     min-width: 360px !important;
-    width: 500px !important;
-    max-width: none;
+    width: 84% !important;
+    max-width: 500px !important;
     margin-right: 50px !important;
     margin-left: 50px !important;
     margin-top: 20px !important;
@@ -541,15 +559,16 @@ div.popup-sms-verify > .modal-content {
   }
 
   .modal-dialog.popup-login-customer {
-    min-width: 200px !important;
+    min-width: 400px !important;
     max-width: 400px !important;
     width: 400px !important;
+    margin: 0px !important;
   }
 
   .modal-dialog.popup-company {
     min-width: 200px !important;
-    width: calc(100% - 400px) !important;
-    max-width: calc(100% - 400px);
+    width: calc(98% - 400px) !important;
+    max-width: calc(98% - 400px);
   }
 
   .modal-dialog.verify.popup-company {
@@ -609,10 +628,11 @@ div.popup-sms-verify > .modal-content {
     min-height: 350px;
     /* min-width: 0 !important; */
     max-width: 1000px !important;
-    width: 100% !important;
-    margin-right: 0 !important;
-    margin-left: 0 !important;
-    margin-top: 20px !important;
+    margin-right: 3% !important;
+    margin-left: 3% !important;
+    width: 94% !important;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
   }
 
   .modal-dialog.popup-content {
@@ -623,7 +643,22 @@ div.popup-sms-verify > .modal-content {
     width: 98% !important;
     margin-right: 1% !important;
     margin-left: 1% !important;
-    margin-top: 520px !important;
+    margin-top: 120px !important;
+  }
+}
+
+@media (max-width: 512px) {  
+
+
+  .modal-dialog.popup-content {
+    float: right;
+    min-height: 350px;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: 98% !important;
+    margin-right: 1% !important;
+    margin-left: 1% !important;
+    margin-top: 460px !important;
   }
 
   .modal-dialog.popup-company.banner1 {
@@ -1301,6 +1336,9 @@ div.crm_calendar {
   box-shadow: 0px 8px 20px rgb(160 209 213);
   border: 1px solid rgb(133 192 200);
   max-width: none;
+  margin-right: 2% !important;
+  margin-left: 2% !important;
+  width: 96% !important;
 }
 
 @media screen and (max-width: 767px) {
@@ -1339,12 +1377,15 @@ div.crm_calendar {
     padding-left: 15px !important;
     padding-right: 15px !important;
     padding-bottom: 15px !important;
+    margin-right: 5% !important;
+    margin-left: 5% !important;
+    width: 88% !important;
   }
 
   .modal-dialog.popup-login {
-    width: 60% !important;
-    margin-right: 20% !important;
-    margin-left: 20% !important;
+    width: 80% !important;
+    margin-right: 10% !important;
+    margin-left: 10% !important;
     max-width: none !important;
     min-height: 450px !important;
     padding-bottom: 50px !important;
@@ -1784,9 +1825,10 @@ a.btnbtsp.btn_link:hover {
 }
 
 .cms_bg_pic {
-  width: 92%;
-  margin-right: 4%;
-  margin-left: 4%;
+  width: 98% !important;
+  margin-right: 1% !important;
+  margin-left: 1% !important;
+  margin-top: 10px !important;
   /* background-image: url(../pic/bg_1003.png);*/
   background-repeat: no-repeat;
   /* background-size: contain;*/
@@ -2148,6 +2190,12 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav
   }
 }
 
+.hzm_label.response.greentitle {
+    float: right;
+    min-height: fit-content;
+    background-color: transparent !important;
+}
+
 .hzm_label.response.greentitle i {
   margin-right: -5px !important;
   display: inline-block;
@@ -2360,17 +2408,7 @@ div#div_data_request_code {
   }
 }
 
-@media screen and (max-width: 484px) {
-  .modal-dialog.popup-login {
-    margin-right: 10% !important;
-  }
 
-  .modal-dialog.popup-register {
-    margin-right: 5% !important;
-    margin-left: 5% !important;
-    width: 88% !important;
-  }
-}
 
 @media screen and (max-width: 1100px) {
   .modal-dialog.popup-login {
@@ -2450,7 +2488,7 @@ div#div_data_request_code {
 /* ======================================================== */
 
 a.crm.complaint {
-  background-color: #f0392e;
+  background-color: #a26f0e;
   color: white;
   margin-left: 10px;
 }
@@ -2876,8 +2914,8 @@ div.hzm_data_ul_cl_files > ul > li.smooth-active {
   margin: 0 1%;
   min-height: 50px !important;
   text-align: center;
-  color: #1f59c1;
-  font-size: 18px;
+  color: #000;
+  font-size: 16px;
 }
 
 div.hzm_data_ul_cl_files > ul.smooth-dots {
@@ -2970,6 +3008,8 @@ header.top-header {
   float: right;
   padding-top: 30px;
   background-color: white;
+  min-height: 48px;
+  margin-top: auto;
 }
 
 .logo_company {
@@ -2978,7 +3018,7 @@ header.top-header {
   background-color: white;
 }
 
-@media screen and (min-width: 471px) {
+@media screen and (min-width: 501px) {
   .title_company {
     visibility: visible;
     width: 69% !important;
@@ -2987,7 +3027,7 @@ header.top-header {
   }
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 500px) {
   .title_company {
     display: none;
     visibility: hidden;
@@ -3119,11 +3159,22 @@ ul.hzm_front_menu_bar.hzm_front_menu_bar.nav.navbar-nav > li > a {
   color: #005e84;
 }
 
-.modal-body > h1 {
-  text-align: center;
+h2.title_login {
   margin-top: 0;
   margin-bottom: 0;
-  color: #022a3c;
+  text-align: center;
+  color: black !important;
+  background-color: #ade4fd;
+  padding: 6px;
+}
+
+.modal-body > h1 {  
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+  color: black !important;
+  background-color: #ade4fd;
+  padding: 6px;
 }
 
 .container {
@@ -3443,7 +3494,7 @@ div#div_data_tip_of_day {
 .signin-content {
   /* background-image: url(../../crm/pic/login_banner.jpg) !important;*/
   background-size: 82% 100% !important;
-  background-color: transparent !important;
+  background-color: #c2ecff !important;
   background-position: left top !important;
 }
 
@@ -3451,7 +3502,7 @@ div#div_data_tip_of_day {
   padding-right: 90px !important;
   border-right: none !important;
   padding-left: 80px !important;
-  background-color: #aee4fd87 !important;
+  background-color: #f2fbffd1 !important
 }
 
 #signin {
@@ -4083,7 +4134,7 @@ tr.data-row.request_late.hzm_row_1 {
   background-color: #ffe5e5 !important;
 }
 
-p.special-link.todo.register {
+p.special-link.todo {
   font-size: 13px;
   padding: 5px;
   text-align: justify;
@@ -4304,3 +4355,106 @@ pre.request-files {
   border: none;
   background-color: #e0f3eca8;
 }
+
+.form-control.inputreadonly.hzm_value_request_type_id_18>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-18>span {
+  font-size: 14px;
+  padding: 8px !important;
+  min-width: 80px !important;
+  display: block;
+  background-color: #db920c;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;  
+}
+
+.form-control.inputreadonly.hzm_value_request_type_id_13>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-13>span {
+  font-size: 14px;
+  padding: 8px !important;
+  background-color: #404040;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  min-width: 80px !important;
+  display: block;
+}
+
+.form-control.inputreadonly.hzm_value_request_type_id_12>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-12>span {
+  font-size: 14px;
+  padding: 8px !important;
+  background-color: #57bc3d;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  min-width: 80px !important;
+  display: block;
+}
+
+
+
+
+
+.form-control.inputreadonly.hzm_value_request_type_id_2>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-2>span {
+  font-size: 14px;
+  padding: 8px !important;
+  background-color: #3b8be9;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  min-width: 80px !important;
+  display: block;
+}
+
+.form-control.inputreadonly.hzm_value_request_type_id_3>span, table.dataTable.display tbody td.srch-result-col-request_type_id.value-3>span {
+  font-size: 14px;
+  padding: 8px !important;
+  background-color: #a26f0e;
+  color: white !important;
+  text-align: center;
+  border: 5px white solid !important;
+  min-width: 80px !important;
+  display: block;
+}
+
+
+/*
+a.crm.complaint {
+  background-color: #a26f0e;
+  color: white;
+  margin-left: 10px;
+}
+
+a.crm.question {
+  background-color: #3b8be9;
+  color: white;
+  margin-left: 10px;
+}
+
+a.crm.response {
+  background-color: #0fbecd;
+  color: white;
+  margin-left: 10px;
+}
+
+a.crm.suggestion {
+  background-color: #404040;
+  color: white;
+  margin-left: 10px;
+}
+
+a.crm.support {
+  background-color: #57bc3d;
+  color: white;
+  margin-left: 10px;
+}
+
+a.crm.request {
+  background-color: #404040;
+  color: white;
+  margin-left: 10px;
+}
+
+a.crm.balagh {
+    background-color: #db920c;
+    color: white;
+    margin-left: 10px;
+}*/

@@ -68,7 +68,8 @@ class CrmCrmEmployeeAfwStructure
 			'ANSWER' => 'orgunit',
 			'ANSMODULE' => 'hrm',
 			'DEPENDENT_OFME' => ['employee_id'],
-			// 'WHERE' => "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
+			'AUTOCOMPLETE-SEARCH' => true,
+			'WHERE' => "me.id in (select orgunit_id from §DBPREFIX§crm.crm_orgunit where active='Y')",
 
 			'RELATION' => 'ManyToOne',
 			'READONLY' => true,

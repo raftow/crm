@@ -72,7 +72,34 @@ class CrmRequestAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
-
+		'request_type_id' => array(
+			'FGROUP' => 'tech_data',
+			'STEP' => 1,
+			'SHORTNAME' => 'type',
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'SHOW' => true,
+			'RETRIEVE' => true,
+			'EXCEL' => true,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'CSS' => 'width_pct_25',
+			'QSIZE' => 3,
+			'SIZE' => 32,
+			'REQUIRED' => true,
+			'UTF8' => false,
+			'TYPE' => 'FK',
+			'ANSWER' => 'request_type',
+			'ANSMODULE' => 'crm',
+			'RELATION' => 'ManyToOne',
+			'READONLY' => false,
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'MANDATORY' => true,
+			'ERROR-CHECK' => true,
+		),
 
 		'request_code' => array(
 			'FGROUP' => 'status',
@@ -199,7 +226,7 @@ class CrmRequestAfwStructure
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
-			'RETRIEVE' => true,
+			'RETRIEVE' => false,
 			'EDIT' => true,
 			'QEDIT' => true,
 			'SIZE' => 60,
@@ -264,7 +291,7 @@ class CrmRequestAfwStructure
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
-			'RETRIEVE' => true,
+			'RETRIEVE' => false,
 			'EXCEL' => true,
 			'EDIT' => true,
 			'QEDIT' => true,
@@ -536,34 +563,7 @@ class CrmRequestAfwStructure
 		),
 
 
-		'request_type_id' => array(
-			'FGROUP' => 'tech_data',
-			'STEP' => 1,
-			'SHORTNAME' => 'type',
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EXCEL' => true,
-			'EDIT' => true,
-			'QEDIT' => false,
-			'CSS' => 'width_pct_25',
-			'QSIZE' => 3,
-			'SIZE' => 32,
-			'REQUIRED' => true,
-			'UTF8' => false,
-			'TYPE' => 'FK',
-			'ANSWER' => 'request_type',
-			'ANSMODULE' => 'crm',
-			'RELATION' => 'ManyToOne',
-			'READONLY' => false,
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'MANDATORY' => true,
-			'ERROR-CHECK' => true,
-		),
+		
 
 		'request_category_id' => array(
 			'FGROUP' => 'tech_data',
@@ -585,7 +585,7 @@ class CrmRequestAfwStructure
 			'ANSWER' => 'request_category',
 			'ANSMODULE' => 'crm',
 			'RELATION' => 'ManyToOne',
-			'READONLY' => false,
+			'READONLY' => true,
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
@@ -638,7 +638,7 @@ class CrmRequestAfwStructure
 			'WHERE' => "region_id = §region_id§",
 			'DEPENDENCY' => 'region_id',
 			'RELATION' => 'ManyToOne',
-			'READONLY' => false,
+			'READONLY' => true,
 			'SEARCH-BY-ONE' => false,
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
@@ -1029,7 +1029,7 @@ class CrmRequestAfwStructure
 
 		'requestFileList' => array(
 			'FGROUP' => 'props',
-			'STEP' => 99, // see the next formula attribute
+			'STEP' => 99, // see the next ul_cl_files formula attribute
 			'SHORTNAME' => 'files',
 			'SHOW' => false,
 			/*'FORMAT' => 'minibox',  'ICONS' => true,  'DELETE-ICON' => true,  'BUTTONS' => true,  */

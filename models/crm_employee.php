@@ -175,6 +175,21 @@ class CrmEmployee extends CrmObject
         }
 
 
+        public static function daysNumberWithCrmOfAuthenticatedUser()
+        {
+                $objme = AfwSession::getUserConnected();
+                if (!$objme) return -2;
+                if ($objme->isSuperAdmin()) return 999999;
+                $objme_employee_id = $objme->getEmployeeId();
+                $objCrmEmpl = self::findCrmEmployee($objme_employee_id);
+                if(!$objCrmEmpl) return -1;
+                $created_at_gdate = $objCrmEmpl->getVal("created_at");
+                $days = AfwDateHelper::diff_date(date("Y-m-d H:i:s"), $created_at_gdate);
+
+                return $days;
+        }
+
+
 
         public function getDisplay($lang = "ar")
         {
@@ -618,7 +633,7 @@ class CrmEmployee extends CrmObject
                 // $obj->select_visibilite_horizontale();
                 $obj->select("orgunit_id", $orgunit_id);
                 $obj->select("active", 'Y');
-                $obj->where("super_admin = 'N' and employee_id != $except_investigator_id");
+                $obj->where("investigator = 'Y' and employee_id != $except_investigator_id");
                 // admin = 'N' and // rafik 30/8/2022 : I removed this from above acondition because admin (مشرف تنسيق) can be a supervisor 
 
 

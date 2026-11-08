@@ -285,7 +285,7 @@ class Request extends CrmObject
 
         // SENT - طلب مرسل  للتحقيق $REQUEST_STATUS_SENT = 2; 
         2 => array(
-            "resetRequestNew" => array(true, "iamTheCustomer", "iamTheSupervisor"),
+            "resetRequestNew" => array(true, "iamTheCustomer"),
             "assignRequest" => "iamTheSupervisor",
             "startRequest" => array(true, "iamTheInvestigator", "iamTheSupervisor"),
             "redirectRequest" => "iamTheInvestigator",
@@ -1312,7 +1312,7 @@ class Request extends CrmObject
 
     public function canResetAsNew()
     {
-        return ((($this->iamTheCustomer()) or ($this->iamTheInvestigator()) or ($this->iamTheSupervisor())) and (!$this->isDraft()) and (!$this->isStarted()));
+        return ($this->iamTheCustomer() and (!$this->isDraft()) and (!$this->isStarted()));
     }
 
 
@@ -1424,9 +1424,9 @@ class Request extends CrmObject
         $connected_employee_id = ($objme) ? $objme->getEmployeeId() : 0;
 
 
-        if ($attribute == "ul_cl_files") {
+        /*if ($attribute == "ul_cl_files") {
             return ($this->calc("ul_cl_files") != "");
-        }
+        }*/
 
 
         // hours_investigator_work عدد ساعات عمل المنسق';
@@ -1473,6 +1473,11 @@ class Request extends CrmObject
         if ($attribute == "request_link") {
             $val = trim($this->getVal($attribute));
             return ($val != "");
+        }
+
+        if ($attribute == "tip_of_day") {
+            $val = trim($this->calc($attribute));
+            return (strlen($val)>5);
         }
 
         /* rafik 5/9/2026 even if related_request_code is empty investigators and supervisors can fill it
@@ -2536,6 +2541,7 @@ class Request extends CrmObject
 
     public function refreshRequest($lang = "ar")
     {
+        // just to reload page and avoid user use F5 keybord button
         return array("", "تم تحديث بيانات الطلب");
     }
 
@@ -2867,7 +2873,7 @@ class Request extends CrmObject
         $objme = AfwSession::getUserConnected();
 
         $pbms = array();
-        if ($objme) /* @todo */ {
+        if ($objme and $objme->isAdmin()) {
 
             $methodConfirmationWarningEn = "You will update status of request depending on last response";
             $methodConfirmationWarning = AfwLanguageHelper::tt($methodConfirmationWarningEn, 'ar', 'crm');
@@ -2913,10 +2919,7 @@ class Request extends CrmObject
                     "HZM-SIZE" => 12,
                 );
             }
-        }
-
-
-        if ($objme and $objme->isAdmin()) {
+        
             if ((!$this->getVal("supervisor_id")) or $objme->isSuperAdmin()) {
                 $color = "yellow";
                 if (!$this->getVal("supervisor_id")) $title_ar = "تعيين مشرف على هذا الطلب";
@@ -3156,13 +3159,18 @@ class Request extends CrmObject
     public function calcTip_of_day($what = "value")
     {
         $tip_of_day_arr = [];
-        $tip_of_day_arr[] = ["ar" => "في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en" => "In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
+        if(CrmEmployee::daysNumberWithCrmOfAuthenticatedUser()<90) {
+                $tip_of_day_arr[] = ["ar" => "في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en" => "In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
+        }       
+        $countTOD = count($tip_of_day_arr);
+        if(!$countTOD) return "";
+        
         $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
-        $countTOD = count($tip_of_day_arr);
+        
         $k = rand(0, $countTOD - 1);
         $tip_of_day = $tip_of_day_arr[$k][$lang];
-        if (!$tip_of_day) $tip_of_day = " tip_of_day_arr[$k][$lang] from tip_of_day_arr = " . var_export($tip_of_day_arr, true);
+        if (!$tip_of_day) $tip_of_day = "<!-- tip_of_day_arr[$k][$lang] from tip_of_day_arr = " . var_export($tip_of_day_arr, true)."-- >";
         $html = "<div class='tip_of_day'>$tip_of_day</div>";
 
         return $html;
@@ -4972,10 +4980,20 @@ class Request extends CrmObject
         $this_id = $this->id;
         $status_class = $isClosed ? "closed" : "opened";
 
-        $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
+        if(CrmEmployee::daysNumberWithCrmOfAuthenticatedUser()<90)
+        {
+            $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
+            $help_html = "<p class='help p-helper'>$help</p>";
+        }
+        else {
+            $help_html = "";
+        }
+
+        
+
 
         $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
-        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class'>&nbsp;</p><p class='help p-helper'>$help</p>" : "";
+        $confidential_button = $this->sureIs("confidential") ? "<p id='confidentialbtn-$this_id' name='confidentialbtn_$this_id' class='confidential-button $confidential_class'>&nbsp;</p>$help_html" : "";
 
         $html = "<div id='div-request-body-$this_id' class='security $confidential_class'>";
         $html .= "<div class='request-desc $request_late_color'>";

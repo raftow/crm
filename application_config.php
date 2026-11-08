@@ -37,7 +37,7 @@ $config_arr = array(
 
 
 
-        
+
 
         'enable_language_switch' => false,
         //  classes params

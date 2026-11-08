@@ -95,7 +95,7 @@ if(($sessionVarUser_avail == "Y") and ($sessionVarUser_firstname))
 	//die("rafik 2019-007 sess = ".var_export($_SESSION,true));
         header("Location: index.php");
 } 
-elseif($_POST["crm_new_go"])
+elseif($_POST["crm_login"])
 {
       $sessionVarCpt = AfwSession::getSessionVar("cpt"); 
       if((!AfwSession::config("sms-captcha-register",true)) or (strtoupper($_POST["customer_cpt"])==strtoupper($sessionVarCpt)))
@@ -219,18 +219,17 @@ else
         $no_front_header = true;
         include_once("$file_dir_name/../$front_header_page");
 }
-
+$company = AfwSession::currentCompany();
 ?>
 <div class="home_banner login_banner">
 <div class="modal-dialog popup-login-customer popup-register">
-        <div class="modal-content">
+        <div class="modal-header logo-company">
+                        <img class="hlc" src="../client-<?php echo $company ?>/pic/customer-login-banner.png">
+                </div>
+        <div class="modal-content">                
                 <div class="modal-header">
                         <div>
-                                <a href="index.php" title="الرئيسسة">
-                                        <img src="pic/logo.png" alt="" title="">
-                                </a>
-                                        
-                                <h2 class='title_login'>عميلنا العزيز، تفضل بادخال  بياناتك</h2>        
+                                <h2 class='title_login'>تسجيل عميل جديد</h2>        
                         </div>
                 </div>                
                     <?php                       
@@ -431,45 +430,13 @@ echo $js_for_cust_type;
                                         <label class="hzm_label label_mandatory">  النجمة الحمراء تعني حقل إجباري  
                                         </label>                                                                               
                                 </div>
-                                <?php                         
-                                        $company = AfwSession::currentCompany();
-                                        $main_company_domain = AfwSession::config("main_company_domain", "$company.gov.sa");       
-                                        $url_ppa = AfwSession::config("url_ppa", "https://$main_company_domain/ar/Pages/PrivacyPolicy.aspx");       
-                                ?> 
-                                <div class="ppa">
-                                        <p class="special-link todo register">
-                                                قبل تسجيل الدخول فضلا نأمل منكم فتح الرابط أسفله ثم قراءة تفاصيل وبنود سياسة الخصوصية في النافذة الجديدة التي ستفتح لك
-                                                ثم غلق هذه الأخيرة والرجوع إلى هذه النافذة للموافقة على سياسة الخصوصية واكمال عملية التسجيل</p>
-                                        <p class="special-link ppa read"><a target="_new" href="<?php echo $url_ppa;?>">الاطلاع على سياسة الخصوصية</a></p>
-                                </div>
-                                <p class="ppa-acceptance hide">
-                                        <input type="checkbox" name="ppa" id="ppa" value="Y">
-                                        <span>
-                                        أوافق على سياسة الخصوصية
-                                        </span>    
-                                </p>
-                                <script>  
-                                $(document).ready(function() {       
-                                        $(".special-link.ppa.read>a").click(function() {
-                                                $(".ppa-acceptance.hide").removeClass("hide");
-                                        });
-
-                                        $(".ppa-acceptance").click(function() {
-                                            if($("#ppa").val() == "Y")
-                                            {
-                                                $("#crm_new_go").removeAttr("disabled");
-                                            }
-                                            else 
-                                            {
-                                                alert("ppa val = "+$("#ppa").val());    
-                                            }    
-                                                
-                                        });
-                                });
-                                </script>
+                        <?php                         
+                                include("tpl/please_read_ppa_content_tpl.php");  
+                                include("tpl/ppa_tpl.php");  
+                        ?>
                                 <br>
                                 <!-- logreg:<?php echo $logbl?> -->
-                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_new_go" id="crm_new_go" disabled>&nbsp;
+                                <input type="submit" class="btnbtsp btn-primary btnregister" value="حفظ البيانات والدخول" name="crm_login" id="crm_login" disabled>&nbsp;
                                 
                                 
                         </form>

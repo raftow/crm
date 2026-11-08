@@ -159,7 +159,7 @@ class RequestArTranslator
 		$trad['request']['ref_num'] = 'الرقم المرجعي';
 
 		$trad['request']['email'] = 'بريد الكتروني';
-		$trad['request']['tip_of_day'] = 'نصيحة حول الاصدار الجدبد';
+		$trad['request']['tip_of_day'] = 'نصيحة حول الاصدار الجديد';
 
 		$trad['request']['hours_investigator_work'] = 'عدد ساعات عمل المنسق';
 		$trad['request']['days_investigator'] = 'عدد أيام عمل المنسق';

@@ -48,6 +48,8 @@ class CrmOrgunitArTranslator{
 		
 		$trad["crm_orgunit"]["crm_code"] = "الرمز عند خدمة العملاء"; 
 		$trad["crm_orgunit"]["unit_token"] = "الرمز السري للوحدة"; 
+
+		$trad["crm_orgunit"]["disabledEmployeeList"] = "الموظفين المعطل حسابهم"; 
 		
 	
 		return $trad;
