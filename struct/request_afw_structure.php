@@ -218,6 +218,52 @@ class CrmRequestAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
+		'response_date' => array(
+			'FGROUP' => 'status',
+			'STEP' => 'all',
+			'SEARCH' => true,
+			'QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'CSS' => 'width_pct_12',
+			'SIZE' => 10,
+			'UTF8' => false,
+			'TYPE' => 'DATE',
+			'FORMAT' => 'CONVERT_SYSTEM_FORMAT',
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'MANDATORY' => true,
+			'AUDIT' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'response_time' => array(
+			'FGROUP' => 'status',
+			'STEP' => 'all',
+			'SEARCH' => false,
+			'QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'CSS' => 'width_pct_12',
+			'SIZE' => 8,
+			'MANDATORY' => true,
+			'AUDIT' => true,
+			'UTF8' => false,
+			'TYPE' => 'TIME',
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
+
 		'supervisor_id' => array(
 			'FGROUP' => 'assignment',
 			'AGROUP' => 'status',
@@ -338,8 +384,8 @@ class CrmRequestAfwStructure
 
 
 		'assign_date' => array(
-			'FGROUP' => 'assignment',
-			'STEP' => 1,
+			'FGROUP' => 'status',
+			'STEP' => 'all',
 			'AGROUP' => 'status',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -363,8 +409,8 @@ class CrmRequestAfwStructure
 		),
 
 		'assign_time' => array(
-			'FGROUP' => 'assignment',
-			'STEP' => 1,
+			'FGROUP' => 'status',
+			'STEP' => 'all',
 			'AGROUP' => 'status',
 			'SEARCH' => true,
 			'QSEARCH' => false,
@@ -441,8 +487,8 @@ class CrmRequestAfwStructure
 		
 
 		'request_date' => array(
-			'FGROUP' => 'tech_data',
-			'STEP' => 1,
+			'FGROUP' => 'status',
+			'STEP' => 'all',
 			'SEARCH' => true,
 			'QSEARCH' => true,
 			'QSEARCH_OPER' => 'between',
@@ -470,8 +516,8 @@ class CrmRequestAfwStructure
 		),
 
 		'request_time' => array(
-			'FGROUP' => 'tech_data',
-			'STEP' => 1,
+			'FGROUP' => 'status',
+			'STEP' => 'all',
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,

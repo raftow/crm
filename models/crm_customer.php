@@ -436,7 +436,11 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
         public function beforeDelete($id, $id_replace)
         {
-
+                $objme = AfwSession::getUserConnected();
+                if (!$objme->isSuperAdmin()) {
+                        $this->deleteNotAllowedReason = "Security : Only the plateform administrator can delete this kind of objects";
+                        return false;
+                }
 
                 if (!$id) {
                         $id = $this->getId();

@@ -33,6 +33,10 @@ class RequestArTranslator
 		$trad['request']['request_code'] = 'رمز الطلب';
 		$trad['request']['request_date'] = 'تاريخ الطلب';
 		$trad['request']['request_time'] = 'وقت الطلب';
+
+		$trad['request']['response_time'] = 'وقت الرد';
+		$trad['request']['response_date'] = 'تاريخ الرد';
+
 		$trad['request']['request_type_id'] = 'نوع الطلب';
 		$trad['request']['request_category_id'] = 'صنف الطلب';
 		  
@@ -168,8 +172,8 @@ class RequestArTranslator
 		$trad['request']['status_action_enum'] = 'آخر اجراء على الطلب';
 
 		
-		$trad['request']['days_avg'] = 'متوسط مدة الرد (بالأيام)';
-		$trad['request']['response_avg'] = 'متوسط مدة بدأ العمل على الطلب (بالأيام)';
+		$trad['request']['days_avg'] = 'متوسط مدة الانجاز (بالأيام)';
+		$trad['request']['response_avg'] = 'متوسط زمن الاستجابة (بالأيام)';
 
 		
 		$trad['request']['nb_responded'] = 'عدد التذاكر التي تم الرد عليها';

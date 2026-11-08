@@ -87,8 +87,6 @@ class CrmEmployee extends CrmObject
                         $selects = array();
                         $this->select_visibilite_horizontale_default($dropdown, $selects);
                 }
-
-                
         }
 
         /**
@@ -182,7 +180,7 @@ class CrmEmployee extends CrmObject
                 if ($objme->isSuperAdmin()) return 999999;
                 $objme_employee_id = $objme->getEmployeeId();
                 $objCrmEmpl = self::findCrmEmployee($objme_employee_id);
-                if(!$objCrmEmpl) return -1;
+                if (!$objCrmEmpl) return -1;
                 $created_at_gdate = $objCrmEmpl->getVal("created_at");
                 $days = AfwDateHelper::diff_date(date("Y-m-d H:i:s"), $created_at_gdate);
 
@@ -395,7 +393,11 @@ class CrmEmployee extends CrmObject
 
         public function beforeDelete($id, $id_replace)
         {
-
+                $objme = AfwSession::getUserConnected();
+                if (!$objme->isSuperAdmin()) {
+                        $this->deleteNotAllowedReason = "Security : Only the plateform administrator can delete this kind of objects";
+                        return false;
+                }
 
                 if ($id) {
                         if ($id_replace == 0) {
@@ -522,7 +524,8 @@ class CrmEmployee extends CrmObject
         }
 
 
-        public function isFromCrmCenter() {
+        public function isFromCrmCenter()
+        {
                 return ($this->getVal("orgunit_id") == self::$CRM_CENTER_ID);
         }
 
@@ -558,49 +561,49 @@ class CrmEmployee extends CrmObject
         public static function getOrgunit($employee_id)
         {
                 $employeeObj = Employee::loadById($employee_id);
-                if(!$employeeObj) return 0;
+                if (!$employeeObj) return 0;
                 return $employeeObj->het("id_sh_dep");
         }
 
         public static function getOrgunitId($employee_id)
         {
                 $employeeObj = Employee::loadById($employee_id);
-                if(!$employeeObj) return 0;
+                if (!$employeeObj) return 0;
                 return $employeeObj->getVal("id_sh_dep");
         }
 
         public static function getDivision($employee_id)
         {
                 $employeeObj = Employee::loadById($employee_id);
-                if(!$employeeObj) return 0;
+                if (!$employeeObj) return 0;
                 return $employeeObj->het("id_sh_div");
         }
 
         public static function getDivisionId($employee_id)
         {
                 $employeeObj = Employee::loadById($employee_id);
-                if(!$employeeObj) return 0;
+                if (!$employeeObj) return 0;
                 return $employeeObj->getVal("id_sh_div");
         }
 
         public static function getDefaultCrmEmployee($employee_id)
         {
                 $orgunit_id = self::getOrgunitId($employee_id);
-                if($orgunit_id) {
+                if ($orgunit_id) {
                         $return = self::loadByMainIndex($orgunit_id, $employee_id);
-                        if($return) return $return;
+                        if ($return) return $return;
                 }
                 // لأن كل مدير إدارة لا يكون في الموارد البشرية يباشر عمله في نفس هذه الإدارة
                 // بل يكون في الإدارة الأم غالبا
                 // لذلك وضعنا المدير في الإدارة الأصلية كقسم له لأجل غايات التنظيم في خدمة العملاء                        
                 $division_id = self::getDivisionId($employee_id);
-                if(!$division_id) return null;
-                return self::loadByMainIndex($division_id, $employee_id);                
+                if (!$division_id) return null;
+                return self::loadByMainIndex($division_id, $employee_id);
         }
 
         public static function isManager($employee_id)
         {
-                if(!$employee_id) return null;
+                if (!$employee_id) return null;
                 $obj = self::getDefaultCrmEmployee($employee_id);
                 if (!$obj) return false;
                 return $obj->sureIs("manager");
@@ -608,7 +611,7 @@ class CrmEmployee extends CrmObject
 
         public static function isInvestigator($employee_id)
         {
-                if(!$employee_id) return null;
+                if (!$employee_id) return null;
                 $obj = self::getDefaultCrmEmployee($employee_id);
                 if (!$obj) return [false, false];
                 return [$obj->sureIs("investigator"), $obj->sureIs("approved")];
@@ -681,7 +684,7 @@ class CrmEmployee extends CrmObject
                                 elseif ($return_id) return $objItem->id;
                                 else {
                                         $crmEmployeeObj = CrmEmployee::loadByMainIndex($objItem->id, $employee_id);
-                                        if(!$crmEmployeeObj) return "Empl $employee_id not found in CRM";
+                                        if (!$crmEmployeeObj) return "Empl $employee_id not found in CRM";
                                         $lang = AfwSession::getSessionVar("current_lang");
                                         if (!$lang) $lang = "ar";
                                         return $crmEmployeeObj->getMyJob($lang) . " " . $objItem->getDisplay($lang);
@@ -692,14 +695,13 @@ class CrmEmployee extends CrmObject
                         elseif ($return_id) return 0;
                         else {
                                 $many_org_details = "";
-                                if($objListCount<=3) {
+                                if ($objListCount <= 3) {
                                         foreach ($objList as $objItem) {
-                                                $many_org_details .= " / ". $objItem->getDisplay();
+                                                $many_org_details .= " / " . $objItem->getDisplay();
                                         }
 
                                         $many_org_details = trim($many_org_details, " /");
-                                }
-                                else {
+                                } else {
                                         $many_org_details = "$objListCount وحدة";
                                 }
 
@@ -982,9 +984,10 @@ class CrmEmployee extends CrmObject
                 return [$request_late, $perf_html, $perf_status];
         }
 
-        public function getCrmManager() {
+        public function getCrmManager()
+        {
                 $manObj = $this->getManager();
-                if(!$manObj) return null;
+                if (!$manObj) return null;
                 $me_org_id = $this->getVal("orgunit_id");
 
                 return CrmEmployee::loadByMainIndex($me_org_id, $manObj->id);
@@ -1031,7 +1034,7 @@ class CrmEmployee extends CrmObject
                 $crm_root_mobile = AfwSession::config("crm_root_mobile", "0598988330");
                 $crm_root_email = AfwSession::config("crm_root_email", "");
                 $crm_simul_manager_email = AfwSession::config("crm_simul_manager_email", "simul.manager@gmail.com");
-                        
+
 
                 if ($simul) {
                         $receiver["mobile"] = $crm_root_mobile;
@@ -1043,16 +1046,14 @@ class CrmEmployee extends CrmObject
                 // 
                 if (!$simul and (date("w") == 3)) // if it's wednesday send cc to department director to follow up with the employee why he have waiting requests
                 {
-                        $crmManagerObj = $this->getCrmManager();                        
-                        if($crmManagerObj and $crmManagerObj->sureIs("admin")) {
-                                if(!$simul) $cc_to = $employeeObj->getManagerEmail();
+                        $crmManagerObj = $this->getCrmManager();
+                        if ($crmManagerObj and $crmManagerObj->sureIs("admin")) {
+                                if (!$simul) $cc_to = $employeeObj->getManagerEmail();
                                 else $cc_to = $crm_simul_manager_email;
+                        } elseif ($bad_perf) {
+                                if (!$simul) $cc_to = $crm_root_email;
+                                else $cc_to = "bad.perf." . $crm_simul_manager_email;
                         }
-                        elseif($bad_perf) {
-                                if(!$simul) $cc_to = $crm_root_email;
-                                else $cc_to = "bad.perf.".$crm_simul_manager_email;
-                        }
-                        
                 }
 
                 $file_dir_name = dirname(__FILE__);
@@ -1092,16 +1093,13 @@ class CrmEmployee extends CrmObject
 
         public function getMyJob($lang)
         {
-               if($this->sureIs("manager")) return AfwLanguageHelper::tt("مدير ", $lang);
-               if($this->sureIs("super_admin")) return AfwLanguageHelper::tt("المشرف العام لدى", $lang);
-               if($this->sureIs("admin")) return AfwLanguageHelper::tt("المشرف لدى", $lang);
-               if($this->sureIs("investigator") and $this->sureIs("approved")) return AfwLanguageHelper::tt("المنسق المعتمد في", $lang);
-               if($this->sureIs("investigator")) return AfwLanguageHelper::tt("المنسق في", $lang);
-               
-               
-               return AfwLanguageHelper::tt("موظف في", $lang);
+                if ($this->sureIs("manager")) return AfwLanguageHelper::tt("مدير ", $lang);
+                if ($this->sureIs("super_admin")) return AfwLanguageHelper::tt("المشرف العام لدى", $lang);
+                if ($this->sureIs("admin")) return AfwLanguageHelper::tt("المشرف لدى", $lang);
+                if ($this->sureIs("investigator") and $this->sureIs("approved")) return AfwLanguageHelper::tt("المنسق المعتمد في", $lang);
+                if ($this->sureIs("investigator")) return AfwLanguageHelper::tt("المنسق في", $lang);
+
+
+                return AfwLanguageHelper::tt("موظف في", $lang);
         }
-
-        
 }
-

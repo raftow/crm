@@ -330,6 +330,11 @@ class SurveyToken extends CrmObject
 
     public function beforeDelete($id, $id_replace)
     {
+        $objme = AfwSession::getUserConnected();
+        if (!$objme->isSuperAdmin()) {
+                $this->deleteNotAllowedReason = "Security : Only the plateform administrator can delete this kind of objects";
+                return false;
+        }
         $server_db_prefix = AfwSession::config("db_prefix", "xxxxx");
 
         if (!$id) {

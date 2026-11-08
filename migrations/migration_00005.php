@@ -7,6 +7,9 @@ $server_db_prefix = AfwSession::currentDBPrefix();
 try {
 
    /*@todo : remove comment when going to prod*/
+
+   AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add  response_date varchar(8) after status_time;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add  response_time varchar(8) after response_date;");
     
     AfwDatabase::db_query("INSERT INTO " . $server_db_prefix . "crm.`request_type` VALUES(18,1,'2021-04-08 17:56:53',
        1,'2021-04-08 17:58:47',0,NULL,
@@ -65,6 +68,11 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   id_responsible int(11) DEFAULT NULL;");
 
 
+    
+
+
+
+
 } catch (Exception $e) {
     $migration_error = " " . $e->getMessage();
 }
@@ -75,5 +83,9 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   bpa_ind char(1) DEFAULT NULL  AFTER confidential;");
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_entity varchar(128)  NOT NULL DEFAULT ''  AFTER request_title;");
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_period varchar(128)  NOT NULL DEFAULT ''  AFTER request_entity;");
+
+mysql> alter table tvtc_crm.request add response_date varchar(8) after status_time;
+mysql> alter table tvtc_crm.request add response_time varchar(8) after response_date;
+
 
  */

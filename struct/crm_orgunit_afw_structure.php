@@ -267,7 +267,7 @@ class CrmCrmOrgunitAfwStructure
 			'ANSMODULE' => 'crm',
 			'CATEGORY' => 'ITEMS',
 			'ITEM' => '',
-			'WHERE' => "orgunit_id = §orgunit_id§ and active = 'Y'",
+			'WHERE' => "orgunit_id = §orgunit_id§ and investigator = 'Y' and active = 'Y'",
 			'HIDE_COLS' => ["orgunit_id"],
 			'FORCE_COLS' => ["inbox_count"],
 			'FORMAT' => 'retrieve',

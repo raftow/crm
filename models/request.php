@@ -1116,6 +1116,11 @@ class Request extends CrmObject
 
     public function beforeDelete($id, $id_replace)
     {
+        $objme = AfwSession::getUserConnected();
+        if (!$objme->isSuperAdmin()) {
+            $this->deleteNotAllowedReason = "Security : Only the plateform administrator can delete this kind of objects";
+            return false;
+        }
         $server_db_prefix = AfwSession::currentDBPrefix();
 
         if ($id) {
@@ -1477,7 +1482,7 @@ class Request extends CrmObject
 
         if ($attribute == "tip_of_day") {
             $val = trim($this->calc($attribute));
-            return (strlen($val)>5);
+            return (strlen($val) > 5);
         }
 
         /* rafik 5/9/2026 even if related_request_code is empty investigators and supervisors can fill it
@@ -1990,6 +1995,24 @@ class Request extends CrmObject
     }
 
 
+    public function repareResponseDate($lang='ar') {
+        $request_id = $this->id;
+        $server_db_prefix = AfwSession::currentDBPrefix();
+        $row = AfwDatabase::db_recup_row("select response_date, response_time from " . $server_db_prefix . "crm.response where request_id = $request_id and active='Y' and new_status_id = 5 order by response_date desc, response_time desc limit 1");
+        if($row and $row["response_date"]) {
+            $response_date = $row["response_date"];
+            $response_time = $row["response_time"];
+            if(!$response_time) $response_time = "11:00:00"; // middle of work period وسط الدوام وبالله التوفيق
+            $this->set("response_date", $response_date);
+            $this->set("response_time", $response_time);
+            $this->updateHoursInvestigatorWork($lang, true, true);
+            
+            return ["", "repare date to ($response_date/$response_time)", "", 1];
+        }
+
+        return ["", "", "No response found, nothing done", 0];
+    }
+
     /**
      * @param string $caller "customer" or "investigator" or "supervisor" or "job" or "system"
      * @param int $new_status_id
@@ -2127,6 +2150,10 @@ class Request extends CrmObject
             }
             $this->set("status_date", AfwDateHelper::currentHijriDate());
             $this->set("status_time", date("H:i:s"));
+            if ($new_status_id == self::$REQUEST_STATUS_DONE) {
+                $this->set("response_date", AfwDateHelper::currentHijriDate());
+                $this->set("status_time", date("H:i:s"));
+            }
             $this->set("status_comment", $status_comment);
             $this->updateMyDOL("ar", false);
             $new_status_decoded = $this->decode("status_id");
@@ -2757,6 +2784,7 @@ class Request extends CrmObject
 
     public static function nbDaysReactionByTicketAverage($nbDaysWorkByTicketAverage = 0, $orgunit_id = 0)
     {
+        // @todo we need to create field hours_crm_reaction in request table
         if (!$nbDaysWorkByTicketAverage) $nbDaysWorkByTicketAverage = self::nbDaysWorkByTicketAverage($orgunit_id);
         // average work of customer to complete ticket data
         $avg_customer_work = round((5 + sin(date("m"))) * 10) / 10;
@@ -2895,6 +2923,18 @@ class Request extends CrmObject
             );
 
 
+            $color = "orange";
+            $title_ar = "إعادة حساب ساعات عمل المنسق مع تقرير";
+            $pbms["xart0B"] = array(
+                "METHOD" => "updateHoursInvestigatorWork",
+                "COLOR" => $color,
+                "LABEL_AR" => $title_ar,
+                "PUBLIC" => true,
+                "BF-ID" => "",
+                "HZM-SIZE" => 12,
+            );
+
+
             if ((!$this->id) or ($this->isClosed())) {
                 $color = "red";
                 $title_ar = "تجهيز وارسال الاستبيان";
@@ -2919,7 +2959,7 @@ class Request extends CrmObject
                     "HZM-SIZE" => 12,
                 );
             }
-        
+
             if ((!$this->getVal("supervisor_id")) or $objme->isSuperAdmin()) {
                 $color = "yellow";
                 if (!$this->getVal("supervisor_id")) $title_ar = "تعيين مشرف على هذا الطلب";
@@ -3159,18 +3199,18 @@ class Request extends CrmObject
     public function calcTip_of_day($what = "value")
     {
         $tip_of_day_arr = [];
-        if(CrmEmployee::daysNumberWithCrmOfAuthenticatedUser()<90) {
-                $tip_of_day_arr[] = ["ar" => "في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en" => "In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
-        }       
+        if (CrmEmployee::daysNumberWithCrmOfAuthenticatedUser() < 90) {
+            $tip_of_day_arr[] = ["ar" => "في هذا الإصدار الجديد انقر على متابعة للانتقال إلى شاشة الردود والتعليقات (مرحلة 2)", "en" => "In this new version, click Continue to move to the Replies and Comments screen (Step 2)"];
+        }
         $countTOD = count($tip_of_day_arr);
-        if(!$countTOD) return "";
-        
+        if (!$countTOD) return "";
+
         $lang = AfwSession::getSessionVar("current_lang");
         if (!$lang) $lang = "ar";
-        
+
         $k = rand(0, $countTOD - 1);
         $tip_of_day = $tip_of_day_arr[$k][$lang];
-        if (!$tip_of_day) $tip_of_day = "<!-- tip_of_day_arr[$k][$lang] from tip_of_day_arr = " . var_export($tip_of_day_arr, true)."-- >";
+        if (!$tip_of_day) $tip_of_day = "<!-- tip_of_day_arr[$k][$lang] from tip_of_day_arr = " . var_export($tip_of_day_arr, true) . "-- >";
         $html = "<div class='tip_of_day'>$tip_of_day</div>";
 
         return $html;
@@ -3556,11 +3596,41 @@ class Request extends CrmObject
 
     public function totalWorkPeriodInUnit($unit = "days", $round = true, $report = false)
     {
-        $status_hdate =  AfwDateHelper::currentHijriDate();
-        $status_time = date("H:i:s");
+        $status_hdate = "";
+        $status_time = "";
+        $response_hdate = "";
+        $response_time = "";
+        $close_hdate =  $this->getVal("status_date");
+        $close_time = $this->getVal("status_time");
+        $request_hdate = $this->getVal("request_date");
+        $request_time = $this->getVal("request_time");
+        if($this->isDone()) {
+            $response_hdate = $status_hdate = $this->getVal("response_date");
+            $response_time = $status_time = $this->getVal("response_time");
+            if(!$status_hdate) {
+                $status_hdate =  $this->getVal("status_date");
+                $status_time = $this->getVal("status_time");
+            }
+        }
+        
+        if(!$status_hdate) {
+            $status_hdate =  AfwDateHelper::currentHijriDate();
+        }
+
+        if(!$status_time) {
+            $status_time = date("H:i:s");
+        }
+        
 
         $assign_hdate = $this->getVal("assign_date");
         $assign_time = $this->getVal("assign_time");
+        if($assign_hdate > $close_hdate) {
+            list($assign_hdate, $assign_time) = AfwDateHelper::hijriDateMiddle($request_hdate, $request_time, $response_hdate, $response_time);
+        }
+
+        if($assign_hdate > $status_hdate) {
+            $assign_hdate = "";
+        }
         if (!$assign_hdate) {
             $assign_hdate = $this->getVal("request_date");
             $assign_time = $this->getVal("request_time");
@@ -4980,16 +5050,14 @@ class Request extends CrmObject
         $this_id = $this->id;
         $status_class = $isClosed ? "closed" : "opened";
 
-        if(CrmEmployee::daysNumberWithCrmOfAuthenticatedUser()<90)
-        {
+        if (CrmEmployee::daysNumberWithCrmOfAuthenticatedUser() < 90) {
             $help = $this->tm("The appearance of the [Top Secret] symbol means that the customer does not want their order information to be shared with anyone unrelated due to the sensitivity of the matter. Depending on whether the situation is secure or not, and whether there are people around you who should not see this information, click the eye icon to show or hide the order text.", $lang);
             $help_html = "<p class='help p-helper'>$help</p>";
-        }
-        else {
+        } else {
             $help_html = "";
         }
 
-        
+
 
 
         $confidential_class = $this->sureIs("confidential") ? "confidential" : "non-confidential";
@@ -5095,7 +5163,8 @@ class Request extends CrmObject
         if ($commit) $this->commit();
 
         if ($pbm) {
-            return ["", $this->tm("hours of work of the investigator has been updated to") . " : $diffH hours"];
+            $report = $this->totalWorkPeriodInHours(true, true);
+            return ["", $this->tm("hours of work of the investigator has been updated to") . " : $diffH hours, report : $report"];
         }
         return $diffH;
     }
@@ -5191,6 +5260,32 @@ class Request extends CrmObject
 
             return $diffH;
     }*/
+
+
+            
+
+     public static function repareResponseDateWhenNeedRepare($limit = 1000, $forceAll = false)
+    {
+        $requestObj = new Request();
+        if (!$forceAll) $requestObj->where("response_date is null");
+        
+        $date_start = AfwDateHelper::shiftHijriDate("", -4*360); // 4 years ago
+        $requestObj->where("request_date >= '$date_start'");
+        
+        
+        $requestList = $requestObj->loadMany($limit, "request_date desc");
+        $records = 0;
+        $inf = "";
+        /**
+         * @var Request $requestItem
+         */
+        foreach ($requestList as $requestItem) {
+            list($err, $inf, $war, $done) = $requestItem->repareResponseDate('ar');
+            $records += $done;
+        }
+
+        return ["", "$records records repared : $inf"];
+    }
 
     public static function calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit = 1000, $forceAll = false)
     {

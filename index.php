@@ -48,7 +48,17 @@ if ($objme) {
                         list($error, $info) = Request::calculateAllInvestigatorsTimeWorkWhenNoCalculated($limit, $forceAll);
                         if ($info) AfwSession::pushInformation($info);
                         if ($error) AfwSession::pushError($error);
+                }elseif ($_GET["rrd"] > 0) {
+                        $forceAll = ($_GET["rrd"]=="all");
+                        if($forceAll) $limit = null;
+                        else $limit = $_GET["rrd"] * 1000;
+                        
+                        list($error, $info) = Request::repareResponseDateWhenNeedRepare($limit, $forceAll);
+                        if ($info) AfwSession::pushInformation($info);
+                        if ($error) AfwSession::pushError($error);
                 }
+
+                
 
                 
 

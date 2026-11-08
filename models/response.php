@@ -10,6 +10,26 @@ class Response extends CrmObject
 
         public static $DB_STRUCTURE = null;
 
+        public static $STATS_CONFIG = array(
+        "st001" => array(
+            "PARAMS" => ["sid"],
+            "STATS_DATA_FROM" => ['class' => 'Response', 'method' => 'statsData'], // 
+            // "URL_SETTINGS" => "main.php?Main_Page=afw_mode_edit.php&cl=CrmOrgunit&id=80&currmod=crm&currstep=5",
+            "FOOTER_TITLES" => true,
+            /*
+            "SHOW_PIE" => "FOOTER",
+            "PIE_MODE" => "FILTER",
+            "FILTER" => "indicator=all",
+            "CHART_URL" => "chart.php?m=crm&stc=st001&cl=SurveyToken&survey_id=1&case=1&f=indicator",
+            */
+            "FORMULA_COLS" => array(
+                //0 => array("SHOW-NAME"=>"perf", "METHOD"=>"getPerf"),
+            ),
+
+
+        ),
+        );
+
         public function __construct()
         {
                 parent::__construct("response", "id", "crm");
@@ -439,8 +459,8 @@ class Response extends CrmObject
                                                         $action_enum = Request::status_action_by_code("responseCreatedStatusUpdated");
                                                         $silent = true; // important keep silent true to avoid infinite loop
                                                         $status_comment = "تم الرد على الطلب من قبل : " . $employee_name;
-                                                        $question_id = 0;
-                                                        $request->changeStatus("new-response-changing-status", $this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $question_id, $objOrgunit, $objEmployee);
+                                                        $indicator_id = 0;
+                                                        $request->changeStatus("new-response-changing-status", $this->getVal("new_status_id"), $status_comment, $action_enum, $this->getVal("internal"), $silent, $indicator_id, $objOrgunit, $objEmployee);
 
                                                         // inform customer by SMS if prio <= 3 (prio 4 = low)
                                                         if ($request->getVal("request_priority") <= 3) {
@@ -475,7 +495,11 @@ class Response extends CrmObject
 
         public function beforeDelete($id, $id_replace)
         {
-
+                $objme = AfwSession::getUserConnected();
+                if (!$objme->isSuperAdmin()) {
+                        $this->deleteNotAllowedReason = "Security : Only the plateform administrator can delete this kind of objects";
+                        return false;
+                }
 
                 if ($id) {
                         if ($id_replace == 0) {
@@ -767,5 +791,48 @@ class Response extends CrmObject
                 if ($requestObj and $requestObj->isMine()) return 1;
 
                 return 2;
+        }
+
+
+        public static function getIndicatorList() {
+                return [];
+        }
+
+        public static function statsData($paramsArr=[])
+        {
+            $server_db_prefix = AfwSession::config("db_prefix","ttc_");
+            $lang= AfwLanguageHelper::getGlobalLanguage();
+            
+            $start_date = self::calcCrmDate_start_satisfaction();
+            $end_date = self::calcCrmDate_end_satisfaction();
+
+            $indicatorsList = self::getIndicatorList();
+            $sql_arr = [];
+            $stat_trad = [];
+            // $stat_trad["indicator"] = AfwLanguageHelper::translateStatsColumn("indicator", "Survey", null, $lang);
+            $stat_trad["indicator_title"] = AfwLanguageHelper::translateStatsColumn("indicator_title", "Response", null, $lang);
+            $stat_trad["year"] = AfwLanguageHelper::translateStatsColumn("year", "Response", null, $lang);
+            
+
+            $indicator_title_arr = [];
+
+            $indicator_order = 0;
+
+            foreach($indicatorsList as $indicator_order => $indicator_row)
+            {
+                $indicator = $indicator_row["indicator"];
+                // ....@to implement
+            }
+
+            
+            $sql = "";    
+            // ....@to implement
+            
+            
+
+
+            return [AfwDatabase::db_recup_rows($sql), $stat_trad, $indicator_title_arr, $sql];
+
+            
         }
 }
