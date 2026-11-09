@@ -119,6 +119,7 @@ class CrmRequestAfwStructure
 			'UTF8' => false,
 			'TYPE' => 'FK',
 			'ANSWER' => 'request_category',
+			'WHERE' => "request_type_id = §request_type_id§",
 			'ANSMODULE' => 'crm',
 			'RELATION' => 'ManyToOne',
 			'READONLY' => true,

@@ -4415,46 +4415,6 @@ pre.request-files {
   display: block;
 }
 
-
-/*
-a.crm.complaint {
-  background-color: #a26f0e;
-  color: white;
-  margin-left: 10px;
+div#div_data_request_type_id {
+    padding-top: 0px !important;
 }
-
-a.crm.question {
-  background-color: #3b8be9;
-  color: white;
-  margin-left: 10px;
-}
-
-a.crm.response {
-  background-color: #0fbecd;
-  color: white;
-  margin-left: 10px;
-}
-
-a.crm.suggestion {
-  background-color: #404040;
-  color: white;
-  margin-left: 10px;
-}
-
-a.crm.support {
-  background-color: #57bc3d;
-  color: white;
-  margin-left: 10px;
-}
-
-a.crm.request {
-  background-color: #404040;
-  color: white;
-  margin-left: 10px;
-}
-
-a.crm.balagh {
-    background-color: #db920c;
-    color: white;
-    margin-left: 10px;
-}*/
