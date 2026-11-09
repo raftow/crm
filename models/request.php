@@ -3626,6 +3626,9 @@ class Request extends CrmObject
         $assign_time = $this->getVal("assign_time");
         if($assign_hdate > $close_hdate) {
             list($assign_hdate, $assign_time) = AfwDateHelper::hijriDateMiddle($request_hdate, $request_time, $response_hdate, $response_time);
+            $this->set("assign_date", $assign_hdate);
+            $this->set("assign_time", $assign_time);
+            $this->commit();
         }
 
         if($assign_hdate > $status_hdate) {
@@ -5267,10 +5270,11 @@ class Request extends CrmObject
      public static function repareResponseDateWhenNeedRepare($limit = 1000, $forceAll = false)
     {
         $requestObj = new Request();
-        if (!$forceAll) $requestObj->where("response_date is null");
+        if (!$forceAll) $requestObj->where("response_date is null or hours_investigator_work>240");
         
         $date_start = AfwDateHelper::shiftHijriDate("", -4*360); // 4 years ago
         $requestObj->where("request_date >= '$date_start'");
+        $requestObj->where("status_id in (5,7)");
         
         
         $requestList = $requestObj->loadMany($limit, "request_date desc");
