@@ -98,6 +98,7 @@ class CrmRequestAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'MANDATORY' => true,
+			'NO-COTE' => true,
 			'ERROR-CHECK' => true,
 		),
 
@@ -119,7 +120,7 @@ class CrmRequestAfwStructure
 			'UTF8' => false,
 			'TYPE' => 'FK',
 			'ANSWER' => 'request_category',
-			'WHERE' => "request_type_id = §request_type_id§",
+			'WHERE' => "request_type_mfk like ',§request_type_id§,'",
 			'ANSMODULE' => 'crm',
 			'RELATION' => 'ManyToOne',
 			'READONLY' => true,
