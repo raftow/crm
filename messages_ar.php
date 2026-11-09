@@ -99,5 +99,5 @@ $messages = [
     "and is being investigated by" => "ويجري فحصه من قِبَل",
 
     "real customer notification is disabled and will only be simulated" => "تم تعطيل إشعارات العملاء الفعلية، وسيتم الاكتفاء بمحاكاتها",
-
+    "Report Log" => 'سجل البلاغات',
 ];

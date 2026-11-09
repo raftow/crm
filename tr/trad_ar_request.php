@@ -76,8 +76,13 @@ class RequestArTranslator
 		$trad['request']['status_id'] = 'حالة التذكرة';
 		$trad['request']['status'] = 'حالة التذكرة';
 		$trad['request']['status_comment'] = 'ملاحظات حول حالة التذكرة';
-		$trad['request']['status_date'] = 'تاريخ الحالة';
-		$trad['request']['status_time'] = 'وقت الحالة';
+		$trad['request']['status_date'] = 'تاريخ آخر تحديث';
+		$trad['request']['status_time'] = 'وقت آخر تحديث';
+		$trad['request']['close_date'] = 'تاريخ الإغلاق ';
+		$trad['request']['close_time'] = 'وقت الإغلاق';
+
+		$trad['request']['Report Log'] = 'سجل البلاغات';
+		
 
 		$trad['request']['notifications'] = 'الاشعارات';
 

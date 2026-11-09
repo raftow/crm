@@ -915,6 +915,24 @@ class Request extends CrmObject
         return self::loadByMainIndex($r_request_code, $customer_id, $create_obj_if_not_found = false);
     }
 
+    public function calcClose_date($what = "value") 
+    {
+        if($this->isFinished()) {
+            return $this->getVal("status_date");
+        }
+
+        return "";
+    }
+
+    public function calcClose_time($what = "value") 
+    {
+        if($this->isFinished()) {
+            return $this->getVal("status_time");
+        }
+
+        return "";
+    }
+
     public function calcRelated_request_id($what = "value")
     {
         $rrObj = $this->getRelatedTicket();
