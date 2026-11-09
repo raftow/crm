@@ -70,7 +70,7 @@ try {
                         'request_type_id',
                         'request_category_id',
                         'request_code',
-                        'crm_customer_id',
+                        'customer_id',
                         'orgunit_id',
                         'request_date',
                         'request_time',
