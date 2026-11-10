@@ -2960,6 +2960,7 @@ class Request extends CrmObject
                     "METHOD" => "linkWithSurveyPlateform",
                     "COLOR" => $color,
                     "EXECUTE-IN-RETRIEVE-MODE" => true,
+                    "DISABLE-FOR-BALAGH_QSEARCH" => true,
                     "LABEL_AR" => $title_ar,
                     "PUBLIC" => true,
                     "BF-ID" => "",

@@ -87,6 +87,7 @@ try {
                         'request_type_id',
                         'request_title',
                         'assign_date',
+                        'assign_time',
                         'prio_icon',
                         'customer_type_id',
                         'survey_icon',
