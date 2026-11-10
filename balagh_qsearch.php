@@ -63,7 +63,6 @@ try {
                 'request_type_id',
                 'request_category_id',
                 'request_date',
-                'orgunit_id',
                 'status_id',
         ];
 
@@ -72,7 +71,7 @@ try {
                         'request_category_id',
                         'request_code',
                         'customer_id',
-                        'orgunit_id',
+                        'request_entity',
                         'request_date',
                         'request_time',
                         'status_id',
@@ -84,6 +83,7 @@ try {
                         'last_response_id',
                 ];
                 $hide_retrieve_cols = [
+                        'orgunit_id',
                         'request_type_id',
                         'request_title',
                         'assign_date',
