@@ -9,12 +9,12 @@ class CrmRequestAfwStructure
 			// $obj->ENABLE_DISPLAY_MODE_IN_QEDIT=true;
 			$obj->ORDER_BY_FIELDS = "request_priority asc, request_date asc, request_time asc, customer_id asc";
 			// $obj->AUDIT_DATA = false // disabled by rafik 23/9/2026 until 
-										// audit become very stable 
-										// for example : 
-										// 1) order of columns and count for table request and request_braudit 
-										// 2) when audit fail we don't know the error 
-										//    just we got message : Audit operation failed 
-										// 'byrow_audit';
+			// audit become very stable 
+			// for example : 
+			// 1) order of columns and count for table request and request_braudit 
+			// 2) when audit fail we don't know the error 
+			//    just we got message : Audit operation failed 
+			// 'byrow_audit';
 			$obj->DEFAULT_AGROUP = "status";
 
 			$obj->STATS_DEFAULT_CODE = "gs001";
@@ -44,7 +44,7 @@ class CrmRequestAfwStructure
 			'STEP' => 99,
 			'SHOW' => true,
 			'RETRIEVE' => false,
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => false,
 			'TYPE' => 'PK',
 			'SEARCH-BY-ONE' => '',
@@ -110,7 +110,7 @@ class CrmRequestAfwStructure
 			'QSEARCH' => true,
 			'SHOW' => true,
 			'RETRIEVE' => false,
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'CSS' => 'width_pct_25',
@@ -215,7 +215,7 @@ class CrmRequestAfwStructure
 			'QSEARCH' => false,
 			'SHOW' => true,
 			'RETRIEVE' => false,
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'CSS' => 'width_pct_50',
@@ -573,130 +573,13 @@ class CrmRequestAfwStructure
 			'ERROR-CHECK' => true,
 		),
 
-		
-
-		
-
-		'supervisor_id' => array(
-			'FGROUP' => 'assignment',
-			'AGROUP' => 'status',
-			'STEP' => 1,
-			'SHORTNAME' => 'supervisor',
-			'SEARCH' => true,
-			'QSEARCH' => false,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'SIZE' => 60,
-			'MANDATORY' => false,
-			'UTF8' => false,
-			'CSS' => 'width_pct_33',
-			'TYPE' => 'FK',
-			'ANSWER' => 'employee',
-			'ANSMODULE' => 'hrm',
-			'RELATION' => 'OneToMany',
-			"NO-RETURNTO" => true,
-			"OTM-NO-LABEL" => false,
-			"OTM-FILE" => true,
-			'READONLY' => true,
-			'AUDIT' => true,
-			'SEARCH-BY-ONE' => false,
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-		'orgunit_id' => array(
-			'FGROUP' => 'assignment',
-			'STEP' => 1,
-			'SHORTNAME' => 'orgunit',
-			'SEARCH' => true,
-			'QSEARCH' => true,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EXCEL' => true,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'WHERE' => "id in (select distinct o.orgunit_id from §DBPREFIX§crm.crm_orgunit o 
-				                        inner join §DBPREFIX§crm.crm_employee e on e.orgunit_id = o.orgunit_id 
-										where o.active='Y' and e.active='Y')",
-			'SIZE' => 60,
-			'UTF8' => false,
-			'CSS' => 'width_pct_33',
-			'AUTOCOMPLETE-SEARCH' => true,
-			'AUTOCOMPLETE' => true,
-			'TYPE' => 'FK',
-			'ANSWER' => 'orgunit',
-			'ANSMODULE' => 'hrm',
-			'RELATION' => 'ManyToOne',
-			'READONLY' => true,
-			'READONLY-MODULE' => 'crm',
-			'DISABLE-READONLY-ADMIN' => true,
-			'DISABLE-READONLY-324' => true,
-			'SEARCH-BY-ONE' => true,
-			'DISPLAY' => true,
-			'AUDIT' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-			'ERROR-CHECK' => true,
-		),
-
-		'employee_id' => array(
-			'FGROUP' => 'assignment',
-			'AGROUP' => 'status',
-			'STEP' => 1,
-			'SHORTNAME' => 'employee',
-			'SEARCH' => true,
-			'QSEARCH' => false,
-			'SHOW' => true,
-			'RETRIEVE' => false,
-			'EXCEL' => true,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'SIZE' => 60,
-			'MANDATORY' => false,
-			'UTF8' => false,
-			'CSS' => 'width_pct_33',
-			'AUTOCOMPLETE' => true,
-			'TYPE' => 'FK',
-			'ANSWER' => 'employee',
-			'ANSMODULE' => 'hrm',
-			'RELATION' => 'ManyToOne',
-			'READONLY' => true,
-			'AUDIT' => true,
-			'SEARCH-BY-ONE' => false,
-			'DISPLAY' => true,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
-
-					'crm_employee_id' => array(
-						'CATEGORY' => 'FORMULA',
-						'AGROUP' => 'status',
-						'STEP' => 1,
-						'AUTOCOMPLETE' => true,
-						'TYPE' => 'FK',
-						'ANSWER' => 'crm_employee',
-						'ANSMODULE' => 'crm',
-						'RELATION' => 'OneToMany',
-						'READONLY' => true,
-					),
-
-					'crm_orgunit_id' => array(
-						'CATEGORY' => 'FORMULA',
-						'AGROUP' => 'status',
-						'STEP' => 1,
-						'AUTOCOMPLETE' => true,
-						'TYPE' => 'FK',
-						'ANSWER' => 'crm_orgunit',
-						'ANSMODULE' => 'crm',
-						'RELATION' => 'OneToMany',
-						'READONLY' => true,
-					),
 
 
-		
+
+
+
+
+
 
 		'request_text' => array(
 			'FGROUP' => 'request_text',
@@ -752,9 +635,9 @@ class CrmRequestAfwStructure
 			'DISABLE-READONLY-ADMIN' => true,
 		),
 
-		
 
-		
+
+
 
 
 
@@ -829,9 +712,9 @@ class CrmRequestAfwStructure
 		),
 
 
-		
 
-		
+
+
 
 		'region_id' => array(
 			'FGROUP' => 'tech_data',
@@ -905,7 +788,7 @@ class CrmRequestAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		
+
 
 		'lang_id' => array(
 			'FGROUP' => 'tech_data',
@@ -940,7 +823,7 @@ class CrmRequestAfwStructure
 			'QSEARCH' => true,
 			'SHOW' => false,**
 			'RETRIEVE' => false,**
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => false,
 			'QEDIT' => false,
 			'CSS' => 'width_pct_50',
@@ -994,7 +877,7 @@ class CrmRequestAfwStructure
 			'QSEARCH' => true,
 			'SHOW' => true,
 			'RETRIEVE' => false,
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'CSS' => 'width_pct_100',
@@ -1020,7 +903,7 @@ class CrmRequestAfwStructure
 			'QSEARCH' => true,
 			'SHOW' => true,
 			'RETRIEVE' => false,
-			'EXCEL' => true,
+			'EXCEL' => false,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'CSS' => 'width_pct_100',
@@ -1187,13 +1070,130 @@ class CrmRequestAfwStructure
 
 
 
+		'supervisor_id' => array(
+			'FGROUP' => 'assignment',
+			'AGROUP' => 'status',
+			'STEP' => 1,
+			'SHORTNAME' => 'supervisor',
+			'SEARCH' => true,
+			'QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'SIZE' => 60,
+			'MANDATORY' => false,
+			'UTF8' => false,
+			'CSS' => 'width_pct_33',
+			'TYPE' => 'FK',
+			'ANSWER' => 'employee',
+			'ANSMODULE' => 'hrm',
+			'RELATION' => 'OneToMany',
+			"NO-RETURNTO" => true,
+			"OTM-NO-LABEL" => false,
+			"OTM-FILE" => true,
+			'READONLY' => true,
+			'AUDIT' => true,
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'orgunit_id' => array(
+			'FGROUP' => 'assignment',
+			'STEP' => 1,
+			'SHORTNAME' => 'orgunit',
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EXCEL' => false,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'WHERE' => "id in (select distinct o.orgunit_id from §DBPREFIX§crm.crm_orgunit o 
+				                        inner join §DBPREFIX§crm.crm_employee e on e.orgunit_id = o.orgunit_id 
+										where o.active='Y' and e.active='Y')",
+			'SIZE' => 60,
+			'UTF8' => false,
+			'CSS' => 'width_pct_33',
+			'AUTOCOMPLETE-SEARCH' => true,
+			'AUTOCOMPLETE' => true,
+			'TYPE' => 'FK',
+			'ANSWER' => 'orgunit',
+			'ANSMODULE' => 'hrm',
+			'RELATION' => 'ManyToOne',
+			'READONLY' => true,
+			'READONLY-MODULE' => 'crm',
+			'DISABLE-READONLY-ADMIN' => true,
+			'DISABLE-READONLY-324' => true,
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'AUDIT' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'ERROR-CHECK' => true,
+		),
+
+		'employee_id' => array(
+			'FGROUP' => 'assignment',
+			'AGROUP' => 'status',
+			'STEP' => 1,
+			'SHORTNAME' => 'employee',
+			'SEARCH' => true,
+			'QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EXCEL' => false,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'SIZE' => 60,
+			'MANDATORY' => false,
+			'UTF8' => false,
+			'CSS' => 'width_pct_33',
+			'AUTOCOMPLETE' => true,
+			'TYPE' => 'FK',
+			'ANSWER' => 'employee',
+			'ANSMODULE' => 'hrm',
+			'RELATION' => 'ManyToOne',
+			'READONLY' => true,
+			'AUDIT' => true,
+			'SEARCH-BY-ONE' => false,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'crm_employee_id' => array(
+			'CATEGORY' => 'FORMULA',
+			'AGROUP' => 'status',
+			'STEP' => 1,
+			'AUTOCOMPLETE' => true,
+			'TYPE' => 'FK',
+			'ANSWER' => 'crm_employee',
+			'ANSMODULE' => 'crm',
+			'RELATION' => 'OneToMany',
+			'READONLY' => true,
+		),
+
+		'crm_orgunit_id' => array(
+			'CATEGORY' => 'FORMULA',
+			'AGROUP' => 'status',
+			'STEP' => 1,
+			'AUTOCOMPLETE' => true,
+			'TYPE' => 'FK',
+			'ANSWER' => 'crm_orgunit',
+			'ANSMODULE' => 'crm',
+			'RELATION' => 'OneToMany',
+			'READONLY' => true,
+		),
 
 
-		
 
-		
 
-		
+
+
+
 
 
 
@@ -1248,7 +1248,7 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_50',
 		),
 
-		
+
 
 		'estimatedHoursReport' => array(
 			'FGROUP' => 'status',
@@ -1901,7 +1901,7 @@ class CrmRequestAfwStructure
 			'CSS' => 'width_pct_50',
 		),
 
-		
+
 
 
 
@@ -1954,7 +1954,7 @@ class CrmRequestAfwStructure
 		),
 
 		'request_priority' => array(
-			'FGROUP' => 'status',  
+			'FGROUP' => 'status',
 			'STEP' => 2,
 			'SHORTNAME' => 'priority',
 			'SEARCH' => true,
