@@ -88,11 +88,7 @@ try {
                         'customer_type_id',
                         'survey_icon',
                         'hours_investigator_work',
-                        'request_priority',
-                        'request_priority',
-                         
-                        
-
+                        'man'
                 ];
 
                 $requiredColumns = [
