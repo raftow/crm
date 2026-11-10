@@ -4140,6 +4140,15 @@ tr.data-row.request_late.hzm_row_1>td {
     border-bottom: 1px #db410c solid !important;
 }
 
+table.search_result_table.balagh_qsearch tr.data-row.request_late.hzm_row_1>td.srch-result-col-request_type_id {
+    border-right: inherit !important;
+}
+
+table.search_result_table.balagh_qsearch tr.data-row.request_late.hzm_row_1>td {
+    border-top: inherit !important;
+    border-bottom: inherit !important;
+}
+
 p.special-link.todo {
   font-size: 13px;
   padding: 5px;
