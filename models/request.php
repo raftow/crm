@@ -2384,9 +2384,48 @@ class Request extends CrmObject
         } else return [false, "no survey token generated", "", $template];
     }
 
+    /**
+     * @param int $status_id
+     */
+    public static function isDoneStatus($status_id) {
+        return (($status_id == Request::$REQUEST_STATUS_DONE) or ($status_id == Request::$REQUEST_STATUS_CLOSED));
+    }
+
+
+
+    /**
+     * @param int $old_status
+     * @param int $new_status_id
+     */
+    public static function requestIsBootstraped($old_status, $new_status_id) {
+        return (($new_status_id != $old_status) and
+            (($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES) or
+                ($new_status_id == Request::$REQUEST_STATUS_MISSED_INFO) or
+                ((!self::isDoneStatus($old_status)) and self::isDoneStatus($new_status_id))
+            ));
+    }
+
+    /**
+     * @param int $old_status
+     * @param int $new_status_id
+     */
+    public static function requestIsResponded($old_status, $new_status_id) {
+        return (($new_status_id != $old_status) and
+                ((!self::isDoneStatus($old_status)) and self::isDoneStatus($new_status_id))
+               );
+    }
+
+
+    /**
+     * @param int $old_status
+     * @param int $responseId
+     * @param int $new_status_id
+     */
     public function statusChanged($old_status, $responseId, $fromCustomer = false, $fromJob = false, $new_status_id = null)
     {
         global $statusChanged;
+
+        $isBalagh = ($this->getVal("request_type_id") == Request::$REQUEST_TYPE_BALAGH);
 
         $technicals_log = "<br> > responseId=$responseId ";
         if (!$new_status_id) $new_status_id = $this->getVal("status_id");
@@ -2453,14 +2492,7 @@ class Request extends CrmObject
                 AfwSession::pushWarning("فشلت دعوة العميل للمشاركة في الاستبيان <!-- reason=$reason -->");
                 $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
             }
-        } elseif ((!$fromCustomer) and
-            ($new_status_id != $old_status) and
-            (($new_status_id == Request::$REQUEST_STATUS_MISSED_FILES) or
-                ($new_status_id == Request::$REQUEST_STATUS_MISSED_INFO) or
-                (($old_status != Request::$REQUEST_STATUS_CLOSED) and ($new_status_id == Request::$REQUEST_STATUS_DONE)) or // fisrt condition to avoid case of unclose ticket
-                (($old_status == Request::$REQUEST_STATUS_RESPONSE_UNDER_REVISION) and ($new_status_id == Request::$REQUEST_STATUS_CLOSED))
-            )
-        ) {
+        } elseif ((!$fromCustomer) and (!$isBalagh) and self::requestIsBootstraped($old_status, $new_status_id)) {
             $customerObj = $this->hetCustomer();
             // send SMS to warn customer
             $token_arr = array(
@@ -2474,6 +2506,22 @@ class Request extends CrmObject
                 $technicals_log .= "<br> > sendSmsToCustomer done with template=$template, lang=$lang, infos=$reason";
             } else {
                 AfwSession::pushWarning("فشل اعلام العميل بهذا التغيير على التذكرة <!-- reason=$reason -->");
+                $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
+            }
+        } elseif ((!$fromCustomer) and $isBalagh and self::requestIsResponded($old_status, $new_status_id)) {
+            // $customerObj = $this->hetCustomer();
+            // send SMS to warn customer
+            $token_arr = array(
+                "[request_code]" => $this->getVal("request_code"),
+                // "[first_name_ar]" => $customerObj->getVal("first_name_ar"),
+                // "[crm_site_url]" => AfwSession::config("crm_site_url", "[crm-site]"),
+            );
+            list($done, $reason, $sms_body) = $this->sendSmsToCustomer($template = "balagh_done", $lang, $token_arr);
+            if ($done) {
+                AfwSession::pushSuccess("تم اعلام العميل بهذا التغيير على اليلاغ عبر الرسالة التالية : " . $sms_body);
+                $technicals_log .= "<br> > sendSmsToCustomer done with template=$template, lang=$lang, infos=$reason";
+            } else {
+                AfwSession::pushWarning("فشل اعلام العميل بهذا التغيير على اليلاغ <!-- reason=$reason -->");
                 $technicals_log .= "<br> > sendSmsToCustomer failed with template=$template, lang=$lang reason=$reason";
             }
         }
@@ -3650,7 +3698,7 @@ class Request extends CrmObject
             else {
                 // by default it has been assigned same day
                 $assign_hdate = $request_hdate;
-                $assign_time = $request_time;
+                $assign_time = ($request_time > "22:00:00") ? $request_time : "22:00:00";
             }
             
             $this->set("assign_date", $assign_hdate);

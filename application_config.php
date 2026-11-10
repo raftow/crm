@@ -22,23 +22,6 @@ $config_arr = array(
 
         'no_menu_for_login' => true,
 
-        /*'cust_type_list' => array(1=>"مسافر",
-                                3=> "مالك باصات",
-                                4=>"مالك فنادق",
-                                5=>"مكتب رحلات"),*/
-
-
-
-
-
-
-
-
-
-
-
-
-
         'enable_language_switch' => false,
         //  classes params
         /*TravelTemplate_showId =>true, */
@@ -47,7 +30,8 @@ $config_arr = array(
 
         /*'simulate_sms_to_mobile' => "0598988330",*/
 
-        'notify_customer' => array("new_request" => array("sms"=>['send'=>true, 'store' => 'workflow', 'event_id'=>2], "email" => false, "web" => false, "whatsup" => false),
+        'notify_customer' => array(
+                                "new_request" => array("sms"=>['send'=>true, 'store' => 'workflow', 'event_id'=>2], "email" => false, "web" => false, "whatsup" => false),
         
                                 ),
 
