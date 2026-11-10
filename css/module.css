@@ -4145,7 +4145,7 @@ table.search_result_table.balagh_qsearch tr.data-row.request_late.hzm_row_1>td.s
 }
 
 table.search_result_table.balagh_qsearch tr.data-row.request_late.hzm_row_1>td {
-    border-top: inherit !important;
+    border-top: 1px solid rgb(51 102 133 / 37%) !important;
     border-bottom: inherit !important;
 }
 

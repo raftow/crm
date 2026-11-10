@@ -84,7 +84,7 @@ try {
                 ];
                 $hide_retrieve_cols = [
                         'assign_date',
-                        'request_priority',
+                        'prio_icon',
                         'customer_type_id',
                         'survey_icon',
                         'hours_investigator_work',
