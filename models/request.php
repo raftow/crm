@@ -5037,7 +5037,18 @@ class Request extends CrmObject
             return $return;
         }
 
-        return AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+        $return = AfwLanguageHelper::getAttributeTranslation($this, $attribute, $lang, $short);
+
+        if(($lang=="ar") and ($attribute != "request_type_id") and (AfwStringHelper::stringEndsWith($return, "الطلب"))) {
+            $request_type_decoded = $this->decode("request_type_id","",false,$lang);
+            if($request_type_decoded) {
+                $request_type_decoded =  "الــ" . $request_type_decoded;
+                $return = str_replace("الطلب", $request_type_decoded, $return);
+            }
+        }
+
+
+        return $return;
     }
 
     public function calcRequest_html($what = "value")

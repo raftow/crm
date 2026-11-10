@@ -30,7 +30,7 @@ class RequestArTranslator
 		$trad['request']['body'] = 'نص الطلب';
 		$trad['request']['file'] = 'الملف';
 		$trad['request']['props'] = 'متعلقات الطلب';
-		$trad['request']['request_code'] = 'رمز الطلب';
+		$trad['request']['request_code'] = 'الرقم المرجعي';
 		$trad['request']['request_date'] = 'تاريخ الطلب';
 		$trad['request']['request_time'] = 'وقت الطلب';
 

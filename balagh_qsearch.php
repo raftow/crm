@@ -45,6 +45,8 @@ try {
                 1 => array('col' => 'datatable_off', 'oper' => '=', 'val' => true,),
         );
 
+        $force_sets = ['request_type_id'=>18,];
+
         $current_page = "balagh_qsearch.php";
 
         $option = $_REQUEST["option"];
@@ -67,7 +69,6 @@ try {
 
         if ($option == "report") {
                 $forced_retrieve_cols = [
-                        'request_type_id',
                         'request_category_id',
                         'request_code',
                         'customer_id',
@@ -83,6 +84,8 @@ try {
                         'last_response_id',
                 ];
                 $hide_retrieve_cols = [
+                        'request_type_id',
+                        'request_title',
                         'assign_date',
                         'prio_icon',
                         'customer_type_id',
