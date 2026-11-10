@@ -83,17 +83,16 @@ try {
                         'last_response_id',
                 ];
                 $hide_retrieve_cols = [
-                        'crm_model_id',
-                        'crm_session_id',
-                        'crm_stage_id',
-                        'crm_status_id',
-                        'crm_scope_id',
-                        'active',
-                        'done',
-                        'done_date',
-                        'orgunit_id',
-                        'employee_id',
-                        'request_date',
+                        'assign_date',
+                        'request_priority',
+                        'customer_type_id',
+                        'survey_icon',
+                        'hours_investigator_work',
+                        'request_priority',
+                        'request_priority',
+                         
+                        
+
                 ];
 
                 $requiredColumns = [

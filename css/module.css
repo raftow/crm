@@ -4130,8 +4130,14 @@ tr.data-row.status_action_enum.hzm_row_15 {
   background-color: #effcff59 !important;
 }
 
-tr.data-row.request_late.hzm_row_1 {
-  background-color: #ffe5e5 !important;
+tr.data-row.request_late.hzm_row_1>td.srch-result-col-request_type_id {
+    border-right: 1px #ff8d66 solid !important;
+}
+
+tr.data-row.request_late.hzm_row_1>td {
+    /* background-color: #f2d9ff96 !important; */
+    border-top: 2px #db410c solid !important;
+    border-bottom: 1px #db410c solid !important;
 }
 
 p.special-link.todo {

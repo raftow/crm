@@ -80,6 +80,8 @@ class RequestArTranslator
 		$trad['request']['status_time'] = 'وقت آخر تحديث';
 		$trad['request']['close_date'] = 'تاريخ الإغلاق ';
 		$trad['request']['close_time'] = 'وقت الإغلاق';
+		$trad['request']['last_response_id'] = 'نتيجة المعالجة';
+		 
 
 		$trad['request']['Report Log'] = 'سجل البلاغات';
 		
