@@ -332,7 +332,7 @@ class CrmRequestAfwStructure
 			'SEARCH' => true,
 			'QSEARCH' => false,
 			'SHOW' => true,
-			'RETRIEVE' => false,
+			'RETRIEVE' => true,
 			'EDIT' => true,
 			'QEDIT' => false,
 			'CSS' => 'width_pct_12',
