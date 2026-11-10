@@ -5390,4 +5390,13 @@ class Request extends CrmObject
         if($mode == 'search') return false;
         return true;
     }
+
+    /**
+     * @param string $icon
+     * @param string $context
+     */
+    public function approveContextIcon($icon, $context) {
+        if($context=="edit") and ($icon=="../lib/images/pencil.png") return "../lib/images/review.png";
+        return $icon;
+    }
 }

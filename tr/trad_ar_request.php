@@ -10,6 +10,7 @@ class RequestArTranslator
 		$trad['request']['request.new'] = 'جديد';
 		$trad['request']['request'] = 'تذاكر الطلبات';
 		
+		$trad['request']['edit'] = 'استعراض';
 
 		$trad['request']['request_subject'] = "أصناف الطلبات";
 		$trad['request']['request_title'] = 'عنوان الطلب';
