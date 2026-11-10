@@ -84,8 +84,8 @@ AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   bp
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_entity varchar(128)  NOT NULL DEFAULT ''  AFTER request_title;");
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_period varchar(128)  NOT NULL DEFAULT ''  AFTER request_entity;");
 
-mysql> alter table tvtc_crm.request add response_date varchar(8) after status_time;
-mysql> alter table tvtc_crm.request add response_time varchar(8) after response_date;
+alter table tvtc_crm.request add response_date varchar(8) after status_time;
+alter table tvtc_crm.request add response_time varchar(8) after response_date;
 
 
  */
