@@ -3644,7 +3644,15 @@ class Request extends CrmObject
         $assign_hdate = $this->getVal("assign_date");
         $assign_time = $this->getVal("assign_time");
         if($assign_hdate > $close_hdate) {
-            list($assign_hdate, $assign_time) = AfwDateHelper::hijriDateMiddle($request_hdate, $request_time, $response_hdate, $response_time);
+            if($response_hdate) {
+                list($assign_hdate, $assign_time) = AfwDateHelper::hijriDateMiddle($request_hdate, $request_time, $response_hdate, $response_time);
+            }
+            else {
+                // by default it has been assigned same day
+                $assign_hdate = $request_hdate;
+                $assign_time = $request_time;
+            }
+            
             $this->set("assign_date", $assign_hdate);
             $this->set("assign_time", $assign_time);
             $this->commit();
