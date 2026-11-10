@@ -5396,7 +5396,7 @@ class Request extends CrmObject
      * @param string $context
      */
     public function approveContextIcon($icon, $context) {
-        if($context=="edit") and ($icon=="../lib/images/pencil.png") return "../lib/images/review.png";
+        if(($context=="edit") and ($icon=="../lib/images/pencil.png")) return "../lib/images/review.png";
         return $icon;
     }
 }
