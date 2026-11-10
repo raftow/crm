@@ -73,9 +73,9 @@ class RequestArTranslator
 		$trad['request']['assign_date'] = 'تاريخ التكليف';
 		$trad['request']['assign_time'] = 'وقت التكليف';
 		$trad['request']['assignment'] = 'التكليف';
-		$trad['request']['status_id'] = 'حالة التذكرة';
-		$trad['request']['status'] = 'حالة التذكرة';
-		$trad['request']['status_comment'] = 'ملاحظات حول حالة التذكرة';
+		$trad['request']['status_id'] = 'حالة الطلب';
+		$trad['request']['status'] = 'حالة الطلب';
+		$trad['request']['status_comment'] = 'ملاحظات حول حالة الطلب';
 		$trad['request']['status_date'] = 'تاريخ آخر تحديث';
 		$trad['request']['status_time'] = 'وقت آخر تحديث';
 		$trad['request']['close_date'] = 'تاريخ الإغلاق ';
@@ -174,7 +174,7 @@ class RequestArTranslator
 
 		$trad['request']['hours_investigator_work'] = 'عدد ساعات عمل المنسق';
 		$trad['request']['days_investigator'] = 'عدد أيام عمل المنسق';
-		$trad['request']['days_retard'] = 'عدد أيام التأخير على التذكرة';
+		$trad['request']['days_retard'] = 'عدد أيام التأخير على الطلب';
 		$trad['request']['days_retard.short'] = 'أيام التأخير';
 		$trad['request']['status_action_enum'] = 'آخر اجراء على الطلب';
 
