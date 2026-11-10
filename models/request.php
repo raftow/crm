@@ -5384,4 +5384,10 @@ class Request extends CrmObject
 
         return ["", "$records records updated until date ($requestDate / $requestGDate)"];
     }
+
+    public function takeDeleteAction($mode = 'search')
+    {
+        if($mode == 'search') return false;
+        return true;
+    }
 }
