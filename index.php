@@ -24,6 +24,24 @@ if ($objme) {
                                 }
                         }
                 }
+                elseif ($_GET["uas"] == 1) {
+                        $company = AfwSession::currentCompany();
+                        if (file_exists(dirname(__FILE__)."/../client-$company/organization_business.php")) {
+                                require_once(dirname(__FILE__)."/../client-$company/organization_business.php");
+                                if (class_exists('OrganizationBusiness')) {
+                                        $res = OrganizationBusiness::update_all_sections(true, $_GET["case"], $_GET["stpdbg"], $_GET["fromapi"]);
+                                        $warning = ""; // implode("<br>\n", $res['log']);
+                                        $error = implode("<br>\n", $res['errors']);
+                                        $info = implode("<br>\n", $res['infos']);
+                                        $matrix = $res['matrix'];
+
+                                        if ($info) AfwSession::pushInformation($info);
+                                        if ($error) AfwSession::pushError($error);
+                                        if ($warning) AfwSession::pushWarning($warning);
+                                        if ($matrix) AfwSession::pushSuccess($matrix);
+                                }
+                        }
+                }
                 elseif ($_GET["uct"] == 1) {
                         list($error, $info) = CustomerType::reloadAllFromConfig("ar");
                         if ($info) AfwSession::pushInformation($info);

@@ -1,6 +1,25 @@
 <?php
 class CrmServiceCategoryAfwStructure
 {
+        public static function initInstance(&$obj)
+	{
+		if ($obj instanceof ServiceCategory) {
+			$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
+                        $obj->DISPLAY_FIELD = "name_ar";
+                        $obj->ORDER_BY_FIELDS = "lookup_code";
+                        $obj->IS_LOOKUP = true;
+                        $obj->ignore_insert_doublon = true;
+                        $obj->UNIQUE_KEY = array('lookup_code');
+                        $obj->UNIQUE_KEY2 = array('name_ar');
+
+                        $obj->showQeditErrors = true;
+                        $obj->showRetrieveErrors = true;
+                        $obj->public_display = true;
+		} else {
+			//ServiceCategoryArTranslator::initData();
+			//ServiceCategoryEnTranslator::initData();
+		}
+	}
         public static $DB_STRUCTURE = array(
 
 
@@ -63,7 +82,7 @@ class CrmServiceCategoryAfwStructure
                         'SIZE' => 128,
                         'MIN-SIZE' => 3,
                         'CHAR_TEMPLATE' => 'ALPHABETIC,SPACE',
-                        'MANDATORY' => true,
+                        'MANDATORY' => false,
                         'UTF8' => false,
                         'TYPE' => 'TEXT',
                         'READONLY' => false,

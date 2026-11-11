@@ -19,7 +19,7 @@ class RequestEnTranslator
 		$trad["request"]["request_type_id"] = "Request type";
 		$trad["request"]["related_request_code"] = "Related request code";
 		$trad["request"]["request_link"] = "Request link";
-		$trad["request"]["service_category_id"] = "Service category";
+		$trad["request"]["service_category_id"] = "Section";
 		$trad["request"]["service_id"] = "Service";
 		$trad["request"]["request_priority"] = "Request priority";
 		$trad["request"]["orgunit_id"] = "B m orgunit";

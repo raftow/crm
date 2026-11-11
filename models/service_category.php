@@ -37,16 +37,7 @@ class ServiceCategory extends AFWObject
         public function __construct()
         {
                 parent::__construct("service_category", "id", "crm");
-                $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-                $this->DISPLAY_FIELD = "name_ar";
-                $this->ORDER_BY_FIELDS = "lookup_code";
-                $this->IS_LOOKUP = true;
-                $this->ignore_insert_doublon = true;
-                $this->UNIQUE_KEY = array('lookup_code');
-
-                $this->showQeditErrors = true;
-                $this->showRetrieveErrors = true;
-                $this->public_display = true;
+                CrmServiceCategoryAfwStructure::initInstance($this);
         }
 
         public static function loadById($id)
@@ -59,21 +50,28 @@ class ServiceCategory extends AFWObject
         }
 
 
+        /**
+         * @param string $lookup_code
+         * @param string $name_ar
+         */
 
-        public static function loadByMainIndex($lookup_code, $create_obj_if_not_found = false)
+        public static function loadByMainIndex($lookup_code, $name_ar, $create_obj_if_not_found = false)
         {
                 $obj = new ServiceCategory();
                 if (!$lookup_code) throw new AfwRuntimeException("loadByMainIndex : lookup_code is mandatory field");
 
 
-                $obj->select("lookup_code", $lookup_code);
+                $obj->where("lookup_code='$lookup_code' or name_ar = _utf8'$name_ar'");
 
                 if ($obj->load()) {
-                        if ($create_obj_if_not_found) $obj->activate();
+                        if ($create_obj_if_not_found) {
+                                $obj->set("name_ar", $name_ar);
+                                $obj->activate();
+                        }
                         return $obj;
                 } elseif ($create_obj_if_not_found) {
                         $obj->set("lookup_code", $lookup_code);
-
+                        $obj->set("name_ar", $name_ar);
                         $obj->insert();
                         $obj->is_new = true;
                         return $obj;

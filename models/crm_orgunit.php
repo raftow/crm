@@ -82,7 +82,8 @@ class CrmOrgunit extends CrmObject
         }
 
         /**
-         * @return CrmOrgunit:
+         * @param int $orgunit_id
+         * @return CrmOrgunit|null:
          */
 
         public static function loadByMainIndex($orgunit_id, $create_obj_if_not_found = false, $activate_obj_if_found = true)

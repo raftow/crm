@@ -36,6 +36,7 @@ class CrmRequestAfwStructure
 			RequestEnTranslator::initData();
 		}
 	}
+	
 	public static $DB_STRUCTURE = array(
 
 
