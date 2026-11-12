@@ -221,7 +221,7 @@ class CrmEmployee extends CrmObject
 
         protected function getOtherLinksArray($mode, $genereLog = false, $step = "all")
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
                 $my_id = $this->getId();
                 $employee_id = $this->getVal("employee_id");

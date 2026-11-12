@@ -595,7 +595,7 @@ class Response extends CrmObject
 
         public function calcResponse_templates()
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 // die("here rafik bara salli");
                 if (!$lang) $lang = "ar";
 
@@ -703,7 +703,7 @@ class Response extends CrmObject
          */
         public function uploadedSuccessfully($file_code, $doc_type_id, $af)
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 $file_dir_name = dirname(__FILE__);
 
 

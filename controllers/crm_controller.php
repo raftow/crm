@@ -566,7 +566,7 @@ class CrmController extends AfwController
 
         public function initiateDraft_request($request)
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
 
                 $data = $request;
                 // echo("request = ".var_export($request,true)."<br><br>");

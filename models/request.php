@@ -1023,7 +1023,7 @@ class Request extends CrmObject
 
     public function uploadedSuccessfully($file_code, $doc_type_id, $af)
     {
-        global $lang;
+        $lang = AfwLanguageHelper::getGlobalLanguage();
         $file_dir_name = dirname(__FILE__);
 
 
@@ -1036,7 +1036,7 @@ class Request extends CrmObject
 
     protected function getOtherLinksArray($mode, $genereLog = false, $step = "all")
     {
-        global $lang;
+        $lang = AfwLanguageHelper::getGlobalLanguage();
         $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
         $my_id = $this->getId();
         $displ = $this->getDisplay($lang);
@@ -2962,7 +2962,7 @@ class Request extends CrmObject
 
     protected function getPublicMethods()
     {
-        global $lang;
+        $lang = AfwLanguageHelper::getGlobalLanguage();
 
         $objme = AfwSession::getUserConnected();
 

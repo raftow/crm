@@ -13,7 +13,7 @@ class CustomerController extends CrmController
 
         public function initiateAccount($request)
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 if (!$lang) $lang = "ar";
                 if ($lang == "ar") $lang_suffix = "";
                 else $lang_suffix = "_" . $lang;
@@ -51,7 +51,7 @@ class CustomerController extends CrmController
 
         public function initiateEditaccount($request)
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 if (!$lang) $lang = "ar";
                 if ($lang == "ar") $lang_suffix = "";
                 else $lang_suffix = "_" . $lang;
@@ -264,7 +264,7 @@ class CustomerController extends CrmController
 
         public function initiateAdvanced($request)
         {
-                global $lang;
+                $lang = AfwLanguageHelper::getGlobalLanguage();
                 if (!$lang) $lang = "ar";
                 if ($lang == "ar") $lang_suffix = "";
                 else $lang_suffix = "_" . $lang;
