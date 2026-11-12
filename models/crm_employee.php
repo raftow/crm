@@ -2,8 +2,7 @@
 // ------------------------------------------------------------------------------------
 // ----             auto generated php class of table crm_orgunit : crm_orgunit - وحدات المتابعة و إعداداتها 
 // ------------------------------------------------------------------------------------
-// alter table ".$server_db_prefix."crm.crm_employee add   admin char(1) DEFAULT NULL  after service_mfk;
-// update ".$server_db_prefix."crm.crm_employee set admin = 'N';
+
 
 $file_dir_name = dirname(__FILE__);
 

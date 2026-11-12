@@ -80,12 +80,25 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 
 /*
 
+INSERT INTO tvtc_crm.`request_type` VALUES(18,1,'2021-04-08 17:56:53',
+       1,'2021-04-08 17:58:47',0,NULL,
+       'Y',1,NULL,NULL,NULL,0, 
+       'balagh', _utf8'بلاغ',
+       'balagh','Y','');
+
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   bpa_ind char(1) DEFAULT NULL  AFTER confidential;");
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_entity varchar(128)  NOT NULL DEFAULT ''  AFTER request_title;");
 AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_period varchar(128)  NOT NULL DEFAULT ''  AFTER request_entity;");
 
 alter table tvtc_crm.request add response_date varchar(8) after status_time;
 alter table tvtc_crm.request add response_time varchar(8) after response_date;
+
+alter table tvtc_crm.crm_employee add   admin char(1) DEFAULT NULL  after service_mfk;
+update tvtc_crm.crm_employee set admin = 'N';
+
+alter table tvtc_crm.crm_employee add request_type_mfk varchar(255) DEFAULT NULL  after service_mfk;
+update tvtc_crm.crm_employee set request_type_mfk = ',2,3,12,13,' where investigator = 'Y';
+alter table tvtc_crm.crm_employee add request_category_mfk varchar(255) DEFAULT NULL  after service_mfk;
 
 
  */
