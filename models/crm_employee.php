@@ -16,7 +16,7 @@ class CrmEmployee extends CrmObject
         // public static $MY_ATABLE_ID= ??; 
         // 117 CRM_INVESTIGATOR	محقق خدمة العملاء			
         public static $JOBROLE_CRM_INVESTIGATOR =  117;
-        // 118 CRM_CONTROLLER	مراقب خدمة العملاء			
+        // 118 CRM_CONTROLLER	صلاحية التقارير لمراقب خدمة العملاء			
         public static $JOBROLE_CRM_CONTROLLER =  118;
         // 119 CRM_SUPERVISION	الإشراف العام	
         public static $JOBROLE_CRM_SUPERVISION =  119;
@@ -324,21 +324,32 @@ class CrmEmployee extends CrmObject
         public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent = false)
         {
                 if (($this->getVal("employee_id") > 0) and
-                        ($fields_updated["active"] or $fields_updated["admin"] or $fields_updated["super_admin"] or $fields_updated["requests_nb"])
+                        ($fields_updated["active"] or 
+                         $fields_updated["admin"] or 
+                         $fields_updated["super_admin"] or 
+                         $fields_updated["manager"] or 
+                         $fields_updated["investigator"] or 
+                         $fields_updated["requests_nb"])
                 ) {
                         $empl = $this->het("employee_id");
                         if ($this->sureIs("active")) {
                                 if ($this->sureIs("super_admin")) {
                                         //
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
-                                        $empl->addMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
+                                        $empl->addMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
                                         $empl->updateMyUserInformationAndRoles();
                                 } elseif ($this->sureIs("admin")) {
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
-                                        $empl->addMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                         $empl->addMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
+                                        $empl->addMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
+                                        $empl->removeMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
+                                        $empl->updateMyUserInformationAndRoles();
+                                } elseif ($this->sureIs("manager")) {
+                                        $empl->addMeThisJobrole(self::$JOBROLE_CRM_INVESTIGATOR);
+                                        $empl->addMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
+                                        $empl->removeMeThisJobrole(self::$JOBROLE_CRM_COORDINATION);
                                         $empl->removeMeThisJobrole(self::$JOBROLE_CRM_SUPERVISION);
                                         $empl->updateMyUserInformationAndRoles();
                                 } else {
@@ -354,11 +365,15 @@ class CrmEmployee extends CrmObject
                                 $empl->removeMeThisJobrole(self::$JOBROLE_CRM_CONTROLLER);
                                 $empl->updateMyUserInformationAndRoles();
                                 // has been disabled so remove all ongoing assigned tickets   
-                                $this->removeMeAllAssigned();
+                                if(!$this->noAssignmentChanges) {
+                                        $this->removeMeAllAssigned();
+                                }
+                                
                         }
 
-
-                        Request::assignSupervisorForNonAssigned(false, true);
+                        if(!$this->noAssignmentChanges) {
+                                Request::assignSupervisorForNonAssigned(false, true);
+                        }
                 }
         }
 
