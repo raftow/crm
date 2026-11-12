@@ -42,11 +42,13 @@ class CrmEmployeeArTranslator{
 
 
         $trad["crm_employee"]["active"] = "نشط";
-        $trad["crm_employee"]["manager"] = "مدير الجهة";
+        $trad["crm_employee"]["manager"] = "مدير أو نائب";
         $trad["crm_employee"]["admin"] = "مشرف تنسيق";
         $trad["crm_employee"]["super_admin"] = "مشرف عام";
         
         $trad["crm_employee"]["investigator"] = "منسق ؟"; 
+        $trad["crm_employee"]["leader"] = "رئيس قسم ؟"; 
+        
         $trad["crm_employee"]["approved"] = "منسق معتمد"; 
         $trad["crm_employee"]["approved.YES"] = "منسق معتمد";
 	    $trad["crm_employee"]["approved.NO"]  = "منسق مستجد";

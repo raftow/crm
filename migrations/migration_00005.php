@@ -96,9 +96,15 @@ alter table tvtc_crm.request add response_time varchar(8) after response_date;
 alter table tvtc_crm.crm_employee add   admin char(1) DEFAULT NULL  after service_mfk;
 update tvtc_crm.crm_employee set admin = 'N';
 
+alter table tvtc_crm.crm_employee add   leader char(1) DEFAULT NULL  after admin;
+update tvtc_crm.crm_employee set leader = 'N';
+
+
 alter table tvtc_crm.crm_employee add request_type_mfk varchar(255) DEFAULT NULL  after service_mfk;
 update tvtc_crm.crm_employee set request_type_mfk = ',2,3,12,13,' where investigator = 'Y';
 alter table tvtc_crm.crm_employee add request_category_mfk varchar(255) DEFAULT NULL  after service_mfk;
+
+update tvtc_crm.service_category set name_ar=_utf8'مؤهلات طلاب  التدريب  الأهلي' where id = 2;
 
 
  */

@@ -102,6 +102,7 @@ class CrmEmployee extends CrmObject
                 $manager = 'N',
                 $super_admin = 'N',
                 $admin = 'N',
+                $leader = 'N',
                 $investigator = 'N',
                 $approved = 'N',
         ) {
@@ -124,6 +125,7 @@ class CrmEmployee extends CrmObject
                                 $obj->set("manager", $manager);
                                 $obj->set("super_admin", $super_admin);
                                 $obj->set("admin", $admin);
+                                $obj->set("leader", $leader);
                                 $obj->set("approved", $approved);
                                 $obj->set("investigator", $investigator);
                                 $obj->activate();
@@ -138,6 +140,7 @@ class CrmEmployee extends CrmObject
                         $obj->set("manager", $manager);
                         $obj->set("super_admin", $super_admin);
                         $obj->set("admin", $admin);
+                        $obj->set("leader", $leader);
                         $obj->set("approved", $approved);
                         $obj->set("investigator", $investigator);
 

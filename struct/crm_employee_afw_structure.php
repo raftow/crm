@@ -337,6 +337,22 @@ class CrmCrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+		'leader' => array(
+			'SHOW' => true,
+			'RETRIEVE' => true,
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'DEFAUT' => 'N',
+			'TYPE' => 'YN',
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
 		'admin' => array(
 			'SHOW' => true,
 			'RETRIEVE' => true,
