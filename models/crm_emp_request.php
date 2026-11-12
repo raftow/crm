@@ -329,13 +329,13 @@ class CrmEmpRequest extends CrmObject
                 return AfwLoadHelper::giveWhat($obj, $what);
         }
 
-        public function  calcCrm_employee_id($what='value', $create_obj_if_not_found = false)
+        public function  calcCrm_employee_id($what='value')
         {
                 $employee_id = $this->getVal("employee_id");
                 $orgunit_id = $this->getVal("orgunit_id");
                 if (!$employee_id) $obj = null;
                 elseif (!$orgunit_id) $obj = null;
-                else $obj = CrmEmployee::loadByMainIndex($orgunit_id, $employee_id, $create_obj_if_not_found);
+                else $obj = CrmEmployee::loadByMainIndex($orgunit_id, $employee_id, false);
                 
                 return AfwLoadHelper::giveWhat($obj, $what);
         }
