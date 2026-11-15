@@ -30,7 +30,7 @@ if ($objme) {
                                 require_once(dirname(__FILE__)."/../client-$company/organization_business.php");
                                 if (class_exists('OrganizationBusiness')) {
                                         $res = OrganizationBusiness::update_all_sections(true, $_GET["case"], $_GET["stpdbg"], $_GET["fromapi"]);
-                                        $warning = ""; // implode("<br>\n", $res['log']);
+                                        $warning = implode("<br>\n", $res['log']);
                                         $error = implode("<br>\n", $res['errors']);
                                         $info = implode("<br>\n", $res['infos']);
                                         $matrix = $res['matrix'];

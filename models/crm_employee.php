@@ -128,7 +128,9 @@ class CrmEmployee extends CrmObject
                                 $obj->set("leader", $leader);
                                 $obj->set("approved", $approved);
                                 $obj->set("investigator", $investigator);
+                                $obj->noAssignmentChanges = true;
                                 $obj->activate();
+                                 
                         }
                         return $obj;
                 } elseif ($create_obj_if_not_found_update_if_found) {
@@ -143,7 +145,7 @@ class CrmEmployee extends CrmObject
                         $obj->set("leader", $leader);
                         $obj->set("approved", $approved);
                         $obj->set("investigator", $investigator);
-
+                        $obj->noAssignmentChanges = true;
                         $obj->insert();
                         $obj->is_new = true;
                         return $obj;
