@@ -577,13 +577,15 @@ class CrmEmployee extends CrmObject
 
         public static function getOrgunit($employee_id)
         {
+                if(!$employee_id) return null;
                 $employeeObj = Employee::loadById($employee_id);
-                if (!$employeeObj) return 0;
+                if (!$employeeObj) return null;
                 return $employeeObj->het("id_sh_dep");
         }
 
         public static function getOrgunitId($employee_id)
         {
+                if(!$employee_id) return 0;
                 $employeeObj = Employee::loadById($employee_id);
                 if (!$employeeObj) return 0;
                 return $employeeObj->getVal("id_sh_dep");
@@ -591,13 +593,15 @@ class CrmEmployee extends CrmObject
 
         public static function getDivision($employee_id)
         {
+                 if(!$employee_id) return null;
                 $employeeObj = Employee::loadById($employee_id);
-                if (!$employeeObj) return 0;
+                if (!$employeeObj) return null;
                 return $employeeObj->het("id_sh_div");
         }
 
         public static function getDivisionId($employee_id)
         {
+                if(!$employee_id) return 0;
                 $employeeObj = Employee::loadById($employee_id);
                 if (!$employeeObj) return 0;
                 return $employeeObj->getVal("id_sh_div");

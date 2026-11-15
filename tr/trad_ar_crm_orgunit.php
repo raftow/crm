@@ -17,6 +17,7 @@ class CrmOrgunitArTranslator{
 		$trad["crm_orgunit"]["new_requests_count"] = "مجموع عدد الطلبات الجديدة";
 		$trad["crm_orgunit"]["new_requests_count.tooltip"] = "تعريف الطلبات الجديدة هي التي لم يعين عليها مشرف أو لم تعين لها وحدة متابعة";
 		$trad["crm_orgunit"]["allEmployeeList"] = "الموظفين المنسقين لدى مركز خدمة العملاء";
+		$trad["crm_orgunit"]["otherEmployeeList"] = "بقية الموظفين لدى مركز خدمة العملاء";
 		$trad["crm_orgunit"]["unAssignedRequests"] = "طلبات يجب اسنادها";
 		$trad["crm_orgunit"]["currentRequests"] = "الطلبات الجارية";
 		$trad["crm_orgunit"]["lateRequests"] = "الطلبات المتأخرة";

@@ -119,7 +119,11 @@ if ($objme) {
                 $MODULE = $My_Module = "crm";
                 CmsMainPage::echoMainPage($My_Module, $Main_Page, dirname(__FILE__));
         } else {
-                die($objme->getVal("firstname") . " : " . $objme->tm("Your are registered now, you can contact your administrator to give you privileges") . "<br>" . $objme->tm("You need also approval from your direct manager for this") . " <br> user name : [" . $objme->getVal("username") . "]");
+                AfwSession::pullWarning();
+                AfwSession::stopNotifications();
+                $Main_Page = "registered_no_privileges.php";
+                $MODULE = $My_Module = "crm";
+                CmsMainPage::echoMainPage($My_Module, $Main_Page, dirname(__FILE__));                
         }
         
 } 

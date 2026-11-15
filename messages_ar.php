@@ -31,7 +31,8 @@ $messages = [
 
     "the status of request" => "حالة الطلب",
     "has been changed to" => "تم تعديلها إلى",
-    "Your are registered now, you can contact your administrator to give you privileges" => "تم تسجيل حسابك. يمكنك التواصل مع مشرف المنصة للحصول على الصلاحية",
+    "Your are registered now, you can contact your administrator to give you privileges" => 
+      "تم تسجيل حسابك. يمكنك التواصل مع مكتب العلاقات مع العملاء للحصول على الصلاحية",
     "Investigator can't be informed" => "لم نتمكن من ارسال بريد الكتروني للموظف المنسق لإعلامه باسناد هذه التذكرة إليه",
     "This employee is not from" => "هذا الموظف ليس من",
     "but from" => "بل من",
