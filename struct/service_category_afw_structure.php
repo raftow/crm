@@ -16,8 +16,8 @@ class CrmServiceCategoryAfwStructure
                         $obj->showRetrieveErrors = true;
                         $obj->public_display = true;
 		} else {
-			//ServiceCategoryArTranslator::initData();
-			//ServiceCategoryEnTranslator::initData();
+			ServiceCategoryArTranslator::initData();
+			ServiceCategoryEnTranslator::initData();
 		}
 	}
         public static $DB_STRUCTURE = array(

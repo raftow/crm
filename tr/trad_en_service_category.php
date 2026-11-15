@@ -1,9 +1,26 @@
 <?php
-	$trad["service_category"]["servicecategory.single"] = "Section";
-	$trad["service_category"]["servicecategory.new"] = "new";
-	$trad["service_category"]["service_category"] = "Sections";
-	$trad["service_category"]["name_ar"] = "Arabic Section name";
-	$trad["service_category"]["name_en"] = "English Section name";
-	$trad["service_category"]["desc_ar"] = "Arabic Section description";
-	$trad["service_category"]["desc_en"] = "English Section description";
-?>
+
+class ServiceCategoryEnTranslator{
+    public static function initData()
+    {
+        $trad = [];
+
+		$trad["service_category"]["servicecategory.single"] = "Section";
+		$trad["service_category"]["servicecategory.new"] = "new";
+		$trad["service_category"]["service_category"] = "Sections";
+		$trad["service_category"]["lookup_code"] = "Lookup code";
+		$trad["service_category"]["name_ar"] = "Arabic Section name";
+		$trad["service_category"]["name_en"] = "English Section name";
+		$trad["service_category"]["desc_ar"] = "Arabic Section description";
+		$trad["service_category"]["desc_en"] = "English Section description";
+        // steps
+		$trad["service_category"]["step1"] = "Definition";
+        return $trad;
+    }
+
+    public static function getInstance()
+	{
+        if(false) return new ServiceCategoryArTranslator();
+		return new ServiceCategory();
+	}
+}

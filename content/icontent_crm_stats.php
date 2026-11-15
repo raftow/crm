@@ -80,8 +80,8 @@ else {
 
 $tokens["orgunit_nb"] = CrmOrgunit::aggreg("count(*)", "active='Y'");
 $tokens["orgunits_title"] = CrmOrgunit::t('crm_orgunit', $lang);
-$tokens["subject_nb"] = 139; //RequestSubject::aggreg("count(*)");
-$tokens["subjects_title"] = Request::t('request_subject', $lang);
+$tokens["subject_nb"] = ServiceCategory::aggreg("count(*)", "active='Y'");
+$tokens["subjects_title"] = ServiceCategory::t('service_category', $lang);
 $tokens["crm_employees_nb"] = CrmEmployee::aggreg("count(*)", "active='Y'");
 $tokens["crm_employees_title"] = CrmEmployee::t('crm_employee.short', $lang);
 $tokens["operators_nb"] = CrmEmployee::aggreg("count(*)", "active='Y' and investigator='Y'");
