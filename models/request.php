@@ -2161,6 +2161,9 @@ class Request extends CrmObject
             }
 
             $this->set("status_id", $new_status_id);
+            if ($new_status_id == Request::$REQUEST_STATUS_DRAFT) {
+                $this->set("orgunit_id", self::$CRM_CENTER_ID);
+            }
             $this->set("status_action_enum", $status_action_enum);
             if ($new_status_id == self::$REQUEST_STATUS_SENT) {
                 $this->set("request_date", AfwDateHelper::currentHijriDate());
