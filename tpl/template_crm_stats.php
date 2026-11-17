@@ -110,7 +110,7 @@
                                         </div>
                                          <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="pic/operator.svg" alt="">
+                                                <img src="pic/leaders.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">[crm_stats_leaders_nb]</span> </h3>
@@ -119,7 +119,7 @@
                                         </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="pic/operator.svg" alt="">
+                                                <img src="pic/managers.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">[crm_stats_managers_nb]</span> </h3>
@@ -128,7 +128,7 @@
                                         </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="pic/operator.svg" alt="">
+                                                <img src="pic/administrators.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">[crm_stats_administrators_nb]</span> </h3>
