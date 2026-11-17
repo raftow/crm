@@ -10,6 +10,9 @@ class CrmEmployeeArTranslator{
         $trad["crm_employee"]["crm_employee"] = "الموظفين لدى خدمة العملاء";
         $trad["crm_employee"]["crm_employee.short"] = "الموظفين";
         $trad["crm_employee"]["investigators"] = "المنسقين";
+        $trad["crm_employee"]["administrators"] = "المشرفين";
+        $trad["crm_employee"]["managers"] = "المدراء";
+        $trad["crm_employee"]["leaders"] = "رؤساء الأقسام";
         $trad["crm_employee"]["orgunit_id"] = "الوحدة المتابعة";
         $trad["crm_employee"]["crm_orgunit_id"] = "الوحدة التابع لها";
         

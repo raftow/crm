@@ -108,6 +108,33 @@
                                                 <p>[crm_stats_operators_title]</p>
                                             </div>
                                         </div>
+                                         <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/operator.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_leaders_nb]</span> </h3>
+                                                <p>[crm_stats_leaders_title]</p>
+                                            </div>
+                                        </div>
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/operator.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_managers_nb]</span> </h3>
+                                                <p>[crm_stats_managers_title]</p>
+                                            </div>
+                                        </div>
+                                        <div class="single_quick_activity d-flex">
+                                            <div class="icon">
+                                                <img src="pic/operator.svg" alt="">
+                                            </div>
+                                            <div class="count_content">
+                                                <h3><span class="counter">[crm_stats_administrators_nb]</span> </h3>
+                                                <p>[crm_stats_administrators_title]</p>
+                                            </div>
+                                        </div>
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
                                                 <img src="pic/employees.svg" alt="">
