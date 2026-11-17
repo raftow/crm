@@ -91,7 +91,7 @@
 
                                         <div class="single_quick_activity d-flex">
                                             <div class="icon">
-                                                <img src="pic/region.svg" alt="">
+                                                <img src="pic/saudia.svg" alt="">
                                             </div>
                                             <div class="count_content">
                                                 <h3><span class="counter">[crm_stats_region_nb]</span> </h3>
