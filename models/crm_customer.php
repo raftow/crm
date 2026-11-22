@@ -336,7 +336,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         {
                 $displ = $this->getShortDisplay($lang);
                 $idn = $this->getVal("idn");
-                // if($idn) $displ .= " - رقم الهوية  : ".$idn;
+                // if($idn) $displ .= " - رقم الهوية أو الإقامة  : ".$idn;
                 if ($idn) $displ .= " - " . $idn;
                 $mobile = $this->getVal("mobile");
                 //if($mobile) $displ .= " - رقم الجوال : ".$mobile;

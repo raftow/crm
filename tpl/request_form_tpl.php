@@ -112,7 +112,7 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
                                                         <!-- fg-your_full_name -->
                                                         <!-- fg-customer_idn -->
                                                         <div id="fg-customer_idn" class="attrib-customer_idn form-group width_pct_100 ">
-                                                                <label for="customer_idn" class="hzm_label hzm_data_customer_idn label_required">رقم الهوية
+                                                                <label for="customer_idn" class="hzm_label hzm_data_customer_idn label_required">رقم الهوية أو الإقامة
                                                                 </label>
                                                                 <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_idn" id="customer_idn" dir="rtl" value="<?php echo $customer_idn ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_idn_readonly ?>>
                                                                 <?php echo AfwInputHelper::inputErrorsInRequest("customer_idn", $data); ?>
@@ -120,7 +120,7 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
                                                         <!-- fg-customer_idn -->
                                                         <!-- fg-customer_mobile -->
                                                         <div id="fg-customer_mobile" class="attrib-customer_mobile form-group width_pct_100 ">
-                                                                <label for="customer_mobile" class="hzm_label hzm_data_customer_mobile label_required">رقم جوالك
+                                                                <label for="customer_mobile" class="hzm_label hzm_data_customer_mobile label_required">رقم الجوال
                                                                 </label>
                                                                 <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_mobile" id="customer_mobile" dir="rtl" value="<?php echo $customer_mobile ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_mobile_readonly ?>>
                                                                 <?php echo AfwInputHelper::inputErrorsInRequest("customer_mobile", $data); ?>
@@ -128,7 +128,7 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
                                                         <!-- fg-customer_mobile -->
                                                         <!-- fg-customer_email -->
                                                         <div id="fg-customer_email" class="attrib-customer_email form-group width_pct_100 ">
-                                                                <label for="customer_email" class="hzm_label hzm_data_customer_email label_required">بريدك الالكتروني
+                                                                <label for="customer_email" class="hzm_label hzm_data_customer_email label_required">البريد الالكتروني
                                                                 </label>
                                                                 <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_email" id="customer_email" dir="rtl" value="<?php echo $customer_email ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_email_readonly ?>>
                                                                 <?php echo AfwInputHelper::inputErrorsInRequest("customer_email", $data); ?>
@@ -137,7 +137,7 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
 
                                                         <!-- fg-customer_type_id -->
                                                         <div class="form-group width_pct_100">
-                                                                <label class="hzm_label hzm_label_customer_type_id label_mandatory">أنت تقوم بهذا <?php echo $request_type_decoded ?> بصفتك
+                                                                <label class="hzm_label hzm_label_customer_type_id label_mandatory">صفة مقدم <?php echo $request_type_decoded ?>
                                                                 </label>
                                                                 <select class="form-control valid" name="customer_type_id" id="customer_type_id" tabindex="0" onchange="register_customer_type_id_changed()" size="1" required="required" aria-invalid="false">
                                                                         <?php

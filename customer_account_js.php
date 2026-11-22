@@ -22,7 +22,7 @@
                         // alert('test 456');
                         if(validateSaudiID($('#customer_idn').val()) < 0)
                         {
-                                $('#customer_idn-error').removeClass('d-none').text('رقم الهوية غير صحيح');
+                                $('#customer_idn-error').removeClass('d-none').text('رقم الهوية أو الإقامة غير صحيح');
                         }
                         else
                         {

@@ -56,7 +56,7 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
 
                 list($customer_idn_correct, $customer_idn_type_id) = AfwFormatHelper::getIdnTypeId($customer_idn);
                 if ((!$customer_idn_correct) or (!$customer_idn_type_id)) {
-                        $customer_register_errors["customer_idn"] = "رقم الهوية غير صحيح";
+                        $customer_register_errors["customer_idn"] = "رقم الهوية أو الإقامة غير صحيح";
                 }
 
                 $customer_mobile = AfwFormatHelper::formatMobile($customer_mobile);
@@ -100,7 +100,7 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
                 $org_name_label = $theCustomer->getAttributeLabel("org_name", $lang);
                 // die("$ref_num_label = theCustomer->getAttributeLabel('ref_num', '$lang') / $org_name_label = theCustomer->getAttributeLabel('org_name', '$lang')");
 
-                $note = "عزيزي المستفيد، نود التأكيد على أن الحصول على أياً من: اسمك ورقم جوالك وهويتك والرقم الوظيفي أو التدريبي هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك";
+                $note = "عزيزي المستفيد، نود التأكيد على أن الحصول على أياً من: اسمك ورقم الجوال وهويتك والرقم الوظيفي أو التدريبي هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك";
 
                 if($all_error) {
                 ?>
@@ -163,7 +163,7 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
                                                                         </div>
                                                                 </div>
                                                                 <div class="edit row crm_data">
-                                                                        <label class="edit hzm_label hzm_label_idn label_mandatory">رقم الهوية</label>
+                                                                        <label class="edit hzm_label hzm_label_idn label_mandatory">رقم الهوية أو الإقامة</label>
                                                                         <div class='edit hzm_data_prop idn'>
                                                                                 <?php echo $theCustomer->getVal("idn"); ?>
                                                                         </div>

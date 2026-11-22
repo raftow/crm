@@ -21,7 +21,7 @@
 
                         <div class='mb_long_title my_request'> 
                                 <div class='my_crm_customer'>
-                                 رقم الهوية <div class='crm_customer_num'></div>
+                                 رقم الهوية أو الإقامة <div class='crm_customer_num'></div>
                                 </div>
                                 <div class='my_crm_customer fleft'>
                                        <div class='crm_customer_prop idn' ><?php echo $customerObj->getVal("idn"); ?>  </div>

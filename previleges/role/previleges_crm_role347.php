@@ -66,11 +66,11 @@
       104211 => 
       array (
         'id' => '104211',
-        'code' => 'f1-a-tb3615/qedit',
+        'code' => 'f1-a-tb3615/qsearch',
         'level' => '999',
-        'menu_name_ar' => 'إدارة أنواع العملاء',
-        'menu_name_en' => 'Customer types administration',
-        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CustomerType&currmod=crm&ids=all&newo=3',
+        'menu_name_ar' => 'أنواع العملاء',
+        'menu_name_en' => 'Customer types',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CustomerType&currmod=crm',
         'css' => 'bf',
         'icon' => 'bficon-104211 bfc-',
       ),
@@ -487,11 +487,11 @@
       104211 => 
       array (
         'id' => '104211',
-        'code' => 'f1-a-tb3615/qedit',
+        'code' => 'f1-a-tb3615/qsearch',
         'level' => '999',
-        'menu_name_ar' => 'إدارة أنواع العملاء',
-        'menu_name_en' => 'Customer types administration',
-        'page' => 'main.php?Main_Page=afw_mode_qedit.php&cl=CustomerType&currmod=crm&ids=all&newo=3',
+        'menu_name_ar' => 'أنواع العملاء',
+        'menu_name_en' => 'Customer types',
+        'page' => 'main.php?Main_Page=afw_mode_qsearch.php&cl=CustomerType&currmod=crm',
         'css' => 'bf',
         'icon' => 'bficon-104211 bfc-',
       ),

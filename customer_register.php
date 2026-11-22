@@ -133,7 +133,7 @@ elseif($_POST["crm_login"])
               list($customer_idn_correct, $customer_idn_type_id) = AfwFormatHelper::getIdnTypeId($customer_idn);
               if((!$customer_idn_correct) or (!$customer_idn_type_id))
               {
-                   $customer_register_errors["customer_idn"] = "رقم الهوية غير صحيح";
+                   $customer_register_errors["customer_idn"] = "رقم الهوية أو الإقامة غير صحيح";
               }
              
               $customer_mobile = AfwFormatHelper::formatMobile($customer_mobile);
@@ -272,7 +272,7 @@ $company = AfwSession::currentCompany();
                                 }
 ?>
                                 <div class="form-group width_pct_50">
-                                        <label class="hzm_label hzm_label_customer_idn label_mandatory">رقم الهوية
+                                        <label class="hzm_label hzm_label_customer_idn label_mandatory">رقم الهوية أو الإقامة
                                         </label>
                                         <input type="text" class="form-control" name="customer_idn" id="customer_idn" value="<?php echo $customer_idn?>"  autocomplete="off" required>
                                         <?php 

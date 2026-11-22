@@ -7,7 +7,7 @@
 	$trad["crm_customer"]["mobile"] = "الجوال";
 	$trad["crm_customer"]["email"] = "البريد الالكتروني";
 	$trad["crm_customer"]["idn_type_id"] = "نوع الهوية";
-	$trad["crm_customer"]["idn"] = "رقم الهوية / بطاقة الأحوال";
+	$trad["crm_customer"]["idn"] = "رقم الهوية أو الإقامة / بطاقة الأحوال";
     $trad["crm_customer"]["gender_id"] = "الجنس";
     $trad["crm_customer"]["lang_id"] = "اللغة";
     $trad["crm_customer"]["hijri"] = "اعتماد التاريخ الهجري";

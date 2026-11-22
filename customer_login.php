@@ -90,7 +90,7 @@ if (AfwSession::customerIsConnected()) {
 
                 list($customer_idn_correct, $customer_idn_type_id) = AfwFormatHelper::getIdnTypeId($customer_idn);
                 if (!$customer_idn_correct) {
-                        $customer_login_errors[] = "رقم الهوية غير صحيح";
+                        $customer_login_errors[] = "رقم الهوية أو الإقامة غير صحيح";
                 }
 
                 // die("rafik debugging : customer_mobile_or_email = ".$customer_mobile_or_email);
@@ -227,7 +227,7 @@ if ($desc_site) {
                                                 <input class="form-control customer-login mobile_or_email" type="text" name="customer_mobile_or_email" value="<?php echo $customer_mobile_or_email ?>" autocomplete="off" placeholder="البريد الالكتروني أو الجوال" required>
                                         </div>
                                         <div class="form-group">
-                                                <input type="text" class="form-control customer-login idn" name="customer_idn" value="<?php echo $customer_idn ?>" autocomplete="off" placeholder="رقم الهوية" required>
+                                                <input type="text" class="form-control customer-login idn" name="customer_idn" value="<?php echo $customer_idn ?>" autocomplete="off" placeholder="رقم الهوية أو الإقامة" required>
                                                 <input type="hidden" name="customer_id" value="<?php echo $customer_id ?>">
                                         </div>
                                         <?php

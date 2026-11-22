@@ -40,7 +40,7 @@ foreach($dataxv as $vard => $vald) $$vard = $vald;
         $org_name_label = $theCustomer->getAttributeLabel("org_name", $lang);
 
 
-        $note = "عزيزي المستفيد، نود التأكيد على أن الحصول على أياً من: اسمك ورقم جوالك وهويتك والرقم الوظيفي أو التدريبي هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك";
+        $note = "عزيزي المستفيد، نود التأكيد على أن الحصول على أياً من: اسمك ورقم الجوال وهويتك والرقم الوظيفي أو التدريبي هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك";
                     
 ?>
 <div class='crm-title hzm-info'><?php echo $note; ?></div>
@@ -82,7 +82,7 @@ foreach($dataxv as $vard => $vald) $$vard = $vald;
                                                 </div>
                                         </div>
                                         <div class="row crm_data">
-                                                <label>رقم الهوية</label>
+                                                <label>رقم الهوية أو الإقامة</label>
                                                 <div class='hzm_data_prop idn'>
                                                 <?php echo $theCustomer->getVal("idn"); ?> 
                                                 </div>

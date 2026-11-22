@@ -54,7 +54,7 @@
 
                 <!-- fg-customer_idn -->
                 <div id="fg-customer_idn" class="attrib-customer_idn form-group width_pct_50 ">
-                        <label for="customer_idn" class="hzm_label hzm_data_customer_idn ">رقم الهوية 
+                        <label for="customer_idn" class="hzm_label hzm_data_customer_idn ">رقم الهوية أو الإقامة 
                         </label>                    				
                         <p><?php echo $customer_idn ?></p>
                 </div>

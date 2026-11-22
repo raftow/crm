@@ -114,7 +114,7 @@ elseif($_POST["customer_verify_code"])
                 list($customer_idn_correct, $customer_idn_type_id) = AfwFormatHelper::getIdnTypeId($customer_idn);
                 if((!$customer_idn_correct) or (!$customer_idn_type_id))
                 {
-                        $customer_register_errors["customer_idn"] = "رقم الهوية غير صحيح";
+                        $customer_register_errors["customer_idn"] = "رقم الهوية أو الإقامة غير صحيح";
                 }
                 
                 
