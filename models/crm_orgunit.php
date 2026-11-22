@@ -441,7 +441,7 @@ class CrmOrgunit extends CrmObject
 
                 // المسارات
                 // not used
-                // AfwDatabase::db_query("update " . $server_db_prefix . "crm.request_path set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                // AfwDatabase::db_query("update " . $server_db_prefix . "crm.requ est_path set orgunit_id='$id_replace' where orgunit_id='$id' ");
 
 
                 // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany

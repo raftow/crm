@@ -36,7 +36,7 @@
 
                                 if (in_array(18, AfwSession::config("crm_rt_list", array()))) {
                                 ?>
-                                        <a class='crm balagh' href='/crm/i.php?cn=crm&mt=request&rt=18'>بلاغ</a>
+                                        <a class='crm balagh' href='/crm/i.php?cn=crm&mt=request&rt=18'>تقديم بلاغ عن مخالفة</a>
                                 <?php
                                 }
                                 ?>

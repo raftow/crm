@@ -141,9 +141,9 @@ class RequestType extends CrmObject
                     // crm.request-نوع  الطلب	request_type_id  حقل يفلتر به-ManyToOne
                     $this->execQuery("update ${server_db_prefix}crm.request set request_type_id='$id_replace' where request_type_id='$id' ");
                     // crm.action_policy-نوع  الطلب	request_type_id  حقل يفلتر به-ManyToOne
-                    $this->execQuery("update ${server_db_prefix}crm.action_policy set request_type_id='$id_replace' where request_type_id='$id' ");
-                    // crm.request_path-نوع الطلب الالكتروني	request_type_id  حقل يفلتر به-ManyToOne
-                    $this->execQuery("update ${server_db_prefix}crm.request_path set request_type_id='$id_replace' where request_type_id='$id' ");
+                    // $this->execQuery("update ${server_db_prefix}crm.action_policy set request_type_id='$id_replace' where request_type_id='$id' ");
+                    // crm.requ est_path-نوع الطلب الالكتروني	request_type_id  حقل يفلتر به-ManyToOne
+                    // $this->execQuery("update ${server_db_prefix}crm.requ est_path set request_type_id='$id_replace' where request_type_id='$id' ");
 
 
 
@@ -154,9 +154,9 @@ class RequestType extends CrmObject
                     // crm.request-نوع  الطلب	request_type_id  حقل يفلتر به-ManyToOne
                     $this->execQuery("update ${server_db_prefix}crm.request set request_type_id='$id_replace' where request_type_id='$id' ");
                     // crm.action_policy-نوع  الطلب	request_type_id  حقل يفلتر به-ManyToOne
-                    $this->execQuery("update ${server_db_prefix}crm.action_policy set request_type_id='$id_replace' where request_type_id='$id' ");
-                    // crm.request_path-نوع الطلب الالكتروني	request_type_id  حقل يفلتر به-ManyToOne
-                    $this->execQuery("update ${server_db_prefix}crm.request_path set request_type_id='$id_replace' where request_type_id='$id' ");
+                    // $this->execQuery("update ${server_db_prefix}crm.action_policy set request_type_id='$id_replace' where request_type_id='$id' ");
+                    // crm.requ est_path-نوع الطلب الالكتروني	request_type_id  حقل يفلتر به-ManyToOne
+                    // $this->execQuery("update ${server_db_prefix}crm.requ est_path set request_type_id='$id_replace' where request_type_id='$id' ");
 
 
                     // MFK

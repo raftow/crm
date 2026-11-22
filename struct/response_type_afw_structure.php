@@ -54,6 +54,7 @@ class CrmResponseTypeAfwStructure
                         'SHORTNAME' => 'code',
                         'SEARCH-BY-ONE' => '',
                         'DISPLAY' => true,
+                        'MANDATORY' => true,
                         'STEP' => 1,
                         'DISPLAY-UGROUPS' => '',
                         'EDIT-UGROUPS' => '',

@@ -14,7 +14,7 @@ try {
     AfwDatabase::db_query("INSERT INTO " . $server_db_prefix . "crm.`request_type` VALUES(18,1,'2021-04-08 17:56:53',
        1,'2021-04-08 17:58:47',0,NULL,
        'Y',1,NULL,NULL,NULL,0, 
-       'balagh', _utf8'بلاغ',
+       'balagh', _utf8'بلاغ عن مخالفة',
        'balagh','Y','');");
 
     AfwDatabase::db_query("DROP TABLE IF EXISTS " . $server_db_prefix . "crm.request_category;");
