@@ -16,6 +16,7 @@ class CrmRequestTypeAfwStructure
                         'STEP' => 1,
                         'DISPLAY-UGROUPS' => '',
                         'EDIT-UGROUPS' => '',
+                        'CSS' => 'width_pct_50',
                 ),
 
                 'lookup_code' => array(
@@ -31,6 +32,7 @@ class CrmRequestTypeAfwStructure
                         'STEP' => 1,
                         'DISPLAY-UGROUPS' => '',
                         'EDIT-UGROUPS' => '',
+                        'CSS' => 'width_pct_50',
                 ),
 
                 'name_ar' => array(
@@ -41,7 +43,8 @@ class CrmRequestTypeAfwStructure
                         'EDIT' => true,
                         'QEDIT' => true,
                         'SIZE' => 48,
-                        'MIN-SIZE' => 3,
+                        'MAXLENGTH' => 128,
+                        'MIN-SIZE' => 5,
                         'CHAR_TEMPLATE' => 'ARABIC-CHARS,SPACE',
                         'MANDATORY' => true,
                         'UTF8' => true,
@@ -53,6 +56,7 @@ class CrmRequestTypeAfwStructure
                         'DISPLAY-UGROUPS' => '',
                         'EDIT-UGROUPS' => '',
                         'ERROR-CHECK' => true,
+                        'CSS' => 'width_pct_50',
                 ),
 
                 'name_en' => array(
@@ -63,6 +67,7 @@ class CrmRequestTypeAfwStructure
                         'EDIT' => true,
                         'QEDIT' => true,
                         'SIZE' => 48,
+                        'MAXLENGTH' => 128,
                         'MIN-SIZE' => 5,
                         'CHAR_TEMPLATE' => 'ALPHABETIC,SPACE',
                         'MANDATORY' => true,
@@ -75,6 +80,7 @@ class CrmRequestTypeAfwStructure
                         'DISPLAY-UGROUPS' => '',
                         'EDIT-UGROUPS' => '',
                         'ERROR-CHECK' => true,
+                        'CSS' => 'width_pct_50',
                 ),
 
                 'is_public' => array(

@@ -28,6 +28,7 @@ if(count($requestList)>0)
 <?php
 foreach($requestList as $ticketObj)     
 {
+        if($ticketObj) {
         $my_status = $ticketObj->getVal("status_id");
         $my_status_decoded = $ticketObj->getCustomerStatus("ar");
         $request_type_decoded = $ticketObj->decode("request_type_id");
@@ -105,6 +106,7 @@ foreach($requestList as $ticketObj)
         </div>
 </div>
 <?php
+        }       
 }
 
 include("new_request_tpl.php");

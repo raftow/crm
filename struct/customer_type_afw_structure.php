@@ -14,6 +14,7 @@ class CrmCustomerTypeAfwStructure
 			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
+			'CSS' => 'width_pct_50',
 		),
 
 		'lookup_code' => array(
@@ -29,6 +30,7 @@ class CrmCustomerTypeAfwStructure
 			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
+			'CSS' => 'width_pct_50',
 		),
 
 		'name_ar' => array(
@@ -39,8 +41,8 @@ class CrmCustomerTypeAfwStructure
 			'EDIT' => true,
 			'QEDIT' => true,
 			'SIZE' => 32,
-			'MAXLENGTH' => 64,
-			'MIN-SIZE' => 3,
+			'MAXLENGTH' => 128,
+			'MIN-SIZE' => 5,
 			'CHAR_TEMPLATE' => 'ARABIC-CHARS,SPACE',
 			'MANDATORY' => true,
 			'UTF8' => true,
@@ -52,6 +54,7 @@ class CrmCustomerTypeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_50',
 		),
 
 		'name_en' => array(
@@ -62,8 +65,8 @@ class CrmCustomerTypeAfwStructure
 			'EDIT' => true,
 			'QEDIT' => true,
 			'SIZE' => 32,
-			'MAXLENGTH' => 64,
-			'MIN-SIZE' => 3,
+			'MAXLENGTH' => 128,
+			'MIN-SIZE' => 5,
 			'CHAR_TEMPLATE' => 'ALPHABETIC,SPACE',
 			'MANDATORY' => true,
 			'UTF8' => false,
@@ -75,6 +78,7 @@ class CrmCustomerTypeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_50',
 		),
 
 		'desc_ar' => array(
@@ -110,6 +114,20 @@ class CrmCustomerTypeAfwStructure
 			'READONLY' => false,
 			'SEARCH-BY-ONE' => true,
 			'DISPLAY' => true,
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
+
+		'active' => array(
+			'SHOW-ADMIN' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => true,
+			'DEFAUT' => 'Y',
+			'TYPE' => 'YN',
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',
 			'STEP' => 1,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
@@ -240,19 +258,7 @@ class CrmCustomerTypeAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-		'active' => array(
-			'SHOW-ADMIN' => true,
-			'RETRIEVE' => false,
-			'EDIT' => true,
-			'QEDIT' => true,
-			'DEFAUT' => 'Y',
-			'TYPE' => 'YN',
-			'SEARCH-BY-ONE' => '',
-			'DISPLAY' => '',
-			'STEP' => 1,
-			'DISPLAY-UGROUPS' => '',
-			'EDIT-UGROUPS' => '',
-		),
+		
 
 		'created_by'         => array(
 			'STEP' => 99,
