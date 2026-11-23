@@ -347,7 +347,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
 
         /*
-        public function list_of_customer_type_id() { 
+        public static function list_of_customer_type_id() { 
             $list_of_items = array(); 
             $list_of_items[5] = "عميل";  //     code : CUSTOMER 
             $list_of_items[4] = "موظف";  //     code : EMPLOYEE 
@@ -499,7 +499,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 }
         }
 
-        public function list_of_idn_type_id()
+        public static function list_of_idn_type_id()
         {
                 $list_of_items = array();
                 $list_of_items[1] = "بطاقة أحوال";  //     code : AHWAL 
