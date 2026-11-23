@@ -16,6 +16,7 @@ require_once("$file_dir_name/../lib/afw/core/afw_autoloader.php");
 AfwSession::startSession();
 $uri_module = UfwUrlManager::currentURIModule();
 AfwAutoLoader::addMainModule($uri_module);
+if ($uri_module != "crm") AfwAutoLoader::addModule("crm");
 if (!$uri_module) die("site code not defined !!!");
 else {
         require_once("$file_dir_name/../$uri_module/ini.php");
@@ -218,7 +219,7 @@ if ($desc_site) {
                                 </div>
                         <?php
                         }
-                        
+
                         ?>
                         <div class="modal-body">
                                 <h1><?php echo $customer_login_welcome ?></h1><br>
@@ -291,9 +292,9 @@ if ($desc_site) {
         $bcounter = 4; // random_int(1, 3);
         ?>
         <div class="modal-dialog popup-company banner<?php echo $bcounter; ?>">
-        <?php
+                <?php
                 include("version_2_desc.php");
-        ?>
+                ?>
         </div>
 
 </div>
