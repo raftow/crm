@@ -92,7 +92,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
                 $obj->select("mobile", $mobile);
                 $obj->select("first_name_ar", $first_name_ar);
-                $obj->where("length(idn)=10");
+                // $obj->where("length(idn)=10");
 
                 if ($obj->load()) {
                         return $obj;
@@ -115,7 +115,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 } else return null;
         }
 
-
+        /*
         public static function loadByMobile($mobile, $the_incorect_idn)
         {
                 $obj = new CrmCustomer();
@@ -127,15 +127,25 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 if ($obj->load()) {
                         return $obj;
                 } else return null;
-        }
+        }*/
+
+
+
+        /**
+         * @param string $mobile, 
+         * @param string $idn_type_id, 
+         * @param string $idn
+         */
 
         public static function loadByMainIndex($mobile, $idn_type_id, $idn, $create_obj_if_not_found = false)
         {
                 $obj = new CrmCustomer();
                 if (!$mobile) throw new AfwRuntimeException("loadByMainIndex : mobile is mandatory field");
-                if (!$idn_type_id) throw new AfwRuntimeException("loadByMainIndex : idn_type_id is mandatory field");
                 if (!$idn) throw new AfwRuntimeException("loadByMainIndex : idn is mandatory field");
 
+                if (!$idn_type_id) {
+                        $idn_type_id = self::idn_to_idn_type($idn);
+                }
 
                 $obj->select("mobile", $mobile);
                 $obj->select("idn", $idn);
@@ -162,6 +172,44 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         }
 
 
+
+        public static function loadByMobileAndBirthDate(string $mobile, string $birth_date, $create_obj_if_not_found = false, $idn = "", $idn_type_id = 0)
+        {
+                if (!$mobile) throw new AfwRuntimeException("loadByMobileAndBirthDate : mobile is mandatory field");
+                if (!$birth_date) throw new AfwRuntimeException("loadByMobileAndBirthDate : birth_date is mandatory field");
+                if ($create_obj_if_not_found) {
+                        if (!$idn) throw new AfwRuntimeException("loadByMobileAndBirthDate : idn is mandatory field if create object if not found option is enabled");
+                }
+
+                if (!$idn_type_id) {
+                        $idn_type_id = self::idn_to_idn_type($idn);
+                }
+
+                $obj = new CrmCustomer();
+                $obj->select("mobile", $mobile);
+                $obj->select("birth_date", $birth_date);
+
+                if ($obj->load()) {
+                        if ($create_obj_if_not_found) {
+                                $obj->set("idn_type_id", $idn_type_id);
+                                $obj->set("idn", $idn);
+                                $obj->activate();
+                        }
+                        return $obj;
+                } elseif ($create_obj_if_not_found) {
+                        $obj->set("idn_type_id", $idn_type_id);
+                        $obj->set("idn", $idn);
+                        $obj->set("mobile", $mobile);
+                        $obj->set("birth_date", $birth_date);
+
+                        $obj->insertNew();
+                        if (!$obj->id) return null; // means beforeInsert rejected insert operation
+                        $obj->is_new = true;
+                        return $obj;
+                } else return null;
+        }
+
+
         public function getTaqibCandidate()
         {
                 $req = new Request();
@@ -182,8 +230,33 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 return null;
         }
 
-        public static function createOrUpdateCustomer($mobile, $idn, $first_name, $last_name, $customer_gender_id, $city_id, $customer_type_id = 1)
-        {
+
+        public function saveInfos(
+                string $first_name,
+                string $last_name,
+                int $customer_gender_id,
+                int $city_id,
+                int $customer_type_id = 1
+        ) {
+                $this->set("first_name_ar", $first_name);
+                $this->set("last_name_ar", $last_name);
+                $this->set("city_id", $city_id);
+                $this->set("gender_id", $customer_gender_id);
+                $this->set("customer_type_id", $customer_type_id);
+
+
+                $this->commit();
+        }
+
+        public static function createOrUpdateCustomer(
+                string $mobile,
+                string $idn,
+                string $first_name,
+                string $last_name,
+                int $customer_gender_id,
+                int $city_id,
+                int $customer_type_id = 1
+        ) {
                 if (!$idn) throw new AfwRuntimeException("createOrUpdateCustomer : idn is mandatory");
                 if (!$mobile) throw new AfwRuntimeException("createOrUpdateCustomer : mobile is mandatory");
 
@@ -205,9 +278,52 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 return $customerObj;
         }
 
+
+        public static function suggestCustomerIdn(string $birth_date)
+        {
+                list($yyyy, $mm, $dd) = explode("-", $birth_date);
+                $mm = intval($mm) % 10 + 21;
+                return $mm . $dd . date("is");
+        }
+
+        public static function createOrUpdateCustomerByBirthDate(
+                string $mobile,
+                string $birth_date,
+                string $first_name,
+                string $last_name,
+                string $idn,
+
+                int $customer_gender_id,
+                int $city_id,
+                int $customer_type_id = 1,
+                int $idn_type_id = 0
+        ) {
+                if (!$birth_date) throw new AfwRuntimeException("createOrUpdateCustomerByBirthDate : birth_date is mandatory");
+                if (!$mobile) throw new AfwRuntimeException("createOrUpdateCustomerByBirthDate : mobile is mandatory");
+
+                if (!$idn_type_id) {
+                        list($idn_correct, $idn_type_id) = AfwFormatHelper::getIdnTypeId($idn, $authorize_other_sa_idns = true);
+                        if (!$idn_correct)  throw new AfwRuntimeException("createOrUpdateCustomer : idn number [$idn] is not correct");
+                }
+
+
+                $customerObj = self::loadByMobileAndBirthDate($mobile, $birth_date, $create_obj_if_not_found = true);
+                if (!$customerObj->getVal("first_name_ar")) {
+                        $customerObj->set("first_name_ar", $first_name);
+                        $customerObj->set("last_name_ar", $last_name);
+                }
+                $customerObj->set("city_id", $city_id);
+                $customerObj->set("gender_id", $customer_gender_id);
+                $customerObj->set("customer_type_id", $customer_type_id);
+
+
+                $customerObj->commit();
+
+                return $customerObj;
+        }
+
         public static function loadByLoginInfos($mobile, $email, $idn)
         {
-
                 if (!$idn)  AfwRunHelper::simpleError("loadByLoginInfos : idn is mandatory");
                 if ((!$mobile) and (!$email))  AfwRunHelper::simpleError("loadByMainIndex : mobile or email is mandatory");
 
@@ -419,11 +535,12 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         }
         */
 
-        
 
-        public static function newCustomersCount($period=30, $orgunit_id=0) {
+
+        public static function newCustomersCount($period = 30, $orgunit_id = 0)
+        {
                 $date_start_stats = self::calc_special_period_greg_date_start_stats($period);
-                
+
 
                 $obj = new CrmCustomer();
                 $obj->where("active = 'Y' and created_at >= '$date_start_stats'");
@@ -499,14 +616,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 }
         }
 
-        public static function list_of_idn_type_id()
-        {
-                $list_of_items = array();
-                $list_of_items[1] = "بطاقة أحوال";  //     code : AHWAL 
-                $list_of_items[2] = "إقامة";  //     code : IQAMA 
-                $list_of_items[99] = "أخرى";  //     code : OTHER 
-                return  $list_of_items;
-        }
+
 
         public function stepsAreOrdered()
         {
@@ -915,9 +1025,9 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         }
 
 
-        public function calcOinfo_html($what = "value", $forCustomer=false)
+        public function calcOinfo_html($what = "value", $forCustomer = false)
         {
-                
+
                 $lang = AfwLanguageHelper::getGlobalLanguage();
                 $objme = AfwSession::getUserConnected();
                 $superAdmin = ($objme and $objme->isSuperAdmin());
@@ -927,30 +1037,29 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 if (file_exists("$file_dir_name/../../client-$company/customer_extended_info.php")) {
                         require_once("$file_dir_name/../../client-$company/customer_extended_info.php");
                         if (class_exists('CustomerExtendedInfo')) {
-                                $level = $forCustomer ? "customer" : ( $superAdmin ? "admin" : "employee");
+                                $level = $forCustomer ? "customer" : ($superAdmin ? "admin" : "employee");
                                 list($html, $res) = CustomerExtendedInfo::getExtendedInfoHtml($this, $level, $lang);
                         }
                 }
 
-                
+
 
                 if (!$res['success']) {
                         $message = $this->tm("customer advanced-information is not available, ", $lang) . " ";
-                        if(!$forCustomer) {
-                                                        
-                                $message .= $this->tm($res['message'], $lang);                        
+                        if (!$forCustomer) {
+
+                                $message .= $this->tm($res['message'], $lang);
                                 if ($superAdmin) {
                                         $return .= "res = " . var_export($res, true);
-                                }                        
+                                }
                         }
                         $return = "<div class='data-report security'>$message</div>";
                         return $return;
-                        
-                }
-                else return $html;
+                } else return $html;
         }
 
-        public function estimatedTotalRows() {
+        public function estimatedTotalRows()
+        {
                 return 2500;
         }
 }

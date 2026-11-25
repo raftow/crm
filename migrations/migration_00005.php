@@ -6,11 +6,11 @@ if (!class_exists("AfwSession")) die("Denied access");
 $server_db_prefix = AfwSession::currentDBPrefix();
 try {
 
-   /*@todo : remove comment when going to prod*/
+    /*@todo : remove comment when going to prod*/
 
-   AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add  response_date varchar(8) after status_time;");
+    AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add  response_date varchar(8) after status_time;");
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add  response_time varchar(8) after response_date;");
-    
+
     AfwDatabase::db_query("INSERT INTO " . $server_db_prefix . "crm.`request_type` VALUES(18,1,'2021-04-08 17:56:53',
        1,'2021-04-08 17:58:47',0,NULL,
        'Y',1,NULL,NULL,NULL,0, 
@@ -58,21 +58,14 @@ VALUES (18,1,'2026-09-09 14:08:05',1,'2026-09-09 14:12:55',NULL,NULL,'Y','Y',1,N
 (9999,1,'2026-09-09 14:08:05',0,'2026-09-09 00:00:00',NULL,NULL,'Y','Y',0,NULL,NULL,NULL,NULL,'other',_utf8'أخرى','other',',2,3,12,13,18,');
 ");
 
-    
+
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request add   request_category_id int(11) NOT NULL DEFAULT 0  AFTER request_type_id;");
     AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.request SET request_category_id = request_type_id");
 
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "crm.request_braudit add   request_category_id int(11) NOT NULL DEFAULT 0  AFTER request_type_id;");
     AfwDatabase::db_query("UPDATE " . $server_db_prefix . "crm.request_braudit SET request_category_id = request_type_id");
-    
+
     AfwDatabase::db_query("ALTER TABLE " . $server_db_prefix . "hrm.orgunit add   id_responsible int(11) DEFAULT NULL;");
-
-
-    
-
-
-
-
 } catch (Exception $e) {
     $migration_error = " " . $e->getMessage();
 }
@@ -106,5 +99,6 @@ alter table tvtc_crm.crm_employee add request_category_mfk varchar(255) DEFAULT 
 
 update tvtc_crm.service_category set name_ar=_utf8'مؤهلات طلاب  التدريب  الأهلي' where id = 2;
 
+ALTER TABLE tvtc_crm.crm_customer add   birth_date datetime DEFAULT NULL  AFTER customer_type_id;
 
  */

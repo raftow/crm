@@ -17,7 +17,8 @@ class CrmCrmCustomerAfwStructure
 
 			$obj->FORMULA_DISPLAY_FIELD  = "concat(IF(ISNULL(first_name_ar), '', first_name_ar) , ' ' , IF(ISNULL(father_name_ar), '', father_name_ar) , ' ' , IF(ISNULL(last_name_ar), '', last_name_ar), ' ' , IF(ISNULL(mobile), '', mobile), ' ' , IF(ISNULL(idn), '', idn))";
 
-			$obj->UNIQUE_KEY = array('mobile', 'email', 'idn_type_id', 'idn');
+			$obj->UNIQUE_KEY = array('birth_date', 'mobile');
+			$obj->UNIQUE_KEY2 = array('idn', 'mobile');
 			$obj->migrationExport = true;
 			$obj->editByStep = true;
 			$obj->editNbSteps = 4;
@@ -131,7 +132,7 @@ class CrmCrmCustomerAfwStructure
 			'SIZE' => 16,
 			'MIN-SIZE' => 7,
 			'MAXLENGTH' => 64,
-			'MANDATORY' => true,
+			'MANDATORY' => false,
 			'FORMAT' => 'EMAIL',
 			'UTF8' => false,
 			'TYPE' => 'TEXT',
@@ -275,6 +276,28 @@ class CrmCrmCustomerAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
+			'CSS' => 'width_pct_25',
+		),
+
+		'birth_date' => array(
+			'FGROUP' => 'status',  /* 'STEP' => 1,  */
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'SEARCH' => true,
+			'QSEARCH' => true,
+			'QSEARCH_OPER' => 'between',
+			'QSIZE' => 6,
+			'CSS' => 'width_pct_25',
+			'SIZE' => 40,
+			'TYPE' => 'GDAT',
+			'FORMAT' => 'CONVERT_NASRANI_VERY_SIMPLE',
+			'RETRIEVE-VALUE' => false,
+			'READONLY' => true,
+			'SEARCH-BY-ONE' => true,
+			'DISPLAY' => true,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
 		),
 
 		'first_name_en' => array(
@@ -379,6 +402,7 @@ class CrmCrmCustomerAfwStructure
 			'EDIT-UGROUPS' => '',
 			'CSS' => 'width_pct_25',
 		),
+
 
 
 

@@ -22,12 +22,12 @@ class CrmObject extends AfwMomkenObject
 
         // إدارة البيانات المرجعية للنظام
         public static $AROLE_OF_GENERAL_SUPERVISOR = 376;
-        
+
         public static $objCRMCenter = null;
 
         public static function getGlobalCRMCenter()
         {
-                if(!self::$objCRMCenter) self::$objCRMCenter = CrmOrgunit::loadByMainIndex(self::$CRM_CENTER_ID);
+                if (!self::$objCRMCenter) self::$objCRMCenter = CrmOrgunit::loadByMainIndex(self::$CRM_CENTER_ID);
 
                 return self::$objCRMCenter;
         }
@@ -108,40 +108,39 @@ class CrmObject extends AfwMomkenObject
                 return (($attribute == "created_by") or ($attribute == "created_at") or ($attribute == "updated_by") or ($attribute == "updated_at") or ($attribute == "validated_by") or ($attribute == "validated_at") or ($attribute == "version"));
         }
 
-        
-        public static function code_of_customer_type_id($lkp_id=null)
+
+        public static function code_of_customer_type_id($lkp_id = null)
         {
-            $lang = AfwLanguageHelper::getGlobalLanguage();
-            if($lkp_id) return self::customer_type()['code'][$lkp_id];
-            else return self::customer_type()['code'];
+                $lang = AfwLanguageHelper::getGlobalLanguage();
+                if ($lkp_id) return self::customer_type()['code'][$lkp_id];
+                else return self::customer_type()['code'];
         }
 
-        public static function name_of_customer_type_id($customer_type_id, $lang="ar")
+        public static function name_of_customer_type_id($customer_type_id, $lang = "ar")
         {
-            return self::customer_type()[$lang][$customer_type_id];            
+                return self::customer_type()[$lang][$customer_type_id];
         }
 
 
         public static function list_of_customer_type_id($lang = null)
         {
-            if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
-            return self::customer_type()[$lang];
+                if (!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
+                return self::customer_type()[$lang];
         }
-        
+
         public static function customer_type()
         {
                 $arr_list_of_customer_type = array();
-                
-                $custTypeListDefault = array(1=>['ar'=>"عميل"]);
+
+                $custTypeListDefault = array(1 => ['ar' => "عميل"]);
                 $custTypeList = AfwSession::config("cust_type_list", $custTypeListDefault);
-                        
-                foreach($custTypeList as $idct => $custTypeRow)
-                {
-                        $arr_list_of_customer_type["code"][$idct] = "CT".$idct;
+
+                foreach ($custTypeList as $idct => $custTypeRow) {
+                        $arr_list_of_customer_type["code"][$idct] = "CT" . $idct;
                         $arr_list_of_customer_type["ar"][$idct] = $custTypeRow['ar'];
                         $arr_list_of_customer_type["en"][$idct] = $custTypeRow['en'];
                 }
-                
+
                 return $arr_list_of_customer_type;
         }
 
@@ -164,7 +163,7 @@ class CrmObject extends AfwMomkenObject
         public static function calcCrmDate_end_satisfaction_greg()
         {
                 $return =  CrmOrgunit::getGlobalCRMCenter()->getVal("satisfaction_report_end_date");
-                if($return=="0000-00-00" or $return=="0000-00-00 00:00:00") $return="";
+                if ($return == "0000-00-00" or $return == "0000-00-00 00:00:00") $return = "";
                 list($return_date, $return_time) = explode(" ", $return);
 
                 return $return_date;
@@ -177,90 +176,89 @@ class CrmObject extends AfwMomkenObject
 
 
 
-        public static function color_of_who($lkp_id=null)
+        public static function color_of_who($lkp_id = null)
         {
-            if($lkp_id) return self::who()['color'][$lkp_id];
-            else return self::who()['color'];
+                if ($lkp_id) return self::who()['color'][$lkp_id];
+                else return self::who()['color'];
         }
 
-        public static function code_of_who_enum($lkp_id=null)
+        public static function code_of_who_enum($lkp_id = null)
         {
-            if($lkp_id) return self::who()['code'][$lkp_id];
-            else return self::who()['code'];
+                if ($lkp_id) return self::who()['code'][$lkp_id];
+                else return self::who()['code'];
         }
 
-        public static function name_of_who_enum($who_enum, $lang="ar")
+        public static function name_of_who_enum($who_enum, $lang = "ar")
         {
-            return self::who()[$lang][$who_enum];            
+                return self::who()[$lang][$who_enum];
         }
 
 
         public static function list_of_who_enum($lang = null)
         {
-            if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
-            return self::who()[$lang];
+                if (!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
+                return self::who()[$lang];
         }
-        
+
         public static function who()
         {
                 $arr_list_of_who = array();
-        
+
                 $arr_list_of_who['color'][1] = 'white';
                 $arr_list_of_who['code'][1] = 'archive';
                 $arr_list_of_who['ar'][1] = 'في الأرشيف';
                 $arr_list_of_who['en'][1] = 'In archive';
-        
+
                 $arr_list_of_who['color'][2] = 'green';
                 $arr_list_of_who['code'][2] = 'customer';
                 $arr_list_of_who['ar'][2] = 'عند العميل';
                 $arr_list_of_who['en'][2] = 'With customer';
-        
+
                 $arr_list_of_who['color'][3] = 'blue';
                 $arr_list_of_who['code'][3] = 'supervisor';
                 $arr_list_of_who['en'][3] = 'With supervisor';
                 $arr_list_of_who['ar'][3] = 'عند المشرف';
-        
+
                 $arr_list_of_who['color'][4] = 'gold';
                 $arr_list_of_who['code'][4] = 'employee';
                 $arr_list_of_who['en'][4] = 'With employee';
                 $arr_list_of_who['ar'][4] = 'عند الموظف';
-        
+
                 return $arr_list_of_who;
-
         }
 
 
-        public static function code_of_user_type($lkp_id=null)
+        public static function code_of_user_type($lkp_id = null)
         {
-            $lang = AfwLanguageHelper::getGlobalLanguage();
-            if($lkp_id) return self::user_type()['code'][$lkp_id];
-            else return self::user_type()['code'];
+                $lang = AfwLanguageHelper::getGlobalLanguage();
+                if ($lkp_id) return self::user_type()['code'][$lkp_id];
+                else return self::user_type()['code'];
         }
 
-        public static function name_of_user_type($user_type, $lang="ar")
+        public static function name_of_user_type($user_type, $lang = "ar")
         {
-            return self::user_type()[$lang][$user_type];            
+                return self::user_type()[$lang][$user_type];
         }
 
 
         public static function list_of_user_type($lang = null)
         {
-            if(!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
-            return self::user_type()[$lang];
+                if (!$lang) $lang = AfwLanguageHelper::getGlobalLanguage();
+                return self::user_type()[$lang];
         }
-        
+
         public static function user_type()
         {
                 $arr_list_of_who = array();
-        
+
                 $arr_list_of_who['code'][1] = 'employee';
                 $arr_list_of_who['ar'][1] = 'موظف';
                 $arr_list_of_who['en'][1] = 'employee';
-        
+
                 $arr_list_of_who['code'][2] = 'approved-employee';
                 $arr_list_of_who['ar'][2] = 'موظف محترف';
                 $arr_list_of_who['en'][2] = 'approved employee';
-        
+
                 $arr_list_of_who['code'][3] = 'supervisor';
                 $arr_list_of_who['en'][3] = 'supervisor';
                 $arr_list_of_who['ar'][3] = 'مشرف';
@@ -268,36 +266,65 @@ class CrmObject extends AfwMomkenObject
                 $arr_list_of_who['code'][4] = 'manager';
                 $arr_list_of_who['en'][4] = 'manager';
                 $arr_list_of_who['ar'][4] = 'مدير';
-        
-                return $arr_list_of_who;
 
+                return $arr_list_of_who;
         }
 
-        public static function calc_special_period_greg_date_start_stats($period=30)
+        public static function calc_special_period_greg_date_start_stats($period = 30)
         {
                 return AfwDateHelper::shiftGregDate("", -$period);
         }
 
-        public static function calc_special_period_date_start_stats($period=30)
+        public static function calc_special_period_date_start_stats($period = 30)
         {
                 return AfwDateHelper::shiftHijriDate("", -$period);
         }
 
-        public function  calcCrm_orgunit_id($what='value', $create_obj_if_not_found = false)
+        public function  calcCrm_orgunit_id($what = 'value', $create_obj_if_not_found = false)
         {
                 if (!$this->getVal("orgunit_id")) $obj = null;
                 else $obj = CrmOrgunit::loadByMainIndex($this->getVal("orgunit_id"), $create_obj_if_not_found);
                 return AfwLoadHelper::giveWhat($obj, $what);
         }
 
-        public function  calcCrm_employee_id($what='value')
+        public function  calcCrm_employee_id($what = 'value')
         {
                 $employee_id = $this->getVal("employee_id");
                 $orgunit_id = $this->getVal("orgunit_id");
                 if (!$employee_id) $obj = null;
                 elseif (!$orgunit_id) $obj = null;
                 else $obj = CrmEmployee::loadByMainIndex($orgunit_id, $employee_id);
-                
+
                 return AfwLoadHelper::giveWhat($obj, $what);
+        }
+
+        public static function idn_to_idn_type(string $idn)
+        {
+                $main_company = AfwSession::currentCompany();
+                $file_dir_name = dirname(__FILE__);
+                $classAC = AfwStringHelper::firstCharUpper($main_company) . "CrmUtils";
+                include($file_dir_name . "/../../client-$main_company/extra/$main_company" . "_crm_utils.php");
+
+                return $classAC::idn_to_idn_type($idn);
+        }
+
+        public static function additional_idn_types()
+        {
+                $main_company = AfwSession::currentCompany();
+                $file_dir_name = dirname(__FILE__);
+                $classAC = AfwStringHelper::firstCharUpper($main_company) . "CrmUtils";
+                include($file_dir_name . "/../../client-$main_company/extra/$main_company" . "_crm_utils.php");
+                if (class_exists($classAC) and method_exists($classAC, "additional_idn_types")) {
+                        return $classAC::additional_idn_types();
+                } else return array();
+        }
+
+        public static function list_of_idn_type_id()
+        {
+                $list_of_items = self::additional_idn_types();
+                $list_of_items[1] = "بطاقة أحوال";  //     code : AHWAL 
+                $list_of_items[2] = "إقامة";  //     code : IQAMA 
+                $list_of_items[99] = "أخرى";  //     code : OTHER 
+                return  $list_of_items;
         }
 }
