@@ -253,7 +253,7 @@ class CrmController extends AfwController
         }
 
 
-        public function defaultMethod($request)
+        public function defaultMethod(array $request)
         {
                 if ($request["rid"]) return "view_request";
                 return "newrequest";
@@ -390,7 +390,8 @@ class CrmController extends AfwController
                 }
                 $crst = md5("crst" . date("YmdHis"));
                 $custom_scripts = array();
-                $custom_scripts[] = array('type' => 'css', 'path' => "./css/content.css?crst=$crst");
+                $custom_scripts[] = array('type' => 'css', 'path' => "../crm/css/content.css?crst=$crst");
+                $custom_scripts[] = array('type' => 'css', 'path' => "../crm/css/module.css?crst=$crst");
                 $custom_scripts[] = array('type' => 'css', 'path' => "../lib/css/sweetalert2.min.css");
                 $custom_scripts[] = array('type' => 'js',   'path' => "../lib/js/sweetalert2.min.js");
                 $custom_scripts[] = array('type' => 'js',   'path' => "../lib/js/sweetalert.min.js");
@@ -909,6 +910,7 @@ class CrmController extends AfwController
                         $data["customer_mobile"] = $theCustomer->getVal("mobile");
                         $data["customer_email"] = $theCustomer->getVal("email");
                         $data["customer_idn"] = $theCustomer->getVal("idn");
+                        $data["theCustomer"] = $theCustomer;
                 } else return;
 
                 if (!$data["city_id"]) $data["city_id"] = 301; //RIYADH
@@ -1606,9 +1608,9 @@ class CrmController extends AfwController
                                 list($file_title_0, $file_order_labels) = AfwInputHelper::multipleFileUploaderLabels($lang);
                                 if (isset($request["_REQUEST_FILES"]) and $request["_REQUEST_FILES"] and (count($request["_REQUEST_FILES"]) > 0)) {
                                         foreach ($request["_REQUEST_FILES"] as $file_code => $file_arr) {
-                                                list(,$file_num) = explode("_", $file_code);
+                                                list(, $file_num) = explode("_", $file_code);
                                                 $file_title = $file_order_labels[$file_num];
-                                                if($file_num<=$nb_files) {
+                                                if ($file_num <= $nb_files) {
                                                         $uploadResult = UfwFileUploader::completeUpload($file_title, $file_code, $file_arr, $reqObj);
 
                                                         $status = $uploadResult["status"];
@@ -1623,17 +1625,14 @@ class CrmController extends AfwController
                                                                 $data["all_error"] = $error_message;
                                                                 break;
                                                         }
-                                                }
-                                                else {
+                                                } else {
                                                         // ignore disabled files (not added by button [+] so remain disabled)
                                                 }
-                                                
-                                                
                                         }
                                 }
 
 
-                                if(!$data["all_error"]) {
+                                if (!$data["all_error"]) {
                                         // send the request 
                                         $reqObj->sendRequest($lang, "CrmController::submit_request(edited)");
                                         if (!$data["id"]) {
@@ -1644,7 +1643,6 @@ class CrmController extends AfwController
                                         }
                                         $data["ticketObj"] = $reqObj;
                                 }
-                                
                         }
                 }
 

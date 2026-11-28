@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @var array $dataxv
  */
-foreach($dataxv as $vard => $vald) $$vard = $vald;
+foreach ($dataxv as $vard => $vald) $$vard = $vald;
 $uri_module = "crm";
 $file_dir_name = dirname(__FILE__);
 require_once("$file_dir_name/../../$uri_module/ini.php");
@@ -100,17 +101,18 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
                 $org_name_label = $theCustomer->getAttributeLabel("org_name", $lang);
                 // die("$ref_num_label = theCustomer->getAttributeLabel('ref_num', '$lang') / $org_name_label = theCustomer->getAttributeLabel('org_name', '$lang')");
 
-                $note = "عزيزي المستفيد، نود التأكيد على أن الحصول على أياً من: اسمك ورقم الجوال وهويتك والرقم الوظيفي أو التدريبي هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك";
+                $note = CrmCustomer::notePrivacy();
 
-                if($all_error) {
+
+                if ($all_error) {
                 ?>
-                <div class='crm-title hzm-error'><?php echo $all_error; ?></div>
+                        <div class='crm-title hzm-error'><?php echo $all_error; ?></div>
                 <?php
                 }
 
-                if($all_info) {
+                if ($all_info) {
                 ?>
-                <div class='crm-title hzm-info'><?php echo $all_info; ?></div>
+                        <div class='crm-title hzm-info'><?php echo $all_info; ?></div>
                 <?php
                 }
                 ?>
@@ -132,7 +134,7 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
                                         </div>
                                         <div class='my_crm_bloc_title'>
                                                 <div class='mb_med_title my_ticket'>
-                                                        <div class='crm_calendar crm_data'>
+                                                        <div class='crm_customer crm_data'>
                                                                 <label> <?php echo $theCustomer->getShortDisplay("ar"); ?> </label>
                                                         </div>
                                                 </div>
@@ -273,7 +275,7 @@ AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/app
                                                                 </div>
 
 
-                                                                <div class="edit row crm_data"> 
+                                                                <div class="edit row crm_data">
                                                                         <label class="edit hzm_label hzm_label_first_name_ar label_mandatory">الاسم الأول
                                                                         </label>
                                                                         <input type="text" class="form-control" name="first_name_ar" id="first_name_ar" dir="rtl" value="<?php echo $first_name_ar ?>" maxlength="48" required>

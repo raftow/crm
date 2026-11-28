@@ -1,3 +1,6 @@
+<?php
+$company = AfwSession::currentCompany();
+?>
 <div class="cms_bg_pic contact">
         <div class="cms_bg crm_new_request">
                 <div class="">
@@ -48,7 +51,7 @@
                 <?php
                 $file_dir_name = dirname(__FILE__);
 
-                include("$file_dir_name/../version_2_desc.php");
+                include("../../client-$company/crm_news_article.php");
                 ?>
         </div>
 </div>

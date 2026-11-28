@@ -49,7 +49,7 @@
  * @var bool $org_name_required
  * @var bool $ref_num_required
  * 
- * 
+ * @var CrmCustomer $theCustomer
  * 
  * 
  * 
@@ -66,12 +66,14 @@ $entity_title = "الجهة المعنية بـ$request_type_decoded";
 $entity_title = UfwReplacement::trans_replace($entity_title, "crm", $lang);
 
 // $file_title_0 = Request::translateAttribute('file', $lang);
+$company = AfwSession::currentCompany();
 
 $file_dir_name = dirname(__FILE__);
 $icontent_full_path_name = "$file_dir_name/../content/bpa_content_html.php";
 $bpa_content_html = include($icontent_full_path_name);
-$bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
+$bpa_content_html .= "<!-- from " . $icontent_full_path_name . " -->";
 
+$idn_label = $theCustomer->getAttributeLabel("idn", $lang);
 ?>
 <div class="cms_bg_pic">
         <div class='hzm_left_image award award_glue'>
@@ -112,7 +114,7 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
                                                         <!-- fg-your_full_name -->
                                                         <!-- fg-customer_idn -->
                                                         <div id="fg-customer_idn" class="attrib-customer_idn form-group width_pct_100 ">
-                                                                <label for="customer_idn" class="hzm_label hzm_data_customer_idn label_required">رقم الهوية أو الإقامة
+                                                                <label for="customer_idn" class="hzm_label hzm_data_customer_idn label_required"><?php echo $idn_label ?>
                                                                 </label>
                                                                 <input placeholder="" type="text" tabindex="0" class="form-control" name="customer_idn" id="customer_idn" dir="rtl" value="<?php echo $customer_idn ?>" size="16" maxlength="16" required="true" aria-invalid="false" <?php echo $customer_idn_readonly ?>>
                                                                 <?php echo AfwInputHelper::inputErrorsInRequest("customer_idn", $data); ?>
@@ -485,7 +487,7 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
                                 <?php
                                 $hide_desc_app = false;
                                 $file_dir_name = dirname(__FILE__);
-                                include("$file_dir_name/../version_2_desc.php");
+                                include("../../client-$company/crm_news_article.php");
                                 ?>
                         </div>
                         <div id="container_left_div" class="table_cell_div register_pic">
@@ -493,8 +495,8 @@ $bpa_content_html .= "<!-- from ".$icontent_full_path_name. " -->";
                 </div>
                 <div class="show-infos-popup-div hide" id="bpa-content">
                         <div class="bpa-content">
-                        <?php echo $bpa_content_html; ?>
-                        </div>        
+                                <?php echo $bpa_content_html; ?>
+                        </div>
                 </div>
 
         </div>

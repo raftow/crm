@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var Request $ticketObj
  * @var string $main_module_home_page
@@ -7,259 +8,248 @@
  * @var string $ds
  */
 ?>
-<div class="cms_bg_pic contact">    
-<div class='hzm_left_image award award_glue'>
-            <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
-</div>  
-<div class="content_big_title registration">بطاقة طلب</div>
-<div class="cms_bg">
-<?php
-        //if(!$ticketObj) die("this ticket is lost");
-        $my_status = $ticketObj->getVal("status_id");
-        $my_status_decoded = $ticketObj->getCustomerStatus("ar");
-        $confidential_class = ""; //$ticketObj->sureIs("confidential") ? "confidential" : "non-confidential";
-        $this_id = $ticketObj->id;
-        $confidential_button = "";// $ticketObj->sureIs("confidential") ? "<button type="button" id='confide ntialbtn-$this_id' name='confident ialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
-        // test of ->showAttribute(..) after ->set(..)
-        // $ticketObj->set("status_id", Request::$REQUEST_STATUS_REDIRECT);
-        // $my_status_show = $ticketObj->showAttribute("status_id");
-        // die("my_status_show=$my_status_show");
+<div class="cms_bg_pic contact">
+        <div class='hzm_left_image award award_glue'>
+                <a href='<?php echo $main_module_home_page ?>'><img alt="" src="<?php echo $img_company_path ?>/<?php echo $customer_module_banner ?>" class="award_home_image"></a>
+        </div>
+        <div class="content_big_title registration">بطاقة طلب</div>
+        <div class="cms_bg">
+                <?php
+                //if(!$ticketObj) die("this ticket is lost");
+                $my_status = $ticketObj->getVal("status_id");
+                $my_status_decoded = $ticketObj->getCustomerStatus("ar");
+                $confidential_class = ""; //$ticketObj->sureIs("confidential") ? "confidential" : "non-confidential";
+                $this_id = $ticketObj->id;
+                $confidential_button = ""; // $ticketObj->sureIs("confidential") ? "<button type="button" id='confide ntialbtn-$this_id' name='confident ialbtn_$this_id' class='confidential-button $confidential_class' />" : "";
+                // test of ->showAttribute(..) after ->set(..)
+                // $ticketObj->set("status_id", Request::$REQUEST_STATUS_REDIRECT);
+                // $my_status_show = $ticketObj->showAttribute("status_id");
+                // die("my_status_show=$my_status_show");
 
-        $request_type_decoded = $ticketObj->decode("request_type_id");
-        $full_request_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("request_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("request_date")));
-        $full_status_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("status_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("status_date")));
-                    
-?>
-<div class="cms_container ticket_div">
-        <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>                
-                
-                <div class='front_bloc hzm_crm_bloc ticket status_<?php echo $my_status; ?>'>
-                        <div class='mb_long_title my_request'> 
-                                <div class='my_crm_ticket'>
-                                <?php echo $request_type_decoded; ?> رقم <div class='crm_ticket_num'><?php echo $ticketObj->getVal("request_code"); ?> </div>
-                                </div>
-                                <div class='my_crm_ticket fleft'>
-                                       <div class='request_status status_<?php echo $my_status; ?>' ><?php echo $my_status_decoded; ?> </div>
-                                </div>
-                        </div>
-                        <div class='my_crm_dates'>
-                                <div class='mb_med_title my_ticket'> 
-                                        <div class='crm_calendar crm_data'>
-                                        <label> <?php echo $ticketObj->getVal("request_title"); ?> </label>                                        
-                                        <span class="hzm_date"><?php echo $full_request_date; ?> الساعة</span> <span class="hzm_time"><?php echo $ticketObj->getVal("request_time"); ?> </span> 
-                                        </div>
-                                </div>
-                        </div>
+                $request_type_decoded = $ticketObj->decode("request_type_id");
+                $full_request_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("request_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("request_date")));
+                $full_status_date = ($ds == "hijri") ? $ticketObj->fullHijriDate("status_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($ticketObj->getVal("status_date")));
 
-                        <div class='front_bloc hzm_data_props my_cms'>
-                                <div class='my_crm_ticket_data'>                        
-                                        <div class="row crm_data">
-                                                <label>نص الطلب</label>
-                                                <div class='security hzm_data_prop request_text <?php echo $confidential_class; ?>'>
-                                                <?php echo $ticketObj->getVal("request_text"); ?>                                                 
+                ?>
+                <div class="cms_container ticket_div">
+                        <div class='hzm_attribute hzm_wd4 hzm_minibox_header0'>
+
+                                <div class='front_bloc hzm_crm_bloc ticket status_<?php echo $my_status; ?>'>
+                                        <div class='mb_long_title my_request'>
+                                                <div class='my_crm_ticket'>
+                                                        <?php echo $request_type_decoded; ?> رقم <div class='crm_ticket_num'><?php echo $ticketObj->getVal("request_code"); ?> </div>
                                                 </div>
-                                                <?php echo $confidential_button; ?>
-
+                                                <div class='my_crm_ticket fleft'>
+                                                        <div class='request_status status_<?php echo $my_status; ?>'><?php echo $my_status_decoded; ?> </div>
+                                                </div>
                                         </div>
-                                        <div class="row crm_data">
-                                                
-                                                <?php 
-                                                
-                                                        if($ticketObj->getVal("related_request_code") and isset($relatedTicketObj) and $relatedTicketObj)
-                                                        {
-                                                ?> 
-                                                                                <label>متعلق بطلب سابق : <?php echo $relatedTicketObj->request_title." <div class=\"crm_ticket_num bggray\">".$ticketObj->getVal("related_request_code")."</div>"; ?></label>
-                                                                                <div class='hzm_data_prop related_request_code'>
-                                                                                        <div class='hzm_data_prop'>                                                                                                
-                                                                                                <a target='_related_request' href='i.php?cn=crm&mt=view_request&rid=<?php echo $relatedTicketObj->id ?>'>
-                                                                                                        <div class='hzm_blue hzm_print'>مشاهدة تفاصيل الطلب الأصلي</div>
-                                                                                                </a>
-                                                                                        </div> 
-                                                                                </div>     
-                                                                        <?php
+                                        <div class='my_crm_dates'>
+                                                <div class='mb_med_title my_ticket'>
+                                                        <div class='crm_request crm_data'>
+                                                                <label> <?php echo $ticketObj->getVal("request_title"); ?> </label>
+                                                                <span class="hzm_date"><?php echo $full_request_date; ?> الساعة</span> <span class="hzm_time"><?php echo $ticketObj->getVal("request_time"); ?> </span>
+                                                        </div>
+                                                </div>
+                                        </div>
+
+                                        <div class='front_bloc hzm_data_props my_cms'>
+                                                <div class='my_crm_ticket_data'>
+                                                        <div class="row crm_data">
+                                                                <label>نص الطلب</label>
+                                                                <div class='security hzm_data_prop request_text <?php echo $confidential_class; ?>'>
+                                                                        <?php echo $ticketObj->getVal("request_text"); ?>
+                                                                </div>
+                                                                <?php echo $confidential_button; ?>
+
+                                                        </div>
+                                                        <div class="row crm_data">
+
+                                                                <?php
+
+                                                                if ($ticketObj->getVal("related_request_code") and isset($relatedTicketObj) and $relatedTicketObj) {
+                                                                ?>
+                                                                        <label>متعلق بطلب سابق : <?php echo $relatedTicketObj->request_title . " <div class=\"crm_ticket_num bggray\">" . $ticketObj->getVal("related_request_code") . "</div>"; ?></label>
+                                                                        <div class='hzm_data_prop related_request_code'>
+                                                                                <div class='hzm_data_prop'>
+                                                                                        <a target='_related_request' href='i.php?cn=crm&mt=view_request&rid=<?php echo $relatedTicketObj->id ?>'>
+                                                                                                <div class='hzm_blue hzm_print'>مشاهدة تفاصيل الطلب الأصلي</div>
+                                                                                        </a>
+                                                                                </div>
+                                                                        </div>
+                                                                <?php
+                                                                }
+
+                                                                ?>
+
+                                                        </div>
+
+
+                                                        <?php
+                                                        list($recommendation, $class_recommendation) = $ticketObj->getCrmAIRecommendation($lang);
+
+                                                        if ($recommendation) {
+                                                        ?>
+                                                                <div class="row crm_data title_crm <?php echo $class_recommendation; ?>">
+                                                                        <label>توجيه مهم</label>
+                                                                </div>
+                                                                <div class="row crm_data">
+                                                                        <div class='hzm_data_prop hzm_recommendation <?php echo $class_recommendation; ?>'>
+                                                                                <?php echo $recommendation; ?>
+                                                                        </div>
+                                                                </div>
+
+                                                        <?php
                                                         }
-                                                
-                                                ?> 
-                                                
-                                        </div>
+                                                        list($lastActionOnRequest, $LAResponseId)  = $ticketObj->getLastActionOnRequest($lang);
+                                                        ?>
+                                                        <div class="row crm_data title_crm">
+                                                                <label>آخر اجراء</label>
+                                                        </div>
+                                                        <?php
+                                                        if ($lastActionOnRequest) {
+                                                        ?>
+                                                                <div class="row crm_data">
+                                                                        <div class='hzm_data_prop hzm_comment'>
+                                                                                <?php echo $lastActionOnRequest; ?>
+                                                                        </div>
+                                                                        <div class='hzm_small_calendar calendar_left'>
+                                                                                تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->getVal("status_time"); ?> </span>
+                                                                        </div>
+                                                                </div>
 
-                                        
-                                <?php 
-                                        list($recommendation, $class_recommendation) = $ticketObj->getCrmAIRecommendation($lang);
-                                        
-                                        if($recommendation) {
-                                ?>
-                                        <div class="row crm_data title_crm <?php echo $class_recommendation; ?>">
-                                                <label>توجيه مهم</label>
-                                        </div>
-                                        <div class="row crm_data">       
-                                                <div class='hzm_data_prop hzm_recommendation <?php echo $class_recommendation; ?>'>
-                                                        <?php echo $recommendation; ?> 
-                                                </div>
-                                        </div>
-                                
-                                <?php                
-                                        } 
-                                        list($lastActionOnRequest, $LAResponseId)  = $ticketObj->getLastActionOnRequest($lang);
-                                ?>        
-                                        <div class="row crm_data title_crm">
-                                                <label>آخر اجراء</label>
-                                        </div>
-                                <?php 
-                                        if($lastActionOnRequest)
-                                        {
-                                ?>
-                                        <div class="row crm_data">       
-                                                <div class='hzm_data_prop hzm_comment'>
-                                                        <?php echo $lastActionOnRequest; ?> 
-                                                </div>
-                                                <div class='hzm_small_calendar calendar_left'>
-                                                تم في <span class="hzm_small_date"><?php echo $full_status_date; ?></span> س <span class="hzm_time hzm_small_time"><?php echo $ticketObj->getVal("status_time"); ?> </span> 
-                                                </div>
-                                        </div>
-                                
-                                <?php 
-                                        }
-                                        else
-                                        { 
-                                ?>
-                                        <div class="row crm_data">
-                                                <span>لم يحدث أي اجراء بعد</span>
-                                        </div>
-                                <?php 
-                                        }
-                                        $parentTpl = "view_request";
-                                        include_once("ticket_btns.php");
-                                ?>
-                                        <div class="row crm_data title_crm">
-                                                <label>الردود / التعليقات / الأحداث</label>                                                
-                                        </div>
-                                <?php 
-                                        $responseList = $ticketObj->get("externalResponseList");
-                                        $odd = "even ";
-                                        $repCount=0;
-                                        if(count($responseList)>0)
-                                        {
-                                                /**
-                                                 * @var Response $responseItem
-                                                 */
-                                                foreach($responseList as  $responseItem)
-                                                {
-                                                        if(true) // ($responseItem->id != $LAResponseId) because it hides also last responses/questions/comments
-                                                        {
-                                                                $repCount++;
-                                                                $css_resp = strtolower($responseItem->calcResponse_aut("value", "en"))."-crm ";
-                                                                $full_response_date = ($ds == "hijri") ? $responseItem->fullHijriDate("response_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($responseItem->getVal("response_date")));
-                                                                $short_response = $responseItem->getShortDisplay($lang);
-                                                                $short_response = UfwReplacement::trans_replace($short_response, "crm", $lang);
-                                ?>
-                                        <div class="row <?php echo $odd.$css_resp?>crm_data crm_response type<?php echo $responseItem->getVal("response_type_id")?>">
-                                                <div class='hzm_small_calendar calendar_left'>
-                                                        <span class="hzm_small_date"><?php echo $full_response_date; ?> </span> 
-                                                        <span class="hzm_small_time"><?php echo $responseItem->response_time; ?> </span> 
-                                                        <label><?php echo $short_response;?> </label>
-                                                </div>                                                
-                                                <div class='hzm_data_prop hzm_comment'>
-                                                        <?php echo $responseItem->showAttribute("response_text"); ?> 
-                                                </div>
-                                                
-                                        </div>
-                                
-                                <?php 
-                                                                if($odd=="even ") $odd = "odd ";
-                                                                else $odd = "even ";
+                                                        <?php
+                                                        } else {
+                                                        ?>
+                                                                <div class="row crm_data">
+                                                                        <span>لم يحدث أي اجراء بعد</span>
+                                                                </div>
+                                                        <?php
                                                         }
-                                                }        
-                                        }
-                                        
-                                        if($repCount==0)
-                                        { 
-                                ?>
-                                        <div class="row crm_data">
-                                                <span>لا يوجد ردود أو تعليقات </span>
-                                        </div>
-                                <?php 
-                                        }
-                                        
-                                
-                                        if($ticketObj->is("survey_sent") and $ticketObj->getVal("survey_token"))
-                                        {
-                                                $survey_btn_title = "استبيان تقييم الخدمة";
-                                                if(false and $ticketObj->is("survey_opened")) // This an old obsolete view of survey 
-                                                {
-                                        ?> 
-                                        
-                                        <div class="row crm_data title_crm">
-                                                <label>استبيان رضا العميل</label>                                                
-                                        </div>
-                                        <div class="row crm_data survey">
-                                                <label>سرعة التواصل</label>                                                
-                                                <div class='hzm_data_prop survey easy_fast<?php echo $ticketObj->getVal("easy_fast"); ?>'>
-                                                        <?php echo $ticketObj->showAttribute("easy_fast"); ?> 
-                                                </div>
-                                        </div>
-                                        <div class="row crm_data survey">
-                                                <label>رضا العميل</label>                                                
-                                                <div class='hzm_data_prop survey service_satisfied<?php echo $ticketObj->getVal("service_satisfied"); ?> '>
-                                                        <?php echo $ticketObj->showAttribute("service_satisfied"); ?> 
-                                                </div>
-                                        </div>
-                                        <div class="row crm_data survey">
-                                                <label>تم حل المشكل</label>                                                
-                                                <div class='hzm_data_prop survey pb_resolved<?php echo $ticketObj->getVal("pb_resolved"); ?>'>
-                                                        <?php echo $ticketObj->showAttribute("pb_resolved"); ?> 
-                                                </div>
-                                        </div>
-                                        <?php 
-                                                }
-                                                
-                                                if(($ticketObj->isNot("service_satisfied")) or ($ticketObj->isNot("pb_resolved")) or true)
-                                                {
-                                                                
-                                        ?>
-                                        <div class="btn_container taqib">
-                                                <div class='content_body contact'>   
-                                                                <a class='crm question thin-btn' href='/crm/i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=<?php echo $ticketObj->getVal("request_type_id"); ?>&pt=<?php echo $ticketObj->id; ?>'>تقديم طلب تعقيب</a>                                                                
-                                                </div>
-                                        </div>
-                                        <?php 
-                                                }                                                        
-                                                
+                                                        $parentTpl = "view_request";
+                                                        include_once("ticket_btns.php");
+                                                        ?>
+                                                        <div class="row crm_data title_crm">
+                                                                <label>الردود / التعليقات / الأحداث</label>
+                                                        </div>
+                                                        <?php
+                                                        $responseList = $ticketObj->get("externalResponseList");
+                                                        $odd = "even ";
+                                                        $repCount = 0;
+                                                        if (count($responseList) > 0) {
+                                                                /**
+                                                                 * @var Response $responseItem
+                                                                 */
+                                                                foreach ($responseList as  $responseItem) {
+                                                                        if (true) // ($responseItem->id != $LAResponseId) because it hides also last responses/questions/comments
+                                                                        {
+                                                                                $repCount++;
+                                                                                $css_resp = strtolower($responseItem->calcResponse_aut("value", "en")) . "-crm ";
+                                                                                $full_response_date = ($ds == "hijri") ? $responseItem->fullHijriDate("response_date") : AfwDateHelper::fullGregDate(AfwDateHelper::hijriToGreg($responseItem->getVal("response_date")));
+                                                                                $short_response = $responseItem->getShortDisplay($lang);
+                                                                                $short_response = UfwReplacement::trans_replace($short_response, "crm", $lang);
+                                                        ?>
+                                                                                <div class="row <?php echo $odd . $css_resp ?>crm_data crm_response type<?php echo $responseItem->getVal("response_type_id") ?>">
+                                                                                        <div class='hzm_small_calendar calendar_left'>
+                                                                                                <span class="hzm_small_date"><?php echo $full_response_date; ?> </span>
+                                                                                                <span class="hzm_small_time"><?php echo $responseItem->response_time; ?> </span>
+                                                                                                <label><?php echo $short_response; ?> </label>
+                                                                                        </div>
+                                                                                        <div class='hzm_data_prop hzm_comment'>
+                                                                                                <?php echo $responseItem->showAttribute("response_text"); ?>
+                                                                                        </div>
 
-                                                if($ticketObj->customerCanSurvey())
-                                                {
-                                                        $survey_btn_title = "تقييم الخدمة";                           
-                                                        $my_survey_url = $ticketObj->mySurveyUrl();                             
-                                        ?>
-                                        <div class="btn_container survey">
-                                                <div class='content_body contact'>   
-                                                   <a class='crm response thin-btn' target='_lmsurv' href='<?php echo $my_survey_url?>'><?php echo $survey_btn_title ?> </a>
+                                                                                </div>
+
+                                                                <?php
+                                                                                if ($odd == "even ") $odd = "odd ";
+                                                                                else $odd = "even ";
+                                                                        }
+                                                                }
+                                                        }
+
+                                                        if ($repCount == 0) {
+                                                                ?>
+                                                                <div class="row crm_data">
+                                                                        <span>لا يوجد ردود أو تعليقات </span>
+                                                                </div>
+                                                                <?php
+                                                        }
+
+
+                                                        if ($ticketObj->is("survey_sent") and $ticketObj->getVal("survey_token")) {
+                                                                $survey_btn_title = "استبيان تقييم الخدمة";
+                                                                if (false and $ticketObj->is("survey_opened")) // This an old obsolete view of survey 
+                                                                {
+                                                                ?>
+
+                                                                        <div class="row crm_data title_crm">
+                                                                                <label>استبيان رضا العميل</label>
+                                                                        </div>
+                                                                        <div class="row crm_data survey">
+                                                                                <label>سرعة التواصل</label>
+                                                                                <div class='hzm_data_prop survey easy_fast<?php echo $ticketObj->getVal("easy_fast"); ?>'>
+                                                                                        <?php echo $ticketObj->showAttribute("easy_fast"); ?>
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="row crm_data survey">
+                                                                                <label>رضا العميل</label>
+                                                                                <div class='hzm_data_prop survey service_satisfied<?php echo $ticketObj->getVal("service_satisfied"); ?> '>
+                                                                                        <?php echo $ticketObj->showAttribute("service_satisfied"); ?>
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="row crm_data survey">
+                                                                                <label>تم حل المشكل</label>
+                                                                                <div class='hzm_data_prop survey pb_resolved<?php echo $ticketObj->getVal("pb_resolved"); ?>'>
+                                                                                        <?php echo $ticketObj->showAttribute("pb_resolved"); ?>
+                                                                                </div>
+                                                                        </div>
+                                                                <?php
+                                                                }
+
+                                                                if (($ticketObj->isNot("service_satisfied")) or ($ticketObj->isNot("pb_resolved")) or true) {
+
+                                                                ?>
+                                                                        <div class="btn_container taqib">
+                                                                                <div class='content_body contact'>
+                                                                                        <a class='crm question thin-btn' href='/crm/i.php?cn=crm&mt=request&taqib=1&rt=3&oldrt=<?php echo $ticketObj->getVal("request_type_id"); ?>&pt=<?php echo $ticketObj->id; ?>'>تقديم طلب تعقيب</a>
+                                                                                </div>
+                                                                        </div>
+                                                                <?php
+                                                                }
+
+
+                                                                if ($ticketObj->customerCanSurvey()) {
+                                                                        $survey_btn_title = "تقييم الخدمة";
+                                                                        $my_survey_url = $ticketObj->mySurveyUrl();
+                                                                ?>
+                                                                        <div class="btn_container survey">
+                                                                                <div class='content_body contact'>
+                                                                                        <a class='crm response thin-btn' target='_lmsurv' href='<?php echo $my_survey_url ?>'><?php echo $survey_btn_title ?> </a>
+                                                                                </div>
+                                                                        </div>
+                                                        <?php
+                                                                }
+                                                        }
+                                                        ?>
+
                                                 </div>
                                         </div>
-                                        <?php
-                                                } 
-                                        }
-                                        ?>
+                                </div>
 
-                                </div>                                
+
                         </div>
                 </div>
-                   
-                
-        </div>
-</div>
-<?php
-$my_survey2_url = $ticketObj->mySurvey2Url();
-if($ticketObj->calcRequest_very_late()) {
-        $ticketObj->resetSurveyForMe("ar");
-        $my_survey_url = $ticketObj->mySurveyUrl();
-}
-else {
-        $my_survey_url =  "";
-}
+                <?php
+                $my_survey2_url = $ticketObj->mySurvey2Url();
+                if ($ticketObj->calcRequest_very_late()) {
+                        $ticketObj->resetSurveyForMe("ar");
+                        $my_survey_url = $ticketObj->mySurveyUrl();
+                } else {
+                        $my_survey_url =  "";
+                }
 
-$cr_prefix = "العودة إلى";
-include("back_to_my_requests_tpl.php");
-?>
-</div>
+                $cr_prefix = "العودة إلى";
+                include("back_to_my_requests_tpl.php");
+                ?>
+        </div>
 </div>

@@ -232,18 +232,19 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
 
 
         public function saveInfos(
-                string $first_name,
-                string $last_name,
+                string $first_name_ar,
+                string $last_name_ar,
                 int $customer_gender_id,
                 int $city_id,
-                int $customer_type_id = 1
+                int $customer_type_id = 1,
+                string $ref_num = ''
         ) {
-                $this->set("first_name_ar", $first_name);
-                $this->set("last_name_ar", $last_name);
+                $this->set("first_name_ar", $first_name_ar);
+                $this->set("last_name_ar", $last_name_ar);
                 $this->set("city_id", $city_id);
                 $this->set("gender_id", $customer_gender_id);
                 $this->set("customer_type_id", $customer_type_id);
-
+                $this->set("ref_num", $ref_num);
 
                 $this->commit();
         }
@@ -435,6 +436,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                         list($data[2], $link[2]) = $this->displayAttribute("last_name_en", false, $lang);
                 }
 
+                // die("customer crm getShortDisplay($lang)" . var_export($data, true));
+
                 $return = trim(implode(" ", $data));  // $this->getId().":".
                 if (!$return) $return = "عميل جديد";
                 else $return .= " (" . $this->showAttribute("customer_type_id", null, true, $lang) . ")";
@@ -457,6 +460,8 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 $mobile = $this->getVal("mobile");
                 //if($mobile) $displ .= " - رقم الجوال : ".$mobile;
                 if ($mobile) $displ .= " / " . $mobile;
+                list($birth_date,) = explode(" ", $this->getVal("birth_date"));
+                if ($birth_date) $displ .= " / " . $birth_date;
                 //if(AfwStringHelper::stringContain($displ,"sara_4238_@hotmail.com")) throw new AfwRuntimeException("This is case of strange key display : $displ");
                 return $displ;
         }
@@ -933,7 +938,7 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
                 // use initials like RB for Rafik BOUBAKER
                 $en_name = $this->calcFull_name_en();
                 if (!$en_name) $en_name = AfwStringHelper::arabic_to_latin_chars($this->calcFull_name());
-                if (!$en_name) $en_name = "??";
+                if (!$en_name) $en_name = "NC";
                 $initials = AfwStringHelper::initialsOfName($en_name);
                 $html = "<div class='user-account'>$initials</div>";
                 return $html;
@@ -1061,5 +1066,11 @@ class CrmCustomer extends CrmObject implements AfwFrontEndUser
         public function estimatedTotalRows()
         {
                 return 2500;
+        }
+
+
+        public static function notePrivacy()
+        {
+                return AfwSession::config("note-privacy", "عزيزي العميل، نود التأكيد على أن الحصول على اسمك ورقم الجوال وتاريخ ميلادك هو لغرض معالجة طلبك، كما نؤكد لك اهتمامنا وحرصنا على أمان بياناتك وخصوصيتك");
         }
 }

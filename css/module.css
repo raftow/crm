@@ -4390,3 +4390,22 @@ table.dataTable.display tbody td.srch-result-col-request_type_id.value-3>span {
 div#div_data_request_type_id {
   padding-top: 0px !important;
 }
+
+.hzm_left_image.award.award_glue {
+  overflow: hidden;
+}
+
+.hzm_left_image.award.award_glue>a>img {
+  width: 880px;
+  height: auto;
+  margin-left: calc(50% - 440px);
+  float: left;
+}
+
+@media screen and (max-width: 970px) {
+  .hzm_left_image.award.award_glue>a>img {
+    width: 100%;
+    height: auto;
+    margin: 0 !important;
+  }
+}

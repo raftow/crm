@@ -293,7 +293,7 @@ if ($desc_site) {
         ?>
         <div class="modal-dialog popup-company banner<?php echo $bcounter; ?>">
                 <?php
-                include("version_2_desc.php");
+                include("../client-$company/crm_news_article.php");
                 ?>
         </div>
 

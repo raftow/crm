@@ -56,7 +56,7 @@ else {
 include_once("$file_dir_name/../$uri_module/application_config.php");
 AfwSession::initConfig($config_arr, "system", "$file_dir_name/../$uri_module/application_config.php");
 
-
+$company = AfwSession::currentCompany();
 
 $nom_site = $NOM_SITE[$lang];
 $desc_site = $DESC_SITE[$lang];
@@ -145,7 +145,7 @@ if (AfwSession::customerIsConnected()) {
 
             </div>
             <?php
-            include("version_2_desc.php");
+            include("../client-$company/crm_news_article.php");
             ?>
         </div>
 <?php

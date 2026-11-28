@@ -2,13 +2,13 @@
 
 class SurveyController extends AfwController
 {
-        public static function pushError($message_en, $lang="")
+        public static function pushError($message_en, $lang = "")
         {
                 if (!$lang) $lang = AfwSession::getSessionVar("current_lang");
                 if (!$lang) $lang = "ar";
-                $support_mobile_number = AfwSession::config("support_mobile_number","0500000001");
-                self::pushError(AfwLanguageHelper::translateCompanyMessage($message_en,"crm",$lang));
-                self::pushError(AfwLanguageHelper::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number","crm",$lang)." ".$support_mobile_number);
+                $support_mobile_number = AfwSession::config("support_mobile_number", "0500000001");
+                self::pushError(AfwLanguageHelper::translateCompanyMessage($message_en, "crm", $lang));
+                self::pushError(AfwLanguageHelper::translateCompanyMessage("Please try again later or send a technical support request. You can send a screenshot and ask your questions on WhatsApp to the number", "crm", $lang) . " " . $support_mobile_number);
         }
 
         public function headerTemplate($methodName, $default_header_template)
@@ -39,7 +39,7 @@ class SurveyController extends AfwController
                 return AfwSession::config("main_module", "");
         }
 
-        public function defaultMethod($request)
+        public function defaultMethod(array $request)
         {
                 return "survey_request";
         }
@@ -47,7 +47,7 @@ class SurveyController extends AfwController
 
         public function prepareOptions($methodName)
         {
-                $options= [];
+                $options = [];
                 $options["front-application"] = "crm";
                 $options["user-is-customer"] = true;
                 $options["menu"] = false;
@@ -59,8 +59,7 @@ class SurveyController extends AfwController
         public function prepareStandard($request)
         {
                 $crst = md5("crst" . date("YmdHis"));
-                if($request["all_error"])
-                {
+                if ($request["all_error"]) {
                         self::pushError($request["all_error"]);
                 }
                 $custom_scripts = array();
@@ -80,17 +79,16 @@ class SurveyController extends AfwController
 
         public function getSurveyToken($request)
         {
-            $token = $request["tkn"];
-            $obj = SurveyToken::loadByToken($token);
-            if($obj and $obj->noResponseIDoNotKnow())
-            {
-                // $obj->set("survey_id", 1);
-                for($k=1;$k<=10;$k++) if(!$obj->sureIs("attribute_yn_$k")) $obj->set("attribute_yn_$k", 'N');
-            }
-            return $obj;
+                $token = $request["tkn"];
+                $obj = SurveyToken::loadByToken($token);
+                if ($obj and $obj->noResponseIDoNotKnow()) {
+                        // $obj->set("survey_id", 1);
+                        for ($k = 1; $k <= 10; $k++) if (!$obj->sureIs("attribute_yn_$k")) $obj->set("attribute_yn_$k", 'N');
+                }
+                return $obj;
         }
 
-/******************************** show_response action ********************************************** */
+        /******************************** show_response action ********************************************** */
 
         public function prepareShow_response($request)
         {
@@ -104,19 +102,19 @@ class SurveyController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
 
-                if(!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
+                if (!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
 
-                if(!$objSurveyToken) {
-                    $this->renderError("action aborted ! survey token not found, contact your admin");
-                    return;
+                if (!$objSurveyToken) {
+                        $this->renderError("action aborted ! survey token not found, contact your admin");
+                        return;
                 }
 
                 // $objSurveyRequest = $objSurveyToken->getMyRequest();
                 $data["hide_intro2"] = "";
 
                 if ($objSurveyToken->isClosed()) {
-                    $this->renderError("This survey token is already closed, responses can't be edited");
-                    return;
+                        $this->renderError("This survey token is already closed, responses can't be edited");
+                        return;
                 }
 
                 if (true) {
@@ -140,56 +138,51 @@ class SurveyController extends AfwController
                 foreach ($request as $key => $value) $$key = $value;
                 $data = $request;
 
-                
 
-                if(!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
-                
-                if(!$objSurveyToken) {
-                    $this->renderError("action aborted ! survey token not found, contact your admin");
-                    return;
+
+                if (!$objSurveyToken) $objSurveyToken = $this->getSurveyToken($request);
+
+                if (!$objSurveyToken) {
+                        $this->renderError("action aborted ! survey token not found, contact your admin");
+                        return;
                 }
 
                 $survey_id = $objSurveyToken->getVal("survey_id");
-                if(!$survey_id) $survey_id = 1;
+                if (!$survey_id) $survey_id = 1;
 
 
                 $data["hide_intro2"] = "hide";
-                $data["hide_intro1"] = "hide";                
-                $data["hide_intro0"] = "hide"; 
-                $data["hide_warning"] = "hide"; 
-                $data["hide_submit"] = ""; 
-                
+                $data["hide_intro1"] = "hide";
+                $data["hide_intro0"] = "hide";
+                $data["hide_warning"] = "hide";
+                $data["hide_submit"] = "";
+
                 $objSurveyRequest = $objSurveyToken->getMyRequest();
-                if($objSurveyRequest)
-                {
+                if ($objSurveyRequest) {
                         $data["hide_intro2"] = "hide";
                         $data["hide_intro1"] = "";
-                        $data["hide_intro0"] = ""; 
-                        $data["hide_warning"] = ""; 
-                        $data["hide_submit"] = "hide"; 
-                        
-                        if($objSurveyRequest and (!$objSurveyRequest->intro2ToHide()))
-                        {
+                        $data["hide_intro0"] = "";
+                        $data["hide_warning"] = "";
+                        $data["hide_submit"] = "hide";
+
+                        if ($objSurveyRequest and (!$objSurveyRequest->intro2ToHide())) {
                                 $data["hide_intro2"] = "";
-                                $data["hide_intro1"] = "hide";                                
+                                $data["hide_intro1"] = "hide";
                         }
                         $oldRequest = $objSurveyRequest ? $objSurveyRequest->isOldRequest() : "no-request";
-                        if($oldRequest)
-                        {
-                                $data["hide_intro1"] = $oldRequest;                        
+                        if ($oldRequest) {
+                                $data["hide_intro1"] = $oldRequest;
+                        } else {
+                                $data["hide_intro1"] = "hide";
                         }
-                        else
-                        {
-                                $data["hide_intro1"] = "hide";   
-                        }        
                 }
-                
 
-                
+
+
 
                 if ($objSurveyToken->isClosed()) {
-                    $this->renderError("This survey token is already closed, responses can't be edited");
-                    return;
+                        $this->renderError("This survey token is already closed, responses can't be edited");
+                        return;
                 }
 
                 if (true) {
@@ -254,20 +247,15 @@ class SurveyController extends AfwController
 
                 $data["edit_survey_responses"] = ($objSurvey and $objSurvey->allowEditSurveyResponses()) ? "" : "hide";
 
-                if (!$data["all_error"]) 
-                {
-                    $this->thankYou($data);
-                } 
-                else 
-                {
-                    $this->survey_request($data);
+                if (!$data["all_error"]) {
+                        $this->thankYou($data);
+                } else {
+                        $this->survey_request($data);
                 }
         }
 
         public function thankYou($data)
         {
-            $this->render("crm", "thank_you", $data);
+                $this->render("crm", "thank_you", $data);
         }
-
-        
 }
